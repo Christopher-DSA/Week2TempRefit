@@ -1,6 +1,5 @@
 import glob
-import os
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfMerger
 
 # Get all the PDF filenames.
 pdfFiles = []
@@ -9,10 +8,7 @@ for filename in glob.glob('*.pdf'):
 
 print(pdfFiles)
 
-#combine all pdfs in the folder into one file
-from PyPDF2 import PdfMerger
-
-
+# combine all pdfs in the folder into one file
 merger = PdfMerger()
 
 for filename in pdfFiles:
@@ -20,4 +16,3 @@ for filename in pdfFiles:
 
 merger.write("documentation.pdf")
 merger.close()
-
