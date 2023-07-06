@@ -11,3 +11,14 @@
 - Looking forward to check it with Sidney and Vinh in tomorrow's meeting.
 - After the diagram, we will move to screens for the APP.
 - Will sign NDA tomorrow.
+
+# July 6, 2023
+- All the NDA have been signed and saved in the shared folder.
+- Alison, Kushal, Aesha, and Sapnil worked on the schema in the spreadsheet yesterday.
+- Sidney will build the schema and confirm will evryone later.
+- Alison shared the app structure with the team in the meeting.
+- The team will work on the user flow today.
+- Kushal: Service People
+- Sapnil: Wholesaler and Admin
+- Aesha: Regulator and Company
+- Will meet and disscuss about that in tomorrow's meeting.
