@@ -1,2 +1,7 @@
-gitkeep
-pypdf2
+gitkeep2        # Non-library, Python utility used to add empty directories to repo - Git limitation workaround.
+pypdf4          # PDF library
+flask           # HTML serving library
+pyotp           # TOTP (Time-based One-Time Password) and HTOP (HMAC-based One-Time Password) library
+python-dotenv   # Load environment variables from .env file
+psycopg2        # PostgreSQL library
+SQLAlchemy      # SQL manipulation library
