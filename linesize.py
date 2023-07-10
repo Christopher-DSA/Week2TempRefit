@@ -85,11 +85,9 @@ print("Total lines |", line_count)
 
 size_data.append(f' {time.strftime("%Y-%m-%d %H:%M:%S")}  {line_count} lines ')
 
-
 # add time and total line count as a comment to the end of the file
 with open(__file__, "a") as myfile:
     myfile.write("\n#  %s  %s lines" % (time.strftime("%Y-%m-%d %H:%M:%S"), line_count))
-
 
 # Get the current working directory
 # and store it in a variable
@@ -102,10 +100,10 @@ files_list = glob.glob(f"{cwd}/*")
 # get list of all files recursively in all subdirectories
 files_list = glob.glob(f"{cwd}/**/*", recursive=True)
 
-
 # Create a list of files
 # in directory along with the size
 size_of_file = [(f, os.stat(f).st_size) for f in files_list]
+
 
 # Iterate over list of files along with size
 # and print them one by one.
@@ -116,18 +114,17 @@ size_of_file = [(f, os.stat(f).st_size) for f in files_list]
 
 # created a lambda function that help
 # us to sort according the size of the file.
-fun = lambda x: x[1]
+def fun(x): return x[1]
 
-# in this case we have use its file name.
+
+# in this case we use its file name.
 for f, s in sorted(size_of_file, key=fun):
     print(f"{f} : {round(s / (1024 * 1024), 3)}MB")
-
 
 # print total size of all files
 print(
     f"Total size of all files: {round(sum(s for f, s in size_of_file) / (1024 * 1024), 3)}MB "
 )
-
 
 # add time and total size and file count as a comment to the end of the file
 with open(__file__, "a") as myfile:
@@ -144,10 +141,7 @@ size_data.append(
     f"{round(sum(s for f, s in size_of_file) / (1024 * 1024), 3)}MB  {len(files_list)} files"
 )
 
-
 print("File run and saved")
-
 
 #  2023-07-04 11:18:53  129 lines
 #  2023-07-04 11:18:53  0.382MB  19 files
-
