@@ -22,3 +22,10 @@
 - Sapnil: Wholesaler and Admin
 - Aesha: Regulator and Company
 - Will meet and disscuss about that in tomorrow's meeting.
+
+# July 7, 2023
+- Sidney will update the schema according to the meeting with the client yesterday.
+- Students will double check the schema and update their user flow design accordingly.
+
+# July 8, 2023
+- Sai from Cambrian Capstone will join the project.
