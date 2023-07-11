@@ -7,6 +7,7 @@ conn = sqlite3.connect('database.db')
 cursor = conn.cursor()
 
 # Drop the tables if they already exist
+
 cursor.execute('DROP TABLE IF EXISTS User')
 cursor.execute('DROP TABLE IF EXISTS Technician')
 cursor.execute('DROP TABLE IF EXISTS Contractor')
@@ -28,19 +29,23 @@ cursor.execute('DROP TABLE IF EXISTS Cylinder')
 cursor.execute('DROP TABLE IF EXISTS Repairs')
 cursor.execute('DROP TABLE IF EXISTS Reclaim_Recovery')
 cursor.execute('DROP TABLE IF EXISTS Refrigerant')
+cursor.execute('DROP TABLE IF EXISTS Maintenance')
+cursor.execute('DROP TABLE IF EXISTS Maintenance_detail')
 
 # Create the "User" table
 cursor.execute('''
-    CREATE TABLE User (
-        user_id INTEGER PRIMARY KEY,
+
+    CREATE TABLE User(
+        user_id INTEGER PRIMARY KEY, 
         email TEXT,
         password TEXT,
         role TEXT,
         added_date TEXT,
         user_detail TEXT,
-        status TEXT,
-    )
-''')
+        status TEXT
+    )''')
+
+
 
 # Create the "Technician" table
 cursor.execute('''
@@ -68,6 +73,20 @@ cursor.execute('''
         subscription_id INTEGER,
         code_2fa_code TEXT,
         FOREIGN KEY (user_id) REFERENCES User(user_id)
+    )
+''')
+               
+               # Create the "Contractor Detail" table
+cursor.execute('''
+    CREATE TABLE Contractor_Detail (
+        contractor_id INTEGER PRIMARY KEY,
+        name TEXT,
+        phone TEXT,
+        address TEXT,
+        employees INTEGER,
+        are_they_tracking_refrigerant TEXT,
+        time_basis TEXT,
+        FOREIGN KEY (contractor_id) REFERENCES Contractor(contractor_id)
     )
 ''')
 
@@ -123,18 +142,7 @@ cursor.execute('''
     )
 ''')
 
-# Create the "Contractor Detail" table
-cursor.execute('''
-    CREATE TABLE Contractor_Detail (
-        contractor_id INTEGER PRIMARY KEY,
-        name TEXT,
-        phone TEXT,
-        address TEXT,
-        employees INTEGER,
-        are_they_tracking_refrigerant TEXT,
-        time_basis TEXT
-    )
-''')
+
 
 # Create the "Tags" table
 cursor.execute('''
@@ -144,8 +152,8 @@ cursor.execute('''
         tag_number TEXT,
         tag_url TEXT,
         type TEXT,
-        cylinder_id INTEGER,
-        FOREIGN KEY (invoice_id) REFERENCES Invoices(invoice_id)
+        cylinder_id INTEGER
+        
     )
 ''')
 
@@ -342,6 +350,40 @@ cursor.execute('''
         list TEXT
     )
 ''')
+
+#create "Maintenance table"               
+cursor.execute('''
+    CREATE TABLE Maintenance (
+        maintenance_id INT PRIMARY KEY,
+        technician_id INT,
+        unit_id INT,
+        log TEXT,
+        last_updated DATETIME,
+        service_history TEXT,
+        maintenance_date DATETIME,
+        maintenance_type VARCHAR(50),
+        parts_used TEXT,
+        notes TEXT,
+        FOREIGN KEY (technician_id) REFERENCES Technician(technician_id),
+        FOREIGN KEY (unit_id) REFERENCES Unit(unit_id)
+    )
+''')
+
+#create Maintenance detail table               
+cursor.execute('''
+    CREATE TABLE Maintenance_detail (
+        maintenance_detail_id INT PRIMARY KEY,
+        maintenance_id INT,
+        description TEXT,
+        status VARCHAR(50),
+        FOREIGN KEY (maintenance_id) REFERENCES Maintenance(maintenance_id)
+    )
+''')
+               
+
+
+
+
 
 # Commit the changes and close the connection
 conn.commit()

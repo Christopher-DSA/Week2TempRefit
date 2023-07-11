@@ -29,3 +29,8 @@
 
 # July 8, 2023
 - Sai from Cambrian Capstone will join the project.
+- Sidney updated the progress of the conversation with James and asked students to add two more tables in the db.
+- Kushal will work on the modules.py for using sqlachemy managing the db.
+- Sapnil will add the maintaniance table into the schema and generate a new png file.
+- Aesha will check all the user flows for the project: technician, contractor, wholesaler, admin, organizations (company), store
+- Alison will work on the blueprints of main.py and build the structure.
