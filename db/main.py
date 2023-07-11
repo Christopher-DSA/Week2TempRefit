@@ -29,6 +29,8 @@ cursor.execute('DROP TABLE IF EXISTS Cylinder')
 cursor.execute('DROP TABLE IF EXISTS Repairs')
 cursor.execute('DROP TABLE IF EXISTS Reclaim_Recovery')
 cursor.execute('DROP TABLE IF EXISTS Refrigerant')
+cursor.execute('DROP TABLE IF EXISTS Maintenance')
+cursor.execute('DROP TABLE IF EXISTS Maintenance_detail')
 
 # Create the "User" table
 cursor.execute('''
@@ -71,6 +73,20 @@ cursor.execute('''
         subscription_id INTEGER,
         code_2fa_code TEXT,
         FOREIGN KEY (user_id) REFERENCES User(user_id)
+    )
+''')
+               
+               # Create the "Contractor Detail" table
+cursor.execute('''
+    CREATE TABLE Contractor_Detail (
+        contractor_id INTEGER PRIMARY KEY,
+        name TEXT,
+        phone TEXT,
+        address TEXT,
+        employees INTEGER,
+        are_they_tracking_refrigerant TEXT,
+        time_basis TEXT,
+        FOREIGN KEY (contractor_id) REFERENCES Contractor(contractor_id)
     )
 ''')
 
@@ -126,18 +142,7 @@ cursor.execute('''
     )
 ''')
 
-# Create the "Contractor Detail" table
-cursor.execute('''
-    CREATE TABLE Contractor_Detail (
-        contractor_id INTEGER PRIMARY KEY,
-        name TEXT,
-        phone TEXT,
-        address TEXT,
-        employees INTEGER,
-        are_they_tracking_refrigerant TEXT,
-        time_basis TEXT
-    )
-''')
+
 
 # Create the "Tags" table
 cursor.execute('''
