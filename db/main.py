@@ -152,8 +152,8 @@ cursor.execute('''
         tag_number TEXT,
         tag_url TEXT,
         type TEXT,
-        cylinder_id INTEGER,
-        FOREIGN KEY (invoice_id) REFERENCES Invoices(invoice_id)
+        cylinder_id INTEGER
+        
     )
 ''')
 
