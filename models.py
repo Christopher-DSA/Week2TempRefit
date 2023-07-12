@@ -1,10 +1,43 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
-class User(Base):
+engine = create_engine('sqlite:///:memory:')
+Session = sessionmaker(bind=engine)
+
+class CRUDMixin:
+    """Mixin that adds convenience methods for CRUD (create, read, update, delete) operations."""
+
+    @classmethod
+    def create(cls, **kwargs):
+        """Create a new record and save it the database."""
+        instance = cls(**kwargs)
+        return instance.save()
+
+    def update(self, commit=True, **kwargs):
+        """Update specific fields of a record."""
+        for attr, value in kwargs.items():
+            setattr(self, attr, value)
+        return commit and self.save() or self
+
+    def save(self, commit=True):
+        """Save the record."""
+        Session.add(self)
+        if commit:
+            Session.commit()
+        return self
+
+    def delete(self, commit=True):
+        """Remove the record from the database."""
+        Session.delete(self)
+        return commit and Session.commit()
+
+
+class User(Base, CRUDMixin):
     __tablename__ = 'User'
     user_id = Column(Integer, primary_key=True)
     email = Column(String)
@@ -26,7 +59,7 @@ class User(Base):
     def __repr__(self):
         return f'User {self.user_id}'
 
-class Technician(Base):
+class Technician(Base, CRUDMixin):
     __tablename__ = 'Technician'
     technician_id = Column(Integer, primary_key=True)
     user_detail = Column(String)
@@ -47,7 +80,7 @@ class Technician(Base):
     def __repr__(self):
         return f'Technician {self.technician_id}'
 
-class Contractor(Base):
+class Contractor(Base, CRUDMixin):
     __tablename__ = 'Contractor'
     contractor_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -66,7 +99,7 @@ class Contractor(Base):
     def __repr__(self):
         return f'Contractor {self.contractor_id}'
 
-class Refit_admin(Base):
+class Refit_admin(Base, CRUDMixin):
     __tablename__ = 'Refit_admin'
     admin_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -80,7 +113,7 @@ class Refit_admin(Base):
     def __repr__(self):
         return f'Refit_admin {self.admin_id}'
 
-class Wholesaler(Base):
+class Wholesaler(Base, CRUDMixin):
     __tablename__ = 'Wholesaler'
     wholesaler_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -94,7 +127,23 @@ class Wholesaler(Base):
     def __repr__(self):
         return f'Wholesaler {self.wholesaler_id}'
 
-class Invoices(Base):
+class Tags(Base, CRUDMixin):
+    __tablename__ = 'Tags'
+
+    tag_id = Column(Integer, primary_key=True)
+    invoice_id = Column(Integer, ForeignKey('Invoices.invoice_id'))
+    tag_number = Column(String)
+    tag_url = Column(String)
+    type = Column(String)
+    cylinder_id = Column(Integer)
+
+    invoices = relationship('Invoices', backref='tags')
+
+    def __repr__(self):
+        return f'Tags {self.tag_id}'
+
+
+class Invoices(Base, CRUDMixin):
     __tablename__ = 'Invoices'
     invoice_id = Column(Integer, primary_key=True)
     subscription_id = Column(Integer, ForeignKey('Subscription.subscription_id'))
@@ -104,13 +153,13 @@ class Invoices(Base):
     tax = Column(REAL)
     date = Column(String)
 
-    subscription = relationship('Subscription', backref='invoices')
-    tag = relationship('Tags', backref='invoices')
+    tags = relationship('Tags', backref='invoices')
 
     def __repr__(self):
         return f'Invoices {self.invoice_id}'
 
-class Subscription(Base):
+
+class Subscription(Base, CRUDMixin):
     __tablename__ = 'Subscription'
     subscription_id = Column(Integer, primary_key=True)
     Start_date = Column(String)
@@ -123,7 +172,7 @@ class Subscription(Base):
     def __repr__(self):
         return f'Subscription {self.subscription_id}'
 
-class Contractor_Detail(Base):
+class Contractor_Detail(Base, CRUDMixin):
     __tablename__ = 'Contractor_Detail'
 
     contractor_id = Column(Integer, primary_key=True)
@@ -137,15 +186,8 @@ class Contractor_Detail(Base):
     def __repr__(self):
         return f'Contractor_Detail {self.contractor_id}'
 
-class Tags(Base):
-    __tablename__ = 'Tags'
-    tag_id = Column(Integer, primary_key=True)
-    tag_name = Column(String)
 
-    def __repr__(self):
-        return f'Tags {self.tag_id}'
-
-class User_logging(Base):
+class User_logging(Base, CRUDMixin):
     __tablename__ = 'USER LOGGING'
     log_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('User.user_id'))
@@ -158,7 +200,7 @@ class User_logging(Base):
     def __repr__(self):
         return f'User_logging {self.log_id}'
 
-class User_detail(Base):
+class User_detail(Base, CRUDMixin):
     __tablename__ = 'User_detail'
 
     user_id = Column(Integer, ForeignKey('User.user_id'), primary_key=True)
@@ -180,7 +222,7 @@ class User_detail(Base):
         return f'User_detail {self.user_id}'
 
 
-class Unit(Base):
+class Unit(Base, CRUDMixin):
     __tablename__ = 'Unit'
     unit_id = Column(Integer, primary_key=True)
     technician_id = Column(Integer, ForeignKey('Technician.technician_id'))
@@ -207,7 +249,7 @@ class Unit(Base):
     def __repr__(self):
         return f'Unit {self.unit_id}'
 
-class ODS_Sheets(Base):
+class ODS_Sheets(Base, CRUDMixin):
     __tablename__ = 'ODS_Sheets'
     ods_id = Column(Integer, primary_key=True)
     contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'))
@@ -225,7 +267,7 @@ class ODS_Sheets(Base):
     def __repr__(self):
         return f'ODS_Sheets {self.ods_id}'
 
-class Technician_offer(Base):
+class Technician_offer(Base, CRUDMixin):
     __tablename__ = 'technician_offer'
     contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'))
     technician_id = Column(Integer, ForeignKey('Technician.technician_id'))
@@ -238,7 +280,7 @@ class Technician_offer(Base):
     def __repr__(self):
         return f'Technician_offer {self.contractor_id}, {self.technician_id}'
 
-class Organizations(Base):
+class Organizations(Base, CRUDMixin):
     __tablename__ = 'Organizations'
     organization_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -253,7 +295,7 @@ class Organizations(Base):
     def __repr__(self):
         return f'Organizations {self.organization_id}'
 
-class Store(Base):
+class Store(Base, CRUDMixin):
     __tablename__ = 'Store'
     store_id = Column(Integer, primary_key=True)
     organization_id = Column(Integer, ForeignKey('Organizations.organization_id'))
@@ -268,7 +310,7 @@ class Store(Base):
     def __repr__(self):
         return f'Store {self.store_id}'
 
-class Store_locations(Base):
+class Store_locations(Base, CRUDMixin):
     __tablename__ = 'Store_locations'
 
     store_id = Column(Integer, ForeignKey('Store.store_id'), primary_key=True)
@@ -280,7 +322,7 @@ class Store_locations(Base):
         return f'Store_locations {self.store_id}'
 
 
-class Cylinder(Base):
+class Cylinder(Base, CRUDMixin):
     __tablename__ = 'Cylinder'
     cylinder_id = Column(Integer, primary_key=True)
     cylinder_size = Column(String)
@@ -301,7 +343,7 @@ class Cylinder(Base):
     def __repr__(self):
         return f'Cylinder {self.cylinder_id}'
 
-class Repairs(Base):
+class Repairs(Base, CRUDMixin):
     __tablename__ = 'Repairs'
     repair_id = Column(Integer, primary_key=True)
     unit_id = Column(Integer, ForeignKey('Unit.unit_id'))
@@ -317,7 +359,7 @@ class Repairs(Base):
     def __repr__(self):
         return f'Repairs {self.repair_id}'
 
-class Reclaim_Recovery(Base):
+class Reclaim_Recovery(Base, CRUDMixin):
     __tablename__ = 'Reclaim_Recovery'
     rec_id = Column(Integer, primary_key=True)
     purchase_id = Column(Integer)
@@ -340,7 +382,7 @@ class Reclaim_Recovery(Base):
     def __repr__(self):
         return f'Reclaim_Recovery {self.rec_id}'
 
-class Refrigerant(Base):
+class Refrigerant(Base, CRUDMixin):
     __tablename__ = 'Refrigerant'
     refrigerant_id = Column(Integer, primary_key=True)
     refrigerant_name = Column(String)
