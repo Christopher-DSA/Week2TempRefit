@@ -227,6 +227,8 @@ cursor.execute('''
         FOREIGN KEY (contractor_id) REFERENCES Contractor(contractor_id),
         FOREIGN KEY (technician_id) REFERENCES Technician(technician_id),
         FOREIGN KEY (unit_id) REFERENCES Unit(unit_id),
+        FOREIGN KEY (repair_id) REFERENCES Repairs(repair_id),
+        FOREIGN KEY (rec_id) REFERENCES  Reclaim_Recovery(rec_id),
         FOREIGN KEY (tag_id) REFERENCES Tags(tag_id)
     )
 ''')
@@ -253,6 +255,7 @@ cursor.execute('''
         status TEXT,
         subscription_id INTEGER,
         code_2fa_code TEXT,
+        FOREIGN KEY (subscription_id) REFERENCES Subscription(subscription_id),
         FOREIGN KEY (user_id) REFERENCES User(user_id)
     )
 ''')
@@ -306,13 +309,11 @@ cursor.execute('''
     CREATE TABLE Repairs (
         repair_id INTEGER PRIMARY KEY,
         unit_id INTEGER,
-        purchase_id INTEGER,
         repair_date TEXT,
         technician_id INTEGER,
         causes TEXT,
         status TEXT,
         FOREIGN KEY (unit_id) REFERENCES Unit(unit_id),
-        FOREIGN KEY (purchase_id) REFERENCES Purchase(purchase_id),
         FOREIGN KEY (technician_id) REFERENCES Technician(technician_id)
     )
 ''')
@@ -321,8 +322,6 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE Reclaim_Recovery (
         rec_id INTEGER PRIMARY KEY,
-        purchase_id INTEGER,
-        tank_id INTEGER,
         unit_id INTEGER,
         gas_type TEXT,
         quantity_before_in_lbs REAL,
@@ -333,8 +332,6 @@ cursor.execute('''
         status TEXT,
         refrigerant_id INTEGER,
         cylinder_id INTEGER,
-        FOREIGN KEY (purchase_id) REFERENCES Purchase(purchase_id),
-        FOREIGN KEY (tank_id) REFERENCES Tank(tank_id),
         FOREIGN KEY (unit_id) REFERENCES Unit(unit_id),
         FOREIGN KEY (technician_id) REFERENCES Technician(technician_id),
         FOREIGN KEY (refrigerant_id) REFERENCES Refrigerant(refrigerant_id),
