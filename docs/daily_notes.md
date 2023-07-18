@@ -56,3 +56,9 @@
 - Kushal: 1
 - Sapnil: 2 & 3
 - Aesha: 4 & 5
+
+# July 18, 2023
+- Kushal will build login page and forgot password page and routes
+- Sapnil will update the schema and research on the db connection
+- Aesha will write the markdown files for records
+- Alison will work on the user flow
