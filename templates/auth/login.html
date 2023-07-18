@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="get" action="{{ url_for('auth.login') }}">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <br>
+        <a href="{{ url_for('auth.forgot_password') }}">Forgot password?</a><br>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
