@@ -40,3 +40,25 @@
 - Sapnil will make some changes for the UML diagram and write a markdown file for it.
 - Aesha will finalize all user flow.
 - Alison will check the user flow and the UML diagram and prepare for tomorrow's meeting with the client.
+
+# July 12, 2023
+- The team reviewed the progress and look forward to meeting James for clarification.
+
+# July 13, 2023
+- The client added a disconnection feature between contractor and technician.
+- Clarify the tags and the user flow.
+
+# July 14, 2023
+- Meet with the Springboard team and check their progress and redefine their scope. Two weeks left for the team and hopefuly will get a complete user flow design from them.
+
+# July 17, 2023
+- The team will review the user flow files from the Springboard team and talk about the availability of the existing db.
+- Kushal: 1
+- Sapnil: 2 & 3
+- Aesha: 4 & 5
+
+# July 18, 2023
+- Kushal will build login page and forgot password page and routes
+- Sapnil will update the schema and research on the db connection
+- Aesha will write the markdown files for records
+- Alison will work on the user flow
