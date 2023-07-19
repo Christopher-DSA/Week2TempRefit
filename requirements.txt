@@ -1,7 +1,7 @@
-gitkeep2==1.0.0        # Non-library, Python utility used to add empty directories to repo - Git limitation workaround.
-pypdf4==1.27.0          # PDF library
-Flask==2.3.2           # HTML serving library
-pyotp==2.8.0           # TOTP (Time-based One-Time Password) and HTOP (HMAC-based One-Time Password) library
-python-dotenv==1.0.0   # Load environment variables from .env file
-psycopg2==2.9.6        # PostgreSQL library
-SQLAlchemy==2.0.17      # SQL manipulation library
+gitkeep2>=1.0.0        # Non-library, Python utility used to add empty directories to repo - Git limitation workaround.
+pypdf4>=1.27.0          # PDF library
+Flask>=2.3.2           # HTML serving library
+pyotp>=2.8.0           # TOTP (Time-based One-Time Password) and HTOP (HMAC-based One-Time Password) library
+python-dotenv>=1.0.0   # Load environment variables from .env file
+psycopg2>=2.9.6        # PostgreSQL library
+SQLAlchemy>=2.0.17      # SQL manipulation library
