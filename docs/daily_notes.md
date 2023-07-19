@@ -62,3 +62,9 @@
 - Sapnil will update the schema and research on the db connection
 - Aesha will write the markdown files for records
 - Alison will work on the user flow
+
+# July 19, 2023
+- Kushal will work on the registration page
+- Sapnil will continue work on the db connection and testing
+- Aesha and Evan will work on the technician lisence number verification API research
+- Alison will work on the hashing and generating password function in the tokenize.py
