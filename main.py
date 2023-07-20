@@ -14,6 +14,7 @@ app = Flask(__name__)
 
 
 
+
 # Register blueprints
 app.register_blueprint(store)
 app.register_blueprint(admin)
