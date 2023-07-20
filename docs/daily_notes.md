@@ -68,3 +68,9 @@
 - Sapnil will continue work on the db connection and testing
 - Aesha and Evan will work on the technician lisence number verification API research
 - Alison will work on the hashing and generating password function in the tokenize.py
+
+# July 20, 2023
+- The team will review the user flow files from the Springboard team and talk about the availability of the existing db. Then meet Springboard team for verification.
+- Kushal: 1
+- Sapnil: 2 & 3
+- Aesha: 4 & 5
