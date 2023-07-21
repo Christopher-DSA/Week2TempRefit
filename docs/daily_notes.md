@@ -77,5 +77,6 @@
 
 # July 21, 2023
 - Sapnil continue working on the db connection
-- Kushal will work on the technician login form page
-- Aesha wil work with Kushal on the building html files
+- Kushal will work with Sapnil for debugging and testing the db connection
+- Aesha wil work on the technician login form page and other two sign up forms
+- Evan will research on the lisence number verification
