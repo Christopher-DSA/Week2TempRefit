@@ -74,3 +74,8 @@
 - Kushal: 1
 - Sapnil: 2 & 3
 - Aesha: 4 & 5
+
+# July 21, 2023
+- Sapnil continue working on the db connection
+- Kushal will work on the technician login form page
+- Aesha wil work with Kushal on the building html files
