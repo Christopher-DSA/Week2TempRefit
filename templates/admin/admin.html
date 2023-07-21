@@ -1,0 +1,46 @@
+<html>
+<h1>Admin</h1>
+{{data}}
+hello admin how are you doing
+
+<table border class="table table-hover table-dark">
+    <thead>
+        
+        <tr>
+            <!-- Your Columns HERE -->
+            <th scope="col">ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th scope="col">Role</th>
+            <th scope="col">Join date</th>
+
+
+            <th scope="col">Options</th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Your rows inside the table HERE: -->
+        {% for user in data%}
+            <tr>
+                <td>{{user.user_id}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.role}}</td>
+                <td>{{user.added_date}}</td>
+
+
+                <td>
+                    <button class="btn btn-outline btn-info">More Info</button>
+                    <button class="btn btn-outline btn-success">Purchase This</button>
+
+                </td>
+
+            </tr>
+
+        {%endfor%}
+    </tbody>
+</table>     
+</html>
