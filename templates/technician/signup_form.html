@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Technician Role Selection</title>
+</head>
+<body>
+    <h1>Select Role</h1>
+    <form id="roleForm" onchange="handleRoleChange()">
+        <label for="role">Choose your role:</label>
+        <select id="role" name="role">
+            <option value="" selected disabled>Select a role</option>
+            <option value="technician">Technician</option>
+            <option value="contractor">Contractor</option>
+            <option value="organization">Organization</option>
+            <option value="wholesaler">Wholesaler</option>
+        </select>
+    </form>
+
+    <div id="roleOptions" style="display: none;">
+        <h2>Select an option:</h2>
+        <button onclick="showLoginForm()">Log In</button>
+        <button onclick="showRegistrationForm()">Register</button>
+    </div>
+
+    <form id="loginForm" style="display: none;" onsubmit="submitLogin(event)">
+        <h1>Login</h1>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Log In</button>
+    </form>
+
+    <form id="registrationForm" style="display: none;" onsubmit="submitRegistration(event)">
+        <h1>Register</h1>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="odsLicenseNumber">ODS License Number:</label>
+        <input type="text" id="odsLicenseNumber" name="odsLicenseNumber" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="" selected disabled>Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="addressLine">Address Line:</label>
+        <input type="text" id="addressLine" name="addressLine" required>
+
+        <label for="province">Province:</label>
+        <input type="text" id="province" name="province" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="postalCode">Postal Code:</label>
+        <input type="text" id="postalCode" name="postalCode" required>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function handleRoleChange() {
+            const selectedRole = document.getElementById('role').value;
+            const roleOptionsDiv = document.getElementById('roleOptions');
+
+            if (selectedRole === 'technician') {
+                roleOptionsDiv.style.display = 'block';
+            } else {
+                roleOptionsDiv.style.display = 'none';
+            }
+        }
+
+        function showLoginForm() {
+            const loginForm = document.getElementById('loginForm');
+            const registrationForm = document.getElementById('registrationForm');
+
+            loginForm.style.display = 'block';
+            registrationForm.style.display = 'none';
+        }
+
+        function showRegistrationForm() {
+            const loginForm = document.getElementById('loginForm');
+            const registrationForm = document.getElementById('registrationForm');
+
+            loginForm.style.display = 'none';
+            registrationForm.style.display = 'block';
+        }
+
+        function submitLogin(event) {
+            event.preventDefault();
+            // Add login logic here (e.g., validate credentials and proceed to dashboard)
+        }
+
+        function submitRegistration(event) {
+            event.preventDefault();
+            // Add registration logic here (e.g., validate inputs and save user data)
+        }
+    </script>
+</body>
+</html>
+
