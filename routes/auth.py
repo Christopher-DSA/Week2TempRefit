@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import User, get_session
+# from models import User, get_session
+from models import User,get_session
 auth = Blueprint('auth', __name__)
 
 # Hard-coded user data
@@ -48,6 +49,7 @@ def register():
             new_user = User(email=username, password=password, role=user_type, added_date='2023-07-19')
             session=get_session()
             session.add(new_user)
+            
             session.commit()
 
             return redirect(url_for('auth.login'))
