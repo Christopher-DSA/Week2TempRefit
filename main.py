@@ -7,6 +7,7 @@ from routes.technician import technician
 from routes.wholesaler import wholesaler
 from routes.contractor import contractor
 from routes.auth import auth
+# import datetime
 
 
 #load_dotenv()
@@ -31,4 +32,4 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8082, debug=True)
