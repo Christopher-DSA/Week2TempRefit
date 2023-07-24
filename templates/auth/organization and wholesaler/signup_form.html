@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contractor Role Selection</title>
+    <title>Role Selection - Organization/Wholesaler</title>
 </head>
 <body>
     <h1>Select Role</h1>
@@ -9,7 +9,8 @@
         <label for="role">Choose your role:</label>
         <select id="role" name="role">
             <option value="" selected disabled>Select a role</option>
-            <option value="contractor">Contractor</option>
+            <option value="organization">Organization</option>
+            <option value="wholesaler">Wholesaler</option>
         </select>
     </form>
 
@@ -47,20 +48,34 @@
         <label for="companyName">Company Name:</label>
         <input type="text" id="companyName" name="companyName" required>
 
-        <label for="branchId">Branch ID:</label>
-        <input type="text" id="branchId" name="branchId" required>
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required>
 
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required>
+        <h2>Mailing Address</h2>
+        <label for="mailingAddress">Address:</label>
+        <input type="text" id="mailingAddress" name="mailingAddress" required>
 
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
+        <label for="mailingCity">City:</label>
+        <input type="text" id="mailingCity" name="mailingCity" required>
 
-        <label for="province">Province:</label>
-        <input type="text" id="province" name="province" required>
+        <label for="mailingProvince">Province:</label>
+        <input type="text" id="mailingProvince" name="mailingProvince" required>
 
-        <label for="postalCode">Postal Code:</label>
-        <input type="text" id="postalCode" name="postalCode" required>
+        <label for="mailingPostalCode">Postal Code:</label>
+        <input type="text" id="mailingPostalCode" name="mailingPostalCode" required>
+
+        <h2>Billing Address</h2>
+        <label for="billingAddress">Address:</label>
+        <input type="text" id="billingAddress" name="billingAddress" required>
+
+        <label for="billingCity">City:</label>
+        <input type="text" id="billingCity" name="billingCity" required>
+
+        <label for="billingProvince">Province:</label>
+        <input type="text" id="billingProvince" name="billingProvince" required>
+
+        <label for="billingPostalCode">Postal Code:</label>
+        <input type="text" id="billingPostalCode" name="billingPostalCode" required>
 
         <label for="phoneNumber">Phone Number:</label>
         <input type="tel" id="phoneNumber" name="phoneNumber" required>
@@ -73,7 +88,7 @@
             const selectedRole = document.getElementById('role').value;
             const roleOptionsDiv = document.getElementById('roleOptions');
 
-            if (selectedRole === 'contractor') {
+            if (selectedRole === 'organization' || selectedRole === 'wholesaler') {
                 roleOptionsDiv.style.display = 'block';
             } else {
                 roleOptionsDiv.style.display = 'none';
