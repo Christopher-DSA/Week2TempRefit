@@ -80,3 +80,8 @@
 - Kushal will work with Sapnil for debugging and testing the db connection
 - Aesha wil work on the technician login form page and other two sign up forms
 - Evan will research on the lisence number verification
+
+# July 22, 2023
+- Sapnil will work on the CRUD class
+- Kushal will connect forms and the system
+- Aesha continue working on the cylinder forms
