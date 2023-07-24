@@ -57,9 +57,9 @@ class User(Base, CRUDMixin):
     refit_admins = relationship('Refit_admin', backref='user')
     wholesalers = relationship('Wholesaler', backref='user')
     user_details = relationship('User_detail', backref='user')
-    organizations = relationship('Organizations', backref='user')
-    stores = relationship('Store', backref='user')
-    user_logging = relationship('USER_LOGGING', backref='user')
+    # organizations = relationship('Organizations', backref='user')
+    # stores = relationship('Store', backref='user')
+    # user_logging = relationship('USER_LOGGING', backref='user')
 
     def __repr__(self):
         return f'User {self.user_id}'
@@ -75,26 +75,26 @@ class Technician(Base, CRUDMixin):
     user_status = Column(String)
     contractor_status = Column(String)
 
-    user = relationship('User', backref='technicians')
-    units = relationship('Unit', backref='technician')
-    ods_sheets = relationship('ODS_Sheets', backref='technician')
-    cylinders = relationship('Cylinder', backref='technician')
-    repairs = relationship('Repairs', backref='technician')
-    reclaim_recoveries = relationship('Reclaim_Recovery', backref='technician')
-    technician_offers = relationship('technician_offer', backref='contractor')
+    # user = relationship('User', backref='technicians')
+    # units = relationship('Unit', backref='technician')
+    # ods_sheets = relationship('ODS_Sheets', backref='technician')
+    # cylinders = relationship('Cylinder', backref='technician')
+    # repairs = relationship('Repairs', backref='technician')
+    # reclaim_recoveries = relationship('Reclaim_Recovery', backref='technician')
+    # technician_offers = relationship('technician_offer', backref='contractor')
 
     def __repr__(self):
         return f'Technician {self.technician_id}'
 
-# class Contractor(Base, CRUDMixin):
-#     __tablename__ = 'Contractor'
-#     contractor_id = Column(Integer, primary_key=True)
-#     name = Column(String)
-#     user_id = Column(Integer, ForeignKey('User.user_id'))
-#     logo = Column(String)
-#     status = Column(String)
-#     subscription_id = Column(Integer)
-#     code_2fa_code = Column(String)
+class Contractor(Base, CRUDMixin):
+    __tablename__ = 'Contractor'
+    contractor_id = Column(Integer, primary_key=True)
+    name = Column(String)
+    user_id = Column(Integer, ForeignKey('User.user_id'))
+    logo = Column(String)
+    status = Column(String)
+    subscription_id = Column(Integer)
+    code_2fa_code = Column(String)
 
 #     user = relationship('User', backref='contractors')
 #     technicians = relationship('Technician', backref='contractor')
@@ -102,36 +102,36 @@ class Technician(Base, CRUDMixin):
 #     ods_sheets = relationship('ODS_Sheets', backref='contractor')
 #     technician_offers = relationship('technician_offer', backref='contractor')
 
-#     def __repr__(self):
-#         return f'Contractor {self.contractor_id}'
+    def __repr__(self):
+        return f'Contractor {self.contractor_id}'
 
-# class Refit_admin(Base, CRUDMixin):
-#     __tablename__ = 'Refit_admin'
-#     admin_id = Column(Integer, primary_key=True)
-#     name = Column(String)
-#     user_id = Column(Integer, ForeignKey('User.user_id'))
-#     status = Column(String)
-#     code_2fa_code = Column(String)
-#     admin_level = Column(Integer)
+class Refit_admin(Base, CRUDMixin):
+    __tablename__ = 'Refit_admin'
+    admin_id = Column(Integer, primary_key=True)
+    name = Column(String)
+    user_id = Column(Integer, ForeignKey('User.user_id'))
+    status = Column(String)
+    code_2fa_code = Column(String)
+    admin_level = Column(Integer)
 
 #     user = relationship('User', backref='refit_admins')
 
-#     def __repr__(self):
-#         return f'Refit_admin {self.admin_id}'
+    def __repr__(self):
+        return f'Refit_admin {self.admin_id}'
 
-# class Wholesaler(Base, CRUDMixin):
-#     __tablename__ = 'Wholesaler'
-#     wholesaler_id = Column(Integer, primary_key=True)
-#     name = Column(String)
-#     user_id = Column(Integer, ForeignKey('User.user_id'))
-#     status = Column(String)
-#     tag_id = Column(Integer, ForeignKey('Tags.tag_id'))
+class Wholesaler(Base, CRUDMixin):
+    __tablename__ = 'Wholesaler'
+    wholesaler_id = Column(Integer, primary_key=True)
+    name = Column(String)
+    user_id = Column(Integer, ForeignKey('User.user_id'))
+    status = Column(String)
+    tag_id = Column(Integer, ForeignKey('Tags.tag_id'))
 
 #     user = relationship('User', backref='wholesalers')
 #     tag = relationship('Tags', backref='wholesalers')
 
-#     def __repr__(self):
-#         return f'Wholesaler {self.wholesaler_id}'
+    def __repr__(self):
+        return f'Wholesaler {self.wholesaler_id}'
 
 # class Tags(Base, CRUDMixin):
 #     __tablename__ = 'Tags'
@@ -206,26 +206,26 @@ class Technician(Base, CRUDMixin):
 #     def __repr__(self):
 #         return f'User_logging {self.log_id}'
 
-# class User_detail(Base, CRUDMixin):
-#     __tablename__ = 'User_detail'
+class User_detail(Base, CRUDMixin):
+    __tablename__ = 'User_detail'
 
-#     user_id = Column(Integer, ForeignKey('User.user_id'), primary_key=True)
-#     ODS_license_number = Column(String)
-#     first_name = Column(String)
-#     middle_name = Column(String)
-#     last_name = Column(String)
-#     birthdate = Column(String)
-#     gender = Column(String)
-#     address = Column(String)
-#     province = Column(String)
-#     city = Column(String)
-#     postal_code = Column(String)
-#     telephone = Column(String)
+    user_id = Column(Integer, ForeignKey('User.user_id'), primary_key=True)
+    ODS_license_number = Column(String)
+    first_name = Column(String)
+    middle_name = Column(String)
+    last_name = Column(String)
+    birthdate = Column(String)
+    gender = Column(String)
+    address = Column(String)
+    province = Column(String)
+    city = Column(String)
+    postal_code = Column(String)
+    telephone = Column(String)
 
 #     user = relationship('User', backref='user_details')
 
-#     def __repr__(self):
-#         return f'User_detail {self.user_id}'
+    def __repr__(self):
+        return f'User_detail {self.user_id}'
 
 
 # class Unit(Base, CRUDMixin):
