@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contractor Dashboard</title>
+</head>
+<body>
+    <h1>Welcome Contractor!</h1>
+    <h2>Select an option:</h2>
+    <button onclick="showJoinTeamForm()">Join My Team</button>
+    <button onclick="showPurchaseTagsForm()">Purchase Tags</button>
+    <button onclick="showReplaceTagsForm()">Replace Tags</button>
+    <button onclick="showDeleteTechnicianForm()">Delete Technician Account</button>
+
+    <!-- Join My Team Form -->
+    <form id="joinTeamForm" style="display: none;">
+        <h3>Invite Technician to Join Your Team</h3>
+        <label for="technicianName">Technician Name:</label>
+        <input type="text" id="technicianName" name="technicianName" required>
+
+        <label for="technicianEmail">Technician Email:</label>
+        <input type="email" id="technicianEmail" name="technicianEmail" required>
+
+        <button type="submit">Send Invite</button>
+    </form>
+
+    <!-- Purchase Tags Form -->
+    <form id="purchaseTagsForm" style="display: none;">
+        <h3>Purchase Tags</h3>
+        <label for="quantity">Quantity:</label>
+        <select id="quantity" name="quantity" onchange="handleQuantityChange()">
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="number" id="otherQuantity" name="otherQuantity" style="display: none;">
+
+        <label for="tagType">Type:</label>
+        <input type="text" id="tagType" name="tagType" required>
+
+        <button type="submit">Purchase</button>
+    </form>
+
+    <!-- Replace Tags Form -->
+    <form id="replaceTagsForm" style="display: none;">
+        <h3>Replace an Invalid Tag</h3>
+        <label for="invalidTagDetails">Invalid Tag Details:</label>
+        <input type="text" id="invalidTagDetails" name="invalidTagDetails" required>
+
+        <label for="newTagDetails">New Tag Details:</label>
+        <input type="text" id="newTagDetails" name="newTagDetails" required>
+
+        <button type="submit">Replace</button>
+    </form>
+
+    <!-- Delete Technician Account Form -->
+    <form id="deleteTechnicianForm" style="display: none;">
+        <h3>Delete Technician Account</h3>
+        <label for="technicianNameToDelete">Technician Name:</label>
+        <input type="text" id="technicianNameToDelete" name="technicianNameToDelete" required>
+
+        <label for="technicianEmailToDelete">Technician Email:</label>
+        <input type="email" id="technicianEmailToDelete" name="technicianEmailToDelete" required>
+
+        <button type="submit">Delete Account</button>
+    </form>
+
+    <script>
+        function showJoinTeamForm() {
+            hideAllForms();
+            document.getElementById('joinTeamForm').style.display = 'block';
+        }
+
+        function showPurchaseTagsForm() {
+            hideAllForms();
+            document.getElementById('purchaseTagsForm').style.display = 'block';
+        }
+
+        function handleQuantityChange() {
+            const otherQuantityInput = document.getElementById('otherQuantity');
+            const quantitySelect = document.getElementById('quantity');
+            otherQuantityInput.style.display = quantitySelect.value === 'other' ? 'inline' : 'none';
+        }
+
+        function showReplaceTagsForm() {
+            hideAllForms();
+            document.getElementById('replaceTagsForm').style.display = 'block';
+        }
+
+        function showDeleteTechnicianForm() {
+            hideAllForms();
+            document.getElementById('deleteTechnicianForm').style.display = 'block';
+        }
+
+        function hideAllForms() {
+            document.getElementById('joinTeamForm').style.display = 'none';
+            document.getElementById('purchaseTagsForm').style.display = 'none';
+            document.getElementById('replaceTagsForm').style.display = 'none';
+            document.getElementById('deleteTechnicianForm').style.display = 'none';
+        }
+
+        
+    </script>
+</body>
+</html>

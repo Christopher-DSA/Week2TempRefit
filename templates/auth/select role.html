@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Role Form</title>
+</head>
+<body>
+    <h1>Select Role</h1>
+    <form id="roleForm" onsubmit="submitForm(event)">
+        <label for="role">Choose your role:</label>
+        <select id="role" name="role">
+            <option value="technician">Technician</option>
+            <option value="contractor">Contractor</option>
+            <option value="organization">Organization</option>
+            <option value="wholesaler">Wholesaler</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const selectedRole = form.role.value;
+
+            
+            switch (selectedRole) {
+                case 'technician':
+                    alert('You selected Technician.');
+                    break;
+                case 'contractor':
+                    alert('You selected Contractor.');
+                    break;
+                case 'organization':
+                    alert('You selected Organization.');
+                    break;
+                case 'wholesaler':
+                    alert('You selected Wholesaler.');
+                    break;
+                default:
+                    alert('Please select a role.');
+            }
+        }
+    </script>
+</body>
+</html>
