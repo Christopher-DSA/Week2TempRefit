@@ -75,7 +75,7 @@
 - Sapnil: 2 & 3
 - Aesha: 4 & 5
 
-# July 23, 2023
+# July 21, 2023
 - Sapnil continue working on the db connection
 - Kushal will work with Sapnil for debugging and testing the db connection
 - Aesha wil work on the technician login form page and other two sign up forms
