@@ -3,9 +3,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from flask_sqlalchemy import SQLAlchemy
 
 
 
+db=SQLAlchemy()
 
 Base = declarative_base()
 
@@ -14,32 +16,115 @@ def get_session():
     Session=sessionmaker(bind=engine)
     return Session()
 
+# class CRUDMixin:
+#     """Mixin that adds convenience methods for CRUD (create, read, update, delete) operations."""
+
+#     @classmethod
+#     def create(cls, **kwargs):
+#         """Create a new record and save it the database."""
+#         instance = cls(**kwargs)
+#         db.session.add(instance)
+#         return instance.save()
+
+#     def update(self, commit=True, **kwargs):
+#         """Update specific fields of a record."""
+#         for attr, value in kwargs.items():
+#             setattr(self, attr, value)
+#         return commit and self.save() or self
+
+#     def save(self, commit=True):
+#         """Save the record."""
+#         get_session().add(self)
+#         if commit:
+#             get_session().commit()
+#         return self
+
+#     def delete(self, commit=True):
+#         """Remove the record from the database."""
+#         get_session().delete(self)
+#         return commit and get_session().commit()
+    
+
 class CRUDMixin:
-    """Mixin that adds convenience methods for CRUD (create, read, update, delete) operations."""
+    @classmethod
+    def get_user_by_email(cls, email):
+        # Get the database session
+        session=get_session()
+
+        try:
+            # Perform a query to find the user with the given email
+            user = session.query(User).filter_by(email=email).first()
+            return user
+        except Exception as e:
+            # Handle any errors that may occur during the query
+            raise e
+        finally:
+            # Close the session
+            session.close()
+    def create(cls, model, **kwargs):
+        # Create a new instance of the model with the given attributes
+        new_instance = model(**kwargs)
+
+        # Get the database session
+        session = get_session()
+        # session = Session()
+
+        try:
+            # Add the new instance to the session and commit changes
+            session.add(new_instance)
+            session.commit()
+            return new_instance
+        except Exception as e:
+            # Rollback the session in case of any errors
+            session.rollback()
+            raise e
+        finally:
+            # Close the session
+            session.close()
+
+    
 
     @classmethod
-    def create(cls, **kwargs):
-        """Create a new record and save it the database."""
-        instance = cls(**kwargs)
-        return instance.save()
+    # def read(cls, model_class, instance_id):
+    #     return model_class.query.get(instance_id)
+    def read(cls, model_class, *args, **kwargs):
+        session = get_session()
+        query = session.query(model_class)
 
-    def update(self, commit=True, **kwargs):
-        """Update specific fields of a record."""
-        for attr, value in kwargs.items():
-            setattr(self, attr, value)
-        return commit and self.save() or self
+        if args:
+            query = query.filter(*args)
 
-    def save(self, commit=True):
-        """Save the record."""
-        get_session().add(self)
-        if commit:
-            get_session().commit()
-        return self
+        if kwargs:
+            query = query.filter_by(**kwargs)
 
-    def delete(self, commit=True):
-        """Remove the record from the database."""
-        get_session().delete(self)
-        return commit and get_session().commit()
+        return query.all()
+        
+        
+
+    @classmethod
+    def update(cls, model_class, instance_id, **kwargs):
+        session = get_session()
+
+        instance = session.query(model_class).get(instance_id)
+        if instance:
+            for key, value in kwargs.items():
+                setattr(instance,key, value)
+        session.commit()
+        return instance
+
+        
+
+    @classmethod
+    def delete(cls, model_class, instance_id):
+        session = get_session()
+        instance = session.query(model_class).get(instance_id)
+
+        if instance:
+            session.delete(instance)
+            session.commit()
+            return True
+        else:
+            return False
 
 
 class User(Base, CRUDMixin):
