@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contractor Registration</title>
+</head>
+<body>
+    <h1>Contractor Registration</h1>
+    <form method="post" action="{{ url_for('contractor.formcontractor') }}">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        <label for="companyName">Company Name:</label><br>
+        <input type="text" id="companyName" name="companyName" required><br>
+        <label for="branchId">Branch ID:</label><br>
+        <input type="text" id="branchId" name="branchId" required><br>
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" required><br>
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" required><br>
+        <label for="province">Province:</label><br>
+        <input type="text" id="province" name="province" required><br>
+        <label for="postalCode">Postal Code:</label><br>
+        <input type="text" id="postalCode" name="postalCode" required><br>
+        <label for="phoneNumber">Phone Number:</label><br>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required><br>
+        <br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

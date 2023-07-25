@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wholesaler Details</title>
+</head>
+<body>
+    <h1>Please fill in all the details to complete registration</h1>
+
+    <form method="post" action="{{ url_for('wholesaler.formwholesaler') }}">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="companyName">Company Name:</label><br>
+        <input type="text" id="companyName" name="companyName" required><br>
+        
+        <label for="branch">Branch:</label><br>
+        <input type="text" id="branch" name="branch" required><br>
+        
+        <h2>Mailing Address</h2>
+
+        <label for="mailingAddress">Address:</label><br>
+        <input type="text" id="mailingAddress" name="mailingAddress" required><br>
+        
+        <label for="mailingCity">City:</label><br>
+        <input type="text" id="mailingCity" name="mailingCity" required><br>
+
+        <label for="mailingProvince">Province:</label><br>
+        <input type="text" id="mailingProvince" name="mailingProvince" required><br>
+
+        <label for="mailingPostalCode">Postal Code:</label><br>
+        <input type="text" id="mailingPostalCode" name="mailingPostalCode" required><br>
+
+        <h2>Billing Address</h2>
+
+        <label for="billingAddress">Address:</label><br>
+        <input type="text" id="billingAddress" name="billingAddress" required><br>
+        
+        <label for="billingCity">City:</label><br>
+        <input type="text" id="billingCity" name="billingCity" required><br>
+
+        <label for="billingProvince">Province:</label><br>
+        <input type="text" id="billingProvince" name="billingProvince" required><br>
+
+        <label for="billingPostalCode">Postal Code:</label><br>
+        <input type="text" id="billingPostalCode" name="billingPostalCode" required><br>
+
+        <label for="phoneNumber">Phone Number:</label><br>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
