@@ -6,7 +6,6 @@ auth = Blueprint('auth', __name__)
 # Hard-coded user data
 users = {'admin': 'admin'}
 
-
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
@@ -46,12 +45,24 @@ def register():
             flash('Technicians must enter a license number.')
         else:
             print('Registered successfully.')
-            new_user = User(email=username, password=password, role=user_type, added_date='2023-07-19')
-            session=get_session()
-            session.add(new_user)
-            
-            session.commit()
+            #new_user = User(email=username, password=password, role=user_type, added_date='2023-07-19')
+            #session=get_session()
+            #session.add(new_user)
+            #session.commit()
 
-            return redirect(url_for('auth.login'))
+            # Redirect to different forms based on user_type
+            if user_type == 'contractor':
+                return redirect(url_for('contractor.formcontractor'))
+            elif user_type == 'technician':
+                return redirect(url_for('technician.formtechnician'))
+            elif user_type == 'wholesaler':
+                return redirect(url_for('wholesaler.formwholesaler'))
+            elif user_type == 'admin':
+                return redirect(url_for('auth.formadmin'))
+            
+            #return redirect(url_for('auth.login'))
     print("******************************* failed to Register ********************************")   
     return render_template("auth/register.html")
+
+
+
