@@ -38,3 +38,12 @@ def dashboardcontractor():
     # Render the dashboard
     return render_template("contractor/dashboardcontractor.html")
 
+@contractor.route('/handle_qr_code', methods=['POST'])
+def handle_qr_code():
+    data = request.get_json()
+    qr_code_text = data['qrCode']
+    print("QR Code Text: ", qr_code_text)
+    # You can handle the QR code text here as needed
+
+    # Return a response
+    return jsonify({'message': 'QR code received successfully.'}), 200
