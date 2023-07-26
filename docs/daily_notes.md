@@ -91,3 +91,6 @@
 - Sapnil will work on the db code in the routes
 - Aesha will work on the equipment form
 
+# July 26, 2023
+- Kushal and Sapnil will work on the db connection
+- Aesha will work on 2 forms in the user flow 5
