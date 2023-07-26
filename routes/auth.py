@@ -66,7 +66,7 @@ def register():
         else:
             print('Registered successfully.')
 
-            new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
+            #new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
             
 
             # Redirect to different forms based on user_type

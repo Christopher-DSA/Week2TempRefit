@@ -33,4 +33,5 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8084, debug=True)
+    #app.run(host='10.101.10.119', port=5000)
+    app.run(host='0.0.0.0', port=8080, debug=True)
