@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-
+from models import CRUDMixin, User,User_detail,Contractor,Contractor_Detail
 
 
 contractor = Blueprint('contractor', __name__)
@@ -9,8 +9,8 @@ contractor = Blueprint('contractor', __name__)
 #     return render_template('contractor/dashboard.html')
 
 
-@contractor.route("/formcontractor", methods=["GET", "POST"])
-def formcontractor():
+@contractor.route("/formcontractor/<int:user_id>", methods=["GET", "POST"])
+def formcontractor(user_id):
     if request.method == 'POST':
         # Get data from form
         name = request.form.get('name')
@@ -28,10 +28,12 @@ def formcontractor():
         print("Contractor data succssfully retrieved.")
     #validate the data and pass data to database
 
+        new_detail=CRUDMixin.create(Contractor,user_id=user_id,name=name,logo='logo', status='active')
+        new_detail=CRUDMixin.create(Contractor_Detail,name=name,phone=phoneNumber,address=address,employees=5,are_they_tracking_refrigerant="yes",time_basis='True')
     #redirect to the appropriate page
 
         return redirect(url_for('contractor.dashboardcontractor'))
-    return render_template("contractor/formcontractor.html")
+    return render_template("contractor/formcontractor.html",user_id=user_id)
 
 @contractor.route("/dashboardcontractor")
 def dashboardcontractor():

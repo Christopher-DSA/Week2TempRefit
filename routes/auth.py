@@ -6,6 +6,7 @@ auth = Blueprint('auth', __name__)
 # Hard-coded user data
 users = {'admin': 'admin'}
 
+@auth.route("/", methods=["GET", "POST"])
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
@@ -66,14 +67,17 @@ def register():
         else:
             print('Registered successfully.')
 
-            #new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
-            
+            new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
+
+            users = CRUDMixin.read(User, email=username)            
+
+            new_userid=(users[0].user_id)
 
             # Redirect to different forms based on user_type
             if user_type == 'contractor':
-                return redirect(url_for('contractor.formcontractor'))
+                return redirect(url_for('contractor.formcontractor',user_id=new_userid))
             elif user_type == 'technician':
-                return redirect(url_for('technician.formtechnician'))
+                return redirect(url_for('technician.formtechnician',user_id=new_userid))
             elif user_type == 'wholesaler':
                 return redirect(url_for('wholesaler.formwholesaler'))
             elif user_type == 'admin':
