@@ -45,7 +45,25 @@ cursor.execute('''
         status TEXT
     )''')
 
-
+# Create the "User_detail" table
+cursor.execute('''
+    CREATE TABLE User_detail (
+        user_detail_id INTEGER PRIMARY KEY,
+        user_id INTEGER,
+        ODS_license_number TEXT,
+        first_name TEXT,
+        middle_name TEXT,
+        last_name TEXT,
+        birthdate TEXT,
+        gender TEXT,
+        address TEXT,
+        province TEXT,
+        city TEXT,
+        postal_code TEXT,
+        telephone TEXT,
+        FOREIGN KEY (user_id) REFERENCES User(user_id)
+    )
+''')
 
 # Create the "Technician" table
 cursor.execute('''
@@ -195,24 +213,7 @@ cursor.execute('''
     )
 ''')
 
-# Create the "User_detail" table
-cursor.execute('''
-    CREATE TABLE User_detail (
-        user_id INTEGER PRIMARY KEY,
-        ODS_license_number TEXT,
-        first_name TEXT,
-        middle_name TEXT,
-        last_name TEXT,
-        birthdate TEXT,
-        gender TEXT,
-        address TEXT,
-        province TEXT,
-        city TEXT,
-        postal_code TEXT,
-        telephone TEXT,
-        FOREIGN KEY (user_id) REFERENCES User(user_id)
-    )
-''')
+
 
 # Create the "ODS Sheets" table
 cursor.execute('''

@@ -1,7 +1,7 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 
-
+from models import CRUDMixin, User, User_detail
 
 technician = Blueprint('technician', __name__)
 
@@ -10,8 +10,8 @@ technician = Blueprint('technician', __name__)
 #     return render_template('technician/dashboard.html')
 
 
-@technician.route("/formtechnician", methods=["GET", "POST"])
-def formtechnician():
+@technician.route("/formtechnician/<int:user_id>", methods=["GET", "POST"])
+def formtechnician(user_id):
     if request.method == 'POST':
         # Get data from form
         firstName = request.form.get('firstName')
@@ -29,10 +29,16 @@ def formtechnician():
         print("Technician data successfully retrieved.")
         # validate the data and pass data to database
 
+        new_detail=CRUDMixin.create(User_detail,user_id=user_id,first_name=firstName,last_name=lastName, birthdate=dob,ODS_license_number=odsLicenseNumber,gender=gender, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
+        # CRUDMixin.create(new_detail)
+
+                    # new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
+
         # redirect to the appropriate page
 
+
         return redirect(url_for('technician.dashboardtechnician'))
-    return render_template("technician/formtechnician.html")
+    return render_template("technician/formtechnician.html",user_id=user_id)
 
 
 @technician.route("/dashboardtechnician")
