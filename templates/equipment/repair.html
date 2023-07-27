@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Repair Form</title>
+</head>
+<body>
+    <h1>Repair Form</h1>
+    <form id="repairForm" onsubmit="submitForm(event)">
+        <h2>Auto Populated Information</h2>
+        <label for="equipmentTagId">Equipment Tag ID:</label>
+        <input type="text" id="equipmentTagId" name="equipmentTagId" value="EQUIP001" readonly>
+
+        <label for="technicianId">Technician ID:</label>
+        <input type="text" id="technicianId" name="technicianId" value="TECH001" readonly>
+
+        <label for="repairDate">Repair Date:</label>
+        <input type="date" id="repairDate" name="repairDate" value="" required>
+
+        <label for="refrigerantId">Refrigerant ID:</label>
+        <input type="text" id="refrigerantId" name="refrigerantId" value="" required>
+
+        <label for="refrigerationType">Refrigeration Type:</label>
+        <input type="text" id="refrigerationType" name="refrigerationType" value="" required>
+
+        <label for="factoryChargeAmount">Factory Charge Amount Refrigerant (lbs):</label>
+        <input type="number" id="factoryChargeAmount" name="factoryChargeAmount" value="" required>
+        <br>
+        <label for="additionalAmount">Additional Amount added (lbs):</label>
+        <input type="number" id="additionalAmount" name="additionalAmount" value="" required>
+
+        <label for="totalRefAmount">Total Ref Amount in the equipment (lbs):</label>
+        <input type="number" id="totalRefAmount" name="totalRefAmount" value="" readonly>
+        <br>
+        <button type="button" onclick="calculateTotalRefAmount()">Calculate Total Ref Amount</button>
+        <br><br>
+
+        <label for="modelNumber">Model Number:</label>
+        <input type="text" id="modelNumber" name="modelNumber" required>
+
+        <label for="serialNumber">Serial Number:</label>
+        <input type="text" id="serialNumber" name="serialNumber" required>
+
+        <label for="odsSheetNumber">ODS Sheet number:</label>
+        <input type="text" id="odsSheetNumber" name="odsSheetNumber" required>
+
+        <h2>Repair Details</h2>
+        <label for="testResults">Test Results:</label><br>
+        <input type="checkbox" id="repairedDischarge" name="testResults" value="repairedDischarge">
+        <label for="repairedDischarge">Repaired Discharge</label><br>
+
+        <input type="checkbox" id="lineOnCompressor" name="testResults" value="lineOnCompressor">
+        <label for="lineOnCompressor">Line on Compressor</label><br>
+
+        <input type="checkbox" id="leakDetected" name="testResults" value="leakDetected">
+        <label for="leakDetected">Leak detected, Do not add refrigerant until repair</label><br>
+
+        <input type="checkbox" id="leakRepair" name="testResults" value="leakRepair">
+        <label for="leakRepair">Leak Repair</label><br>
+
+        <input type="checkbox" id="vacuumTestPerformed" name="testResults" value="vacuumTestPerformed">
+        <label for="vacuumTestPerformed">Vacuum Test Performed</label><br>
+
+        <input type="checkbox" id="leakNotRepaired" name="testResults" value="leakNotRepaired">
+        <label for="leakNotRepaired">Leak Not Repaired</label><br>
+
+        <input type="checkbox" id="noLeakDetected" name="testResults" value="noLeakDetected">
+        <label for="noLeakDetected">No Leak Detected</label><br>
+
+        <input type="checkbox" id="noLongerContainsRef" name="testResults" value="noLongerContainsRef">
+        <label for="noLongerContainsRef">No Longer Contains Refrigerant</label><br>
+
+        <label for="compressorOilRemoved">Compressor Oil Removed:</label><br>
+        <input type="radio" id="compressorOilYes" name="compressorOilRemoved" value="Yes">
+        <label for="compressorOilYes">Yes</label><br>
+        <input type="radio" id="compressorOilNo" name="compressorOilRemoved" value="No">
+        <label for="compressorOilNo">No</label><br>
+
+        <input type="checkbox" id="otherCheckbox" name="testResults" value="other">
+        <label for="otherCheckbox">Other</label><br>
+
+        <div id="otherDetailsSection" style="display: none;">
+            <label for="otherDetails">Other Details:</label>
+            <textarea id="otherDetails" name="otherDetails" rows="4" cols="50"></textarea>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function calculateTotalRefAmount() {
+            const factoryCharge = parseFloat(document.getElementById('factoryChargeAmount').value) || 0;
+            const additionalAmount = parseFloat(document.getElementById('additionalAmount').value) || 0;
+            const totalRefAmount = factoryCharge + additionalAmount;
+            document.getElementById('totalRefAmount').value = totalRefAmount.toFixed(2);
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const jobNumber = prompt("Enter Job Number:");
+            if (jobNumber) {
+                
+                alert("Form submitted successfully!");
+            } else {
+                alert("Please enter a valid Job Number.");
+            }
+        }
+
+        document.getElementById('otherCheckbox').addEventListener('change', function() {
+            const otherDetailsSection = document.getElementById('otherDetailsSection');
+            if (this.checked) {
+                otherDetailsSection.style.display = 'block';
+            } else {
+                otherDetailsSection.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
