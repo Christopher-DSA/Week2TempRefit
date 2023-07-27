@@ -94,3 +94,7 @@
 # July 26, 2023
 - Kushal and Sapnil will work on the db connection
 - Aesha will work on 2 forms in the user flow 5
+
+# July 27, 2023
+- Kushal and Aesha will work on the html files
+- Sapnil will work on the db connection
