@@ -29,7 +29,7 @@ def formcontractor(user_id):
     #validate the data and pass data to database
 
         new_detail=CRUDMixin.create(Contractor,user_id=user_id,name=name,logo='logo', status='active')
-        new_detail=CRUDMixin.create(Contractor_Detail,name=name,phone=phoneNumber,address=address,employees=5,are_they_tracking_refrigerant="yes",time_basis='True')
+        new_detail=CRUDMixin.create(Contractor_Detail,name=name,phone=phoneNumber,address=address,employees=5,are_they_tracking_refrigerant="yes",time_basis='True', contractor_id = user_id)
     #redirect to the appropriate page
 
         return redirect(url_for('contractor.dashboardcontractor'))
