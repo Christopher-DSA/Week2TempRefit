@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cylinder Page</title>
+</head>
+<body>
+    <h1>Cylinder Page</h1>
+    <form id="cylinderForm" onsubmit="submitForm(event)">
+        <h2>Auto Populated Information</h2>
+        <label for="cylinderTagId">Cylinder Tag ID:</label>
+        <input type="text" id="cylinderTagId" name="cylinderTagId" value="CYL001" readonly>
+
+        <label for="refrigerantId">Refrigerant ID:</label>
+        <input type="text" id="refrigerantId" name="refrigerantId" value="REF001" readonly>
+
+        <label for="technicianId">Technician ID:</label>
+        <input type="text" id="technicianId" name="technicianId" value="TECH001" readonly>
+
+        <label for="cylinderType">Cylinder Type:</label>
+        <input type="text" id="cylinderType" name="cylinderType" value="TypeX" readonly>
+
+        <label for="cylinderSize">Cylinder Size (lbs):</label>
+        <input type="number" id="cylinderSize" name="cylinderSize" value="50" readonly>
+
+        <label for="createDate">Create Date:</label>
+        <input type="date" id="createDate" name="createDate" value="" required>
+
+        <label for="refrigerantWeight">Current Refrigerant Weight (lbs):</label>
+        <input type="number" id="refrigerantWeight" name="refrigerantWeight" value="25" readonly>
+
+        <label for="refrigerantWeightAfterService">Refrigerant Weight After Service (lbs):</label>
+        <input type="number" id="refrigerantWeightAfterService" name="refrigerantWeightAfterService" value="25" readonly>
+
+        <h2>Information to be Entered</h2>
+        <label for="refrigerantWeightAdded">Refrigerant Weight Added to Equipment (lbs):</label>
+        <input type="number" id="refrigerantWeightAdded" name="refrigerantWeightAdded" value="" required>
+
+        <label for="addCylinder">Add Cylinder:</label>
+        <input type="radio" id="addCylinderYes" name="addCylinder" value="Yes">
+        <label for="addCylinderYes">Yes</label>
+        <input type="radio" id="addCylinderNo" name="addCylinder" value="No">
+        <label for="addCylinderNo">No</label>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('refrigerantWeightAdded').addEventListener('input', function() {
+            const currentWeight = parseFloat(document.getElementById('refrigerantWeight').value) || 0;
+            const weightAdded = parseFloat(this.value) || 0;
+            document.getElementById('refrigerantWeightAfterService').value = (currentWeight - weightAdded).toFixed(2);
+        });
+
+        function submitForm(event) {
+            event.preventDefault();
+            const addCylinder = document.querySelector('input[name="addCylinder"]:checked');
+            if (addCylinder) {
+                const jobNumber = prompt("Enter Job Number:");
+                if (jobNumber) {
+                    
+                    alert("Form submitted successfully!");
+                } else {
+                    alert("Please enter a valid Job Number.");
+                }
+            } else {
+                alert("Please select whether to add a cylinder or not.");
+            }
+        }
+    </script>
+</body>
+</html>
+
