@@ -98,3 +98,7 @@
 # July 27, 2023
 - Kushal and Aesha will work on the html files
 - Sapnil will work on the db connection
+
+# July 28, 2023
+- Kushal, Sapnil and Aesha will work on the markdown files to document this week's progress.
+- Alison will set up a meeting with clients and update the backend progress and get more updates changes from the clients then finalizing the database next week.
