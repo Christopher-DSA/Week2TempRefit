@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cylinder Recovery Form</title>
+</head>
+<body>
+    <h1>Cylinder Recovery Form</h1>
+    <form id="cylinderRecoveryForm" onsubmit="submitForm(event)">
+        <h2>Auto Populated Information</h2>
+        <label for="cylinderTagId">Cylinder Tag ID:</label>
+        <input type="text" id="cylinderTagId" name="cylinderTagId" value="CYL001" readonly>
+
+        <label for="refrigerantId">Refrigerant ID:</label>
+        <input type="text" id="refrigerantId" name="refrigerantId" value="REF001" readonly>
+
+        <label for="technicianId">Technician ID:</label>
+        <input type="text" id="technicianId" name="technicianId" value="TECH001" readonly>
+
+        <label for="cylinderType">Cylinder Type:</label>
+        <input type="text" id="cylinderType" name="cylinderType" value="TypeX" readonly>
+
+        <label for="cylinderSize">Cylinder Size (lbs):</label>
+        <input type="number" id="cylinderSize" name="cylinderSize" value="50" readonly>
+
+        <label for="createDate">Create Date:</label>
+        <input type="date" id="createDate" name="createDate" value="" required>
+
+        <label for="currentRefrigerantWeight">Current Refrigerant Weight (lbs):</label>
+        <input type="number" id="currentRefrigerantWeight" name="currentRefrigerantWeight" value="25" readonly>
+
+        <label for="refrigerantWeightAfterService">Refrigerant Weight After Service (lbs):</label>
+        <input type="number" id="refrigerantWeightAfterService" name="refrigerantWeightAfterService" value="" readonly>
+        <br>
+        <label for="refrigerantWeightReclaimed">Refrigerant Weight Reclaimed (lbs):</label>
+        <input type="number" id="refrigerantWeightReclaimed" name="refrigerantWeightReclaimed" value="" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('createDate').value = new Date().toISOString().split('T')[0];
+
+        document.getElementById('refrigerantWeightReclaimed').addEventListener('input', function() {
+            const currentWeight = parseFloat(document.getElementById('currentRefrigerantWeight').value) || 0;
+            const reclaimedWeight = parseFloat(this.value) || 0;
+            document.getElementById('refrigerantWeightAfterService').value = (currentWeight + reclaimedWeight).toFixed(2);
+        });
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            alert("Form submitted successfully!");
+        }
+    </script>
+</body>
+</html>
