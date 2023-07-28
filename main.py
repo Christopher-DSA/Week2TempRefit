@@ -35,6 +35,6 @@ app.register_blueprint(auth)
 if __name__ == '__main__':
     with app.app_context():
         Base.metadata.create_all(bind=db.engine)
-    app.run(debug=True,port=9852)
+    app.run(debug=True,port=8080)
 
 

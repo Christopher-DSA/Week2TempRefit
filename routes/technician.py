@@ -46,3 +46,17 @@ def dashboardtechnician():
     # Render the dashboard
     return render_template("technician/dashboardtechnician.html")
 
+@technician.route('/equipment/equipment_create')
+def equipment_create():
+    return render_template('equipment/equipment_create.html')
+
+@technician.route('/equipment/repair')
+def repair():
+    return render_template('equipment/repair.html')
+
+@technician.route('/equipment/recovery')
+def recovery():
+    return render_template('equipment/recovery.html')
+
+
+
