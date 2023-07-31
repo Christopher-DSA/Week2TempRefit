@@ -102,3 +102,6 @@
 # July 28, 2023
 - Kushal, Sapnil and Aesha will work on the markdown files to document this week's progress.
 - Alison will set up a meeting with clients and update the backend progress and get more updates changes from the clients then finalizing the database next week.
+
+# July 31, 2023
+- The team will meet the client and get new changes from them and finalize the db schema.
