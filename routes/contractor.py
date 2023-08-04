@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUDMixin, User,User_detail,Contractor,Contractor_Detail
+from models import CRUDMixin, User,User_detail,Contractor
 
 
 contractor = Blueprint('contractor', __name__)
