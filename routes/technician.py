@@ -17,9 +17,9 @@ def formtechnician(user_id):
         firstName = request.form.get('firstName')
         lastName = request.form.get('lastName')
         companyName = request.form.get('companyName')
-        dob = request.form.get('dob')
+        # dob = request.form.get('dob')
         odsLicenseNumber = request.form.get('odsLicenseNumber')
-        gender = request.form.get('gender')
+        # gender = request.form.get('gender')
         addressLine = request.form.get('addressLine')
         province = request.form.get('province')
         city = request.form.get('city')
@@ -29,7 +29,7 @@ def formtechnician(user_id):
         print("Technician data successfully retrieved.")
         # validate the data and pass data to database
 
-        new_detail=CRUDMixin.create(User_detail,user_id=user_id,first_name=firstName,last_name=lastName, birthdate=dob,ODS_license_number=odsLicenseNumber,gender=gender, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
+        new_detail=CRUDMixin.create(User_detail,user_id=user_id,first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
         # CRUDMixin.create(new_detail)
 
                     # new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
