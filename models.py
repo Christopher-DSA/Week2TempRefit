@@ -1,9 +1,10 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_sqlalchemy import SQLAlchemy
+
 
 
 
@@ -122,7 +123,7 @@ class User(Base, CRUDMixin):
     # user_loggings = relationship('User_logging', back_populates='users')
 
     def __repr__(self):
-        return f'User {self.user_id}'
+        return str(self.user_id)
     
 
 class User_detail(Base, CRUDMixin):
@@ -248,7 +249,7 @@ class Tags(Base, CRUDMixin):
     __tablename__ = 'tags'
 
     tag_id = Column(Integer, primary_key=True)
-    invoice_id = Column(Integer, ForeignKey('invoices.invoice_id'))
+    invoice_id = Column(Integer)
     tag_number = Column(String)
     tag_url = Column(String)
     type = Column(String)

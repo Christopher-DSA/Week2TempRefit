@@ -1,24 +1,46 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 # from models import User, get_session
 from models import User,get_session, CRUDMixin
+from functools import wraps
+
+# from flask_login import login_user,login_required,logout_user
 auth = Blueprint('auth', __name__)
 
 # Hard-coded user data
 users = {'admin': 'admin'}
 
+#decorator to see if a user is logged in and stored in a session.
+#redirects to login page if the session is empty
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('auth.login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 @auth.route("/", methods=["GET", "POST"])
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        if username and password:
-            # just a placeholder - replace with  logic to check if user exists in database
-            if username == 'admin' and password == 'password':
-                return redirect(url_for('auth.home'))
-            else:
-                print('Invalid username or password')
-    return render_template("auth/login.html")
+        email = request.form['username']
+        password = request.form['password']
+        user = User.get_user_by_email(email)
+        print(user.email)
+        if user and user.password == password:  # A basic check, but you should hash and verify passwords securely.
+            session['user_id'] = user.email  # Store user ID in session
+            print(session)
+            return redirect(url_for('auth.home'))
+        return "Invalid credentials", 401
+    
+    return render_template('auth/login.html')
+
+@auth.route('/logout')
+@login_required
+def logout():
+    session.pop('user_id', None)  # Remove user ID from session
+    return redirect(url_for('auth.login'))
+
 
 
 
@@ -49,8 +71,10 @@ def forgot_password():
 
 
 @auth.route("/home", methods=["GET"])
+@login_required
 def home():
-    return render_template("auth/home.html")
+    user=session.get('user_id')
+    return render_template("auth/home.html",user=user)
 
 
 @auth.route("/register", methods=["GET", "POST"])
