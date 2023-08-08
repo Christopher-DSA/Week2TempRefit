@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
-# from flask_login import LoginManager
+from models import User, CRUDMixin
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure random string
@@ -9,7 +9,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Update the da
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 from models import Base
 db = SQLAlchemy(app)
-
 
 
 # Optional: If you have routes, register them here
