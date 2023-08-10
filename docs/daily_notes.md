@@ -102,3 +102,26 @@
 # July 28, 2023
 - Kushal, Sapnil and Aesha will work on the markdown files to document this week's progress.
 - Alison will set up a meeting with clients and update the backend progress and get more updates changes from the clients then finalizing the database next week.
+
+# July 31, 2023
+- The team will meet the client and get new changes from them and finalize the db schema.
+
+# Aug 1, 2023
+- Sapnil will work on finalizing the db and make the new schema
+- Kushal will work with Sapnil
+
+# Aug 7, 2023
+- It is a holiday.
+
+# Aug 8, 2023
+- The team met James and Mark for updating progresses and clarifying geolocation feature. We got a plan and will start working on it.
+
+# Aug 9, 2023
+- Aesha will make the new user flow.
+- Kushal will research on the searching bar automatically fill out info feature
+- Sapnil was working on entering data into the db
+
+# Aug 10, 2023
+- Sapnil will work on CSV uploading
+- Kushal will work on the geolocation feature
+- Aesha will finalize the new user flow

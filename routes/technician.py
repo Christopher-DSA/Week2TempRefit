@@ -1,25 +1,49 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 
-from models import CRUDMixin, User, User_detail
-
+from models import CRUDMixin, User, User_detail, Technician
+from functools import wraps
 technician = Blueprint('technician', __name__)
 
 # @technician.route("/technician/dashboard", methods=['GET', 'POST'])
 # def dashboard():
 #     return render_template('technician/dashboard.html')
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('auth.login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
-@technician.route("/formtechnician/<int:user_id>", methods=["GET", "POST"])
-def formtechnician(user_id):
+def technician_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # Assuming the user_id in the session is the email of the user.
+        user_id = session.get('user_id')
+
+        
+
+        user = CRUDMixin.read(User,user_id=user_id)[0]
+        
+        if not user or user.role != 'technician':
+            # Either user doesn't exist, or the user is not an admin.
+            return "Unauthorized", 403
+        
+        return f(*args, **kwargs)
+    return decorated_function
+
+@technician.route("/formtechnician", methods=["GET", "POST"])
+def formtechnician():
     if request.method == 'POST':
         # Get data from form
         firstName = request.form.get('firstName')
         lastName = request.form.get('lastName')
         companyName = request.form.get('companyName')
-        dob = request.form.get('dob')
+        # dob = request.form.get('dob')
         odsLicenseNumber = request.form.get('odsLicenseNumber')
-        gender = request.form.get('gender')
+        # gender = request.form.get('gender')
         addressLine = request.form.get('addressLine')
         province = request.form.get('province')
         city = request.form.get('city')
@@ -29,22 +53,22 @@ def formtechnician(user_id):
         print("Technician data successfully retrieved.")
         # validate the data and pass data to database
 
-        new_detail=CRUDMixin.create(User_detail,user_id=user_id,first_name=firstName,last_name=lastName, birthdate=dob,ODS_license_number=odsLicenseNumber,gender=gender, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
-        # CRUDMixin.create(new_detail)
-
-                    # new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
-
-        # redirect to the appropriate page
-
-
+        new_detail=CRUDMixin.create(User_detail,user_id=session.get('user_id'),first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
+        new_technician_detail=CRUDMixin.create(Technician, ODS_licence_number=odsLicenseNumber,user_id=session.get('user_id'))
         return redirect(url_for('technician.dashboardtechnician'))
-    return render_template("technician/formtechnician.html",user_id=user_id)
+                    
+
+        
+    return render_template("technician/formtechnician.html")
 
 
 @technician.route("/dashboardtechnician")
+@login_required
+@technician_required
 def dashboardtechnician():
     # Render the dashboard
-    return render_template("technician/dashboardtechnician.html")
+    user=session.get('user_id')
+    return render_template("technician/dashboardtechnician.html", user=user)
 
 @technician.route('/equipment/equipment_create')
 def equipment_create():

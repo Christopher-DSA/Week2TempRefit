@@ -1,14 +1,38 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 
-
+from functools import wraps
+from models import User, CRUDMixin
 
 wholesaler = Blueprint('wholesaler', __name__)
 
 # @wholesaler.route("/wholesaler/dashboard", methods=['GET', 'POST'])
 # def dashboard():
 #     return render_template('wholesaler/dashboard.html')
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('auth.login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
+def wholesaler_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # Assuming the user_id in the session is the email of the user.
+        email = session.get('user_id')
+
+        
+
+        user = User.get_user_by_email(email)
+        
+        if not user or user.role != 'wholesaler':
+            # Either user doesn't exist, or the user is not an admin.
+            return "Unauthorized", 403
+        
+        return f(*args, **kwargs)
+    return decorated_function
 
 @wholesaler.route("/formwholesaler", methods=["GET", "POST"])
 def formwholesaler():
@@ -30,6 +54,10 @@ def formwholesaler():
         # TODO: Validate the data
 
         # TODO: Pass data to database
+
+        new_detail=CRUDMixin.create(User_detail,user_id=session.get('user_id'),first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
+        new_technician_detail=CRUDMixin.create(Technician, ODS_licence_number=odsLicenseNumber,user_id=session.get('user_id'))
+        return redirect(url_for('technician.dashboardtechnician'))
         # create_wholesaler(name, email, password, companyName, branch, 
         #    mailingAddress, mailingCity, mailingProvince, mailingPostalCode, 
         #    billingAddress, billingCity, billingProvince, billingPostalCode, phoneNumber)
@@ -40,6 +68,8 @@ def formwholesaler():
     return render_template("wholesaler/formwholesaler.html")
 
 @wholesaler.route("/dashboardwholesaler")
+@login_required
+@wholesaler_required
 def dashboardwholesaler():
     # Render the dashboard
     return render_template("wholesaler/dashboardwholesaler.html")

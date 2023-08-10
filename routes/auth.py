@@ -1,24 +1,55 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 # from models import User, get_session
 from models import User,get_session, CRUDMixin
+from functools import wraps
+
+# from flask_login import login_user,login_required,logout_user
 auth = Blueprint('auth', __name__)
 
 # Hard-coded user data
 users = {'admin': 'admin'}
 
+#decorator to see if a user is logged in and stored in a session.
+#redirects to login page if the session is empty
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('auth.login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 @auth.route("/", methods=["GET", "POST"])
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        if username and password:
-            # just a placeholder - replace with  logic to check if user exists in database
-            if username == 'admin' and password == 'password':
-                return redirect(url_for('auth.home'))
-            else:
-                print('Invalid username or password')
-    return render_template("auth/login.html")
+        email = request.form['username']
+        password = request.form['password']
+        user = User.get_user_by_email(email)
+        
+        if user and user.password == password:  # A basic check, but you should hash and verify passwords securely.
+            session['user_id'] = user.user_id  # Store user ID in session
+            print(session)
+            print(user.role)
+            if user.role=='technician':
+                return redirect(url_for('technician.dashboardtechnician'))
+            elif user.role=='admin':
+                return redirect(url_for('admin.user_page'))
+            elif user.role=='contractor':
+                return redirect(url_for('contractor.dashboardcontractor'))
+            elif user.role=='wholesaler':
+                return redirect(url_for('wholesaler.dashboardwholesaler'))
+            
+        return "Invalid credentials", 401
+    
+    return render_template('auth/login.html')
+
+@auth.route('/logout')
+@login_required
+def logout():
+    session.pop('user_id', None)  # Remove user ID from session
+    return redirect(url_for('auth.login'))
+
 
 
 
@@ -49,8 +80,10 @@ def forgot_password():
 
 
 @auth.route("/home", methods=["GET"])
+@login_required
 def home():
-    return render_template("auth/home.html")
+    user=session.get('user_id')
+    return render_template("auth/home.html",user=user)
 
 
 @auth.route("/register", methods=["GET", "POST"])
@@ -59,25 +92,28 @@ def register():
         username = request.form['username']
         password = request.form['password']
         user_type = request.form['user_type']
-        license = request.form['license']
+        print(username)
+        print(password)
+        print(user_type)
         if not username or not password or not user_type:
             flash('Please fill out all fields.')
-        elif user_type == 'technician' and not license:
-            flash('Technicians must enter a license number.')
+        
         else:
-            print('Registered successfully.')
+           
 
-            new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
+            new_user = CRUDMixin.create(User, email=username, password=password, role=user_type)
+            new_user = User.get_user_by_email(username)
+            session['user_id'] = new_user.user_id
 
-            users = CRUDMixin.read(User, email=username)            
-
-            new_userid=(users[0].user_id)
+            print(session)
+            print(new_user.role)
+            
 
             # Redirect to different forms based on user_type
             if user_type == 'contractor':
-                return redirect(url_for('contractor.formcontractor',user_id=new_userid))
+                return redirect(url_for('contractor.formcontractor'))
             elif user_type == 'technician':
-                return redirect(url_for('technician.formtechnician',user_id=new_userid))
+                return redirect(url_for('technician.formtechnician'))
             elif user_type == 'wholesaler':
                 return redirect(url_for('wholesaler.formwholesaler'))
             elif user_type == 'admin':
