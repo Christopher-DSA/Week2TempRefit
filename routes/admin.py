@@ -19,12 +19,30 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # Assuming the user_id in the session is the email of the user.
+        email = session.get('user_id')
+
+        
+
+        user = User.get_user_by_email(email)
+        
+        if not user or user.role != 'admin':
+            # Either user doesn't exist, or the user is not an admin.
+            return "Unauthorized", 403
+        
+        return f(*args, **kwargs)
+    return decorated_function
+
 @admin.route("/admin", methods=['GET'])
 #admin page access requires login.
 @login_required
+@admin_required
 def user_page():
     
-    
+
     data=get_session().query(User).all()
 
     
