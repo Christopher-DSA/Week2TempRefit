@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
 
 
 
@@ -109,7 +110,7 @@ class User(Base, CRUDMixin):
     email = Column(String)
     password = Column(String)
     role = Column(String)
-    added_date = Column(String)
+    added_date = Column(String,default=func.now())
     user_detail = Column(String)
     status = Column(String)
 
@@ -147,7 +148,7 @@ class User_detail(Base, CRUDMixin):
 class Technician(Base, CRUDMixin):
     __tablename__ = 'technician'
     technician_id = Column(Integer, primary_key=True)
-    user_detail = Column(String)
+    
     ODS_licence_number = Column(String)
     user_id = Column(Integer, ForeignKey('user.user_id'))
     contractor_id = Column(Integer,ForeignKey('contractor.contractor_id'))

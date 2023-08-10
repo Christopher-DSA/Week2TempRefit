@@ -26,11 +26,20 @@ def login():
         email = request.form['username']
         password = request.form['password']
         user = User.get_user_by_email(email)
-        print(user.email)
+        
         if user and user.password == password:  # A basic check, but you should hash and verify passwords securely.
-            session['user_id'] = user.email  # Store user ID in session
+            session['user_id'] = user.user_id  # Store user ID in session
             print(session)
-            return redirect(url_for('auth.home'))
+            print(user.role)
+            if user.role=='technician':
+                return redirect(url_for('technician.dashboardtechnician'))
+            elif user.role=='admin':
+                return redirect(url_for('admin.user_page'))
+            elif user.role=='contractor':
+                return redirect(url_for('contractor.dashboardcontractor'))
+            elif user.role=='wholesaler':
+                return redirect(url_for('wholesaler.dashboardwholesaler'))
+            
         return "Invalid credentials", 401
     
     return render_template('auth/login.html')
@@ -83,25 +92,28 @@ def register():
         username = request.form['username']
         password = request.form['password']
         user_type = request.form['user_type']
-        license = request.form['license']
+        print(username)
+        print(password)
+        print(user_type)
         if not username or not password or not user_type:
             flash('Please fill out all fields.')
-        elif user_type == 'technician' and not license:
-            flash('Technicians must enter a license number.')
+        
         else:
-            print('Registered successfully.')
+           
 
-            new_user = CRUDMixin.create(User, email=username, password=password, role=user_type, added_date=license)
+            new_user = CRUDMixin.create(User, email=username, password=password, role=user_type)
+            new_user = User.get_user_by_email(username)
+            session['user_id'] = new_user.user_id
 
-            users = CRUDMixin.read(User, email=username)            
-
-            new_userid=(users[0].user_id)
+            print(session)
+            print(new_user.role)
+            
 
             # Redirect to different forms based on user_type
             if user_type == 'contractor':
-                return redirect(url_for('contractor.formcontractor',user_id=new_userid))
+                return redirect(url_for('contractor.formcontractor'))
             elif user_type == 'technician':
-                return redirect(url_for('technician.formtechnician',user_id=new_userid))
+                return redirect(url_for('technician.formtechnician'))
             elif user_type == 'wholesaler':
                 return redirect(url_for('wholesaler.formwholesaler'))
             elif user_type == 'admin':

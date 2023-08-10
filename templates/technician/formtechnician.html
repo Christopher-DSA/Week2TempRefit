@@ -6,7 +6,7 @@
 <body>
     <h1>Please fill in all the details to complete registration</h1>
 
-    <form method="post" action="{{ url_for('technician.formtechnician',user_id=user_id) }}">
+    <form method="post" action="{{ url_for('technician.formtechnician') }}">
         <label for="firstName">First Name:</label><br>
         <input type="text" id="firstName" name="firstName" required><br>
         
@@ -16,19 +16,11 @@
         <label for="companyName">Company Name:</label><br>
         <input type="text" id="companyName" name="companyName"><br>
         
-        <label for="dob">Date of Birth:</label><br>
-        <input type="date" id="dob" name="dob" required><br>
-
+        
         <label for="odsLicenseNumber">ODS License Number:</label><br>
         <input type="text" id="odsLicenseNumber" name="odsLicenseNumber" required><br>
 
-        <label for="gender">Gender:</label><br>
-        <select id="gender" name="gender" required>
-            <option value="">Select...</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-        </select><br>
+        
 
         <label for="addressLine">Address Line:</label><br>
         <input type="text" id="addressLine" name="addressLine" required><br>
