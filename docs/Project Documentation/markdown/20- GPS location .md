@@ -1,0 +1,7 @@
+## GPS location form with address suggestions
+
+This outlines the process for a technician using an application to fill out a form while utilizing GPS location and address suggestions. The technician begins by accessing the application's main dashboard and selecting the "Scan QR Code" button to initiate the process. Upon selecting this button, the application requests permission to access the technician's GPS location.
+
+If permission is granted, the technician proceeds to the form page. This page includes fields for personal information and an address field. When the technician interacts with the address field, two branches are possible. If the technician selects a suggested address, the address field auto-fills with related information. On the other hand, if the technician manually enters an address, an elastic search query is triggered to provide address suggestions. Once an address is selected, related fields auto-fill accordingly.
+
+Following the completion of the form, a validation process occurs. If the form is valid, the submitted data is stored, and a confirmation message is displayed. The technician is then redirected back to the main dashboard. In case of invalid form data, a validation error message appears, and the technician remains on the form page.
