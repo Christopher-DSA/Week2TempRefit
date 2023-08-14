@@ -125,3 +125,7 @@
 - Sapnil will work on CSV uploading
 - Kushal will work on the geolocation feature
 - Aesha will finalize the new user flow
+
+# Aug 14, 2023
+- Sapnil will work on the documentation
+- Kushal will work on the qr scanning feature documentation
