@@ -1,7 +1,10 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 # from models import User, get_session
-from models import User,get_session, CRUDMixin
+from models import User,Store,get_session, CRUDMixin
 from functools import wraps
+import pandas as pd
+import os
+# from main import app
 
 # from flask_login import login_user,login_required,logout_user
 auth = Blueprint('auth', __name__)
@@ -122,6 +125,34 @@ def register():
             #return redirect(url_for('auth.login'))
     print("******************************* failed to Register ********************************")   
     return render_template("auth/register.html")
+
+
+@auth.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        
+        file = request.files['file']
+        
+        
+        if file and file.filename.endswith('.csv'):
+            filename = os.path.join('/Users/sapnilsharma/sofvie', file.filename)
+            file.save(filename)
+
+            data = pd.read_csv(filename)
+            for _, row in data.iterrows():
+                
+                
+                entry = CRUDMixin.create(Store,
+                    
+                    address=row['address'], 
+                    
+                )
+                
+            flash('Data successfully stored in the database', 'success')
+            return redirect(url_for('auth.upload'))
+
+    return render_template('auth/csv.html')
+
 
 
 
