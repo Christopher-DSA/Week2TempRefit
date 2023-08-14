@@ -7,6 +7,7 @@ When a technician scans a QR tag, they are presented with the option to select a
 
  New Cylinder 
  Recovery Cylinder
+ 
 ## New Cylinder Option
 If the technician chooses the "New Cylinder" option, they are directed to a form where they can input information. The form includes non-editable auto-populated fields:
 
