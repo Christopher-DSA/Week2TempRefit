@@ -1,0 +1,22 @@
+*.pyc
+
+# CSV Uploads
+/uploads/*
+!/uploads/.gitkeep
+
+# # Omit environment variable and virtual enviroments
+# .env
+# env
+
+# QR code files
+.pyc
+
+# Assets
+# /static/assets/*
+# !/static/assets/.gitkeep
+
+# Database
+*.db
+
+#DS_Store
+.DS_Store
