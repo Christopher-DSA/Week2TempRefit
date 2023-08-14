@@ -410,7 +410,7 @@ class Store(Base, CRUDMixin):
     name = Column(String)
     user_id = Column(Integer, ForeignKey('user.user_id'))
     address = Column(String)
-    gps_locations = Column(String)
+    gps_location = Column(String)
 
 
     organizations = relationship('Organizations', back_populates='stores')
