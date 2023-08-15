@@ -129,3 +129,8 @@
 # Aug 14, 2023
 - Sapnil will work on the documentation
 - Kushal will work on the qr scanning feature documentation
+
+# Aug 15, 2023
+- Sapnil will update the address issue in db
+- Kushal will implement the geolocation into the app
+

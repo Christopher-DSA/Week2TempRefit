@@ -342,9 +342,6 @@ class Unit(Base, CRUDMixin):
     maintenances=relationship('Maintenance',back_populates='units')
     ustores=relationship('Store',back_populates='units')
 
-
-
-
     def __repr__(self):
         return f'Unit {self.unit_id}'
 
@@ -413,6 +410,7 @@ class Store(Base, CRUDMixin):
     organizations = relationship('Organizations', back_populates='stores')
     users = relationship('User', back_populates='stores')
     units=relationship('Unit', back_populates='stores')
+
     def __repr__(self):
         return f'Store {self.store_id}'
 
