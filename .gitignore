@@ -16,7 +16,7 @@
 # !/static/assets/.gitkeep
 
 # Database
-*.db
+.db
 
 #DS_Store
 .DS_Store
