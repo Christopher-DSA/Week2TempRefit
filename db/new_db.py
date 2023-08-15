@@ -183,11 +183,6 @@ cursor.execute('''
         unit_id INTEGER PRIMARY KEY,
         technician_id INTEGER,
         unit_name TEXT,
-        address TEXT,
-        province TEXT,
-        city TEXT,
-        postal_code TEXT,
-        telephone TEXT,
         tag_id INTEGER,
         other_attribute TEXT,
         installation_date TEXT,
@@ -200,6 +195,7 @@ cursor.execute('''
         store_id TEXT,
         FOREIGN KEY (technician_id) REFERENCES technician(technician_id),
         FOREIGN KEY (tag_id) REFERENCES tags(tag_id)
+        FOREIGN KEY (store_id) REFERENCES store(store_id)
     )
 ''')
 

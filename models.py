@@ -322,11 +322,6 @@ class Unit(Base, CRUDMixin):
     unit_id = Column(Integer, primary_key=True)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'))
     unit_name = Column(String)
-    address = Column(String)
-    province = Column(String)
-    city = Column(String)
-    postal_code = Column(String)
-    telephone = Column(String)
     tag_id = Column(Integer, ForeignKey('tags.tag_id'))
     other_attribute = Column(String)
     installation_date = Column(String)
@@ -336,7 +331,8 @@ class Unit(Base, CRUDMixin):
     type_of_refrigerant = Column(String)
     factory_charge_amount = Column(Integer)
     unit_type = Column(String)
-    store_id = Column(String)
+    store_id = Column(Integer,ForeignKey('store.store_id'))
+    
 
     technicians = relationship('Technician', back_populates='units')
     tags = relationship('Tags', back_populates='units')
@@ -344,6 +340,7 @@ class Unit(Base, CRUDMixin):
     ods_sheets=relationship('ODS_sheets',back_populates='units')
     repairs=relationship('Repairs',back_populates='units')
     maintenances=relationship('Maintenance',back_populates='units')
+    ustores=relationship('Store',back_populates='units')
 
 
 
@@ -415,7 +412,7 @@ class Store(Base, CRUDMixin):
 
     organizations = relationship('Organizations', back_populates='stores')
     users = relationship('User', back_populates='stores')
-
+    units=relationship('Unit', back_populates='stores')
     def __repr__(self):
         return f'Store {self.store_id}'
 
