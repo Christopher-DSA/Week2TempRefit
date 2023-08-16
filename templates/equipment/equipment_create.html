@@ -78,11 +78,8 @@
     <script>
         function updateRefrigerantIdAndTotalCharge() {
             const selectedRefrigerant = document.getElementById('refrigerantType').value;
-            
             const refrigerantId = "REF001";
             document.getElementById('refrigerantId').value = refrigerantId;
-
-            
             const factoryCharge = parseFloat(document.getElementById('factoryCharge').value);
             const additionalCharge = parseFloat(document.getElementById('additionalCharge').value);
             const totalCharge = factoryCharge + additionalCharge;
@@ -92,7 +89,6 @@
         function toggleAdditionalRefrigerantInput() {
             const addRefrigerantValue = document.getElementById('addRefrigerant').value;
             const additionalRefrigerantSection = document.getElementById('additionalRefrigerantSection');
-
             if (addRefrigerantValue === 'yes') {
                 additionalRefrigerantSection.style.display = 'block';
             } else {
@@ -102,8 +98,37 @@
 
         function submitForm(event) {
             event.preventDefault();
-            
+
+            // Get the user's location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
         }
+
+        function sendLocation(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Display the coordinates on the page
+            document.getElementById("locationOutput").innerText = `Received coordinates: Latitude ${latitude}, Longitude ${longitude}`;
+
+            // Send the data to Flask
+            fetch('/technician/equipment/equipment_create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `latitude=${latitude}&longitude=${longitude}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                // Here you can redirect or do anything else after sending the data to Flask
+            });
+        }
+    </script>
     </script>
 </body>
 </html>
