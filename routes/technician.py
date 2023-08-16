@@ -72,6 +72,11 @@ def dashboardtechnician():
 
 @technician.route('/equipment/equipment_create')
 def equipment_create():
+    if request.method == 'POST':
+        latitude = request.form.get('latitude')
+        longitude = request.form.get('longitude')
+        print(f"Received coordinates: Latitude {latitude}, Longitude {longitude}")
+        return "Location received", 200
     return render_template('equipment/equipment_create.html')
 
 @technician.route('/equipment/repair')
