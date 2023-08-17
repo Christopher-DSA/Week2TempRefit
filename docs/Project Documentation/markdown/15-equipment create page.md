@@ -43,6 +43,6 @@ The technician can enter the manufacturer's name, model number, serial number, e
 
 ## Additional Notes
 
-[Enter Additional Notes]
+When the submit button is pressed, the form also sends gps co-ordinates to the database (for now it just prints into the consol as database needs to be updated), default it asks for user permission for location access, which needs to be added to the previous screen that was disucssed to allow for location access.
 
 
