@@ -9,20 +9,7 @@ import os
 # from flask_login import login_user,login_required,logout_user
 auth = Blueprint('auth', __name__)
 
-# Hard-coded user data
-users = {'admin': 'admin'}
 
-#decorator to see if a user is logged in and stored in a session.
-#redirects to login page if the session is empty
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
-            return redirect(url_for('auth.login'))
-        return f(*args, **kwargs)
-    return decorated_function
-
-@auth.route("/", methods=["GET", "POST"])
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
@@ -102,8 +89,6 @@ def register():
             flash('Please fill out all fields.')
         
         else:
-           
-
             new_user = CRUD.create(User, email=username, password=password, role=user_type)
             new_user = User.get_user_by_email(username)
             session['user_id'] = new_user.user_id

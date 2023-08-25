@@ -23,21 +23,6 @@ def get_session():
 
 class CRUD:
     @classmethod
-    def get_user_by_email(cls, email):
-        # Get the database session
-        session=get_session()
-
-        try:
-            # Perform a query to find the user with the given email
-            user = session.query(User).filter_by(email=email).first()
-            return user
-        except Exception as e:
-            # Handle any errors that may occur during the query
-            raise e
-        finally:
-            # Close the session
-            session.close()
-    @classmethod
     def create(cls, model, **kwargs):
         # Create a new instance of the model with the given attributes
         new_instance = model(**kwargs)
