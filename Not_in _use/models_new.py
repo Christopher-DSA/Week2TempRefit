@@ -21,7 +21,7 @@ def get_session():
     return Session()
    
 
-class CRUDMixin:
+class CRUD:
 
     ''' This class is the main CRUD class with methods to create, read, update, and delete records. 
         Here all methods are classmethods which means there is no necessary to use the class constructor.'''
@@ -177,7 +177,7 @@ class CRUDMixin:
 
         print('Deleted')
 
-class User(Base, CRUDMixin):
+class User(Base, CRUD):
     __tablename__ = 'User'
     user_id = Column(Integer, primary_key=True)
     email = Column(String)
@@ -196,7 +196,7 @@ class User(Base, CRUDMixin):
     # organizations = relationship("Organizations", backref="user")
     # stores = relationship("Store", backref="user")
   
-class Technician(Base, CRUDMixin):
+class Technician(Base, CRUD):
     __tablename__ = 'Technician'
     technician_id = Column(Integer, primary_key=True)
     user_detail = Column(String)
@@ -214,7 +214,7 @@ class Technician(Base, CRUDMixin):
     # repairs = relationship("Repairs", backref="technician")
     # reclaims = relationship("Reclaim_Recovery", backref="technician")
 
-# class Contractor(Base, CRUDMixin):
+# class Contractor(Base, CRUD):
 #     __tablename__ = 'Contractor'
 #     contractor_id = Column(Integer, primary_key=True)
 #     name = Column(String)
@@ -228,7 +228,7 @@ class Technician(Base, CRUDMixin):
     # ods_sheets = relationship("ODS_Sheets", backref="contractor")
     # technician_offers = relationship("Technician_offer", backref="contractor")
 
-# class Contractor_Detail(Base, CRUDMixin):
+# class Contractor_Detail(Base, CRUD):
 #     __tablename__ = 'Contractor_Detail'
 #     contractor_id = Column(Integer,ForeignKey('Contractor.contractor_id'), primary_key=True)
 #     name = Column(String)
@@ -238,7 +238,7 @@ class Technician(Base, CRUDMixin):
 #     are_they_tracking_refrigerant = Column(String)
 #     time_basis = Column(String)
 
-# class Refit_admin(Base, CRUDMixin):
+# class Refit_admin(Base, CRUD):
 #     __tablename__ = 'Refit_admin'
 #     admin_id = Column(Integer, primary_key=True)
 #     name = Column(String)
@@ -247,7 +247,7 @@ class Technician(Base, CRUDMixin):
 #     code_2fa_code = Column(String)
 #     admin_level = Column(Integer)
 
-# class Wholesaler(Base, CRUDMixin):
+# class Wholesaler(Base, CRUD):
 #     __tablename__ = 'Wholesaler'
 #     wholesaler_id = Column(Integer, primary_key=True)
 #     name = Column(String)
@@ -255,7 +255,7 @@ class Technician(Base, CRUDMixin):
 #     status = Column(String)
 #     tag_id = Column(Integer, ForeignKey('Tags.tag_id'))
 
-# class Invoices(Base, CRUDMixin):
+# class Invoices(Base, CRUD):
 #     __tablename__ = 'Invoices'
 #     invoice_id = Column(Integer, primary_key=True)
 #     subscription_id = Column(Integer, ForeignKey('Subscription.subscription_id'))
@@ -265,7 +265,7 @@ class Technician(Base, CRUDMixin):
 #     tax = Column(REAL)
 #     date = Column(String)
 
-# class Subscription(Base, CRUDMixin):
+# class Subscription(Base, CRUD):
 #     __tablename__ = 'Subscription'
 #     subscription_id = Column(Integer, primary_key=True)
 #     Start_date = Column(String)
@@ -276,7 +276,7 @@ class Technician(Base, CRUDMixin):
 #     invoices = relationship("Invoices", backref="subscription")
 #     organizations = relationship("Organizations", backref="subscription")
 
-# class Tags(Base, CRUDMixin):
+# class Tags(Base, CRUD):
 #     __tablename__ = 'Tags'
 #     tag_id = Column(Integer, primary_key=True)
 #     invoice_id = Column(Integer, ForeignKey('Invoices.invoice_id'))
@@ -290,7 +290,7 @@ class Technician(Base, CRUDMixin):
 #     ods_sheets = relationship("ODS_Sheets", backref="tag")
 #     cylinders = relationship("Cylinder", backref="tag")
 
-# class Unit(Base, CRUDMixin):
+# class Unit(Base, CRUD):
 #     __tablename__ = 'Unit'
 #     unit_id = Column(Integer, primary_key=True)
 #     technician_id = Column(Integer, ForeignKey('Technician.technician_id'))
@@ -315,7 +315,7 @@ class Technician(Base, CRUDMixin):
 #     repairs = relationship("Repairs", backref="unit")
 #     reclaims = relationship("Reclaim_Recovery", backref="unit")
 
-# class User_logging(Base, CRUDMixin):
+# class User_logging(Base, CRUD):
 #     __tablename__ = 'USER LOGGING'
 #     log_id = Column(Integer, primary_key=True)
 #     user_id = Column(Integer, ForeignKey('User.user_id'))
@@ -323,7 +323,7 @@ class Technician(Base, CRUDMixin):
 #     ip_address = Column(String)
 #     address_gps = Column(String)
 
-# class User_detail(Base, CRUDMixin):
+# class User_detail(Base, CRUD):
 #     __tablename__ = 'User_detail'
 #     user_id = Column(Integer, ForeignKey('User.user_id'), primary_key=True)
 #     ODS_license_number = Column(String)
@@ -338,7 +338,7 @@ class Technician(Base, CRUDMixin):
 #     postal_code = Column(String)
 #     telephone = Column(String)
 
-# class ODS_Sheets(Base, CRUDMixin):
+# class ODS_Sheets(Base, CRUD):
 #     __tablename__ = 'ODS_Sheets'
 #     ods_id = Column(Integer, primary_key=True)
 #     contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'))
@@ -348,14 +348,14 @@ class Technician(Base, CRUDMixin):
 #     repair_id = Column(Integer)
 #     rec_id = Column(Integer)
 
-# class Technician_offer(Base, CRUDMixin):
+# class Technician_offer(Base, CRUD):
 #     __tablename__ = 'technician_offer'
 #     contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'), primary_key=True)
 #     technician_id = Column(Integer, ForeignKey('Technician.technician_id'), primary_key=True)
 #     offer_status = Column(String)
 #     email_time_sent = Column(String)
 
-# class Organizations(Base, CRUDMixin):
+# class Organizations(Base, CRUD):
 #     __tablename__ = 'Organizations'
 #     organization_id = Column(Integer, primary_key=True)
 #     name = Column(String)
@@ -367,7 +367,7 @@ class Technician(Base, CRUDMixin):
 
 #     stores = relationship("Store", backref="organization")
 
-# class Store(Base, CRUDMixin):
+# class Store(Base, CRUD):
 #     __tablename__ = 'Store'
 #     store_id = Column(Integer, primary_key=True)
 #     organization_id = Column(Integer, ForeignKey('Organizations.organization_id'))
@@ -378,12 +378,12 @@ class Technician(Base, CRUDMixin):
 
 #     store_locations = relationship("Store_locations", backref="store")
 
-# class Store_locations(Base, CRUDMixin):
+# class Store_locations(Base, CRUD):
 #     __tablename__ = 'Store_locations'
 #     store_id = Column(Integer, ForeignKey('Store.store_id'), primary_key=True)
 #     gps_location = Column(String)
 
-# class Cylinder(Base, CRUDMixin):
+# class Cylinder(Base, CRUD):
 #     __tablename__ = 'Cylinder'
 #     cylinder_id = Column(Integer, primary_key=True)
 #     cylinder_size = Column(String)
@@ -400,7 +400,7 @@ class Technician(Base, CRUDMixin):
 
 #     reclaims = relationship("Reclaim_Recovery", backref="cylinder")
 
-# class Repairs(Base, CRUDMixin):
+# class Repairs(Base, CRUD):
 #     __tablename__ = 'Repairs'
 #     repair_id = Column(Integer, primary_key=True)
 #     unit_id = Column(Integer, ForeignKey('Unit.unit_id'))
@@ -409,7 +409,7 @@ class Technician(Base, CRUDMixin):
 #     causes = Column(String)
 #     status = Column(String)
 
-# class Reclaim_Recovery(Base, CRUDMixin):
+# class Reclaim_Recovery(Base, CRUD):
 #     __tablename__ = 'Reclaim_Recovery'
 #     rec_id = Column(Integer, primary_key=True)
 #     unit_id = Column(Integer, ForeignKey('Unit.unit_id'))
@@ -423,13 +423,13 @@ class Technician(Base, CRUDMixin):
 #     refrigerant_id = Column(Integer)
 #     cylinder_id = Column(Integer, ForeignKey('Cylinder.cylinder_id'))
 
-# class Refrigerant(Base, CRUDMixin):
+# class Refrigerant(Base, CRUD):
 #     __tablename__ = 'Refrigerant'
 #     refrigerant_id = Column(Integer, primary_key=True)
 #     refrigerant_name = Column(String)
 #     list = Column(String)
 
-# class Maintenance(Base, CRUDMixin):
+# class Maintenance(Base, CRUD):
 #     __tablename__ = 'Maintenance'
 #     maintenance_id = Column(Integer, primary_key=True)
 #     technician_id = Column(Integer, ForeignKey('Technician.technician_id'))
@@ -444,7 +444,7 @@ class Technician(Base, CRUDMixin):
 
 #     maintenance_details = relationship("Maintenance_detail", backref="maintenance")
 
-# class Maintenance_detail(Base, CRUDMixin):
+# class Maintenance_detail(Base, CRUD):
 #     __tablename__ = 'Maintenance_detail'
 #     maintenance_detail_id = Column(Integer, primary_key=True)
 #     maintenance_id = Column(Integer, ForeignKey('Maintenance.maintenance_id'))
