@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 # from models import User, get_session
-from models import User,Store,get_session, CRUDMixin
+from models import User,Store,get_session, CRUD
 from functools import wraps
 import pandas as pd
 import os
@@ -66,14 +66,14 @@ def forgot_password():
         if email and new_password:
             # Use a query to find the user by email
             
-            # user = CRUDMixin.get_user_by_email(email)
-            users = CRUDMixin.read(User, email=email)
+            # user = CRUD.get_user_by_email(email)
+            users = CRUD.read(User, email=email)
            
             if users:
                 user=users[0]
                 
-            #     # Use the CRUDMixin update method to change the password
-                updated_user = CRUDMixin.update(User, user.user_id, password=new_password)
+            #     # Use the CRUD update method to change the password
+                updated_user = CRUD.update(User, user.user_id, password=new_password)
                 return jsonify({'message': 'Password changed successfully'})
             else:
                 return jsonify({'error': 'User not found'})
@@ -104,7 +104,7 @@ def register():
         else:
            
 
-            new_user = CRUDMixin.create(User, email=username, password=password, role=user_type)
+            new_user = CRUD.create(User, email=username, password=password, role=user_type)
             new_user = User.get_user_by_email(username)
             session['user_id'] = new_user.user_id
 
@@ -142,7 +142,7 @@ def upload():
             for _, row in data.iterrows():
                 
                 
-                entry = CRUDMixin.create(Store,
+                entry = CRUD.create(Store,
                     
                     address=row['address'], 
                     

@@ -2,7 +2,7 @@ from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 
 from functools import wraps
-from models import User, CRUDMixin
+from models import User, CRUD
 
 wholesaler = Blueprint('wholesaler', __name__)
 
@@ -55,8 +55,8 @@ def formwholesaler():
 
         # TODO: Pass data to database
 
-        new_detail=CRUDMixin.create(User_detail,user_id=session.get('user_id'),first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
-        new_technician_detail=CRUDMixin.create(Technician, ODS_licence_number=odsLicenseNumber,user_id=session.get('user_id'))
+        new_detail=CRUD.create(User_detail,user_id=session.get('user_id'),first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
+        new_technician_detail=CRUD.create(Technician, ODS_licence_number=odsLicenseNumber,user_id=session.get('user_id'))
         return redirect(url_for('technician.dashboardtechnician'))
         # create_wholesaler(name, email, password, companyName, branch, 
         #    mailingAddress, mailingCity, mailingProvince, mailingPostalCode, 

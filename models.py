@@ -14,14 +14,14 @@ db=SQLAlchemy()
 Base = declarative_base()
 Base.query = db.session.query_property()
 
-engine = create_engine('sqlite:///newdatabase.db')
+engine = create_engine('sqlite:///database.db')
 def get_session():
     Session=sessionmaker(bind=engine)
     return Session()
 
 
 
-class CRUDMixin:
+class CRUD:
     @classmethod
     def get_user_by_email(cls, email):
         # Get the database session
@@ -104,7 +104,7 @@ class CRUDMixin:
             return False
 
 
-class User(Base, CRUDMixin):
+class User(Base, CRUD):
     __tablename__ = 'user'
     user_id = Column(Integer, primary_key=True)
     email = Column(String)
@@ -127,7 +127,7 @@ class User(Base, CRUDMixin):
         return str(self.user_id)
     
 
-class User_detail(Base, CRUDMixin):
+class User_detail(Base, CRUD):
     __tablename__ = 'user_detail'
 
     user_detail_id = Column(Integer, primary_key=True)
@@ -145,7 +145,7 @@ class User_detail(Base, CRUDMixin):
     def __repr__(self):
         return f'User_detail {self.user_id}'
 
-class Technician(Base, CRUDMixin):
+class Technician(Base, CRUD):
     __tablename__ = 'technician'
     technician_id = Column(Integer, primary_key=True)
     
@@ -173,7 +173,7 @@ class Technician(Base, CRUDMixin):
     def __repr__(self):
         return f'Technician {self.technician_id}'
 
-class Contractor(Base, CRUDMixin):
+class Contractor(Base, CRUD):
     __tablename__ = 'contractor'
     contractor_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -195,7 +195,7 @@ class Contractor(Base, CRUDMixin):
     def __repr__(self):
         return f'Contractor {self.contractor_id}'
 
-# class Contractor_Detail(Base, CRUDMixin):
+# class Contractor_Detail(Base, CRUD):
 #     __tablename__ = 'Contractor_Detail'
 
 #     contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'), primary_key=True)
@@ -218,7 +218,7 @@ class Contractor(Base, CRUDMixin):
 
    
 
-class Refit_admin(Base, CRUDMixin):
+class Refit_admin(Base, CRUD):
     __tablename__ = 'refit_admin'
     admin_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -232,7 +232,7 @@ class Refit_admin(Base, CRUDMixin):
     def __repr__(self):
         return f'Refit_admin {self.admin_id}'
 
-class Wholesaler(Base, CRUDMixin):
+class Wholesaler(Base, CRUD):
     __tablename__ = 'wholesaler'
     wholesaler_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -246,7 +246,7 @@ class Wholesaler(Base, CRUDMixin):
     def __repr__(self):
         return f'Wholesaler {self.wholesaler_id}'
 
-class Tags(Base, CRUDMixin):
+class Tags(Base, CRUD):
     __tablename__ = 'tags'
 
     tag_id = Column(Integer, primary_key=True)
@@ -266,7 +266,7 @@ class Tags(Base, CRUDMixin):
         return f'Tags {self.tag_id}'
 
 
-class Invoices(Base, CRUDMixin):
+class Invoices(Base, CRUD):
     __tablename__ = 'Invoices'
     invoice_id = Column(Integer, primary_key=True)
     subscription_id = Column(Integer, ForeignKey('subscription.subscription_id'))
@@ -283,7 +283,7 @@ class Invoices(Base, CRUDMixin):
         return f'Invoices {self.invoice_id}'
 
 
-class Subscription(Base, CRUDMixin):
+class Subscription(Base, CRUD):
     __tablename__ = 'subscription'
     subscription_id = Column(Integer, primary_key=True)
     Start_date = Column(String)
@@ -299,7 +299,7 @@ class Subscription(Base, CRUDMixin):
 
 
 
-# class User_logging(Base, CRUDMixin):
+# class User_logging(Base, CRUD):
 #     __tablename__ = 'USER_LOGGING'
 #     log_id = Column(Integer, primary_key=True)
 #     user_id = Column(Integer, ForeignKey('User.user_id'))
@@ -317,7 +317,7 @@ class Subscription(Base, CRUDMixin):
 
 
 
-class Unit(Base, CRUDMixin):
+class Unit(Base, CRUD):
     __tablename__ = 'unit'
     unit_id = Column(Integer, primary_key=True)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'))
@@ -345,7 +345,7 @@ class Unit(Base, CRUDMixin):
     def __repr__(self):
         return f'Unit {self.unit_id}'
 
-class ODS_sheets(Base, CRUDMixin):
+class ODS_sheets(Base, CRUD):
     __tablename__ = 'ODS_sheets'
     ods_id = Column(Integer, primary_key=True)
     contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'))
@@ -366,7 +366,7 @@ class ODS_sheets(Base, CRUDMixin):
     def __repr__(self):
         return f'ODS_Sheets {self.ods_id}'
 
-class Technician_offer(Base, CRUDMixin):
+class Technician_offer(Base, CRUD):
     __tablename__ = 'technician_offer'
     contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'), primary_key=True)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'), primary_key=True)
@@ -379,7 +379,7 @@ class Technician_offer(Base, CRUDMixin):
     def __repr__(self):
         return f'Technician_offer {self.contractor_id}, {self.technician_id}'
 
-class Organizations(Base, CRUDMixin):
+class Organizations(Base, CRUD):
     __tablename__ = 'organizations'
     organization_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -396,7 +396,7 @@ class Organizations(Base, CRUDMixin):
     def __repr__(self):
         return f'Organizations {self.organization_id}'
 
-class Store(Base, CRUDMixin):
+class Store(Base, CRUD):
     __tablename__ = 'store'
     store_id = Column(Integer, primary_key=True)
     organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
@@ -414,7 +414,7 @@ class Store(Base, CRUDMixin):
     def __repr__(self):
         return f'Store {self.store_id}'
 
-# class Store_locations(Base, CRUDMixin):
+# class Store_locations(Base, CRUD):
 #     __tablename__ = 'Store_locations'
 
 #     store_id = Column(Integer, ForeignKey('Store.store_id'), primary_key=True)
@@ -426,7 +426,7 @@ class Store(Base, CRUDMixin):
 #         return f'Store_locations {self.store_id}'
 
 
-class Cylinder(Base, CRUDMixin):
+class Cylinder(Base, CRUD):
     __tablename__ = 'cylinder'
     cylinder_id = Column(Integer, primary_key=True)
     cylinder_size = Column(String)
@@ -451,7 +451,7 @@ class Cylinder(Base, CRUDMixin):
     def __repr__(self):
         return f'Cylinder {self.cylinder_id}'
     
-class Cylinder_type(Base, CRUDMixin):
+class Cylinder_type(Base, CRUD):
     __tablename__ = 'cylinder_type'
     cylinder_type_id = Column(Integer, primary_key=True)
     type_name = Column(String)
@@ -462,7 +462,7 @@ class Cylinder_type(Base, CRUDMixin):
     def __repr__(self):
         return f'Cylinder {self.cylinder_id}'
 
-class Repairs(Base, CRUDMixin):
+class Repairs(Base, CRUD):
     __tablename__ = 'repairs'
     repair_id = Column(Integer, primary_key=True)
     unit_id = Column(Integer, ForeignKey('unit.unit_id'))
@@ -480,7 +480,7 @@ class Repairs(Base, CRUDMixin):
     def __repr__(self):
         return f'Repairs {self.repair_id}'
 
-class Reclaim_recovery(Base, CRUDMixin):
+class Reclaim_recovery(Base, CRUD):
     __tablename__ = 'reclaim_recovery'
     rec_id = Column(Integer, primary_key=True)
     purchase_id = Column(Integer)
@@ -505,7 +505,7 @@ class Reclaim_recovery(Base, CRUDMixin):
     def __repr__(self):
         return f'Reclaim_Recovery {self.rec_id}'
 
-class Refrigerant(Base, CRUDMixin):
+class Refrigerant(Base, CRUD):
     __tablename__ = 'refrigerant'
     refrigerant_id = Column(Integer, primary_key=True)
     refrigerant_name = Column(String)
@@ -518,7 +518,7 @@ class Refrigerant(Base, CRUDMixin):
     def __repr__(self):
         return f'Refrigerant {self.refrigerant_id}'
     
-class Maintenance(Base, CRUDMixin):
+class Maintenance(Base, CRUD):
     __tablename__ = 'maintenance'
     maintenance_id = Column(Integer, primary_key=True)
     technician_id=Column(Integer,ForeignKey('technician.technician_id'))
@@ -540,7 +540,7 @@ class Maintenance(Base, CRUDMixin):
     def __repr__(self):
         return f'Refrigerant {self.maintenance_id}'
     
-class Maintenance_detail(Base, CRUDMixin):
+class Maintenance_detail(Base, CRUD):
     __tablename__ = 'maintenance_detail'
     maintenance_detail_id = Column(Integer, primary_key=True)
     maintenance_id=Column(Integer,ForeignKey('maintenance.maintenance_id'))

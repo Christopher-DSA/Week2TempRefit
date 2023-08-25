@@ -100,7 +100,7 @@ Has relationships with Contractor, Technician, Unit, Tags, Repairs, and Reclaim_
 
 
 3. CRUD Operations
-The code provides CRUD (Create, Read, Update, Delete) operations using the CRUDMixin class. These operations can be performed on any of the defined model classes (e.g., User, Technician, Contractor, etc.). The CRUD operations are as follows:
+The code provides CRUD (Create, Read, Update, Delete) operations using the CRUD class. These operations can be performed on any of the defined model classes (e.g., User, Technician, Contractor, etc.). The CRUD operations are as follows:
 
 3.1 Create
 The create method allows creating a new instance of a model class and adding it to the database.
