@@ -2,7 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from models import User, CRUD, Base
-# from routes import your_blueprint
 from routes.store import store
 from routes.admin import admin
 from routes.organization import organization

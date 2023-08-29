@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 # from models import User, get_session
-from models import User,Store,get_session, CRUD
+from models import User,Store, CRUD
 from functools import wraps
 import pandas as pd
 import os
@@ -10,7 +10,7 @@ import os
 auth = Blueprint('auth', __name__)
 
 
-@auth.route("/login", methods=["GET", "POST"])
+@auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
         email = request.form['username']
@@ -35,7 +35,6 @@ def login():
     return render_template('auth/login.html')
 
 @auth.route('/logout')
-@login_required
 def logout():
     session.pop('user_id', None)  # Remove user ID from session
     return redirect(url_for('auth.login'))
@@ -70,7 +69,7 @@ def forgot_password():
 
 
 @auth.route("/home", methods=["GET"])
-@login_required
+
 def home():
     user=session.get('user_id')
     return render_template("auth/home.html",user=user)

@@ -1,96 +1,22 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
 
-
-
-db=SQLAlchemy()
-
+# SQLAlcehmy base.
 Base = declarative_base()
-Base.query = db.session.query_property()
+
 
 engine = create_engine('sqlite:///database.db')
-def get_session():
-    Session=sessionmaker(bind=engine)
-    return Session()
+Session = sessionmaker(bind=engine)
 
 
 
-class CRUD:
-    @classmethod
-    def create(cls, model, **kwargs):
-        # Create a new instance of the model with the given attributes
-        new_instance = model(**kwargs)
+class User(Base):
 
-        # Get the database session
-        session = get_session()
-        # session = Session()
-
-        try:
-            # Add the new instance to the session and commit changes
-            session.add(new_instance)
-            session.commit()
-            return new_instance
-        except Exception as e:
-            # Rollback the session in case of any errors
-            session.rollback()
-            raise e
-        finally:
-            # Close the session
-            session.close()
-
-    
-
-    @classmethod
-    # def read(cls, model_class, instance_id):
-    #     return model_class.query.get(instance_id)
-    def read(cls, model_class, *args, **kwargs):
-        session = get_session()
-        query = session.query(model_class)
-
-        if args:
-            query = query.filter(*args)
-
-        if kwargs:
-            query = query.filter_by(**kwargs)
-
-        return query.all()
-        
-        
-
-    @classmethod
-    def update(cls, model_class, instance_id, **kwargs):
-        session = get_session()
-
-        instance = session.query(model_class).get(instance_id)
-        if instance:
-            for key, value in kwargs.items():
-                setattr(instance,key, value)
-        session.commit()
-        return instance
-
-        
-
-    @classmethod
-    def delete(cls, model_class, instance_id):
-        session = get_session()
-        instance = session.query(model_class).get(instance_id)
-
-        if instance:
-            session.delete(instance)
-            session.commit()
-            return True
-        else:
-            return False
-
-
-class User(Base, CRUD):
     __tablename__ = 'user'
+    
     user_id = Column(Integer, primary_key=True)
     email = Column(String)
     password = Column(String)
@@ -109,10 +35,10 @@ class User(Base, CRUD):
     # user_loggings = relationship('User_logging', back_populates='users')
 
     def __repr__(self):
-        return str(self.user_id)
+        return 'User model'
     
 
-class User_detail(Base, CRUD):
+class User_detail(Base):
     __tablename__ = 'user_detail'
 
     user_detail_id = Column(Integer, primary_key=True)
@@ -128,9 +54,9 @@ class User_detail(Base, CRUD):
     users = relationship('User', back_populates='user_details')
 
     def __repr__(self):
-        return f'User_detail {self.user_id}'
+        return 'User Detail Model'
 
-class Technician(Base, CRUD):
+class Technician(Base):
     __tablename__ = 'technician'
     technician_id = Column(Integer, primary_key=True)
     
@@ -153,13 +79,13 @@ class Technician(Base, CRUD):
     contractors = relationship('Contractor', back_populates='technicians')
 
 
-
-
     def __repr__(self):
-        return f'Technician {self.technician_id}'
+        return 'Technician Model'
 
-class Contractor(Base, CRUD):
+class Contractor(Base):
+
     __tablename__ = 'contractor'
+
     contractor_id = Column(Integer, primary_key=True)
     name = Column(String)
     user_id = Column(Integer, ForeignKey('user.user_id'))
@@ -180,7 +106,7 @@ class Contractor(Base, CRUD):
     def __repr__(self):
         return f'Contractor {self.contractor_id}'
 
-# class Contractor_Detail(Base, CRUD):
+# class Contractor_Detail(Base):
 #     __tablename__ = 'Contractor_Detail'
 
 #     contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'), primary_key=True)
@@ -203,8 +129,10 @@ class Contractor(Base, CRUD):
 
    
 
-class Refit_admin(Base, CRUD):
+class Refit_Admin(Base):
+
     __tablename__ = 'refit_admin'
+
     admin_id = Column(Integer, primary_key=True)
     name = Column(String)
     user_id = Column(Integer, ForeignKey('user.user_id'))
@@ -215,10 +143,12 @@ class Refit_admin(Base, CRUD):
     users = relationship('User', back_populates='refit_admins')
 
     def __repr__(self):
-        return f'Refit_admin {self.admin_id}'
+        return 'Refit Admin Model'
 
-class Wholesaler(Base, CRUD):
+class Wholesaler(Base):
+
     __tablename__ = 'wholesaler'
+    
     wholesaler_id = Column(Integer, primary_key=True)
     name = Column(String)
     user_id = Column(Integer, ForeignKey('user.user_id'))
@@ -229,9 +159,10 @@ class Wholesaler(Base, CRUD):
     tags = relationship('Tags', back_populates='wholesalers')
 
     def __repr__(self):
-        return f'Wholesaler {self.wholesaler_id}'
+        return 'Wholesaler Model'
 
-class Tags(Base, CRUD):
+class Tags(Base):
+
     __tablename__ = 'tags'
 
     tag_id = Column(Integer, primary_key=True)
@@ -248,10 +179,10 @@ class Tags(Base, CRUD):
     units=relationship('Unit',back_populates='tags')
 
     def __repr__(self):
-        return f'Tags {self.tag_id}'
+        return 'Tags Model'
 
 
-class Invoices(Base, CRUD):
+class Invoices(Base):
     __tablename__ = 'Invoices'
     invoice_id = Column(Integer, primary_key=True)
     subscription_id = Column(Integer, ForeignKey('subscription.subscription_id'))
@@ -265,11 +196,13 @@ class Invoices(Base, CRUD):
     subscriptions=relationship('Subscription',back_populates='invoices')
 
     def __repr__(self):
-        return f'Invoices {self.invoice_id}'
+        return 'Invoices Model'
 
 
-class Subscription(Base, CRUD):
+class Subscription(Base):
+
     __tablename__ = 'subscription'
+
     subscription_id = Column(Integer, primary_key=True)
     Start_date = Column(String)
     End_Date = Column(String)
@@ -280,11 +213,11 @@ class Subscription(Base, CRUD):
     organizations=relationship('Organizations',back_populates='subscriptions')
 
     def __repr__(self):
-        return f'Subscription {self.subscription_id}'
+        return 'Subscription MOdel'
 
 
 
-# class User_logging(Base, CRUD):
+# class User_logging(Base):
 #     __tablename__ = 'USER_LOGGING'
 #     log_id = Column(Integer, primary_key=True)
 #     user_id = Column(Integer, ForeignKey('User.user_id'))
@@ -302,8 +235,10 @@ class Subscription(Base, CRUD):
 
 
 
-class Unit(Base, CRUD):
+class Unit(Base):
+
     __tablename__ = 'unit'
+    
     unit_id = Column(Integer, primary_key=True)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'))
     unit_name = Column(String)
@@ -328,10 +263,12 @@ class Unit(Base, CRUD):
     ustores=relationship('Store',back_populates='units')
 
     def __repr__(self):
-        return f'Unit {self.unit_id}'
+        return 'Unit MOdel'
 
-class ODS_sheets(Base, CRUD):
+class ODS_sheets(Base):
+
     __tablename__ = 'ODS_sheets'
+    
     ods_id = Column(Integer, primary_key=True)
     contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'))
     technician_id = Column(Integer, ForeignKey('technician.technician_id'))
@@ -349,10 +286,12 @@ class ODS_sheets(Base, CRUD):
 
 
     def __repr__(self):
-        return f'ODS_Sheets {self.ods_id}'
+        return 'ODS_Sheets Model'
 
-class Technician_offer(Base, CRUD):
+class Technician_offer(Base):
+
     __tablename__ = 'technician_offer'
+
     contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'), primary_key=True)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'), primary_key=True)
     offer_status = Column(String)
@@ -362,10 +301,12 @@ class Technician_offer(Base, CRUD):
     technicians = relationship('Technician', back_populates='technician_offers')
 
     def __repr__(self):
-        return f'Technician_offer {self.contractor_id}, {self.technician_id}'
+        return 'Technician Offer Model'
 
-class Organizations(Base, CRUD):
+class Organizations(Base):
+
     __tablename__ = 'organizations'
+
     organization_id = Column(Integer, primary_key=True)
     name = Column(String)
     user_id = Column(Integer, ForeignKey('user.user_id'))
@@ -379,10 +320,12 @@ class Organizations(Base, CRUD):
     users=relationship('User',back_populates='organizations')
 
     def __repr__(self):
-        return f'Organizations {self.organization_id}'
+        return 'Organizations Model'
 
-class Store(Base, CRUD):
+class Store(Base):
+
     __tablename__ = 'store'
+
     store_id = Column(Integer, primary_key=True)
     organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
     branch = Column(String)
@@ -397,9 +340,9 @@ class Store(Base, CRUD):
     units=relationship('Unit', back_populates='stores')
 
     def __repr__(self):
-        return f'Store {self.store_id}'
+        return 'Store Model'
 
-# class Store_locations(Base, CRUD):
+# class Store_locations(Base):
 #     __tablename__ = 'Store_locations'
 
 #     store_id = Column(Integer, ForeignKey('Store.store_id'), primary_key=True)
@@ -411,8 +354,10 @@ class Store(Base, CRUD):
 #         return f'Store_locations {self.store_id}'
 
 
-class Cylinder(Base, CRUD):
+class Cylinder(Base):
+
     __tablename__ = 'cylinder'
+
     cylinder_id = Column(Integer, primary_key=True)
     cylinder_size = Column(String)
     cylinder_type = Column(String, ForeignKey('cylinder_type.cylinder_type_id'))
@@ -434,21 +379,25 @@ class Cylinder(Base, CRUD):
 
 
     def __repr__(self):
-        return f'Cylinder {self.cylinder_id}'
+        return 'Cylinder Model'
     
-class Cylinder_type(Base, CRUD):
+class Cylinder_type(Base):
+
     __tablename__ = 'cylinder_type'
+
     cylinder_type_id = Column(Integer, primary_key=True)
     type_name = Column(String)
-    
+
     cylinders= relationship('Cylinder', back_populates='cylinder_types')
 
 
     def __repr__(self):
-        return f'Cylinder {self.cylinder_id}'
+        return 'Cylinder Model'
 
-class Repairs(Base, CRUD):
+class Repairs(Base):
+
     __tablename__ = 'repairs'
+
     repair_id = Column(Integer, primary_key=True)
     unit_id = Column(Integer, ForeignKey('unit.unit_id'))
     purchase_id = Column(Integer)
@@ -463,10 +412,12 @@ class Repairs(Base, CRUD):
 
 
     def __repr__(self):
-        return f'Repairs {self.repair_id}'
+        return 'Repairs Model'
 
-class Reclaim_recovery(Base, CRUD):
+class Reclaim_recovery(Base):
+
     __tablename__ = 'reclaim_recovery'
+
     rec_id = Column(Integer, primary_key=True)
     purchase_id = Column(Integer)
     tank_id = Column(Integer)
@@ -488,10 +439,12 @@ class Reclaim_recovery(Base, CRUD):
     refrigerants = relationship('Refrigerant', back_populates='reclaim_recoveries')
 
     def __repr__(self):
-        return f'Reclaim_Recovery {self.rec_id}'
+        return 'Reclaim_Recovery Model'
 
-class Refrigerant(Base, CRUD):
+class Refrigerant(Base):
+
     __tablename__ = 'refrigerant'
+
     refrigerant_id = Column(Integer, primary_key=True)
     refrigerant_name = Column(String)
     list = Column(String)
@@ -501,10 +454,12 @@ class Refrigerant(Base, CRUD):
 
 
     def __repr__(self):
-        return f'Refrigerant {self.refrigerant_id}'
+        return 'Refrigerant Model'
     
-class Maintenance(Base, CRUD):
+class Maintenance(Base):
+
     __tablename__ = 'maintenance'
+
     maintenance_id = Column(Integer, primary_key=True)
     technician_id=Column(Integer,ForeignKey('technician.technician_id'))
     unit_id=Column(Integer,ForeignKey('unit.unit_id'))
@@ -523,10 +478,12 @@ class Maintenance(Base, CRUD):
 
 
     def __repr__(self):
-        return f'Refrigerant {self.maintenance_id}'
+        return 'Refrigerant Model'
     
-class Maintenance_detail(Base, CRUD):
+class Maintenance_detail(Base):
+
     __tablename__ = 'maintenance_detail'
+
     maintenance_detail_id = Column(Integer, primary_key=True)
     maintenance_id=Column(Integer,ForeignKey('maintenance.maintenance_id'))
     description = Column(String)
@@ -535,12 +492,165 @@ class Maintenance_detail(Base, CRUD):
     maintenances=relationship('Maintenance',back_populates='maintenance_details')
 
 
-
-
-
     def __repr__(self):
-        return f'Refrigerant {self.refrigerant_id}'
+        return 'Refrigerant Model'
     
 
+# Class CRUD with all important features to worth with the Database.
+class CRUD:
+
+    ''' This class is the main CRUD class with methods to create, read, update, and delete records. 
+        Here all methods are classmethods which means there is no necessary to use the class constructor.'''
+
+    # Constructor.
+    def __init__(self, model, **kargs) -> None:
+        
+        self.model = model(**kargs)
+
+    # Database model printing.
+    def __repr__(self):
+        return f"< model= **{self.model}** >"
+
+    # Method to create a record.
+    @classmethod
+    def create(cls, model, rollback= False, **kargs):
+
+        ''' This classmethod has the main function of creating a record, it receives the model class, the rollback argument, which
+            is just for testing, and the arguments for the class model, such as name= 'My name', email= 'myemail@something.com'... '''
+        
+        # Class initializing.
+        user = cls(model, **kargs)
+        
+        # rollback just for testing.
+        if rollback == True:
+            
+            # Opening session.
+            session = Session()
+            # Adding the record.
+            session.add(user.model)
+
+            # Avoiding saving the record.
+            session.rollback()
+
+            # Writing the record.
+            session.commit()
+
+            # Closing session.
+            session.close()
+
+        else:
+
+            # Opening session.
+            session = Session()
+            # Adding the record.
+            session.add(user.model)
+            # Writing the record.
+            session.commit()
+
+            # Closing session.
+            session.close()
+            # Returning the user.
+            return user
+
+    @classmethod
+    def read(cls, model, all=False, latest_field=None, count_only=False, relative_match=None, order_by = False ,**kwargs):
+        """
+        This class method is used to read records within the model. It receives the class model, the argument 'all' which
+        determines if all records should be returned if True, the field name for determining the latest record, whether to
+        return only a count of records, the relative_match for filtering based on a relative string match, and the arguments
+        of the class method to filter the records. It retrieves the record(s) based on the filter criteria and returns the
+        latest record based on the specified field.
+        """
+        # Opening session.
+        session = Session()
+
+        if count_only:
+            # If count_only is True, return a count of the records matching the filter criteria.
+            count = session.query(func.count(model.ID)).filter_by(**kwargs).scalar()
+
+            # Closing session.
+            session.close()
+
+            # Returning the count.
+            return count
+        else:
+            # If all is True, return all records.
+            if all:
+                if order_by:
+                    q = session.query(model).filter_by(**kwargs).order_by(model.date.asc()).all()
+                else:
+                    q = session.query(model).filter_by(**kwargs).all()
+            else:
+                if latest_field is None:
+                    # If the latest_field is not specified, retrieve the first record that matches the filter criteria.
+                    q = session.query(model).filter_by(**kwargs).first()
+                else:
+                    # Retrieve the record that matches the filter criteria and has the latest value for the specified field.
+                    query = session.query(model).filter_by(**kwargs)
+
+                    if relative_match is not None:
+                        # Apply the relative string match filter.
+                        query = query.filter(model.field.ilike(f"%{relative_match}%"))
+
+                    q = query.order_by(getattr(model, latest_field).desc()).first()
+
+            # Closing session.
+            session.close()
+
+            # Returning the query.
+            return q
+
+
+
+
+    # Method to modify the records.
+    @classmethod
+    def update(self, model, attr, new, **kwargs):
+
+        ''' Update classmethod is used to update records, it receives the model, the attribute(attr) argument which we want to 
+            update within the record, the new argument, which is the new input, and the arguments to find the record we want to
+            modify. As an example for Admin -> Admin, 'name', new= 'New name', name= 'my name', it will search the first record
+            with the name; then, it will replace the field name with the new input 'New name'. '''
+
+        # Opening session.
+        session = Session()
+        # Adding all changes.
+
+        record = session.query(model).filter_by(**kwargs).first()
+
+        setattr(record, attr, new)
+
+        session.commit()
+
+        kwargs = {attr: new}
+
+        print(session.query(model).filter_by(**kwargs).first())
+
+        # Closing the session.
+        session.close()
+
+        print('updated')
+
+    # Method to delete records within the database.
+    @classmethod
+    def delete(self, model, **kwargs):
+
+        ''' Delete classmethod is to delete records within the database, it receives the model which is the class model,
+            and the arguments to get this record, as an example. Admin -> Admin, 'name'= 'my name', 'password'= 'pass' 
+            . It will delete the first record which matches the criterion. '''
+
+        session = Session()
+
+        record = session.query(model).filter_by(**kwargs).first()
+
+        # Deleting the record.
+        session.delete(record)
+        # Deleting the record within the database.
+        session.commit()
+
+        # Closing the session.
+        session.close()
+
+        print('Deleted')
 
 

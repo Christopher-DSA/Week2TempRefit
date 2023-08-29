@@ -1,9 +1,8 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from functools import wraps
-# from models import User, get_session
+from models import User
 
-from models import User, get_session
 admin = Blueprint('admin', __name__)
 
 
