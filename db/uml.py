@@ -1,5 +1,11 @@
-# Possible problems: , or " " or type
+# Possible problems: , or " " or data type or the order
+# 1. psycopg2.errors.UndefinedTable: relation "Repairs" does not exist (Order matters)
+# 2. psycopg2.errors.UndefinedObject: type "datetime" does not exist
+#    LINE 7: last_updated DATETIME, (change it to TIMESTAMP)
+
+# What is this file for? 
 # Modify this file to manage the db
+
 import psycopg2
 from dotenv import load_dotenv
 import os
@@ -22,7 +28,6 @@ conn = psycopg2.connect(
     host=database_host,
     port=database_port
 )
-
 
 # Create a cursor object to execute SQL queries
 cursor = conn.cursor()
