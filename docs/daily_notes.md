@@ -134,3 +134,5 @@
 - Sapnil will update the address issue in db
 - Kushal will implement the geolocation into the app
 
+# Sept 7, 2023
+- Kickoff meeting.
