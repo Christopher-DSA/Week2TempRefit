@@ -136,3 +136,7 @@
 
 # Sept 7, 2023
 - Kickoff meeting. Students connected to the project, were set up with the repo, and were given a tour of the project goals. We will schedule a meeting to go over flask next week. In the meantime, students will review the project and ask any questions they have.
+
+
+# Sept 11, 2023
+- Sample Sowmya Edit
