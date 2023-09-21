@@ -8,7 +8,7 @@ from sqlalchemy.sql import func
 Base = declarative_base()
 
 
-engine = create_engine('sqlite:///database.db')
+engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 
 
