@@ -2,13 +2,17 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text,
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy.sql import func
+import os
+from dotenv import load_dotenv
 
+# Load environment variables from the .env file
+load_dotenv()
 
 # SQLAlcehmy base.
 Base = declarative_base()
 
 
-engine = create_engine('sqlite:///database.db')
+engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 
 
@@ -27,12 +31,20 @@ class User(Base):
 
     technicians = relationship('Technician', back_populates='users')
     contractors = relationship('Contractor', back_populates='users')
-    refit_admins = relationship('Refit_admin', back_populates='users')
+    refit_admins = relationship('Refit_Admin', back_populates='users')
     wholesalers = relationship('Wholesaler', back_populates='users')
     user_details = relationship('User_detail', back_populates='users')
     organizations = relationship('Organizations', back_populates='users')
     stores = relationship('Store', back_populates='users')
     # user_loggings = relationship('User_logging', back_populates='users')
+    
+    @classmethod
+    def get_user_by_email(cls, email):
+        """Retrieve a user by their email address."""
+        session = Session()
+        user = session.query(cls).filter_by(email=email).first()
+        session.close()
+        return user
 
     def __repr__(self):
         return 'User model'
@@ -166,11 +178,11 @@ class Tags(Base):
     __tablename__ = 'tags'
 
     tag_id = Column(Integer, primary_key=True)
-    invoice_id = Column(Integer)
+    invoice_id = Column(Integer, ForeignKey('Invoices.invoice_id'))
     tag_number = Column(String)
     tag_url = Column(String)
     type = Column(String)
-    cylinder_id = Column(Integer)
+    cylinder_id = Column(Integer, ForeignKey('Cylinder.cylinder_id'))
 
     # invoices = relationship('Invoices', back_populates='tags', foreign_keys=[invoice_id])
     wholesalers=relationship('Wholesaler',back_populates='tags')
@@ -186,7 +198,7 @@ class Invoices(Base):
     __tablename__ = 'Invoices'
     invoice_id = Column(Integer, primary_key=True)
     subscription_id = Column(Integer, ForeignKey('subscription.subscription_id'))
-    tag_id = Column(Integer)
+    tag_id = Column(Integer, ForeignKey('Tag.tag_id'))
     amount = Column(REAL)
     payment_method = Column(String)
     tax = Column(REAL)
@@ -360,7 +372,7 @@ class Cylinder(Base):
 
     cylinder_id = Column(Integer, primary_key=True)
     cylinder_size = Column(String)
-    cylinder_type = Column(String, ForeignKey('cylinder_type.cylinder_type_id'))
+    cylinder_type_id = Column(String, ForeignKey('cylinder_type.cylinder_type_id'))
     cylinder_weight = Column(String)
     added_date = Column(String)
     refrigerant_id = Column(Integer,ForeignKey('refrigerant.refrigerant_id'))
@@ -400,7 +412,7 @@ class Repairs(Base):
 
     repair_id = Column(Integer, primary_key=True)
     unit_id = Column(Integer, ForeignKey('unit.unit_id'))
-    purchase_id = Column(Integer)
+    purchase_id = Column(Integer, ForeignKey('unit.purchase_id'))
     repair_date = Column(String)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'))
     causes = Column(String)
@@ -419,8 +431,8 @@ class Reclaim_recovery(Base):
     __tablename__ = 'reclaim_recovery'
 
     rec_id = Column(Integer, primary_key=True)
-    purchase_id = Column(Integer)
-    tank_id = Column(Integer)
+    purchase_id = Column(Integer, ForeignKey('unit.purchase_id'))
+    tank_id = Column(Integer, ForeignKey('unit.tank_id'))
     unit_id = Column(Integer, ForeignKey('unit.unit_id'))
     gas_type = Column(String)
     quantity_before_in_lbs = Column(REAL)
