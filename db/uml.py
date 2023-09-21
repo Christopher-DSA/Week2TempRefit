@@ -256,7 +256,8 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Refrigerant" (
         refrigerant_id INTEGER PRIMARY KEY,
-        refrigerant_name TEXT)
+        refrigerant_name TEXT,
+        list TEXT)
 ''')
 
 #create cylinder_type table
@@ -293,6 +294,8 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Reclaim_Recovery" (
         rec_id INTEGER PRIMARY KEY,
+        purchase_id INTEGER,
+        tank_id INTEGER,
         unit_id INTEGER,
         gas_type TEXT,
         quantity_before_in_lbs REAL,
@@ -315,6 +318,7 @@ cursor.execute('''
     CREATE TABLE "Repairs" (
         repair_id INTEGER PRIMARY KEY,
         unit_id INTEGER,
+        purchase_id INTEGER,
         repair_date TIMESTAMP,
         technician_id INTEGER,
         causes TEXT,

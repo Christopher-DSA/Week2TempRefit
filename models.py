@@ -2,15 +2,18 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text,
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy.sql import func
+import os
 
 
 # SQLAlcehmy base.
 Base = declarative_base()
 
-
-engine = create_engine(os.getenv('DATABASE_URL'))
+database_url= 'postgresql://sofvie:gXq!%g^&dm*OuWfK8HhC@refitdb.czvko9baktul.ca-central-1.rds.amazonaws.com:5432/postgres?sslmode=require'
+engine = create_engine(database_url)
+#engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
-
+#database_url = os.getenv('DATABASE_URL')
+#print(f'DATABASE_URL: {database_url}')
 
 
 class User(Base):
