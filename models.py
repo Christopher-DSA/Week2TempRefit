@@ -15,6 +15,164 @@ Base = declarative_base()
 engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 
+# Class CRUD with all important features to worth with the Database.
+class CRUD:
+
+    ''' This class is the main CRUD class with methods to create, read, update, and delete records. 
+        Here all methods are classmethods which means there is no necessary to use the class constructor.'''
+
+    # Constructor.
+    def __init__(self, model, **kargs) -> None:
+        
+        self.model = model(**kargs)
+
+    # Database model printing.
+    def __repr__(self):
+        return f"< model= **{self.model}** >"
+
+    # Method to create a record.
+    @classmethod
+    def create(cls, model, rollback= False, **kargs):
+
+        ''' This classmethod has the main function of creating a record, it receives the model class, the rollback argument, which
+            is just for testing, and the arguments for the class model, such as name= 'My name', email= 'myemail@something.com'... '''
+        
+        # Class initializing.
+        user = cls(model, **kargs)
+        
+        # rollback just for testing.
+        if rollback == True:
+            
+            # Opening session.
+            session = Session()
+            # Adding the record.
+            session.add(user.model)
+
+            # Avoiding saving the record.
+            session.rollback()
+
+            # Writing the record.
+            session.commit()
+
+            # Closing session.
+            session.close()
+
+        else:
+
+            # Opening session.
+            session = Session()
+            # Adding the record.
+            session.add(user.model)
+            # Writing the record.
+            session.commit()
+
+            # Closing session.
+            session.close()
+            # Returning the user.
+            return user
+
+    @classmethod
+    def read(cls, model, all=False, latest_field=None, count_only=False, relative_match=None, order_by = False ,**kwargs):
+        """
+        This class method is used to read records within the model. It receives the class model, the argument 'all' which
+        determines if all records should be returned if True, the field name for determining the latest record, whether to
+        return only a count of records, the relative_match for filtering based on a relative string match, and the arguments
+        of the class method to filter the records. It retrieves the record(s) based on the filter criteria and returns the
+        latest record based on the specified field.
+        """
+        # Opening session.
+        session = Session()
+
+        if count_only:
+            # If count_only is True, return a count of the records matching the filter criteria.
+            count = session.query(func.count(model.ID)).filter_by(**kwargs).scalar()
+
+            # Closing session.
+            session.close()
+
+            # Returning the count.
+            return count
+        else:
+            # If all is True, return all records.
+            if all:
+                if order_by:
+                    q = session.query(model).filter_by(**kwargs).order_by(model.date.asc()).all()
+                else:
+                    q = session.query(model).filter_by(**kwargs).all()
+            else:
+                if latest_field is None:
+                    # If the latest_field is not specified, retrieve the first record that matches the filter criteria.
+                    q = session.query(model).filter_by(**kwargs).first()
+                else:
+                    # Retrieve the record that matches the filter criteria and has the latest value for the specified field.
+                    query = session.query(model).filter_by(**kwargs)
+
+                    if relative_match is not None:
+                        # Apply the relative string match filter.
+                        query = query.filter(model.field.ilike(f"%{relative_match}%"))
+
+                    q = query.order_by(getattr(model, latest_field).desc()).first()
+
+            # Closing session.
+            session.close()
+
+            # Returning the query.
+            return q
+
+
+
+
+    # Method to modify the records.
+    @classmethod
+    def update(self, model, attr, new, **kwargs):
+
+        ''' Update classmethod is used to update records, it receives the model, the attribute(attr) argument which we want to 
+            update within the record, the new argument, which is the new input, and the arguments to find the record we want to
+            modify. As an example for Admin -> Admin, 'name', new= 'New name', name= 'my name', it will search the first record
+            with the name; then, it will replace the field name with the new input 'New name'. '''
+
+        # Opening session.
+        session = Session()
+        # Adding all changes.
+
+        record = session.query(model).filter_by(**kwargs).first()
+
+        setattr(record, attr, new)
+
+        session.commit()
+
+        kwargs = {attr: new}
+
+        print(session.query(model).filter_by(**kwargs).first())
+
+        # Closing the session.
+        session.close()
+
+        print('updated')
+
+    # Method to delete records within the database.
+    @classmethod
+    def delete(self, model, **kwargs):
+
+        ''' Delete classmethod is to delete records within the database, it receives the model which is the class model,
+            and the arguments to get this record, as an example. Admin -> Admin, 'name'= 'my name', 'password'= 'pass' 
+            . It will delete the first record which matches the criterion. '''
+
+        session = Session()
+
+        record = session.query(model).filter_by(**kwargs).first()
+
+        # Deleting the record.
+        session.delete(record)
+        # Deleting the record within the database.
+        session.commit()
+
+        # Closing the session.
+        session.close()
+
+        print('Deleted')
+
+
 
 Base.metadata.create_all(engine)
 
@@ -508,162 +666,4 @@ class Maintenance_detail(Base):
     def __repr__(self):
         return 'Refrigerant Model'
     
-
-# Class CRUD with all important features to worth with the Database.
-class CRUD:
-
-    ''' This class is the main CRUD class with methods to create, read, update, and delete records. 
-        Here all methods are classmethods which means there is no necessary to use the class constructor.'''
-
-    # Constructor.
-    def __init__(self, model, **kargs) -> None:
-        
-        self.model = model(**kargs)
-
-    # Database model printing.
-    def __repr__(self):
-        return f"< model= **{self.model}** >"
-
-    # Method to create a record.
-    @classmethod
-    def create(cls, model, rollback= False, **kargs):
-
-        ''' This classmethod has the main function of creating a record, it receives the model class, the rollback argument, which
-            is just for testing, and the arguments for the class model, such as name= 'My name', email= 'myemail@something.com'... '''
-        
-        # Class initializing.
-        user = cls(model, **kargs)
-        
-        # rollback just for testing.
-        if rollback == True:
-            
-            # Opening session.
-            session = Session()
-            # Adding the record.
-            session.add(user.model)
-
-            # Avoiding saving the record.
-            session.rollback()
-
-            # Writing the record.
-            session.commit()
-
-            # Closing session.
-            session.close()
-
-        else:
-
-            # Opening session.
-            session = Session()
-            # Adding the record.
-            session.add(user.model)
-            # Writing the record.
-            session.commit()
-
-            # Closing session.
-            session.close()
-            # Returning the user.
-            return user
-
-    @classmethod
-    def read(cls, model, all=False, latest_field=None, count_only=False, relative_match=None, order_by = False ,**kwargs):
-        """
-        This class method is used to read records within the model. It receives the class model, the argument 'all' which
-        determines if all records should be returned if True, the field name for determining the latest record, whether to
-        return only a count of records, the relative_match for filtering based on a relative string match, and the arguments
-        of the class method to filter the records. It retrieves the record(s) based on the filter criteria and returns the
-        latest record based on the specified field.
-        """
-        # Opening session.
-        session = Session()
-
-        if count_only:
-            # If count_only is True, return a count of the records matching the filter criteria.
-            count = session.query(func.count(model.ID)).filter_by(**kwargs).scalar()
-
-            # Closing session.
-            session.close()
-
-            # Returning the count.
-            return count
-        else:
-            # If all is True, return all records.
-            if all:
-                if order_by:
-                    q = session.query(model).filter_by(**kwargs).order_by(model.date.asc()).all()
-                else:
-                    q = session.query(model).filter_by(**kwargs).all()
-            else:
-                if latest_field is None:
-                    # If the latest_field is not specified, retrieve the first record that matches the filter criteria.
-                    q = session.query(model).filter_by(**kwargs).first()
-                else:
-                    # Retrieve the record that matches the filter criteria and has the latest value for the specified field.
-                    query = session.query(model).filter_by(**kwargs)
-
-                    if relative_match is not None:
-                        # Apply the relative string match filter.
-                        query = query.filter(model.field.ilike(f"%{relative_match}%"))
-
-                    q = query.order_by(getattr(model, latest_field).desc()).first()
-
-            # Closing session.
-            session.close()
-
-            # Returning the query.
-            return q
-
-
-
-
-    # Method to modify the records.
-    @classmethod
-    def update(self, model, attr, new, **kwargs):
-
-        ''' Update classmethod is used to update records, it receives the model, the attribute(attr) argument which we want to 
-            update within the record, the new argument, which is the new input, and the arguments to find the record we want to
-            modify. As an example for Admin -> Admin, 'name', new= 'New name', name= 'my name', it will search the first record
-            with the name; then, it will replace the field name with the new input 'New name'. '''
-
-        # Opening session.
-        session = Session()
-        # Adding all changes.
-
-        record = session.query(model).filter_by(**kwargs).first()
-
-        setattr(record, attr, new)
-
-        session.commit()
-
-        kwargs = {attr: new}
-
-        print(session.query(model).filter_by(**kwargs).first())
-
-        # Closing the session.
-        session.close()
-
-        print('updated')
-
-    # Method to delete records within the database.
-    @classmethod
-    def delete(self, model, **kwargs):
-
-        ''' Delete classmethod is to delete records within the database, it receives the model which is the class model,
-            and the arguments to get this record, as an example. Admin -> Admin, 'name'= 'my name', 'password'= 'pass' 
-            . It will delete the first record which matches the criterion. '''
-
-        session = Session()
-
-        record = session.query(model).filter_by(**kwargs).first()
-
-        # Deleting the record.
-        session.delete(record)
-        # Deleting the record within the database.
-        session.commit()
-
-        # Closing the session.
-        session.close()
-
-        print('Deleted')
-
 
