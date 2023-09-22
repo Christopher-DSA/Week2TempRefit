@@ -291,6 +291,20 @@ cursor.execute('''
     )
 ''')
 
+# Create the "purchase" table
+cursor.execute('''
+    CREATE TABLE "Purchase" (
+        purchase_id INTEGER PRIMARY KEY
+    )
+''')
+
+# Create the "tank" table
+cursor.execute('''
+    CREATE TABLE "Tank" (
+        tank_id INTEGER PRIMARY KEY
+    )
+''')
+
 # Create the "Reclaim/Recovery" table
 cursor.execute('''
     CREATE TABLE "Reclaim_Recovery" (
@@ -360,20 +374,6 @@ cursor.execute('''
         email_time_sent TEXT,
         FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id)
-    )
-''')
-
-# Create the "purchase" table
-cursor.execute('''
-    CREATE TABLE "Purchase" (
-        purchase_id INTEGER PRIMARY KEY
-    )
-''')
-
-# Create the "tank" table
-cursor.execute('''
-    CREATE TABLE "Tank" (
-        tank_id INTEGER PRIMARY KEY
     )
 ''')
 

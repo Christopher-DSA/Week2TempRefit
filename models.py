@@ -15,11 +15,11 @@ Base = declarative_base()
 engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 
-
+Base.metadata.create_all(engine)
 
 class User(Base):
 
-    __tablename__ = 'user'
+    __tablename__ = 'User'
     
     user_id = Column(Integer, primary_key=True)
     email = Column(String)
@@ -62,7 +62,7 @@ class User_detail(Base):
     city = Column(String)
     postal_code = Column(String)
     telephone = Column(String)
-    user_id=Column(Integer,ForeignKey('user.user_id'))
+    user_id=Column(Integer,ForeignKey('User.user_id'))
     users = relationship('User', back_populates='user_details')
 
     def __repr__(self):
@@ -73,7 +73,7 @@ class Technician(Base):
     technician_id = Column(Integer, primary_key=True)
     
     ODS_licence_number = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'))
     contractor_id = Column(Integer,ForeignKey('contractor.contractor_id'))
     date_begin = Column(String)
     date_end = Column(String)
@@ -100,7 +100,7 @@ class Contractor(Base):
 
     contractor_id = Column(Integer, primary_key=True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'))
     logo = Column(String)
     status = Column(String)
     subscription_id = Column(Integer)
@@ -147,7 +147,7 @@ class Refit_Admin(Base):
 
     admin_id = Column(Integer, primary_key=True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'))
     status = Column(String)
     code_2fa_code = Column(String)
     admin_level = Column(Integer)
@@ -163,7 +163,7 @@ class Wholesaler(Base):
     
     wholesaler_id = Column(Integer, primary_key=True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'))
     status = Column(String)
     tag_id = Column(Integer, ForeignKey('tags.tag_id'))
 
@@ -272,10 +272,10 @@ class Unit(Base):
     ods_sheets=relationship('ODS_sheets',back_populates='units')
     repairs=relationship('Repairs',back_populates='units')
     maintenances=relationship('Maintenance',back_populates='units')
-    ustores=relationship('Store',back_populates='units')
+    stores=relationship('Store',back_populates='units')
 
     def __repr__(self):
-        return 'Unit MOdel'
+        return 'Unit Model'
 
 class ODS_sheets(Base):
 
@@ -321,7 +321,7 @@ class Organizations(Base):
 
     organization_id = Column(Integer, primary_key=True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'))
     logo = Column(String)
     status = Column(String)
     subscription_id = Column(Integer,ForeignKey('subscription.subscription_id'))
@@ -342,7 +342,7 @@ class Store(Base):
     organization_id = Column(Integer, ForeignKey('organizations.organization_id'))
     branch = Column(String)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'))
     address = Column(String)
     gps_location = Column(String)
 
@@ -412,7 +412,7 @@ class Repairs(Base):
 
     repair_id = Column(Integer, primary_key=True)
     unit_id = Column(Integer, ForeignKey('unit.unit_id'))
-    purchase_id = Column(Integer, ForeignKey('unit.purchase_id'))
+    purchase_id = Column(Integer, ForeignKey('purchase.purchase_id'))
     repair_date = Column(String)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'))
     causes = Column(String)
@@ -431,8 +431,8 @@ class Reclaim_recovery(Base):
     __tablename__ = 'reclaim_recovery'
 
     rec_id = Column(Integer, primary_key=True)
-    purchase_id = Column(Integer, ForeignKey('unit.purchase_id'))
-    tank_id = Column(Integer, ForeignKey('unit.tank_id'))
+    purchase_id = Column(Integer, ForeignKey('purchase.purchase_id'))
+    tank_id = Column(Integer, ForeignKey('tank.tank_id'))
     unit_id = Column(Integer, ForeignKey('unit.unit_id'))
     gas_type = Column(String)
     quantity_before_in_lbs = Column(REAL)
