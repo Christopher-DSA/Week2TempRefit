@@ -257,7 +257,7 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Refrigerant" (
         refrigerant_id INTEGER PRIMARY KEY,
-        refrigerant_name TEXT
+        refrigerant_name TEXT,
         list TEXT)
 ''')
 
@@ -295,6 +295,8 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Reclaim_Recovery" (
         rec_id INTEGER PRIMARY KEY,
+        purchase_id INTEGER,
+        tank_id INTEGER,
         unit_id INTEGER,
         purchase_id INTEGER,
         tank_id INTEGER,      

@@ -15,8 +15,6 @@ Base = declarative_base()
 engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 
-
-
 class User(Base):
 
     __tablename__ = 'user'
