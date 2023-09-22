@@ -143,8 +143,9 @@ cursor.execute('''
         tag_number TEXT,
         tag_url TEXT,
         type TEXT,
-        cylinder_id INTEGER
-        
+        cylinder_id INTEGER,
+        FOREIGN KEY (invoice_id) REFERENCES "Invoices"(invoice_id)
+        FOREIGN KEY (cylinder_id) REFERENCES "Cylinder"(cylinder_id)  
     )
 ''')
 
@@ -256,7 +257,8 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Refrigerant" (
         refrigerant_id INTEGER PRIMARY KEY,
-        refrigerant_name TEXT)
+        refrigerant_name TEXT,
+        list TEXT)
 ''')
 
 #create cylinder_type table
@@ -289,11 +291,29 @@ cursor.execute('''
     )
 ''')
 
+# Create the "purchase" table
+cursor.execute('''
+    CREATE TABLE "Purchase" (
+        purchase_id INTEGER PRIMARY KEY
+    )
+''')
+
+# Create the "tank" table
+cursor.execute('''
+    CREATE TABLE "Tank" (
+        tank_id INTEGER PRIMARY KEY
+    )
+''')
+
 # Create the "Reclaim/Recovery" table
 cursor.execute('''
     CREATE TABLE "Reclaim_Recovery" (
         rec_id INTEGER PRIMARY KEY,
+        purchase_id INTEGER,
+        tank_id INTEGER,
         unit_id INTEGER,
+        purchase_id INTEGER,
+        tank_id INTEGER,      
         gas_type TEXT,
         quantity_before_in_lbs REAL,
         quantity_after_in_lbs REAL,
@@ -306,7 +326,9 @@ cursor.execute('''
         FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (refrigerant_id) REFERENCES "Refrigerant"(refrigerant_id),
-        FOREIGN KEY (cylinder_id) REFERENCES "Cylinder"(cylinder_id)
+        FOREIGN KEY (cylinder_id) REFERENCES "Cylinder"(cylinder_id),
+        FOREIGN KEY (purchase_id) REFERENCES "Purchase"(purchase_id),
+        FOREIGN KEY (tank_id) REFERENCES "Tank"(tank_id),
     )
 ''')
 
@@ -315,12 +337,14 @@ cursor.execute('''
     CREATE TABLE "Repairs" (
         repair_id INTEGER PRIMARY KEY,
         unit_id INTEGER,
+        purchase_id INTEGER,
         repair_date TIMESTAMP,
         technician_id INTEGER,
         causes TEXT,
         status TEXT,
         FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id)
+        FOREIGN KEY (purchase_id) REFERENCES "Purchase"(purchase_id)
     )
 ''')
 
