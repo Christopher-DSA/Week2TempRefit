@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
+from flask import Flask, request, jsonify
 from models import User, CRUD, Base
 from routes.store import store
 from routes.admin import admin
@@ -9,9 +10,12 @@ from routes.technician import technician
 from routes.wholesaler import wholesaler
 from routes.contractor import contractor
 from routes.auth import auth
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from models import User, CRUD, Base
+
 
 app = Flask(__name__)
-
 
 app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure random string
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Update the database URI
@@ -31,11 +35,8 @@ app.register_blueprint(auth)
 
 db = SQLAlchemy(app)
 
-
-
 if __name__ == '__main__':
     with app.app_context():
         Base.metadata.create_all(bind=db.engine)
     app.run(debug=True,port=5053)
-
 
