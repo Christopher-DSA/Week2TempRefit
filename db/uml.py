@@ -190,7 +190,9 @@ cursor.execute('''
         tag_url TEXT,
         type TEXT,
         cylinder_id INTEGER,
-        FOREIGN KEY (cylinder_id) REFERENCES "cylinder"(cylinder_id)  
+        wholesaler_id INTEGER,
+        FOREIGN KEY (cylinder_id) REFERENCES "cylinder"(cylinder_id),
+        FOREIGN KEY (wholesaler_id) REFERENCES "wholesaler"(wholesaler_id)  
     )
 ''')
 
