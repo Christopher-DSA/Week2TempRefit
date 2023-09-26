@@ -1,6 +1,8 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from functools import wraps
+
+from flask.cli import get_version
 from models import User
 
 admin = Blueprint('admin', __name__)
@@ -42,7 +44,7 @@ def admin_required(f):
 def user_page():
     
 
-    data=get_session().query(User).all()
+    data=get_version().query(User).all()
 
     
     return render_template('admin/admin.html', data=data)

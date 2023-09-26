@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD, User,User_detail,Contractor
+from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 
 contractor = Blueprint('contractor', __name__)
@@ -51,7 +51,7 @@ def formcontractor():
         print("Contractor data succssfully retrieved.")
     #validate the data and pass data to database
 
-        new_user=CRUD.create(User_detail, address=address, city=city,province=province, postal_code=postalCode,telephone=phoneNumber)
+        new_user=CRUD.create(User_Detail, address=address, city=city,province=province, postal_code=postalCode,telephone=phoneNumber)
 
         new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active')
         

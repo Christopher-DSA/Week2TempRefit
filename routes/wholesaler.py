@@ -1,8 +1,7 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-
 from functools import wraps
-from models import User, CRUD
+from models import Technician, User, CRUD, User_Detail
 
 wholesaler = Blueprint('wholesaler', __name__)
 
@@ -49,13 +48,20 @@ def formwholesaler():
         billingCity = request.form.get('billingCity')
         billingProvince = request.form.get('billingProvince')
         billingPostalCode = request.form.get('billingPostalCode')
+        firstName = request.form.get('firstName')
+        lastName = request.form.get('lastName')
+        addressLine = request.form.get('addressLine')
+        province = request.form.get('province')
+        city = request.form.get('city') 
+        postalCode = request.form.get('postalCode')
+        odsLicenseNumber = request.form.get('odsLicenseNumber')
         phoneNumber = request.form.get('phoneNumber')
 
         # TODO: Validate the data
 
         # TODO: Pass data to database
 
-        new_detail=CRUD.create(User_detail,user_id=session.get('user_id'),first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
+        new_detail=CRUD.create(User_Detail,user_id=session.get('user_id'),first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
         new_technician_detail=CRUD.create(Technician, ODS_licence_number=odsLicenseNumber,user_id=session.get('user_id'))
         return redirect(url_for('technician.dashboardtechnician'))
         # create_wholesaler(name, email, password, companyName, branch, 

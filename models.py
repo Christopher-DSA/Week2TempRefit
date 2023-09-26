@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, create_engine
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.sql import func
 import os
@@ -175,7 +175,7 @@ Base.metadata.create_all(engine)
 
 class User(Base):
 
-    __tablename__ = 'user'
+    __tablename__ = "user"
 
     user_id = Column(Integer, primary_key=True, nullable=False)
     email = Column(String, nullable=False)
@@ -189,10 +189,10 @@ class User(Base):
     contractors = relationship('Contractor', back_populates='users')
     refit_admins = relationship('Refit_Admin', back_populates='users')
     wholesalers = relationship('Wholesaler', back_populates='users')
-    user_details = relationship('User_detail', back_populates='users')
+    user_details = relationship('User_Detail', back_populates='users')
     organizations = relationship('Organization', back_populates='users')
     stores = relationship('Store', back_populates='users')
-    # user_loggings = relationship('User_logging', back_populates='users')
+    user_loggings = relationship('User_Logging', back_populates='users')
     
     @classmethod
     def get_user_by_email(cls, email):
@@ -206,9 +206,9 @@ class User(Base):
         return 'User model'
     
 
-class User_detail(Base):
+class User_Detail(Base):
 
-    __tablename__ = 'user_detail'
+    __tablename__ = "user_detail"
 
     user_detail_id = Column(Integer, primary_key=True)
     first_name = Column(String)
@@ -228,7 +228,7 @@ class User_detail(Base):
 
 class Technician(Base):
 
-    __tablename__ = 'technician'
+    __tablename__ = "technician"
     technician_id = Column(Integer, primary_key=True)
     
     ODS_licence_number = Column(String)
@@ -255,7 +255,7 @@ class Technician(Base):
 
 class Contractor(Base):
 
-    __tablename__ = 'contractor'
+    __tablename__ = "contractor"
 
     contractor_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -279,7 +279,7 @@ class Contractor(Base):
 
 class Contractor_Detail(Base):
 
-    __tablename__ = 'contractor_detail'
+    __tablename__ = "contractor_detail"
 
     contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'), primary_key=True)
     name = Column(String)
@@ -296,7 +296,7 @@ class Contractor_Detail(Base):
 
 class Refit_Admin(Base):
 
-    __tablename__ = 'refit_admin'
+    __tablename__ = "refit_admin"
 
     admin_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -310,25 +310,9 @@ class Refit_Admin(Base):
     def __repr__(self):
         return 'Refit Admin Model'
 
-class Wholesaler(Base):
-
-    __tablename__ = 'wholesaler'
-    
-    wholesaler_id = Column(Integer, primary_key=True)
-    name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
-    status = Column(String)
-    tag_id = Column(Integer, ForeignKey('tag.tag_id'))
-
-    users = relationship('User', back_populates='wholesalers')
-    tags = relationship('Tag', back_populates='wholesalers')
-
-    def __repr__(self):
-        return 'Wholesaler Model'
-
 class Tag(Base):
 
-    __tablename__ = 'tag'
+    __tablename__ = "tag"
 
     tag_id = Column(Integer, primary_key=True)
     invoice_id = Column(Integer, ForeignKey('invoice.invoice_id'))
@@ -336,6 +320,7 @@ class Tag(Base):
     tag_url = Column(String)
     type = Column(String)
     cylinder_id = Column(Integer, ForeignKey('cylinder.cylinder_id'))
+    wholesaler_id = Column(Integer, ForeignKey('wholesaler.wholesaler_id'))
 
     cylinders = relationship('Cylinder', back_populates='tags', foreign_keys=[cylinder_id])
     invoices = relationship('Invoice', back_populates='tags', foreign_keys=[invoice_id])
@@ -346,10 +331,27 @@ class Tag(Base):
     def __repr__(self):
         return 'Tag Model'
 
+class Wholesaler(Base):
+
+    __tablename__ = "wholesaler"
+    
+    wholesaler_id = Column(Integer, primary_key=True)
+    name = Column(String)
+    user_id = Column(Integer, ForeignKey('user.user_id'))
+    status = Column(String)
+    tag_id = Column(Integer, ForeignKey('tag.tag_id'))
+
+    users = relationship('User', back_populates='wholesalers')
+    tags = relationship('Tag', back_populates='wholesalers')
+
+
+    def __repr__(self):
+        return 'Wholesaler Model'
 
 class Invoice(Base):
 
-    __tablename__ = 'invoice'
+    __tablename__ = "invoice"
+
     invoice_id = Column(Integer, primary_key=True)
     subscription_id = Column(Integer, ForeignKey('subscription.subscription_id'))
     tag_id = Column(Integer, ForeignKey('tag.tag_id'))
@@ -367,7 +369,7 @@ class Invoice(Base):
 
 class Subscription(Base):
 
-    __tablename__ = 'subscription'
+    __tablename__ = "subscription"
 
     subscription_id = Column(Integer, primary_key=True)
     Start_date = Column(String)
@@ -385,7 +387,7 @@ class Subscription(Base):
 
 class User_Logging(Base):
 
-    __tablename__ = 'user_logging'
+    __tablename__ = "user_logging"
 
     log_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.user_id'))
@@ -401,7 +403,7 @@ class User_Logging(Base):
 
 class Unit(Base):
 
-    __tablename__ = 'unit'
+    __tablename__ = "unit"
     
     unit_id = Column(Integer, primary_key=True)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'))
@@ -431,7 +433,7 @@ class Unit(Base):
 
 class ODS_Sheet(Base):
 
-    __tablename__ = 'ods_sheet'
+    __tablename__ = "ods_sheet"
     
     ods_id = Column(Integer, primary_key=True)
     contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'))
@@ -454,7 +456,7 @@ class ODS_Sheet(Base):
 
 class Technician_offer(Base):
 
-    __tablename__ = 'technician_offer'
+    __tablename__ = "technician_offer"
 
     contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'), primary_key=True)
     technician_id = Column(Integer, ForeignKey('technician.technician_id'), primary_key=True)
@@ -469,7 +471,7 @@ class Technician_offer(Base):
 
 class Organization(Base):
 
-    __tablename__ = 'organization'
+    __tablename__ = "organization"
 
     organization_id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -488,7 +490,7 @@ class Organization(Base):
 
 class Store(Base):
 
-    __tablename__ = 'store'
+    __tablename__ = "store"
 
     store_id = Column(Integer, primary_key=True)
     organization_id = Column(Integer, ForeignKey('organization.organization_id'))
@@ -508,7 +510,7 @@ class Store(Base):
 
 class Store_Location(Base):
     
-    __tablename__ = 'store_location'
+    __tablename__ = "store_location"
 
     store_id = Column(Integer, ForeignKey('store.store_id'), primary_key=True)
     gps_location = Column(String)
@@ -521,7 +523,7 @@ class Store_Location(Base):
 
 class Cylinder(Base):
 
-    __tablename__ = 'cylinder'
+    __tablename__ = "cylinder"
 
     cylinder_id = Column(Integer, primary_key=True)
     cylinder_size = Column(String)
@@ -548,7 +550,7 @@ class Cylinder(Base):
     
 class Cylinder_type(Base):
 
-    __tablename__ = 'cylinder_type'
+    __tablename__ = "cylinder_type"
 
     cylinder_type_id = Column(Integer, primary_key=True)
     type_name = Column(String)
@@ -561,7 +563,7 @@ class Cylinder_type(Base):
 
 class Purchase(Base):
 
-    __tablename__ = 'purchase'
+    __tablename__ = "purchase"
 
     purchase_id = Column(Integer, primary_key=True)
 
@@ -571,7 +573,7 @@ class Purchase(Base):
     
 class Repair(Base):
 
-    __tablename__ = 'repair'
+    __tablename__ = "repair"
 
     repair_id = Column(Integer, primary_key=True)
     unit_id = Column(Integer, ForeignKey('unit.unit_id'))
@@ -590,7 +592,7 @@ class Repair(Base):
 
 class Reclaim_Recovery(Base):
 
-    __tablename__ = 'reclaim_recovery'
+    __tablename__ = "reclaim_recovery"
 
     rec_id = Column(Integer, primary_key=True)
     purchase_id = Column(Integer, ForeignKey('purchase.purchase_id'))
@@ -617,7 +619,7 @@ class Reclaim_Recovery(Base):
 
 class Refrigerant(Base):
 
-    __tablename__ = 'refrigerant'
+    __tablename__ = "refrigerant"
 
     refrigerant_id = Column(Integer, primary_key=True)
     refrigerant_name = Column(String)
@@ -631,7 +633,7 @@ class Refrigerant(Base):
     
 class Maintenance(Base):
 
-    __tablename__ = 'maintenance'
+    __tablename__ = "maintenance"
 
     maintenance_id = Column(Integer, primary_key=True)
     technician_id=Column(Integer,ForeignKey('technician.technician_id'))
@@ -653,7 +655,7 @@ class Maintenance(Base):
     
 class Maintenance_Detail(Base):
 
-    __tablename__ = 'maintenance_detail'
+    __tablename__ = "maintenance_detail"
 
     maintenance_detail_id = Column(Integer, primary_key=True)
     maintenance_id=Column(Integer,ForeignKey('maintenance.maintenance_id'))
