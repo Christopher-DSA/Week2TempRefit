@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, create_engine
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.sql import func
 import os
@@ -189,10 +189,10 @@ class User(Base):
     contractors = relationship('Contractor', back_populates='users')
     refit_admins = relationship('Refit_Admin', back_populates='users')
     wholesalers = relationship('Wholesaler', back_populates='users')
-    user_details = relationship('User_detail', back_populates='users')
+    user_details = relationship('User_Detail', back_populates='users')
     organizations = relationship('Organization', back_populates='users')
     stores = relationship('Store', back_populates='users')
-    # user_loggings = relationship('User_logging', back_populates='users')
+    user_loggings = relationship('User_Logging', back_populates='users')
     
     @classmethod
     def get_user_by_email(cls, email):
@@ -206,7 +206,7 @@ class User(Base):
         return 'User model'
     
 
-class User_detail(Base):
+class User_Detail(Base):
 
     __tablename__ = "user_detail"
 
@@ -310,7 +310,6 @@ class Refit_Admin(Base):
     def __repr__(self):
         return 'Refit Admin Model'
 
-
 class Tag(Base):
 
     __tablename__ = "tag"
@@ -325,7 +324,7 @@ class Tag(Base):
 
     cylinders = relationship('Cylinder', back_populates='tags', foreign_keys=[cylinder_id])
     invoices = relationship('Invoice', back_populates='tags', foreign_keys=[invoice_id])
-    wholesalers=relationship('Wholesaler',back_populates='tags', foreign_keys=[wholesaler_id])
+    wholesalers=relationship('Wholesaler',back_populates='tags')
     ods_sheets=relationship('ODS_Sheet',back_populates='tags')
     units=relationship('Unit',back_populates='tags')
 
@@ -343,7 +342,8 @@ class Wholesaler(Base):
     tag_id = Column(Integer, ForeignKey('tag.tag_id'))
 
     users = relationship('User', back_populates='wholesalers')
-    tags = relationship('Tag', back_populates='wholesalers', foreign_keys=[tag_id], remote_side='tag.tag_id')
+    tags = relationship('Tag', back_populates='wholesalers')
+
 
     def __repr__(self):
         return 'Wholesaler Model'
