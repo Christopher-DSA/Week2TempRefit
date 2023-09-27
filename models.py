@@ -56,7 +56,7 @@ class User_Detail(Base):
     telephone = Column(String)
     user_id=Column(Integer,ForeignKey('User.user_id'), nullable= True)
     
-    User = relationship('User', backref='User_Detail')
+    user = relationship('User', backref='User_Detail')
 
     def __repr__(self):
         return 'User Detail Model'
@@ -66,7 +66,7 @@ class Technician(Base):
     __tablename__ = "Technician"
     technician_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     
-    ods_licence_number = Column(String)
+    ODS_licence_number = Column(String)
     user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     contractor_id = Column(Integer,ForeignKey('Contractor.contractor_id'), nullable= True)
     date_begin = Column(String)
@@ -231,7 +231,7 @@ class User_Logging(Base):
     ip_address = Column(String)
     address_gps = Column(String)
 
-    User = relationship('User', backref='User_Logging')
+    user = relationship('User', backref='User_Logging')
 
     def __repr__(self):
         return f'User_Logging {self.log_id}'
@@ -259,10 +259,10 @@ class Unit(Base):
     technician = relationship('Technician', backref='Unit')
     tag = relationship('Tag', backref='Unit')
     reclaim_recoveries=relationship('Reclaim_Recovery',backref='Unit')
-    Ods_Sheet=relationship('ODS_Sheet',backref='Unit')
+    ods_sheet=relationship('ODS_Sheet',backref='Unit')
     repair=relationship('Repair',backref='Unit')
     maintenances=relationship('Maintenance',backref='Unit')
-    Store=relationship('Store',backref='Unit')
+    store=relationship('Store',backref='Unit')
 
     def __repr__(self):
         return 'Unit Model'
@@ -318,9 +318,9 @@ class Organization(Base):
     subscription_id = Column(Integer,ForeignKey('Subscription.subscription_id'), nullable= True)
     code_2fa_code = Column(String)
     
-    store =relationship('Store',backref='Organization')
+    store = relationship('Store',backref='Organization')
     subscription =relationship('Subscription',backref='Organization')
-    User =relationship('User',backref='Organization')
+    User = relationship('User',backref='Organization')
 
     def __repr__(self):
         return 'Organization Model'
@@ -340,7 +340,7 @@ class Store(Base):
 
     organization = relationship('Organization', backref='Store')
     user = relationship('User', backref='Store')
-    unit=relationship('Unit', backref='Store')
+    unit = relationship('Unit', backref='Store')
 
     def __repr__(self):
         return 'Store Model'
