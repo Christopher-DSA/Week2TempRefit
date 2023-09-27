@@ -28,9 +28,9 @@ class User(Base):
     user_detail = Column(String)
     status = Column(String)
 
-    Technician = relationship('Technician', backref='User')
-    Contractor = relationship('Contractor', backref='User')
-    Refit_Admin = relationship('Refit_Admin', backref='User')
+    technician = relationship('Technician', backref='User')
+    contractor = relationship('Contractor', backref='User')
+    refit_admin = relationship('Refit_Admin', backref='User')
     wholesaler = relationship('Wholesaler', backref='User')
     user_detail = relationship('User_Detail', backref='User')
     organization = relationship('Organization', backref='User')
@@ -56,7 +56,7 @@ class User_Detail(Base):
     telephone = Column(String)
     user_id=Column(Integer,ForeignKey('User.user_id'), nullable= True)
     
-    User = relationship('User', backref='user_details')
+    User = relationship('User', backref='User_Detail')
 
     def __repr__(self):
         return 'User Detail Model'
@@ -66,7 +66,7 @@ class Technician(Base):
     __tablename__ = "Technician"
     technician_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     
-    ODS_licence_number = Column(String)
+    ods_licence_number = Column(String)
     user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     contractor_id = Column(Integer,ForeignKey('Contractor.contractor_id'), nullable= True)
     date_begin = Column(String)
@@ -116,7 +116,8 @@ class Contractor_Detail(Base):
 
     __tablename__ = "Contractor_Detail"
 
-    contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'), primary_key=True)
+    contractor_detail_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'), nullable= True)
     name = Column(String)
     phone = Column(String)
     address = Column(String)
@@ -172,9 +173,9 @@ class Wholesaler(Base):
     
     wholesaler_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'), nullable= True)
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     status = Column(String)
-    tag_id = Column(Integer, ForeignKey('tag.tag_id'), nullable= True)
+    tag_id = Column(Integer, ForeignKey('Tag.tag_id'), nullable= True)
 
     user = relationship('User', backref='Wholesaler')
     tag = relationship('Tag', backref='Wholesaler')
@@ -185,18 +186,18 @@ class Wholesaler(Base):
 
 class Invoice(Base):
 
-    __tablename__ = "invoice"
+    __tablename__ = "Invoice"
 
     invoice_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    subscription_id = Column(Integer, ForeignKey('subscription.subscription_id'))
-    tag_id = Column(Integer, ForeignKey('tag.tag_id'))
+    subscription_id = Column(Integer, ForeignKey('Subscription.subscription_id'), nullable= True)
+    tag_id = Column(Integer, ForeignKey('Tag.tag_id'), nullable= True)
     amount = Column(REAL)
     payment_method = Column(String)
     tax = Column(REAL)
     date = Column(String)
 
-    Tag = relationship('Tag', backref='invoices', foreign_keys=[tag_id], remote_side='tag.tag_id')
-    subscriptions=relationship('Subscription',backref='invoices')
+    tag = relationship('Tag', backref='Invoice', foreign_keys=[tag_id], remote_side='tag.tag_id')
+    subscription = relationship('Subscription',backref='Invoice')
 
     def __repr__(self):
         return 'Invoice Model'
@@ -204,16 +205,16 @@ class Invoice(Base):
 
 class Subscription(Base):
 
-    __tablename__ = "subscription"
+    __tablename__ = "Subscription"
 
     subscription_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    Start_date = Column(String)
-    End_Date = Column(String)
-    Package_size = Column(String)
+    start_date = Column(String)
+    end_Date = Column(String)
+    package_size = Column(String)
     compliant = Column(String)
 
-    invoices = relationship('Invoice', backref='subscriptions')
-    Organization=relationship('Organization',backref='subscriptions')
+    invoices = relationship('Invoice', backref='Subscription')
+    organization = relationship('Organization',backref='Subscription')
 
     def __repr__(self):
         return 'Subscription Model'
@@ -222,15 +223,15 @@ class Subscription(Base):
 
 class User_Logging(Base):
 
-    __tablename__ = "user_logging"
+    __tablename__ = "User_Logging"
 
     log_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     entry_date = Column(String)
     ip_address = Column(String)
     address_gps = Column(String)
 
-    User = relationship('User', backref='user_loggings')
+    User = relationship('User', backref='User_Logging')
 
     def __repr__(self):
         return f'User_Logging {self.log_id}'
@@ -238,12 +239,12 @@ class User_Logging(Base):
 
 class Unit(Base):
 
-    __tablename__ = "unit"
+    __tablename__ = "Unit"
     
     unit_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    technician_id = Column(Integer, ForeignKey('technician.technician_id'))
+    technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
     unit_name = Column(String)
-    tag_id = Column(Integer, ForeignKey('tag.tag_id'))
+    tag_id = Column(Integer, ForeignKey('Tag.tag_id'))
     other_attribute = Column(String)
     installation_date = Column(String)
     last_maintenance_date = Column(String)
@@ -252,69 +253,69 @@ class Unit(Base):
     type_of_refrigerant = Column(String)
     factory_charge_amount = Column(Integer)
     unit_type = Column(String)
-    store_id = Column(Integer,ForeignKey('store.store_id'))
+    store_id = Column(Integer,ForeignKey('Store.store_id'))
     
 
-    Technician = relationship('Technician', backref='units')
-    Tag = relationship('Tag', backref='units')
-    reclaim_recoveries=relationship('Reclaim_Recovery',backref='units')
-    ods_sheets=relationship('ODS_Sheet',backref='units')
-    Repair=relationship('Repair',backref='units')
-    maintenances=relationship('Maintenance',backref='units')
-    stores=relationship('Store',backref='units')
+    technician = relationship('Technician', backref='Unit')
+    tag = relationship('Tag', backref='Unit')
+    reclaim_recoveries=relationship('Reclaim_Recovery',backref='Unit')
+    Ods_Sheet=relationship('ODS_Sheet',backref='Unit')
+    repair=relationship('Repair',backref='Unit')
+    maintenances=relationship('Maintenance',backref='Unit')
+    Store=relationship('Store',backref='Unit')
 
     def __repr__(self):
         return 'Unit Model'
 
 class ODS_Sheet(Base):
 
-    __tablename__ = "ods_sheet"
+    __tablename__ = "ODS_Sheet"
     
     ods_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'))
-    technician_id = Column(Integer, ForeignKey('technician.technician_id'))
-    unit_id = Column(Integer, ForeignKey('unit.unit_id'))
-    tag_id = Column(Integer, ForeignKey('tag.tag_id'))
-    repair_id = Column(Integer, ForeignKey('repair.repair_id'))
-    rec_id = Column(Integer, ForeignKey('reclaim_recovery.rec_id'))
+    contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'), nullable= True)
+    technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
+    unit_id = Column(Integer, ForeignKey('Unit.unit_id'), nullable= True)
+    tag_id = Column(Integer, ForeignKey('Tag.tag_id'), nullable= True)
+    repair_id = Column(Integer, ForeignKey('Repair.repair_id'), nullable= True)
+    rec_id = Column(Integer, ForeignKey('Reclaim_Recovery.rec_id'), nullable= True)
 
-    Contractor = relationship('Contractor', backref='ods_sheets')
-    Technician = relationship('Technician', backref='ods_sheets')
-    units = relationship('Unit', backref='ods_sheets')
-    Tag = relationship('Tag', backref='ods_sheets')
-    Repair = relationship('Repair', backref='ods_sheets')
-    reclaim_recoveries = relationship('Reclaim_Recovery', backref='ods_sheets')
+    contractor = relationship('Contractor', backref='ODS_Sheet')
+    technician = relationship('Technician', backref='ODS_Sheet')
+    unit = relationship('Unit', backref='ODS_Sheet')
+    tag = relationship('Tag', backref='ODS_Sheet')
+    repair = relationship('Repair', backref='ODS_Sheet')
+    reclaim_recoveries = relationship('Reclaim_Recovery', backref='ODS_Sheet')
 
 
     def __repr__(self):
         return 'ODS_Sheet Model'
 
-class Technician_offer(Base):
+class Technician_Offer(Base):
 
-    __tablename__ = "technician_offer"
+    __tablename__ = "Technician_Offer"
 
     technician_offer_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    contractor_id = Column(Integer, ForeignKey('contractor.contractor_id'))
-    technician_id = Column(Integer, ForeignKey('technician.technician_id'))
+    contractor_id = Column(Integer, ForeignKey('Contractor.contractor_id'), nullable= True)
+    technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
     offer_status = Column(String)
     email_time_sent = Column(String)
 
-    Contractor = relationship('Contractor', backref='Technician_Offer')
-    Technician = relationship('Technician', backref='technician_offers')
+    contractor = relationship('Contractor', backref='Technician_Offer')
+    technician = relationship('Technician', backref='Technician_Offer')
 
     def __repr__(self):
         return 'Technician Offer Model'
 
 class Organization(Base):
 
-    __tablename__ = "organization"
+    __tablename__ = "Organization"
 
     organization_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('User.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     logo = Column(String)
     status = Column(String)
-    subscription_id = Column(Integer,ForeignKey('Subscription.subscription_id'))
+    subscription_id = Column(Integer,ForeignKey('Subscription.subscription_id'), nullable= True)
     code_2fa_code = Column(String)
     
     store =relationship('Store',backref='Organization')
@@ -329,29 +330,30 @@ class Store(Base):
     __tablename__ = "Store"
 
     store_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    organization_id = Column(Integer, ForeignKey('organization.organization_id'))
+    organization_id = Column(Integer, ForeignKey('Organization.organization_id'), nullable= True)
     branch = Column(String)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     address = Column(String)
     gps_location = Column(String)
 
 
-    Organization = relationship('Organization', backref='stores')
-    User = relationship('User', backref='stores')
-    units=relationship('Unit', backref='stores')
+    organization = relationship('Organization', backref='Store')
+    user = relationship('User', backref='Store')
+    unit=relationship('Unit', backref='Store')
 
     def __repr__(self):
         return 'Store Model'
 
 class Store_Location(Base):
     
-    __tablename__ = "store_location"
+    __tablename__ = "Store_Location"
+
     store_location_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
-    store_id = Column(Integer, ForeignKey('store.store_id'))
+    store_id = Column(Integer, ForeignKey('Store.store_id'), nullable= True)
     gps_location = Column(String)
 
-    store = relationship('Store', backref='store_locations')
+    store = relationship('Store', backref='Store_Location')
 
     def __repr__(self):
         return f'Store_Location {self.store_id}'
@@ -359,26 +361,26 @@ class Store_Location(Base):
 
 class Cylinder(Base):
 
-    __tablename__ = "cylinder"
+    __tablename__ = "Cylinder"
 
     cylinder_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     cylinder_size = Column(String)
-    cylinder_type_id = Column(String, ForeignKey('cylinder_type.cylinder_type_id'))
+    cylinder_type_id = Column(String, ForeignKey('Cylinder_Type.cylinder_type_id'), nullable= True)
     cylinder_weight = Column(String)
     added_date = Column(String)
-    refrigerant_id = Column(Integer,ForeignKey('refrigerant.refrigerant_id'))
-    technician_id = Column(Integer, ForeignKey('technician.technician_id'))
+    refrigerant_id = Column(Integer,ForeignKey('Refrigerant.refrigerant_id'), nullable= True)
+    technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
     purchase_date = Column(String)
     supplier = Column(String)
     last_refill_date = Column(String)
     condition = Column(String)
-    tag_id = Column(Integer, ForeignKey('tag.tag_id'))
+    tag_id = Column(Integer, ForeignKey('Tag.tag_id'), nullable= True)
 
     reclaim_recoveries=relationship('Reclaim_Recovery',backref='Cylinder')
     refrigerants=relationship('Refrigerant',backref='Cylinder')
-    Technician = relationship('Technician', backref='Cylinder')
-    Tag = relationship('Tag', backref='Cylinder')
-    cylinder_types = relationship('Cylinder_type', backref='Cylinder')
+    technician = relationship('Technician', backref='Cylinder')
+    tag = relationship('Tag', backref='Cylinder')
+    cylinder_types = relationship('Cylinder_Type', backref='Cylinder')
 
 
     def __repr__(self):
@@ -388,20 +390,20 @@ class Cylinder_Type(Base):
 
     __tablename__ = "Cylinder_Type"
 
-    cylinder_type_id = Column(Integer, primary_key=True)
+    cylinder_type_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     type_name = Column(String)
 
     cylinder= relationship('Cylinder', backref='Cylinder_Type')
 
 
     def __repr__(self):
-        return 'Cylinder Model'
+        return 'Cylinder_Type Model'
 
 class Purchase(Base):
 
     __tablename__ = "Purchase"
 
-    purchase_id = Column(Integer, primary_key=True)
+    purchase_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
 
 
     def __repr__(self):
@@ -411,17 +413,17 @@ class Repair(Base):
 
     __tablename__ = "Repair"
 
-    repair_id = Column(Integer, primary_key=True)
-    unit_id = Column(Integer, ForeignKey('Unit.unit_id'))
-    purchase_id = Column(Integer, ForeignKey('Purchase.purchase_id'))
+    repair_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    unit_id = Column(Integer, ForeignKey('Unit.unit_id'), nullable= True)
+    purchase_id = Column(Integer, ForeignKey('Purchase.purchase_id'), nullable= True)
     repair_date = Column(String)
-    technician_id = Column(Integer, ForeignKey('Technician.technician_id'))
+    technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
     causes = Column(String)
     status = Column(String)
 
-    units = relationship('Unit', backref='Repair')
-    Technician = relationship('Technician', backref='Repair')
-    ods_sheets=relationship('ODS_Sheet',backref='Repair')
+    unit = relationship('Unit', backref='Repair')
+    technician = relationship('Technician', backref='Repair')
+    ods_Sheet=relationship('ODS_Sheet',backref='Repair')
 
     def __repr__(self):
         return 'Repair Model'
@@ -430,50 +432,50 @@ class Reclaim_Recovery(Base):
 
     __tablename__ = "Reclaim_Recovery"
 
-    rec_id = Column(Integer, primary_key=True)
-    purchase_id = Column(Integer, ForeignKey('Purchase.purchase_id'))
-    tank_id = Column(Integer, ForeignKey('Tank.tank_id'))
-    unit_id = Column(Integer, ForeignKey('Unit.unit_id'))
+    rec_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    purchase_id = Column(Integer, ForeignKey('Purchase.purchase_id'), nullable= True)
+    tank_id = Column(Integer, ForeignKey('Tank.tank_id'), nullable= True)
+    unit_id = Column(Integer, ForeignKey('Unit.unit_id'), nullable= True)
     gas_type = Column(String)
     quantity_before_in_lbs = Column(REAL)
     quantity_after_in_lbs = Column(REAL)
-    technician_id = Column(Integer, ForeignKey('Technician.technician_id'))
+    technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
     notes = Column(String)
     date = Column(String)
     status = Column(String)
-    refrigerant_id = Column(Integer, ForeignKey('Refrigerant.refrigerant_id'))
-    cylinder_id = Column(Integer, ForeignKey('Cylinder.cylinder_id'))
+    refrigerant_id = Column(Integer, ForeignKey('Refrigerant.refrigerant_id'), nullable= True)
+    cylinder_id = Column(Integer, ForeignKey('Cylinder.cylinder_id'), nullable= True)
 
-    ods_sheets=relationship('ODS_Sheet',backref='reclaim_recoveries')
-    units = relationship('Unit', backref='reclaim_recoveries')
-    Technician = relationship('Technician', backref='reclaim_recoveries')
-    Cylinder = relationship('Cylinder', backref='reclaim_recoveries')
-    refrigerants = relationship('Refrigerant', backref='reclaim_recoveries')
+    ods_Sheet=relationship('ODS_Sheet',backref='Reclaim_Recovery')
+    unit = relationship('Unit', backref='Reclaim_Recovery')
+    technician = relationship('Technician', backref='Reclaim_Recovery')
+    cylinder = relationship('Cylinder', backref='Reclaim_Recovery')
+    refrigerant = relationship('Refrigerant', backref='Reclaim_Recovery')
 
     def __repr__(self):
         return 'Reclaim_Recovery Model'
 
 class Refrigerant(Base):
 
-    __tablename__ = "refrigerant"
+    __tablename__ = "Refrigerant"
 
-    refrigerant_id = Column(Integer, primary_key=True)
+    refrigerant_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     refrigerant_name = Column(String)
     list = Column(String)
 
-    Cylinder=relationship('Cylinder',backref='refrigerants')
-    reclaim_recoveries=relationship('Reclaim_Recovery',backref='refrigerants')
+    cylinder=relationship('Cylinder',backref='Refrigerant')
+    reclaim_recovery=relationship('Reclaim_Recovery',backref='Refrigerant')
 
     def __repr__(self):
         return 'Refrigerant Model'
     
 class Maintenance(Base):
 
-    __tablename__ = "maintenance"
+    __tablename__ = "Maintenance"
 
-    maintenance_id = Column(Integer, primary_key=True)
-    technician_id=Column(Integer,ForeignKey('technician.technician_id'))
-    unit_id=Column(Integer,ForeignKey('unit.unit_id'))
+    maintenance_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    technician_id=Column(Integer,ForeignKey('Technician.technician_id'), nullable= True)
+    unit_id=Column(Integer,ForeignKey('Unit.unit_id'), nullable= True)
     log = Column(String)
     last_updated = Column(String)
     service_history=Column(String)
@@ -482,23 +484,23 @@ class Maintenance(Base):
     parts_used=Column(String)
     notes=Column(String)
 
-    maintenance_details=relationship('Maintenance_Detail',backref='maintenances')
-    units=relationship('Unit',backref='maintenances')
-    Technician=relationship('Technician',backref='maintenances')
+    maintenance_detail = relationship('Maintenance_Detail',backref='Maintenance')
+    unit = relationship('Unit',backref='Maintenance')
+    technician = relationship('Technician',backref='Maintenance')
 
     def __repr__(self):
         return 'Maintenance Model'
     
 class Maintenance_Detail(Base):
 
-    __tablename__ = "maintenance_detail"
+    __tablename__ = "Maintenance_Detail"
 
-    maintenance_detail_id = Column(Integer, primary_key=True)
-    maintenance_id=Column(Integer,ForeignKey('maintenance.maintenance_id'))
+    maintenance_detail_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    maintenance_id = Column(Integer,ForeignKey('Maintenance.maintenance_id'), nullable= True)
     description = Column(String)
     status = Column(String)
 
-    maintenances=relationship('Maintenance',backref='maintenance_details')
+    maintenance = relationship('Maintenance',backref='Maintenance_Detail')
 
 
     def __repr__(self):
