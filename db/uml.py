@@ -34,35 +34,37 @@ cursor = conn.cursor()
 
 # Drop the tables if they already exist
 
-cursor.execute('DROP TABLE IF EXISTS "user"')
-cursor.execute('DROP TABLE IF EXISTS "contractor"')
-cursor.execute('DROP TABLE IF EXISTS "technician"')
-cursor.execute('DROP TABLE IF EXISTS "refit_admin"')
-cursor.execute('DROP TABLE IF EXISTS "wholesaler"')
-cursor.execute('DROP TABLE IF EXISTS "invoice"')
-cursor.execute('DROP TABLE IF EXISTS "subscription"')
-cursor.execute('DROP TABLE IF EXISTS "tag"')
-cursor.execute('DROP TABLE IF EXISTS "user_logging"')
-cursor.execute('DROP TABLE IF EXISTS "user_detail"')
-cursor.execute('DROP TABLE IF EXISTS "unit"')
-cursor.execute('DROP TABLE IF EXISTS "organization"')
-cursor.execute('DROP TABLE IF EXISTS "store"')
-cursor.execute('DROP TABLE IF EXISTS "store_location"')
-cursor.execute('DROP TABLE IF EXISTS "ods_sheet"')
-cursor.execute('DROP TABLE IF EXISTS "technician_offer"')
-cursor.execute('DROP TABLE IF EXISTS "cylinder"')
-cursor.execute('DROP TABLE IF EXISTS "repair"')
-cursor.execute('DROP TABLE IF EXISTS "reclaim_recovery"')
-cursor.execute('DROP TABLE IF EXISTS "refrigerant"')
-cursor.execute('DROP TABLE IF EXISTS "maintenance"')
-cursor.execute('DROP TABLE IF EXISTS "maintenance_detail"')
-cursor.execute('DROP TABLE IF EXISTS "cylinder_type"')
+cursor.execute('DROP TABLE IF EXISTS "User"')
+cursor.execute('DROP TABLE IF EXISTS "Contractor"')
+cursor.execute('DROP TABLE IF EXISTS "Technician"')
+cursor.execute('DROP TABLE IF EXISTS "Refit_Admin"')
+cursor.execute('DROP TABLE IF EXISTS "Wholesaler"')
+cursor.execute('DROP TABLE IF EXISTS "Invoice"')
+cursor.execute('DROP TABLE IF EXISTS "Subscription"')
+cursor.execute('DROP TABLE IF EXISTS "Tag"')
+cursor.execute('DROP TABLE IF EXISTS "User_Logging"')
+cursor.execute('DROP TABLE IF EXISTS "User_Detail"')
+cursor.execute('DROP TABLE IF EXISTS "Unit"')
+cursor.execute('DROP TABLE IF EXISTS "Organization"')
+cursor.execute('DROP TABLE IF EXISTS "Store"')
+cursor.execute('DROP TABLE IF EXISTS "Store_Location"')
+cursor.execute('DROP TABLE IF EXISTS "ODS_Sheet"')
+cursor.execute('DROP TABLE IF EXISTS "Technician_Offer"')
+cursor.execute('DROP TABLE IF EXISTS "Cylinder"')
+cursor.execute('DROP TABLE IF EXISTS "Repair"')
+cursor.execute('DROP TABLE IF EXISTS "Reclaim_Recovery"')
+cursor.execute('DROP TABLE IF EXISTS "Refrigerant"')
+cursor.execute('DROP TABLE IF EXISTS "Maintenance"')
+cursor.execute('DROP TABLE IF EXISTS "Maintenance_Detail"')
+cursor.execute('DROP TABLE IF EXISTS "Cylinder_Type"')
+cursor.execute('DROP TABLE IF EXISTS "Purchase"')
+cursor.execute('DROP TABLE IF EXISTS "Tank"')
 
 
 # Create the "User" table
 cursor.execute('''
 
-    CREATE TABLE "user"(
+    CREATE TABLE "User"(
         user_id INTEGER PRIMARY KEY, 
         email TEXT,
         password TEXT,
@@ -70,11 +72,12 @@ cursor.execute('''
         added_date TIMESTAMP,
         user_detail TEXT,
         status TEXT
-    )''')
+    )
+''')
 
 # Create the "User_Detail" table
 cursor.execute('''
-    CREATE TABLE "user_detail" (
+    CREATE TABLE "User_Detail" (
         user_detail_id INTEGER PRIMARY KEY,
         user_id INTEGER,
         first_name TEXT,
@@ -85,13 +88,13 @@ cursor.execute('''
         city TEXT,
         postal_code TEXT,
         telephone TEXT,
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
 
 # Create the "Contractor" table
 cursor.execute('''
-    CREATE TABLE "contractor" (
+    CREATE TABLE "Contractor" (
         contractor_id INTEGER PRIMARY KEY,
         name TEXT,
         user_id INTEGER,
@@ -102,13 +105,13 @@ cursor.execute('''
         employees INTEGER,
         are_they_tracking_refrigerant TEXT,
         time_basis TEXT,
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
                
-# Create the "technician" table
+# Create the "Technician" table
 cursor.execute('''
-    CREATE TABLE "technician" (
+    CREATE TABLE "Technician" (
         technician_id INTEGER PRIMARY KEY,
         ODS_licence_number TEXT,
         user_id INTEGER,
@@ -117,27 +120,27 @@ cursor.execute('''
         date_end TIMESTAMP,
         user_status TEXT,
         contractor_status TEXT,
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id),
-        FOREIGN KEY (contractor_id) REFERENCES "contractor"(contractor_id)
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id),
+        FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id)
     )
 ''')
 
 # Create the "Refit_Admin" table
 cursor.execute('''
-    CREATE TABLE "refit_admin" (
+    CREATE TABLE "Refit_Admin" (
         admin_id INTEGER PRIMARY KEY,
         name TEXT,
         user_id INTEGER,
         status TEXT,
         code_2fa_code TEXT,
         admin_level INTEGER,
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
 
 # Create the "Subscription" table
 cursor.execute('''
-    CREATE TABLE "subscription" (
+    CREATE TABLE "Subscription" (
         subscription_id INTEGER PRIMARY KEY,
         start_date TIMESTAMP,
         end_Date TIMESTAMP,
@@ -148,7 +151,7 @@ cursor.execute('''
 
 #create "Cylinder_Type" table
 cursor.execute('''
-    CREATE TABLE "cylinder_type" (
+    CREATE TABLE "Cylinder_Type" (
         cylinder_type_id INTEGER PRIMARY KEY,
         type_name TEXT
     )
@@ -156,15 +159,16 @@ cursor.execute('''
 
 # Create the "Refrigerant" table
 cursor.execute('''
-    CREATE TABLE "refrigerant" (
+    CREATE TABLE "Refrigerant" (
         refrigerant_id INTEGER PRIMARY KEY,
         refrigerant_name TEXT,
-        list TEXT)
+        list TEXT
+    )
 ''')
 
 # Create the "Cylinder" table
 cursor.execute('''
-    CREATE TABLE "cylinder" (
+    CREATE TABLE "Cylinder" (
         cylinder_id INTEGER PRIMARY KEY,
         cylinder_size TEXT,
         cylinder_type_id INTEGER,
@@ -176,29 +180,33 @@ cursor.execute('''
         supplier TEXT,
         last_refill_date TIMESTAMP,
         condition TEXT,
-        FOREIGN KEY (refrigerant_id) REFERENCES "refrigerant"(refrigerant_id),
-        FOREIGN KEY (technician_id) REFERENCES "technician"(technician_id),
-        FOREIGN KEY (cylinder_type_id) REFERENCES "cylinder_type"(cylinder_type_id)
+        tag_id INTEGER,
+        FOREIGN KEY (refrigerant_id) REFERENCES "Refrigerant"(refrigerant_id),
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
+        FOREIGN KEY (cylinder_type_id) REFERENCES "Cylinder_Type"(cylinder_type_id)
+        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
     )
 ''')
 
 # Create the "Tag" table
 cursor.execute('''
-    CREATE TABLE "tag" (
+    CREATE TABLE "Tag" (
         tag_id INTEGER PRIMARY KEY,
         tag_number TEXT,
         tag_url TEXT,
         type TEXT,
         cylinder_id INTEGER,
         wholesaler_id INTEGER,
-        FOREIGN KEY (cylinder_id) REFERENCES "cylinder"(cylinder_id),
-        FOREIGN KEY (wholesaler_id) REFERENCES "wholesaler"(wholesaler_id)  
+        invoice_id INTEGER,
+        FOREIGN KEY (cylinder_id) REFERENCES "Cylinder"(cylinder_id),
+        FOREIGN KEY (wholesaler_id) REFERENCES "Wholesaler"(wholesaler_id)
+        FOREIGN KEY (invoice_id) REFERENCES "Invoice"(invoice_id)
     )
 ''')
 
 # Create the "Invoice" table
 cursor.execute('''
-    CREATE TABLE "invoice" (
+    CREATE TABLE "Invoice" (
         invoice_id INTEGER PRIMARY KEY,
         subscription_id INTEGER,
         tag_id INTEGER,
@@ -206,27 +214,27 @@ cursor.execute('''
         payment_method TEXT,
         tax REAL,
         date TIMESTAMP,
-        FOREIGN KEY (subscription_id) REFERENCES "subscription"(subscription_id),
-        FOREIGN KEY (tag_id) REFERENCES "tag"(tag_id)
+        FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id),
+        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
     )
 ''')
 
 # Create the "Wholesaler" table
 cursor.execute('''
-    CREATE TABLE "wholesaler" (
+    CREATE TABLE "Wholesaler" (
         wholesaler_id INTEGER PRIMARY KEY,
         name TEXT,
         user_id INTEGER,
         status TEXT,
         tag_id INTEGER,
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id),
-        FOREIGN KEY (tag_id) REFERENCES "tag"(tag_id)
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id),
+        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
     )
 ''')
 
 # Create the "Organization/Group" table
 cursor.execute('''
-    CREATE TABLE "organization" (
+    CREATE TABLE "Organization" (
         organization_id INTEGER PRIMARY KEY,
         name TEXT,
         user_id INTEGER,
@@ -234,14 +242,14 @@ cursor.execute('''
         status TEXT,
         subscription_id INTEGER,
         code_2fa_code TEXT,
-        FOREIGN KEY (subscription_id) REFERENCES "subscription"(subscription_id),
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+        FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id),
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
 
 # Create the "Store" table
 cursor.execute('''
-    CREATE TABLE "store" (
+    CREATE TABLE "Store" (
         store_id INTEGER PRIMARY KEY,
         organization_id INTEGER,
         branch TEXT,
@@ -249,14 +257,14 @@ cursor.execute('''
         user_id INTEGER,
         address TEXT,
         gps_location TEXT,
-        FOREIGN KEY (organization_id) REFERENCES "organization"(organization_id),
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+        FOREIGN KEY (organization_id) REFERENCES "Organization"(organization_id),
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
 
 # Create the "Unit" table
 cursor.execute('''
-    CREATE TABLE "unit" (
+    CREATE TABLE "Unit" (
         unit_id INTEGER PRIMARY KEY,
         technician_id INTEGER,
         unit_name TEXT,
@@ -270,41 +278,41 @@ cursor.execute('''
         factory_charge_amount INTEGER,
         unit_type TEXT,
         store_id INTEGER,
-        FOREIGN KEY (technician_id) REFERENCES "technician"(technician_id),
-        FOREIGN KEY (tag_id) REFERENCES "tag"(tag_id),
-        FOREIGN KEY (store_id) REFERENCES "store"(store_id)
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
+        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id),
+        FOREIGN KEY (store_id) REFERENCES "Store"(store_id)
     )
 ''')
 
-# Create the "User Logging" table
+# Create the "User_Logging" table
 cursor.execute('''
-    CREATE TABLE "user_logging" (
+    CREATE TABLE "User_Logging" (
         log_id INTEGER PRIMARY KEY,
         user_id INTEGER,
         entry_date TIMESTAMP,
         ip_address TEXT,
         address_gps TEXT,
-        FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
 
 # Create the "Purchase" table
 cursor.execute('''
-    CREATE TABLE "purchase" (
+    CREATE TABLE "Purchase" (
         purchase_id INTEGER PRIMARY KEY
     )
 ''')
 
 # Create the "Tank" table
 cursor.execute('''
-    CREATE TABLE "tank" (
+    CREATE TABLE "Tank" (
         tank_id INTEGER PRIMARY KEY
     )
 ''')
 
 # Create the "Reclaim/Recovery" table
 cursor.execute('''
-    CREATE TABLE "reclaim_recovery" (
+    CREATE TABLE "Reclaim_Recovery" (
         rec_id INTEGER PRIMARY KEY,
         purchase_id INTEGER,
         tank_id INTEGER,
@@ -318,18 +326,18 @@ cursor.execute('''
         status TEXT,
         refrigerant_id INTEGER,
         cylinder_id INTEGER,
-        FOREIGN KEY (unit_id) REFERENCES "unit"(unit_id),
-        FOREIGN KEY (technician_id) REFERENCES "technician"(technician_id),
-        FOREIGN KEY (refrigerant_id) REFERENCES "refrigerant"(refrigerant_id),
-        FOREIGN KEY (cylinder_id) REFERENCES "cylinder"(cylinder_id),
-        FOREIGN KEY (purchase_id) REFERENCES "purchase"(purchase_id),
-        FOREIGN KEY (tank_id) REFERENCES "tank"(tank_id)
+        FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
+        FOREIGN KEY (refrigerant_id) REFERENCES "Refrigerant"(refrigerant_id),
+        FOREIGN KEY (cylinder_id) REFERENCES "Cylinder"(cylinder_id),
+        FOREIGN KEY (purchase_id) REFERENCES "Purchase"(purchase_id),
+        FOREIGN KEY (tank_id) REFERENCES "Tank"(tank_id)
     )
 ''')
 
 # Create the "Repair" table
 cursor.execute('''
-    CREATE TABLE "repair" (
+    CREATE TABLE "Repair" (
         repair_id INTEGER PRIMARY KEY,
         unit_id INTEGER,
         purchase_id INTEGER,
@@ -337,15 +345,15 @@ cursor.execute('''
         technician_id INTEGER,
         causes TEXT,
         status TEXT,
-        FOREIGN KEY (unit_id) REFERENCES "unit"(unit_id),
-        FOREIGN KEY (technician_id) REFERENCES "technician"(technician_id),
-        FOREIGN KEY (purchase_id) REFERENCES "purchase"(purchase_id)
+        FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
+        FOREIGN KEY (purchase_id) REFERENCES "Purchase"(purchase_id)
     )
 ''')
 
-# Create the "ODS Sheet" table
+# Create the "ODS_Sheet" table
 cursor.execute('''
-    CREATE TABLE "ods_sheet" (
+    CREATE TABLE "ODS_Sheet" (
         ods_id INTEGER PRIMARY KEY,
         contractor_id INTEGER,
         technician_id INTEGER,
@@ -353,42 +361,44 @@ cursor.execute('''
         tag_id INTEGER,
         repair_id INTEGER,
         rec_id INTEGER,
-        FOREIGN KEY (contractor_id) REFERENCES "contractor"(contractor_id),
-        FOREIGN KEY (technician_id) REFERENCES "technician"(technician_id),
-        FOREIGN KEY (unit_id) REFERENCES "unit"(unit_id),
-        FOREIGN KEY (repair_id) REFERENCES "repair"(repair_id),
-        FOREIGN KEY (rec_id) REFERENCES  "reclaim_recovery"(rec_id),
-        FOREIGN KEY (tag_id) REFERENCES "tag"(tag_id)
+        FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id),
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
+        FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
+        FOREIGN KEY (repair_id) REFERENCES "Repair"(repair_id),
+        FOREIGN KEY (rec_id) REFERENCES  "Reclaim_Recovery"(rec_id),
+        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
     )
 ''')
 
 # Create the "Technician_Offer" table
 cursor.execute('''
-    CREATE TABLE "technician_offer" (
+    CREATE TABLE "Technician_Offer" (
+        technician_offer_id INTEGER PRIMARY KEY,
         contractor_id INTEGER,
         technician_id INTEGER,
         offer_status TEXT,
         email_time_sent TEXT,
-        FOREIGN KEY (contractor_id) REFERENCES "contractor"(contractor_id),
-        FOREIGN KEY (technician_id) REFERENCES "technician"(technician_id)
+        FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id),
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id)
     )
 ''')
 
 # Create the "Store_Location" table
 cursor.execute('''
-    CREATE TABLE "store_location" (
-        store_id INTEGER PRIMARY KEY,
+    CREATE TABLE "Store_Location" (
+        store_location_id INTEGER PRIMARY KEY,
+        store_id INTEGER,
         gps_location TEXT,
-        FOREIGN KEY (store_id) REFERENCES "store"(store_id)
+        FOREIGN KEY (store_id) REFERENCES "Store"(store_id)
     )
 ''')
 
 #create "Maintenance" table            
 cursor.execute('''
-    CREATE TABLE "maintenance" (
-        maintenance_id INT PRIMARY KEY,
-        technician_id INT,
-        unit_id INT,
+    CREATE TABLE "Maintenance" (
+        maintenance_id INTEGER PRIMARY KEY,
+        technician_id INTEGER,
+        unit_id INTEGER,
         log TEXT,
         last_updated TIMESTAMP,
         service_history TEXT,
@@ -396,19 +406,19 @@ cursor.execute('''
         maintenance_type VARCHAR(50),
         parts_used TEXT,
         notes TEXT,
-        FOREIGN KEY (technician_id) REFERENCES "technician"(technician_id),
-        FOREIGN KEY (unit_id) REFERENCES "unit"(unit_id)
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
+        FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id)
     )
 ''')
 
 #create "Maintenance_Detail" table               
 cursor.execute('''
-    CREATE TABLE "maintenance_detail" (
-        maintenance_detail_id INT PRIMARY KEY,
-        maintenance_id INT,
+    CREATE TABLE "Maintenance_Detail" (
+        maintenance_detail_id INTEGER PRIMARY KEY,
+        maintenance_id INTEGER,
         description TEXT,
         status VARCHAR(50),
-        FOREIGN KEY (maintenance_id) REFERENCES "maintenance"(maintenance_id)
+        FOREIGN KEY (maintenance_id) REFERENCES "Maintenance"(maintenance_id)
     )
 ''')
                
