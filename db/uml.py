@@ -1,7 +1,7 @@
 # Possible problems: , or " " or data type or the order
 # 1. psycopg2.errors.UndefinedTable: relation "Repairs" does not exist (Order matters)
 # 2. psycopg2.errors.UndefinedObject: type "datetime" does not exist
-#    LINE 7: last_updated DATETIME, (change it to TIMESTAMP)
+#    LINE 7: last_updated DATETIME, (change it to String)
 
 # What is this file for? 
 # Modify this file to manage the db
@@ -37,7 +37,7 @@ cursor = conn.cursor()
 cursor.execute('DROP TABLE IF EXISTS "User"')
 cursor.execute('DROP TABLE IF EXISTS "Contractor"')
 cursor.execute('DROP TABLE IF EXISTS "Technician"')
-cursor.execute('DROP TABLE IF EXISTS "Refit_Admin"')
+cursor.execute('DROP TABLE IF EXISTS "Admin"')
 cursor.execute('DROP TABLE IF EXISTS "Wholesaler"')
 cursor.execute('DROP TABLE IF EXISTS "Invoice"')
 cursor.execute('DROP TABLE IF EXISTS "Subscription"')
@@ -69,7 +69,7 @@ cursor.execute('''
         email TEXT,
         password TEXT,
         role TEXT,
-        added_date TIMESTAMP,
+        added_date String,
         user_detail TEXT,
         status TEXT
     )
@@ -89,6 +89,15 @@ cursor.execute('''
         postal_code TEXT,
         telephone TEXT,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
+    )
+''')
+
+# Create the "Refrigerant" table
+cursor.execute('''
+    CREATE TABLE "Refrigerant" (
+        refrigerant_id INTEGER PRIMARY KEY,
+        refrigerant_name TEXT,
+        list TEXT
     )
 ''')
 
@@ -116,8 +125,8 @@ cursor.execute('''
         ODS_licence_number TEXT,
         user_id INTEGER,
         contractor_id INTEGER,
-        date_begin TIMESTAMP,
-        date_end TIMESTAMP,
+        date_begin String,
+        date_end String,
         user_status TEXT,
         contractor_status TEXT,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id),
@@ -125,9 +134,9 @@ cursor.execute('''
     )
 ''')
 
-# Create the "Refit_Admin" table
+# Create the "Admin" table
 cursor.execute('''
-    CREATE TABLE "Refit_Admin" (
+    CREATE TABLE "Admin" (
         admin_id INTEGER PRIMARY KEY,
         name TEXT,
         user_id INTEGER,
@@ -142,8 +151,8 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Subscription" (
         subscription_id INTEGER PRIMARY KEY,
-        start_date TIMESTAMP,
-        end_Date TIMESTAMP,
+        start_date String,
+        end_Date String,
         package_size TEXT,
         compliant TEXT
     )
@@ -157,15 +166,6 @@ cursor.execute('''
     )
 ''')
 
-# Create the "Refrigerant" table
-cursor.execute('''
-    CREATE TABLE "Refrigerant" (
-        refrigerant_id INTEGER PRIMARY KEY,
-        refrigerant_name TEXT,
-        list TEXT
-    )
-''')
-
 # Create the "Cylinder" table
 cursor.execute('''
     CREATE TABLE "Cylinder" (
@@ -173,18 +173,40 @@ cursor.execute('''
         cylinder_size TEXT,
         cylinder_type_id INTEGER,
         cylinder_weight TEXT,
-        added_date TIMESTAMP,
+        added_date String,
         refrigerant_id INTEGER,
         technician_id INTEGER,
-        purchase_date TIMESTAMP,
+        purchase_date String,
         supplier TEXT,
-        last_refill_date TIMESTAMP,
+        last_refill_date String,
         condition TEXT,
-        tag_id INTEGER,
         FOREIGN KEY (refrigerant_id) REFERENCES "Refrigerant"(refrigerant_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (cylinder_type_id) REFERENCES "Cylinder_Type"(cylinder_type_id)
-        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
+    )
+''')
+
+# Create the "Wholesaler" table
+cursor.execute('''
+    CREATE TABLE "Wholesaler" (
+        wholesaler_id INTEGER PRIMARY KEY,
+        name TEXT,
+        user_id INTEGER,
+        status TEXT,
+        FOREIGN KEY (user_id) REFERENCES "User"(user_id)
+    )
+''')
+
+# Create the "Invoice" table
+cursor.execute('''
+    CREATE TABLE "Invoice" (
+        invoice_id INTEGER PRIMARY KEY,
+        subscription_id INTEGER,
+        amount REAL,
+        payment_method TEXT,
+        tax REAL,
+        date String,
+        FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id)
     )
 ''')
 
@@ -199,38 +221,12 @@ cursor.execute('''
         wholesaler_id INTEGER,
         invoice_id INTEGER,
         FOREIGN KEY (cylinder_id) REFERENCES "Cylinder"(cylinder_id),
-        FOREIGN KEY (wholesaler_id) REFERENCES "Wholesaler"(wholesaler_id)
+        FOREIGN KEY (wholesaler_id) REFERENCES "Wholesaler"(wholesaler_id),
         FOREIGN KEY (invoice_id) REFERENCES "Invoice"(invoice_id)
     )
 ''')
 
-# Create the "Invoice" table
-cursor.execute('''
-    CREATE TABLE "Invoice" (
-        invoice_id INTEGER PRIMARY KEY,
-        subscription_id INTEGER,
-        tag_id INTEGER,
-        amount REAL,
-        payment_method TEXT,
-        tax REAL,
-        date TIMESTAMP,
-        FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id),
-        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
-    )
-''')
 
-# Create the "Wholesaler" table
-cursor.execute('''
-    CREATE TABLE "Wholesaler" (
-        wholesaler_id INTEGER PRIMARY KEY,
-        name TEXT,
-        user_id INTEGER,
-        status TEXT,
-        tag_id INTEGER,
-        FOREIGN KEY (user_id) REFERENCES "User"(user_id),
-        FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
-    )
-''')
 
 # Create the "Organization/Group" table
 cursor.execute('''
@@ -270,8 +266,8 @@ cursor.execute('''
         unit_name TEXT,
         tag_id INTEGER,
         other_attribute TEXT,
-        installation_date TIMESTAMP,
-        last_maintenance_date TIMESTAMP,
+        installation_date String,
+        last_maintenance_date String,
         manufacturer TEXT,
         model TEXT,
         type_of_refrigerant TEXT,
@@ -289,7 +285,7 @@ cursor.execute('''
     CREATE TABLE "User_Logging" (
         log_id INTEGER PRIMARY KEY,
         user_id INTEGER,
-        entry_date TIMESTAMP,
+        entry_date String,
         ip_address TEXT,
         address_gps TEXT,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
@@ -322,7 +318,7 @@ cursor.execute('''
         quantity_after_in_lbs REAL,
         technician_id INTEGER,
         notes TEXT,
-        date TIMESTAMP,
+        date String,
         status TEXT,
         refrigerant_id INTEGER,
         cylinder_id INTEGER,
@@ -341,7 +337,7 @@ cursor.execute('''
         repair_id INTEGER PRIMARY KEY,
         unit_id INTEGER,
         purchase_id INTEGER,
-        repair_date TIMESTAMP,
+        repair_date String,
         technician_id INTEGER,
         causes TEXT,
         status TEXT,
@@ -400,9 +396,9 @@ cursor.execute('''
         technician_id INTEGER,
         unit_id INTEGER,
         log TEXT,
-        last_updated TIMESTAMP,
+        last_updated String,
         service_history TEXT,
-        maintenance_date TIMESTAMP,
+        maintenance_date String,
         maintenance_type VARCHAR(50),
         parts_used TEXT,
         notes TEXT,
