@@ -40,9 +40,6 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-
-
-
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
     if request.method == "POST":
@@ -81,7 +78,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
         user_type = request.form['user_type']
-        added_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        added_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        user_detail = user_type
 
         hashed_password = generate_hash(password, current_app.secret_key)
 
@@ -89,7 +87,7 @@ def register():
             flash('Please fill out all fields.')
         
         else:
-            CRUD.create(User, False, email=username, password=hashed_password, role=user_type, added_date=added_date)          
+            CRUD.create(User, False, email=username, password=hashed_password, role=user_type, added_date=added_date)    
 
             # Redirect to different forms based on user_type
             if user_type == 'contractor':

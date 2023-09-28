@@ -394,6 +394,13 @@ class Repair(Base):
     def __repr__(self):
         return 'Repair Model'
 
+class Tank(Base):
+    __tablename__ = 'Tank'
+    tank_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    
+    def __repr__(self):
+            return 'Tank Model'
+
 class Reclaim_Recovery(Base):
 
     __tablename__ = "Reclaim_Recovery"
