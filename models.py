@@ -119,7 +119,7 @@ class Admin(Base):
 
     admin_id = Column(Integer, primary_key=True, autoincrement=True, nullable=True)
     name = Column(String)
-    user_id = Column(Integer, ForeignKey('User.user_id', nullable=True))
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable=True)
     status = Column(String)
     code_2fa_code = Column(String)
     admin_level = Column(Integer)
@@ -393,6 +393,13 @@ class Repair(Base):
 
     def __repr__(self):
         return 'Repair Model'
+
+class Tank(Base):
+    __tablename__ = 'Tank'
+    tank_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    
+    def __repr__(self):
+            return 'Tank Model'
 
 class Reclaim_Recovery(Base):
 
