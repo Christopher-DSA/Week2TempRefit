@@ -1,11 +1,11 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-# from models import User, get_session
-from models import User,Store, CRUD
+from datetime import datetime
+from models import User, Store, CRUD
 from functools import wraps
 import pandas as pd
 import os
 # from main import app
-
+from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
 auth = Blueprint('auth', __name__)
 
@@ -81,20 +81,15 @@ def register():
         username = request.form['username']
         password = request.form['password']
         user_type = request.form['user_type']
-        print(username)
-        print(password)
-        print(user_type)
+        added_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+
+        hashed_password = generate_hash(password, current_app.secret_key)
+
         if not username or not password or not user_type:
             flash('Please fill out all fields.')
         
         else:
-            new_user = CRUD.create(User, email=username, password=password, role=user_type)
-            new_user = User.get_user_by_email(username)
-            session['user_id'] = new_user.user_id
-
-            print(session)
-            print(new_user.role)
-            
+            CRUD.create(User, False, email=username, password=hashed_password, role=user_type, added_date=added_date)          
 
             # Redirect to different forms based on user_type
             if user_type == 'contractor':
