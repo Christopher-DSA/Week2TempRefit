@@ -1,7 +1,7 @@
 # Possible problems:  , or " " or data type or the order
 # 1. psycopg2.errors.UndefinedTable: relation "Repairs" does not exist (Order matters)
 # 2. psycopg2.errors.UndefinedObject: type "datetime" does not exist
-#    LINE 7: last_updated DATETIME, (change it to String)
+#    LINE 7: last_updated DATETIME, (change it to TEXT)
 
 # What is this file for? 
 # Modify this file to manage the db
@@ -69,8 +69,8 @@ cursor.execute('''
         email TEXT,
         password TEXT,
         role TEXT,
-        added_date String Null,
-        user_detail TEXT NULL Null,
+        added_date TEXT NULL,
+        user_detail TEXT NULL NULL,
         status TEXT NULL
     )
 ''')
@@ -80,14 +80,14 @@ cursor.execute('''
     CREATE TABLE "User_Detail" (
         user_detail_id SERIAL PRIMARY KEY,
         user_id INTEGER,
-        first_name TEXT Null,
-        middle_name TEXT Null,
-        last_name TEXT Null,
-        address TEXT Null,
-        province TEXT NULL Null,
-        city TEXT NULL Null,
-        postal_code TEXT NULL Null,
-        telephone TEXT NULL Null,
+        first_name TEXT NULL,
+        middle_name TEXT NULL,
+        last_name TEXT NULL,
+        address TEXT NULL,
+        province TEXT NULL,
+        city TEXT NULL,
+        postal_code TEXT NULL,
+        telephone TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
@@ -96,8 +96,8 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Refrigerant" (
         refrigerant_id SERIAL PRIMARY KEY,
-        refrigerant_name TEXT Null,
-        list TEXT Null
+        refrigerant_name TEXT NULL,
+        list TEXT NULL
     )
 ''')
 
@@ -105,15 +105,15 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Contractor" (
         contractor_id SERIAL PRIMARY KEY,
-        name TEXT Null,
+        name TEXT NULL,
         user_id INTEGER,
-        logo TEXT Null,
-        status TEXT Null,
-        subscription_id INTEGER Null,
-        code_2fa_code TEXT Null,
-        employees INTEGER Null,
-        are_they_tracking_refrigerant TEXT Null,
-        time_basis TEXT Null,
+        logo TEXT NULL,
+        status TEXT NULL,
+        subscription_id INTEGER NULL,
+        code_2fa_code TEXT NULL,
+        employees INTEGER NULL,
+        are_they_tracking_refrigerant TEXT NULL,
+        time_basis TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
@@ -124,11 +124,11 @@ cursor.execute('''
         technician_id SERIAL PRIMARY KEY,
         ODS_licence_number TEXT,
         user_id INTEGER,
-        contractor_id INTEGER Null,
-        date_begin String Null,
-        date_end String Null,
-        user_status TEXT Null,
-        contractor_status TEXT Null,
+        contractor_id INTEGER NULL,
+        date_begin TEXT NULL,
+        date_end TEXT NULL,
+        user_status TEXT NULL,
+        contractor_status TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id),
         FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id)
     )
@@ -138,11 +138,11 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Admin" (
         admin_id SERIAL PRIMARY KEY,
-        name TEXT Null,
+        name TEXT NULL,
         user_id INTEGER,
-        status TEXT Null,
-        code_2fa_code TEXT Null,
-        admin_level INTEGER Null,
+        status TEXT NULL,
+        code_2fa_code TEXT NULL,
+        admin_level INTEGER NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
@@ -151,10 +151,10 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Subscription" (
         subscription_id SERIAL PRIMARY KEY,
-        start_date String,
-        end_Date String,
+        start_date TEXT,
+        end_Date TEXT,
         package_size TEXT,
-        compliant TEXT Null
+        compliant TEXT NULL
     )
 ''')
 
@@ -170,16 +170,16 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Cylinder" (
         cylinder_id SERIAL PRIMARY KEY,
-        cylinder_size TEXT Null,
-        cylinder_type_id INTEGER Null,
-        cylinder_weight TEXT Null,
-        added_date String Null,
-        refrigerant_id INTEGER Null,
-        technician_id INTEGER Null,
-        purchase_date String Null,
-        supplier TEXT Null,
-        last_refill_date String Null,
-        condition TEXT Null,
+        cylinder_size TEXT NULL,
+        cylinder_type_id INTEGER NULL,
+        cylinder_weight TEXT NULL,
+        added_date TEXT NULL,
+        refrigerant_id INTEGER NULL,
+        technician_id INTEGER NULL,
+        purchase_date TEXT NULL,
+        supplier TEXT NULL,
+        last_refill_date TEXT NULL,
+        condition TEXT NULL,
         FOREIGN KEY (refrigerant_id) REFERENCES "Refrigerant"(refrigerant_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (cylinder_type_id) REFERENCES "Cylinder_Type"(cylinder_type_id)
@@ -190,9 +190,9 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Wholesaler" (
         wholesaler_id SERIAL PRIMARY KEY,
-        name TEXT Null,
+        name TEXT NULL,
         user_id INTEGER,
-        status TEXT Null,
+        status TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
@@ -201,11 +201,11 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Invoice" (
         invoice_id SERIAL PRIMARY KEY,
-        subscription_id INTEGER Null,
-        amount REAL Null,
-        payment_method TEXT Null,
-        tax REAL Null,
-        date String Null,
+        subscription_id INTEGER NULL,
+        amount REAL NULL,
+        payment_method TEXT NULL,
+        tax REAL NULL,
+        date TEXT NULL,
         FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id)
     )
 ''')
@@ -214,12 +214,12 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Tag" (
         tag_id SERIAL PRIMARY KEY,
-        tag_number TEXT Null,
-        tag_url TEXT Null,
-        type TEXT Null,
-        cylinder_id INTEGER Null,
-        wholesaler_id INTEGER Null,
-        invoice_id INTEGER Null,
+        tag_number TEXT NULL,
+        tag_url TEXT NULL,
+        type TEXT NULL,
+        cylinder_id INTEGER NULL,
+        wholesaler_id INTEGER NULL,
+        invoice_id INTEGER NULL,
         FOREIGN KEY (cylinder_id) REFERENCES "Cylinder"(cylinder_id),
         FOREIGN KEY (wholesaler_id) REFERENCES "Wholesaler"(wholesaler_id),
         FOREIGN KEY (invoice_id) REFERENCES "Invoice"(invoice_id)
@@ -232,12 +232,12 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Organization" (
         organization_id SERIAL PRIMARY KEY,
-        name TEXT Null,
+        name TEXT NULL,
         user_id INTEGER,
-        logo TEXT Null,
-        status TEXT Null,
-        subscription_id INTEGER Null,
-        code_2fa_code TEXT Null,
+        logo TEXT NULL,
+        status TEXT NULL,
+        subscription_id INTEGER NULL,
+        code_2fa_code TEXT NULL,
         FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id),
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
@@ -247,12 +247,12 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Store" (
         store_id SERIAL PRIMARY KEY,
-        organization_id INTEGER Null,
-        branch TEXT Null,
-        name TEXT Null,
+        organization_id INTEGER NULL,
+        branch TEXT NULL,
+        name TEXT NULL,
         user_id INTEGER,
-        address TEXT Null,
-        gps_location TEXT Null,
+        address TEXT NULL,
+        gps_location TEXT NULL,
         FOREIGN KEY (organization_id) REFERENCES "Organization"(organization_id),
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
@@ -262,18 +262,18 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Unit" (
         unit_id SERIAL PRIMARY KEY,
-        technician_id INTEGER Null,
-        unit_name TEXT Null,
-        tag_id INTEGER Null,
-        other_attribute TEXT Null,
-        installation_date String Null,
-        last_maintenance_date String Null,
-        manufacturer TEXT Null,
-        model TEXT Null,
-        type_of_refrigerant TEXT Null,
-        factory_charge_amount INTEGER Null,
-        unit_type TEXT Null,
-        store_id INTEGER Null,
+        technician_id INTEGER NULL,
+        unit_name TEXT NULL,
+        tag_id INTEGER NULL,
+        other_attribute TEXT NULL,
+        installation_date TEXT NULL,
+        last_maintenance_date TEXT NULL,
+        manufacturer TEXT NULL,
+        model TEXT NULL,
+        type_of_refrigerant TEXT NULL,
+        factory_charge_amount INTEGER NULL,
+        unit_type TEXT NULL,
+        store_id INTEGER NULL,
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id),
         FOREIGN KEY (store_id) REFERENCES "Store"(store_id)
@@ -285,9 +285,9 @@ cursor.execute('''
     CREATE TABLE "User_Logging" (
         log_id SERIAL PRIMARY KEY,
         user_id INTEGER,
-        entry_date String Null,
-        ip_address TEXT Null,
-        address_gps TEXT Null,
+        entry_date TEXT NULL,
+        ip_address TEXT NULL,
+        address_gps TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
 ''')
@@ -310,18 +310,18 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Reclaim_Recovery" (
         rec_id SERIAL PRIMARY KEY,
-        purchase_id INTEGER Null,
-        tank_id INTEGER Null,
-        unit_id INTEGER Null,    
-        gas_type TEXT Null,
-        quantity_before_in_lbs REAL Null,
-        quantity_after_in_lbs REAL Null,
-        technician_id INTEGER Null,
-        notes TEXT Null,
-        date String Null,
-        status TEXT Null,
-        refrigerant_id INTEGER Null,
-        cylinder_id INTEGER Null,
+        purchase_id INTEGER NULL,
+        tank_id INTEGER NULL,
+        unit_id INTEGER NULL,    
+        gas_type TEXT NULL,
+        quantity_before_in_lbs REAL NULL,
+        quantity_after_in_lbs REAL NULL,
+        technician_id INTEGER NULL,
+        notes TEXT NULL,
+        date TEXT NULL,
+        status TEXT NULL,
+        refrigerant_id INTEGER NULL,
+        cylinder_id INTEGER NULL,
         FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (refrigerant_id) REFERENCES "Refrigerant"(refrigerant_id),
@@ -335,12 +335,12 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Repair" (
         repair_id SERIAL PRIMARY KEY,
-        unit_id INTEGER Null,
-        purchase_id INTEGER Null,
-        repair_date String Null,
-        technician_id INTEGER Null,
-        causes TEXT Null,
-        status TEXT Null,
+        unit_id INTEGER NULL,
+        purchase_id INTEGER NULL,
+        repair_date TEXT NULL,
+        technician_id INTEGER NULL,
+        causes TEXT NULL,
+        status TEXT NULL,
         FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (purchase_id) REFERENCES "Purchase"(purchase_id)
@@ -351,12 +351,12 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "ODS_Sheet" (
         ods_id SERIAL PRIMARY KEY,
-        contractor_id INTEGER Null,
-        technician_id INTEGER Null,
-        unit_id INTEGER Null,
-        tag_id INTEGER Null,
-        repair_id INTEGER Null,
-        rec_id INTEGER Null,
+        contractor_id INTEGER NULL,
+        technician_id INTEGER NULL,
+        unit_id INTEGER NULL,
+        tag_id INTEGER NULL,
+        repair_id INTEGER NULL,
+        rec_id INTEGER NULL,
         FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id),
@@ -370,10 +370,10 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Technician_Offer" (
         technician_offer_id SERIAL PRIMARY KEY,
-        contractor_id INTEGER Null,
-        technician_id INTEGER Null,
-        offer_status TEXT Null,
-        email_time_sent TEXT Null,
+        contractor_id INTEGER NULL,
+        technician_id INTEGER NULL,
+        offer_status TEXT NULL,
+        email_time_sent TEXT NULL,
         FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id)
     )
@@ -383,8 +383,8 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Store_Location" (
         store_location_id SERIAL PRIMARY KEY,
-        store_id INTEGER Null,
-        gps_location TEXT Null,
+        store_id INTEGER NULL,
+        gps_location TEXT NULL,
         FOREIGN KEY (store_id) REFERENCES "Store"(store_id)
     )
 ''')
@@ -393,15 +393,15 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Maintenance" (
         maintenance_id SERIAL PRIMARY KEY,
-        technician_id INTEGER Null,
-        unit_id INTEGER Null,
-        log TEXT Null,
-        last_updated String Null,
-        service_history TEXT Null,
-        maintenance_date String Null,
-        maintenance_type VARCHAR(50) Null,
-        parts_used TEXT Null,
-        notes TEXT Null,
+        technician_id INTEGER NULL,
+        unit_id INTEGER NULL,
+        log TEXT NULL,
+        last_updated TEXT NULL,
+        service_history TEXT NULL,
+        maintenance_date TEXT NULL,
+        maintenance_type VARCHAR(50) NULL,
+        parts_used TEXT NULL,
+        notes TEXT NULL,
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id)
     )
@@ -411,9 +411,9 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Maintenance_Detail" (
         maintenance_detail_id SERIAL PRIMARY KEY,
-        maintenance_id INTEGER Null,
-        description TEXT Null,
-        status VARCHAR(50) Null,
+        maintenance_id INTEGER NULL,
+        description TEXT NULL,
+        status VARCHAR(50) NULL,
         FOREIGN KEY (maintenance_id) REFERENCES "Maintenance"(maintenance_id)
     )
 ''')

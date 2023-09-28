@@ -15,3 +15,6 @@
     user_detail TEXT NULL,
     status TEXT NULL
 );
+
+# 3. Moved files so disconnect with the GitHub branch?
+- Git clone to redownload everything then replace the files in the folder with the files outside the folder, which you have made changes.
