@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from flask import Flask, request, jsonify
-from models import User, CRUD, Base
+from models import User, CRUD
 from routes.store import store
 from routes.admin import admin
 from routes.organization import organization
@@ -12,7 +12,6 @@ from routes.contractor import contractor
 from routes.auth import auth
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from models import User, CRUD, Base
 
 
 app = Flask(__name__)
@@ -35,8 +34,15 @@ app.register_blueprint(auth)
 
 db = SQLAlchemy(app)
 
+
+    
+@app.route("/", methods=['GET', 'POST'])
+def login():
+    return render_template('auth/login.html')
+
+
 if __name__ == '__main__':
-    with app.app_context():
-        Base.metadata.create_all(bind=db.engine)
-    app.run(debug=True,port=5053)
+    
+    app.run(host='0.0.0.0')
+
 
