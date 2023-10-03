@@ -60,7 +60,7 @@ class Technician(Base):
     __tablename__ = "Technician"
     technician_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     
-    ODS_licence_number = Column(String)
+    ods_licence_number = Column(String)
     user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     contractor_id = Column(Integer,ForeignKey('Contractor.contractor_id'), nullable= True)
     date_begin = Column(String)
@@ -278,6 +278,26 @@ class Technician_Offer(Base):
 
     def __repr__(self):
         return 'Technician Offer Model'
+    
+class Technician_Own_Company(Base):
+
+    __tablename__ = "Technician_Own_Company"
+
+    to_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
+    name = Column(String)
+    branch_nm = Column(String)
+    phone_nm = Column(String)
+    ods_rece_email = Column(String)
+    address = Column(String)
+    apartment = Column(String)
+    city = Column(String)
+    province = Column(String)
+    postal_code = Column(String)
+    technician = relationship('Technician', backref='Technician_Own_Company')
+
+    def __repr__(self):
+        return 'Technician Own Company Model'
 
 class Organization(Base):
 
