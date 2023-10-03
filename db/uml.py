@@ -46,6 +46,7 @@ cursor.execute('DROP TABLE IF EXISTS "User_Logging"')
 cursor.execute('DROP TABLE IF EXISTS "User_Detail"')
 cursor.execute('DROP TABLE IF EXISTS "Unit"')
 cursor.execute('DROP TABLE IF EXISTS "Organization"')
+cursor.execute('DROP TABLE IF EXISTS "Technician_Organization"')
 cursor.execute('DROP TABLE IF EXISTS "Store"')
 cursor.execute('DROP TABLE IF EXISTS "Store_Location"')
 cursor.execute('DROP TABLE IF EXISTS "ODS_Sheet"')
@@ -122,7 +123,7 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Technician" (
         technician_id SERIAL PRIMARY KEY,
-        ODS_licence_number TEXT,
+        ods_licence_number TEXT,
         user_id INTEGER,
         contractor_id INTEGER NULL,
         date_begin TEXT NULL,
@@ -296,6 +297,24 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE "Purchase" (
         purchase_id SERIAL PRIMARY KEY
+    )
+''')
+
+# Create the "Purchase" table
+cursor.execute('''
+    CREATE TABLE "Technician_Own_Company" (
+        toc_id SERIAL PRIMARY KEY,
+        technician_id INTEGER,
+        name TEXT,
+        branch_nm TEXT NULL,
+        phone_nm TEXT NULL,
+        ods_rece_email TEXT NULL,
+        address TEXT NULL,
+        apartment TEXT NULL,
+        city TEXT NULL,
+        province TEXT NULL,
+        postal_code TEXT NULL,
+        FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id)
     )
 ''')
 
