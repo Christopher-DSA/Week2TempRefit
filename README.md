@@ -3,12 +3,11 @@
 ## Project Team
 
 - Alison (team lead)
-- Evan (team lead)
-- Kushal
-- Snapil
-- Aesha
+- Sidney (Data Science Manager)
+- Vinh (Data Scientist)
 
-- Sidney and Vinh supporting
+## Project Description
+Refit is an application to track and manage refridgerant gasses
 
 ---
 
