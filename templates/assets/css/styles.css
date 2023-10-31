@@ -1,0 +1,16 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+}
+
+.custom-tab.active {
+  background: transparent !important;
+  color: #121212!important;
+  border-bottom: 3px solid #111a66 !important;
+}
+
+.custom-tab {
+  background: transparent !important;
+  color: #636262!important;
+}
+
