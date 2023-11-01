@@ -33,8 +33,6 @@ app.register_blueprint(contractor)
 app.register_blueprint(auth)
 
 db = SQLAlchemy(app)
-
-
     
 @app.route("/", methods=['GET', 'POST'])
 def login():
