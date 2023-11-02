@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>New Equipment 2</title>
+  <title>Equipment Page</title>
   <script>
     (function() {
 
@@ -161,65 +161,114 @@
     </nav>
   </section><!-- End: Navbar -->
 
+
   <section>
     <div class="row justify-content-center mt-5">
-      <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
+      <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4 d-flex justify-content-center align-items-center">
         <form class="px-4">
           <!-- Start: Form Header -->
-          <div class="row mb-5">
-            <div class="col"><a class="btn mb-4 p-0" role="button" href="/New%20Cylinder/cylinder-type.html"><svg
-                  xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
-                  class="bi bi-chevron-left fs-4 me-2">
+          <div class="row mb-3">
+            <div class="col"><button class="btn mb-4 p-0" type="button"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-left fs-4 me-2">
                   <path fill-rule="evenodd"
                     d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
                   </path>
-                </svg>Back</a>
-              <h2>New Equipment Tag</h2>
-              <p>Equipment QR Ref Number: A0081295</p>
-              <div class="row justify-content-center">
-                <div class="col">1</div>
-                <div class="col">2</div>
-              </div>
-              <p>Fields with an asterisk (<span class="text-danger">*</span>) are required.</p>
+                </svg>Back</button>
+              <h2>Equipment Page</h2>
+              <p>Equipment QR Ref Number: {{Tag Number}}</p>
             </div>
-          </div><!-- End: Form Header -->
-          <section>
-            <h4>Equipment Refrigerant Information</h4>
-            <label for="refrigerant-type">Refrigerant Type<span class="text-danger">*</span></label>
-            <input type="text" name="refrigerant-type" class="form-control" required />
-            <label for="refrigerant-weight">Factory Refrigerant Weight<span class="text-danger">*</span></label>
+          </div>
+          <!-- End: Form Header -->
 
-
-              <div class="row-sm">
-                <div class="col-sm-2">
-                  <select class="form-select">
-                    <option>lb/oz</option>
-                    <option>other</option>
-                  </select>
+          <!-- Start: Card Buttons -->
+          <div class="container">
+            <div class="row">
+              <div class="col col-sm-6 mb-3">
+                <div class="card h-100 border btn" style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                  <div class="card-body d-flex flex-column">
+                    <div>
+                      <button class="btn mb-4 p-0" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="currentColor" class="bi bi-tools"
+                          viewBox="0 0 16 16">
+                          <path
+                            d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0Zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708ZM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11Z" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button class="btn">Repair and ODS</button>
+                  </div>
                 </div>
-
-              </div>
-              <div class="col-sm-3">
-                <input type="number" class="form-control" />
-                <label>lb</label>
-              </div>
-              <div class="col-sm-3">
-                <input type="number" class="form-control" />
-                <label>oz</label>
               </div>
 
-          </section>
+              <div class="col col-sm-6 mb-3">
+                <div class="card h-100 border btn" style="border-radius: 20px; box-shadow:5px 5px 10px rgba(0, 0, 0, 0.2);">
+                  <div class="card-body">
+                    <div>
+                      <button class="btn mb-4 p-0" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" viewBox="0 0 512 512">
+                          <path
+                            d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button class="btn">Recover and Decommission</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        </form>
+            <div class="row">
+              <div class="col col-sm-6 mb-3">
+                <div class="card h-100 border btn" style="border-radius: 20px; box-shadow:5px 5px 10px rgba(0, 0, 0, 0.2);">
+                  <div class="card-body">
+                    <div>
+                      <button class="btn mb-4 p-0" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="currentColor"
+                          class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+                          <path
+                            d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button class="btn">Unit ODS History</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col col-sm-6 mb-3">
+                <div class="card h-100 border btn" style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                  <div class="card-body">
+                    <div>
+                      <button class="btn mb-4 p-0" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="currentColor"
+                          class="bi bi-journal-text" viewBox="0 0 16 16">
+                          <path
+                            d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                          <path
+                            d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                          <path
+                            d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button class="btn">Maintenance History</button>
+                  </div>
+                </div>
+              </div>
+              <!-- End: Card Buttons -->
+
+            </div>
+          </div>
       </div>
     </div>
+    </form>
+  </section>
 
 
 
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
