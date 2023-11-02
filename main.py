@@ -5,10 +5,10 @@ from flask import Flask, request, jsonify
 from models import User, CRUD
 from routes.store import store
 from routes.admin import admin
-from routes.organization import organization
-from routes.technician import technician
-from routes.wholesaler import wholesaler
-from routes.contractor import contractor
+from routes.organization import organization #stores like walmart
+from routes.technician import technician #the only people who can use gas
+from routes.wholesaler import wholesaler #provides gas to stores
+from routes.contractor import contractor #boss of technician
 from routes.auth import auth
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
