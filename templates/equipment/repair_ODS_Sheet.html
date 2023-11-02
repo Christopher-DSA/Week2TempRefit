@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Setup Account</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/png" sizes="130x165"
         href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="icon" type="image/png" sizes="130x165"
@@ -92,7 +92,7 @@
                     <!-- Start: Form Header -->
                     <div class="row mb-3">
                         <div class="col">
-                            <h2>Account Set Up</h2>
+                            <h2>Repair ODS Sheet</h2>
                         </div>
                     </div><!-- End: Form Header -->
                     <!-- Start: Form Tabs -->
@@ -120,14 +120,49 @@
                                         <div class="row">
                                             <div class="col gap-3">
                                                 <div class="py-3">
-                                                    <h6>Repair Date<span class="text-danger">*</span></h3>
-                                                        <div class="mb-3"><input class="form-control" type="date"
-                                                                required=""></div>
+                                                    <p>Repair Date<span class="text-danger">*</span></p>
+                                                    <div class="mb-3"><input class="form-control" type="date"
+                                                            required=""></div>
                                                 </div>
-                                                <div class="py-3">
-                                                    <h6>Job Number<span class="text-danger">*</span></h3>
-                                                        <div class="mb-3"><input class="form-control" type="text"
-                                                                required=""></div>
+                                                <div class="pb-3">
+                                                    <p>Job Number</p>
+                                                    <div class="mb-3"><input class="form-control" type="text"></div>
+                                                </div>
+                                            </div>
+                                            <h4 class="mt-4">Equipment Refrigerant Information</h4>
+                                            <div class="py-3">
+                                                <p>Refrigerant Type</p>
+                                                <div class="mb-5"><input class="form-control" type="text" disabled
+                                                        placeholder="Refrigerant Placeholder"></div>
+                                                <p>Factory Refrigerant Weight</p>
+                                                <div class="row">
+                                                    <div class="col dropdown">
+                                                        <button class="btn w-100 btn-outline-secondary dropdown-toggle"
+                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false" disabled>
+                                                            lb/oz
+                                                        </button>
+                                                    </div>
+                                                    <div class="col mb-3">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control"
+                                                                style="border-radius: 5px;" placeholder="0" disabled>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text text-center"
+                                                                    style="text-align:center; border: none;">lb</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control"
+                                                                style="border-radius: 5px;" placeholder="0" disabled>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text text-center"
+                                                                    style="text-align:center; border: none;">oz</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div><!-- End: Role Selection -->
