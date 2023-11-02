@@ -140,3 +140,12 @@
 
 # Sept 11, 2023
 - Sample Sowmya Edit
+
+# October 31, 2023
+- Met with Cambrian students to discuss project
+
+# Novemeber 1, 2023
+- Met with the ICT and got them up to speed on the project. The students are connectedto click up and the Googlefolderthey have access to the documentation and we are going to review before setting tasks for next week 
+
+# November 2, 2023
+- Meeting with ICT and Cambrian, they stared at me and said nothing
