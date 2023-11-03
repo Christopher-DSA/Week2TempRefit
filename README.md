@@ -10,6 +10,12 @@
 - Christopher (ICT)
 - Yael (ICT)
 
+- Mansi Kamani (Cambrian)
+- Muqaddas Rahim (Cambrian)
+- Nithin Shajan (Cambrian)
+- Prashant Tiwari (Cambrian)
+- Sumanth Sundar (Cambrian)
+
 ## Project Description
 Refit is an application to track and manage refridgerant gasses
 

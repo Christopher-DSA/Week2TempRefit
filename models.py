@@ -30,6 +30,21 @@ Session = sessionmaker(bind=engine)
 
 
 class User(Base):
+    """Represents a user in the system.
+
+    Args:
+        email (str): The email address of the user.
+        password (str): The password of the user.
+        role (str): The role of the user.
+        added_date (str): The date when the user was added.
+        user_detail (str): Additional details about the user.
+        status (str): The status of the user.
+
+    Attributes:
+        user_id (int): The unique identifier of the user.
+
+    """
+
     __tablename__ = "User"
 
     user_id = Column(Integer, primary_key=True, autoincrement=True, nullable=True)
@@ -42,6 +57,7 @@ class User(Base):
 
     def __repr__(self):
         return "User model"
+
 
 
 class User_Detail(Base):
