@@ -112,9 +112,11 @@ size_of_file = [(f, os.stat(f).st_size) for f in files_list]
 # so, we have call sorted function
 # to sort according to the size of the file
 
+
 # created a lambda function that help
 # us to sort according the size of the file.
-def fun(x): return x[1]
+def fun(x):
+    return x[1]
 
 
 # in this case we use its file name.
@@ -154,3 +156,10 @@ print("File run and saved")
 
 #  2023-08-25 08:35:46  2392 lines
 #  2023-08-25 08:35:46  2.459MB  100 files
+
+#  2023-11-03 09:57:02  3049 lines
+#  2023-11-03 09:57:02  3.493MB  171 files
+
+
+#  2023-11-03 14:19:57  1126260 lines
+#  2023-11-03 14:19:59  127.543MB  5970 files
