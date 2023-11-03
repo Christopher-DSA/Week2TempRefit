@@ -1,6 +1,0 @@
-Collecting pyotp
-  Obtaining dependency information for pyotp from https://files.pythonhosted.org/packages/c3/c0/c33c8792c3e50193ef55adb95c1c3c2786fe281123291c2dbf0eaab95a6f/pyotp-2.9.0-py3-none-any.whl.metadata
-  Downloading pyotp-2.9.0-py3-none-any.whl.metadata (9.8 kB)
-Downloading pyotp-2.9.0-py3-none-any.whl (13 kB)
-Installing collected packages: pyotp
-Successfully installed pyotp-2.9.0
