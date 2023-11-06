@@ -230,21 +230,48 @@
                                     <div class="tab-pane" role="tabpanel" id="tab-2">
                                         <!-- Start: Form Input -->
                                         <div class="row">
-                                            <div class="col">
-                                                <p>Fields with an asterisk (<span class="text-danger">*</span>) are required.</p>
-                                                <h4>Identification</h4><!-- Start: First Name -->
-                                                <div class="mb-4"><label class="form-label">First Name*</label><input
-                                                        class="form-control" type="text" required="" name="First Name">
-                                                </div><!-- End: First Name -->
-                                                <!-- Start: Last Name -->
-                                                <div class="mb-4"><label class="form-label">LastName*</label><input
-                                                        class="form-control" type="text" required="" name="Last Name">
-                                                </div><!-- End: Last Name -->
-                                                <!-- Start: License -->
-                                                <div class="mb-4"><label class="form-label">ODS License*</label><input
-                                                        class="form-control" type="text" required="" name="License">
-                                                </div><!-- End: License -->
+                                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
+                                                required.</p>
+                                            <h5 class="mb-3">Leak Test Result<span class="text-danger">*</span></h5>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Leak detected - Do not add refrigerant until repaired
+                                                </label>
                                             </div>
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-6">
+                                                        <div class="form-check my-3">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="radioOption" id="radioOption1" value="option1" disabled>
+                                                            <label class="form-check-label" for="radioOption1">
+                                                                Leak Repaired
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check my-3">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="radioOption" id="radioOption2" value="option2" disabled>
+                                                            <label class="form-check-label" for="radioOption2">
+                                                                Leak Not Repaired
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Start: Last Name -->
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    No leak detected
+                                                </label>
+                                            </div>
+                                            <!-- Start: License -->
+                                            <div class="mb-4"><label class="form-label">ODS License*</label><input
+                                                    class="form-control" type="text" required="" name="License">
+                                            </div><!-- End: License -->
                                         </div><!-- End: Form Input -->
                                     </div>
                                     <div class="tab-pane" role="tabpanel" id="tab-3">
