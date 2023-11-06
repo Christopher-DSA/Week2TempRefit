@@ -3,7 +3,7 @@
 # 2. psycopg2.errors.UndefinedObject: type "datetime" does not exist
 #    LINE 7: last_updated DATETIME, (change it to TEXT)
 
-# What is this file for?
+# What is this file for? 
 # Modify this file to manage the db
 
 import psycopg2
@@ -26,7 +26,7 @@ conn = psycopg2.connect(
     user=database_user,
     password=database_password,
     host=database_host,
-    port=database_port,
+    port=database_port
 )
 
 # Create a cursor object to execute SQL queries
@@ -63,8 +63,7 @@ cursor.execute('DROP TABLE IF EXISTS "Tank"')
 
 
 # Create the "User" table
-cursor.execute(
-    """
+cursor.execute('''
 
     CREATE TABLE "User"(
         user_id SERIAL PRIMARY KEY, 
@@ -75,12 +74,10 @@ cursor.execute(
         user_detail TEXT NULL NULL,
         status TEXT NULL
     )
-"""
-)
+''')
 
 # Create the "User_Detail" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "User_Detail" (
         user_detail_id SERIAL PRIMARY KEY,
         user_id INTEGER,
@@ -94,23 +91,19 @@ cursor.execute(
         telephone TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
-"""
-)
+''')
 
 # Create the "Refrigerant" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Refrigerant" (
         refrigerant_id SERIAL PRIMARY KEY,
         refrigerant_name TEXT NULL,
         list TEXT NULL
     )
-"""
-)
+''')
 
 # Create the "Contractor" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Contractor" (
         contractor_id SERIAL PRIMARY KEY,
         name TEXT NULL,
@@ -124,12 +117,10 @@ cursor.execute(
         time_basis TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
-"""
-)
-
+''')
+               
 # Create the "Technician" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Technician" (
         technician_id SERIAL PRIMARY KEY,
         ods_licence_number TEXT,
@@ -142,12 +133,10 @@ cursor.execute(
         FOREIGN KEY (user_id) REFERENCES "User"(user_id),
         FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id)
     )
-"""
-)
+''')
 
 # Create the "Admin" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Admin" (
         admin_id SERIAL PRIMARY KEY,
         name TEXT NULL,
@@ -157,12 +146,10 @@ cursor.execute(
         admin_level INTEGER NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
-"""
-)
+''')
 
 # Create the "Subscription" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Subscription" (
         subscription_id SERIAL PRIMARY KEY,
         start_date TEXT,
@@ -170,22 +157,18 @@ cursor.execute(
         package_size TEXT,
         compliant TEXT NULL
     )
-"""
-)
+''')
 
-# create "Cylinder_Type" table
-cursor.execute(
-    """
+#create "Cylinder_Type" table
+cursor.execute('''
     CREATE TABLE "Cylinder_Type" (
         cylinder_type_id SERIAL PRIMARY KEY,
         type_name TEXT
     )
-"""
-)
+''')
 
 # Create the "Cylinder" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Cylinder" (
         cylinder_id SERIAL PRIMARY KEY,
         cylinder_size TEXT NULL,
@@ -202,12 +185,10 @@ cursor.execute(
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (cylinder_type_id) REFERENCES "Cylinder_Type"(cylinder_type_id)
     )
-"""
-)
+''')
 
 # Create the "Wholesaler" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Wholesaler" (
         wholesaler_id SERIAL PRIMARY KEY,
         name TEXT NULL,
@@ -215,12 +196,10 @@ cursor.execute(
         status TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
-"""
-)
+''')
 
 # Create the "Invoice" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Invoice" (
         invoice_id SERIAL PRIMARY KEY,
         subscription_id INTEGER NULL,
@@ -230,12 +209,10 @@ cursor.execute(
         date TEXT NULL,
         FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id)
     )
-"""
-)
+''')
 
 # Create the "Tag" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Tag" (
         tag_id SERIAL PRIMARY KEY,
         tag_number TEXT NULL,
@@ -248,13 +225,12 @@ cursor.execute(
         FOREIGN KEY (wholesaler_id) REFERENCES "Wholesaler"(wholesaler_id),
         FOREIGN KEY (invoice_id) REFERENCES "Invoice"(invoice_id)
     )
-"""
-)
+''')
+
 
 
 # Create the "Organization/Group" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Organization" (
         organization_id SERIAL PRIMARY KEY,
         name TEXT NULL,
@@ -266,12 +242,10 @@ cursor.execute(
         FOREIGN KEY (subscription_id) REFERENCES "Subscription"(subscription_id),
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
-"""
-)
+''')
 
 # Create the "Store" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Store" (
         store_id SERIAL PRIMARY KEY,
         organization_id INTEGER NULL,
@@ -283,12 +257,10 @@ cursor.execute(
         FOREIGN KEY (organization_id) REFERENCES "Organization"(organization_id),
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
-"""
-)
+''')
 
 # Create the "Unit" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Unit" (
         unit_id SERIAL PRIMARY KEY,
         technician_id INTEGER NULL,
@@ -307,12 +279,10 @@ cursor.execute(
         FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id),
         FOREIGN KEY (store_id) REFERENCES "Store"(store_id)
     )
-"""
-)
+''')
 
 # Create the "User_Logging" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "User_Logging" (
         log_id SERIAL PRIMARY KEY,
         user_id INTEGER,
@@ -321,21 +291,17 @@ cursor.execute(
         address_gps TEXT NULL,
         FOREIGN KEY (user_id) REFERENCES "User"(user_id)
     )
-"""
-)
+''')
 
 # Create the "Purchase" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Purchase" (
         purchase_id SERIAL PRIMARY KEY
     )
-"""
-)
+''')
 
 # Create the "Purchase" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Technician_Own_Company" (
         toc_id SERIAL PRIMARY KEY,
         technician_id INTEGER,
@@ -350,21 +316,17 @@ cursor.execute(
         postal_code TEXT NULL,
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id)
     )
-"""
-)
+''')
 
 # Create the "Tank" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Tank" (
         tank_id SERIAL PRIMARY KEY
     )
-"""
-)
+''')
 
 # Create the "Reclaim/Recovery" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Reclaim_Recovery" (
         rec_id SERIAL PRIMARY KEY,
         purchase_id INTEGER NULL,
@@ -386,12 +348,10 @@ cursor.execute(
         FOREIGN KEY (purchase_id) REFERENCES "Purchase"(purchase_id),
         FOREIGN KEY (tank_id) REFERENCES "Tank"(tank_id)
     )
-"""
-)
+''')
 
 # Create the "Repair" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Repair" (
         repair_id SERIAL PRIMARY KEY,
         unit_id INTEGER NULL,
@@ -404,12 +364,10 @@ cursor.execute(
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (purchase_id) REFERENCES "Purchase"(purchase_id)
     )
-"""
-)
+''')
 
 # Create the "ODS_Sheet" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "ODS_Sheet" (
         ods_id SERIAL PRIMARY KEY,
         contractor_id INTEGER NULL,
@@ -425,12 +383,10 @@ cursor.execute(
         FOREIGN KEY (rec_id) REFERENCES  "Reclaim_Recovery"(rec_id),
         FOREIGN KEY (tag_id) REFERENCES "Tag"(tag_id)
     )
-"""
-)
+''')
 
 # Create the "Technician_Offer" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Technician_Offer" (
         technician_offer_id SERIAL PRIMARY KEY,
         contractor_id INTEGER NULL,
@@ -440,24 +396,20 @@ cursor.execute(
         FOREIGN KEY (contractor_id) REFERENCES "Contractor"(contractor_id),
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id)
     )
-"""
-)
+''')
 
 # Create the "Store_Location" table
-cursor.execute(
-    """
+cursor.execute('''
     CREATE TABLE "Store_Location" (
         store_location_id SERIAL PRIMARY KEY,
         store_id INTEGER NULL,
         gps_location TEXT NULL,
         FOREIGN KEY (store_id) REFERENCES "Store"(store_id)
     )
-"""
-)
+''')
 
-# create "Maintenance" table
-cursor.execute(
-    """
+#create "Maintenance" table            
+cursor.execute('''
     CREATE TABLE "Maintenance" (
         maintenance_id SERIAL PRIMARY KEY,
         technician_id INTEGER NULL,
@@ -472,12 +424,10 @@ cursor.execute(
         FOREIGN KEY (technician_id) REFERENCES "Technician"(technician_id),
         FOREIGN KEY (unit_id) REFERENCES "Unit"(unit_id)
     )
-"""
-)
+''')
 
-# create "Maintenance_Detail" table
-cursor.execute(
-    """
+#create "Maintenance_Detail" table               
+cursor.execute('''
     CREATE TABLE "Maintenance_Detail" (
         maintenance_detail_id SERIAL PRIMARY KEY,
         maintenance_id INTEGER NULL,
@@ -485,8 +435,11 @@ cursor.execute(
         status VARCHAR(50) NULL,
         FOREIGN KEY (maintenance_id) REFERENCES "Maintenance"(maintenance_id)
     )
-"""
-)
+''')
+               
+
+
+
 
 
 # Commit the changes and close the connection
