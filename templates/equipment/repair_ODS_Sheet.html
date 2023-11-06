@@ -245,14 +245,16 @@
                                                     <div class="col-6">
                                                         <div class="form-check my-3">
                                                             <input class="form-check-input" type="radio"
-                                                                name="radioOption" id="radioOption1" value="option1" disabled>
+                                                                name="radioOption" id="radioOption1" value="option1"
+                                                                disabled>
                                                             <label class="form-check-label" for="radioOption1">
                                                                 Leak Repaired
                                                             </label>
                                                         </div>
                                                         <div class="form-check my-3">
                                                             <input class="form-check-input" type="radio"
-                                                                name="radioOption" id="radioOption2" value="option2" disabled>
+                                                                name="radioOption" id="radioOption2" value="option2"
+                                                                disabled>
                                                             <label class="form-check-label" for="radioOption2">
                                                                 Leak Not Repaired
                                                             </label>
@@ -278,45 +280,17 @@
                                         <!-- Start: Form Input -->
                                         <div class="row">
                                             <div class="col">
-                                                <p>Fields with an asterisk (*) are required.</p>
-                                                <h4>Company Details</h4><!-- Start: Company Name -->
-                                                <div class="mb-4"><label class="form-label">Company Name</label><input
-                                                        class="form-control" type="text" name="Company Name"></div>
-                                                <!-- End: Company Name -->
-                                                <!-- Start: Branch Number -->
-                                                <div class="mb-4"><label class="form-label">Company Branch
-                                                        Number</label><input class="form-control" type="text"
-                                                        name="Branch Number"></div><!-- End: Branch Number -->
-                                                <!-- Start: Phone Number -->
-                                                <div class="mb-4"><label class="form-label">Company Phone
-                                                        Number</label><input class="form-control" type="tel"
-                                                        name="Phone Number"></div><!-- End: Phone Number -->
-                                                <!-- Start: ODS Email -->
-                                                <div class="mb-4"><label class="form-label">ODS Sheet Recipient
-                                                        Email</label><input class="form-control" type="email"
-                                                        name="Recipient Email"></div><!-- End: ODS Email -->
-                                                <!-- Start: Company Address -->
-                                                <div class="mb-4"><label class="form-label">Company
-                                                        Address</label><input class="form-control" type="text"
-                                                        name="Company Address"></div><!-- End: Company Address -->
-                                                <!-- Start: Suite -->
-                                                <div class="mb-4"><label class="form-label">Apartment, Suite,
-                                                        etc.</label><input class="form-control" type="text"
-                                                        name="Suite Number"></div><!-- End: Suite -->
-                                                <!-- Start: Company City -->
-                                                <div class="mb-4"><label class="form-label">City</label><input
-                                                        class="form-control" type="text" name="Company City"></div>
-                                                <!-- End: Company City -->
-                                                <!-- Start: Company Province -->
-                                                <div class="mb-4"><label class="form-label">Province</label><input
-                                                        class="form-control" type="text" name="Company Province"></div>
-                                                <!-- End: Company Province -->
-                                                <!-- Start: Company Postal -->
-                                                <div class="mb-4"><label class="form-label">Postal Code</label><input
-                                                        class="form-control" type="text" name="Postal Code"
-                                                        pattern="^[ABCEGHJKLMNPRSTVXY]\d[A-Z] \d[A-Z]\d$"
-                                                        title="Please enter a valid Canadian postal code in the format A1A 1A1">
-                                                </div><!-- End: Company Postal -->
+                                                <h4>Adding Repair Refrigerant</h4>
+                                                <ul class="list-group my-3 mx-2">
+                                                    <li class="list-group-item border-0 p-0">1. Scan cylinder QR tag
+                                                    </li>
+                                                    <li class="list-group-item border-0 p-0">2. Add refrigerant to
+                                                        equipment</li>
+                                                    <li class="list-group-item border-0 p-0">3. Record refrigerant added
+                                                    </li>
+                                                </ul>
+                                                <p>If you do not need to add refrigerant, proceed to review ODS sheet.
+                                                </p>
                                             </div>
                                         </div><!-- End: Form Input -->
                                     </div>
@@ -326,9 +300,10 @@
                     </div><!-- End: Form Tabs -->
                     <!-- Start: Form Submit -->
                     <div class="row d-flex justify-content-center">
-                        <div class="col d-flex flex-row align-items-center gap-4"><button
-                                class="btn btn-outline-primary btn-lg w-100" type="button">Back</button><input
-                                class="btn btn-lg btn-primary w-100" type="submit" name="Next" value="Next"></div>
+                        <div class="row d-flex flex-col align-items-center gap-4"><input
+                                class="btn btn-lg btn-primary w-100" type="submit" name="Scan Cylinder" value="Next">
+                            <button class="btn btn-outline-primary btn-lg w-100" type="button">Review ODS Sheet</button>
+                        </div>
                     </div><!-- End: Form Submit -->
                 </form>
             </div>
