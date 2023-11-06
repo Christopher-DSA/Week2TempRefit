@@ -5,10 +5,17 @@
 - Alison (team lead)
 - Sidney (Data Science Manager)
 - Vinh (Data Scientist)
-
+-
 - Jared (ICT)
 - Christopher (ICT)
-- Yahel (ICT)
+- Yael (ICT)
+- Jennifer (ICT)
+-
+- Mansi Kamani (Cambrian)
+- Muqaddas Rahim (Cambrian)
+- Nithin Shajan (Cambrian)
+- Prashant Tiwari (Cambrian)
+- Sumanth Sundar (Cambrian)
 
 ## Project Description
 Refit is an application to track and manage refridgerant gasses
