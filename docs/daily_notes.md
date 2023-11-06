@@ -145,6 +145,34 @@
 - Met with Cambrian students to discuss project
 
 # Novemeber 1, 2023
+
+- Met with the ICT and got them up to speed on the project. The students are connected to click up and the Google folder they have access to the documentation and we are going to review before setting tasks for next week 
+
+
+
 - Met with the ICT and got them up to speed on the project. The students are connectedto click up and the Googlefolderthey have access to the documentation and we are going to review before setting tasks for next week 
 
+
+
+# November 2, 2023
+- Meeting with ICT and Cambrian
+
+# November 3, 2023
+- Summary
+
+- A new unit testing file was created in the tests folder, named test_user.py.
+- The models.py file was examined, which contains SQLAlchemy models for various database tables.
+- Unit tests were created for the User and User_Detail models.
+- Several separate unit testing files were created for the Technician, Admin, and Contractor models.
+- The complete test_technician.py, test_admin.py, and test_contractor.py files were provided for testing the respective models.
+- Files
+- test_user.py - Unit tests for the User model.
+- test_user_detail.py - Unit tests for the User_Detail model.
+- test_technician.py - Unit tests for the Technician model.
+- test_admin.py - Unit tests for the Admin model.
+- test_contractor.py - Unit tests for the Contractor model.
+
+
+# November 6, 2023
+- Reviewed code and modules
 
