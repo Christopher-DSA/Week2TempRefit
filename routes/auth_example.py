@@ -85,7 +85,7 @@
 #         return resp, 200
 #     except:
 #         return jsonify({'message': 'Invalid refresh token'}), 401
-
+    
 # @auth.route('/forgot-password', methods=['GET', 'POST'])
 # def forgot_password():
 #   if request.method == 'GET':
@@ -109,6 +109,7 @@
 #         return redirect(url_for('auth.forgot_password'))
 
 
+    
 # @auth.route('/reset_password/<verfi_code>/<email>', methods=['GET','POST'])
 # def reset_password(verfi_code, email):
 #     if request.method == 'GET':
@@ -134,3 +135,4 @@
 #     # there should be a link that directs user to the mediwell portal
 #     # that has the form to reset their password
 #     # the reset url should have a token that could identify that the right email (credential) is reset
+    

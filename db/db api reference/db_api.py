@@ -14,7 +14,7 @@ url = URL.create(
     password=os.getenv("SQL_DATABASE_PASSWORD"),
     host=os.getenv("SQL_DATABASE_HOSTNAME"),
     port=os.getenv("SQL_DATABASE_PORT"),
-    database=os.getenv("SQL_DATABASE"),
+    database=os.getenv("SQL_DATABASE")
 )
 
 engine = create_engine(url)
