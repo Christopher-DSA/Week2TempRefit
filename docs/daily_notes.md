@@ -164,4 +164,7 @@
 - test_technician.py - Unit tests for the Technician model.
 - test_admin.py - Unit tests for the Admin model.
 - test_contractor.py - Unit tests for the Contractor model.
-- 
+
+
+# November 6, 2023
+- Reviewed code and modules
