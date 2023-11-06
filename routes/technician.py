@@ -113,3 +113,6 @@ def repair():
 @technician.route("/equipment/recovery")
 def recovery():
     return render_template("equipment/recovery.html")
+
+
+
