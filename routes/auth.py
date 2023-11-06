@@ -26,13 +26,19 @@ auth = Blueprint("auth", __name__)
 @auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        print("Received POST request")
         email = request.form["username"]
         password = request.form["password"]
+        print(email, password)
+        
+        #Reminds user that they need to fill out all fields.
+        if not email or not password:
+            flash("Please fill out all fields.")
+            return redirect(url_for('login'))  # Redirecting to the login route
+        
         user = User.get_user_by_email(email)
 
-        if (
-            user and user.password == password
-        ):  # A basic check, but you should hash and verify passwords securely.
+        if (user and user.password == password):# A basic check, but you should hash and verify passwords securely.
             session["user_id"] = user.user_id  # Store user ID in session
             print(session)
             print(user.role)
