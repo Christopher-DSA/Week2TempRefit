@@ -228,10 +228,10 @@
                 <div class="mb-3">
                   <h4 class="mb-3">Equipment Refrigerant Information</h4>
                   <label for="Refrigerant Type" class="form-label">Refrigerant Type</label>
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" placeholder="R-134A" readonly/>
                 </div>
 
-                <!-- Refrigerant Inputs -->
+                <!-- Factory Refrigerant Weight input -->
                 <div class="mb-5">
                   <label for="Unit Type">Factory Refrigerant Weight</label>
                   <div class="row">
@@ -240,15 +240,94 @@
                         <option>lb/oz</option>
                         <option>kg/g</option>
                       </select>
-
-                      <label for="refrigerant-weight"></label>
-                      <input type="number" class="form-control"/>
                     </div>
-                  </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="12" readonly/>
+                        <label class="input-group-sm p-2">lb</label>
+                      </div>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="0" readonly/>
+                        <label class="input-group-sm p-2">oz</label>
+                      </div>
+                    </div>
                 </div>
 
+                <!-- Space in between -->
+                <div class="mb-4"></div> 
+
+                <!-- Additional Refrigerant Weight input-->
+                <div class="mb-5">
+                  <label for="Unit Type">Additional Refrigerant Weight</label>
+                  <div class="row">
+                    <div class="col-4">
+                      <select class="form-select">
+                        <option>lb/oz</option>
+                        <option>kg/g</option>
+                      </select>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="2" readonly/>
+                        <label class="input-group-sm p-2">lb</label>
+                      </div>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="3" readonly/>
+                        <label class="input-group-sm p-2">oz</label>
+                      </div>
+                    </div>
+                </div>
+
+                  <!-- Space in between -->
+                  <div class="mb-4"></div> 
+
+                <!-- Total Refrigerant Weight input -->
+                <div class="mb-5">
+                  <label for="Unit Type">Total Refrigerant Weight</label>
+                  <div class="row">
+                    <div class="col-4">
+                      <select class="form-select">
+                        <option>lb/oz</option>
+                        <option>kg/g</option>
+                      </select>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="14" readonly/>
+                        <label class="input-group-sm p-2">lb</label>
+                      </div>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="3"readonly/>
+                        <label class="input-group-sm p-2">oz</label>
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6 d-flex justify-content-center">
+                  <button type="cancel" class="btn btn-lg btn-outline-primary py-2 px-5">Cancel</button>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                  <button type="submit" class="btn btn-lg btn-primary py-2 px-5">Next</button>
+                </div>
               </div>
             </div>
+
+            </div>
+
 
           </form>
           <!-- End: Form -->
