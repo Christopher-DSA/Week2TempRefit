@@ -496,7 +496,7 @@ class Maintenance_Detail(Base):
     def __repr__(self):
         return 'Maintenance Detail Model'
     
-# Class CRUD with all important features to worth with the Database.
+# Class CRUD with all important features to work with the Database.
 class CRUD:
 
     ''' This class is the main CRUD class with methods to create, read, update, and delete records. 
