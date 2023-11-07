@@ -190,11 +190,10 @@
                 <button class="nav-link" id="recovery-2-tab" type="button" role="tab" data-bs-toggle="tab"
                   data-bs-target="#recovery-2" aria-controls="recovery-2-tab-pane" aria-selected="false">2</button>
               </li>
-              <!-- <li class="nav-item ms-3" role="presentation">
-                <button class="nav-link" id="new-equipment-3-tab" type="button" role="tab" data-bs-toggle="tab"
-                  data-bs-target="#new-equipment-3" aria-controls="new-equipment-3-tab-pane"
-                  aria-selected="false">3</button>
-              </li> -->
+              <li class="nav-item ms-3" role="presentation">
+                <button class="nav-link" id="recovery-3-tab" type="button" role="tab" data-bs-toggle="tab"
+                  data-bs-target="#recovery-3" aria-controls="recovery-3-tab-pane" aria-selected="false">3</button>
+              </li>
             </ul>
           </div>
           <div>
@@ -325,12 +324,11 @@
                     </div>
                   </div>
                 </div>
-
               </div>
               <!-- End: Tab 1 -->
 
               <!-- Start: Tab 2 -->
-              <div class="tab-pane fade d-flex flex-column justify-content-start mb-4" id="recovery-2" role="tabpanel"
+              <div class="tab-pane fade justify-content-start" id="recovery-2" role="tabpanel"
                 aria-labelledby="nav-equipment-2-tab">
 
                 <h4>Leak Test Result <span class="text-danger fw-bold">*</span></h4>
@@ -416,7 +414,8 @@
                   <div class="form-floating mt-3">
                     <h5>Additional Notes</h5>
                     <p class="mb-1">Recovery Notes</p>
-                    <textarea class="form-control" style="height: 120px; resize: none; word-wrap: break-word;"></textarea>
+                    <textarea class="form-control"
+                      style="height: 120px; resize: none; word-wrap: break-word;"></textarea>
                   </div>
 
                   <div class="row mt-4">
@@ -427,12 +426,47 @@
                       <button type="submit" class="btn btn-lg btn-primary py-2 px-5">Next</button>
                     </div>
                   </div>
-
                 </div>
-
               </div>
               <!-- End: Tab 2 -->
 
+              <!-- Start: Tab 3 -->
+              <div class="tab-pane fade d-flex flex-column justify-content-start mb-4" id="recovery-3" role="tabpanel"
+                aria-labelledby="nav-equipment-3-tab">
+
+                <h4 class="mb-3">Recover Refrigerant</h4>
+
+                <div class="mb-3">
+                  <label for="recover-refrigerant" class="mb-2">Total Recovered from Equipment</label>
+                  <div class="row">
+                    <div class="col-4">
+                      <select class="form-select">
+                        <option>lb/oz</option>
+                        <option>kg/g</option>
+                      </select>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control"/>
+                        <label class="input-group-sm p-2">lb</label>
+                      </div>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control"/>
+                        <label class="input-group-sm p-2">oz</label>
+                      </div>
+                    </div>
+
+                    <div class="d-grid gap-4 mx-auto mt-5">
+                      <button type="button" class="btn btn-primary btn-lg">Review ODS Sheet</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End: Tab 3 -->
 
             </div>
           </form>
