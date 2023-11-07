@@ -186,12 +186,11 @@
                 <button class="nav-link active" id="recovery-1-tab" type="button" role="tab" data-bs-toggle="tab"
                   data-bs-target="#recovery-1" aria-controls="recovery-1-tab-pane" aria-selected="true">1</button>
               </li>
-              <!-- <li class="nav-item ms-3" role="presentation">
-                <button class="nav-link" id="new-equipment-2-tab" type="button" role="tab" data-bs-toggle="tab"
-                  data-bs-target="#new-equipment-2" aria-controls="new-equipment-2-tab-pane"
-                  aria-selected="false">2</button>
-              </li>
               <li class="nav-item ms-3" role="presentation">
+                <button class="nav-link" id="recovery-2-tab" type="button" role="tab" data-bs-toggle="tab"
+                  data-bs-target="#recovery-2" aria-controls="recovery-2-tab-pane" aria-selected="false">2</button>
+              </li>
+              <!-- <li class="nav-item ms-3" role="presentation">
                 <button class="nav-link" id="new-equipment-3-tab" type="button" role="tab" data-bs-toggle="tab"
                   data-bs-target="#new-equipment-3" aria-controls="new-equipment-3-tab-pane"
                   aria-selected="false">3</button>
@@ -203,7 +202,7 @@
           </div>
           <!-- End: Tab Navigation -->
 
-          <!-- Start: Form -->
+          <!-- Start: Form-->
           <form>
             <div class="tab-content" id="recovery-form-tab-content">
 
@@ -228,7 +227,7 @@
                 <div class="mb-3">
                   <h4 class="mb-3">Equipment Refrigerant Information</h4>
                   <label for="Refrigerant Type" class="form-label">Refrigerant Type</label>
-                  <input type="text" class="form-control" placeholder="R-134A" readonly/>
+                  <input type="text" class="form-control" placeholder="R-134A" readonly />
                 </div>
 
                 <!-- Factory Refrigerant Weight input -->
@@ -244,96 +243,138 @@
 
                     <div class="col-4">
                       <div class="input-group">
-                        <input type="number" class="form-control" placeholder="12" readonly/>
+                        <input type="number" class="form-control" placeholder="12" readonly />
                         <label class="input-group-sm p-2">lb</label>
                       </div>
                     </div>
 
                     <div class="col-4">
                       <div class="input-group">
-                        <input type="number" class="form-control" placeholder="0" readonly/>
+                        <input type="number" class="form-control" placeholder="0" readonly />
                         <label class="input-group-sm p-2">oz</label>
                       </div>
                     </div>
-                </div>
-
-                <!-- Space in between -->
-                <div class="mb-4"></div> 
-
-                <!-- Additional Refrigerant Weight input-->
-                <div class="mb-5">
-                  <label for="Unit Type">Additional Refrigerant Weight</label>
-                  <div class="row">
-                    <div class="col-4">
-                      <select class="form-select">
-                        <option>lb/oz</option>
-                        <option>kg/g</option>
-                      </select>
-                    </div>
-
-                    <div class="col-4">
-                      <div class="input-group">
-                        <input type="number" class="form-control" placeholder="2" readonly/>
-                        <label class="input-group-sm p-2">lb</label>
-                      </div>
-                    </div>
-
-                    <div class="col-4">
-                      <div class="input-group">
-                        <input type="number" class="form-control" placeholder="3" readonly/>
-                        <label class="input-group-sm p-2">oz</label>
-                      </div>
-                    </div>
-                </div>
+                  </div>
 
                   <!-- Space in between -->
-                  <div class="mb-4"></div> 
+                  <div class="mb-4"></div>
 
-                <!-- Total Refrigerant Weight input -->
-                <div class="mb-5">
-                  <label for="Unit Type">Total Refrigerant Weight</label>
-                  <div class="row">
-                    <div class="col-4">
-                      <select class="form-select">
-                        <option>lb/oz</option>
-                        <option>kg/g</option>
-                      </select>
-                    </div>
+                  <!-- Additional Refrigerant Weight input-->
+                  <div class="mb-5">
+                    <label for="Unit Type">Additional Refrigerant Weight</label>
+                    <div class="row">
+                      <div class="col-4">
+                        <select class="form-select">
+                          <option>lb/oz</option>
+                          <option>kg/g</option>
+                        </select>
+                      </div>
 
-                    <div class="col-4">
-                      <div class="input-group">
-                        <input type="number" class="form-control" placeholder="14" readonly/>
-                        <label class="input-group-sm p-2">lb</label>
+                      <div class="col-4">
+                        <div class="input-group">
+                          <input type="number" class="form-control" placeholder="2" readonly />
+                          <label class="input-group-sm p-2">lb</label>
+                        </div>
+                      </div>
+
+                      <div class="col-4">
+                        <div class="input-group">
+                          <input type="number" class="form-control" placeholder="3" readonly />
+                          <label class="input-group-sm p-2">oz</label>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="col-4">
-                      <div class="input-group">
-                        <input type="number" class="form-control" placeholder="3"readonly/>
-                        <label class="input-group-sm p-2">oz</label>
+                    <!-- Space in between -->
+                    <div class="mb-4"></div>
+
+                    <!-- Total Refrigerant Weight input -->
+                    <div class="mb-5">
+                      <label for="Unit Type">Total Refrigerant Weight</label>
+                      <div class="row">
+                        <div class="col-4">
+                          <select class="form-select">
+                            <option>lb/oz</option>
+                            <option>kg/g</option>
+                          </select>
+                        </div>
+
+                        <div class="col-4">
+                          <div class="input-group">
+                            <input type="number" class="form-control" placeholder="14" readonly />
+                            <label class="input-group-sm p-2">lb</label>
+                          </div>
+                        </div>
+
+                        <div class="col-4">
+                          <div class="input-group">
+                            <input type="number" class="form-control" placeholder="3" readonly />
+                            <label class="input-group-sm p-2">oz</label>
+                          </div>
+                        </div>
                       </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-6 d-flex justify-content-center">
+                        <button type="cancel" class="btn btn-lg btn-outline-primary py-2 px-5">Cancel</button>
+                      </div>
+                      <div class="col-6 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-lg btn-primary py-2 px-5">Next</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
               </div>
+              <!-- End: Tab 1 -->
 
-              <div class="row">
-                <div class="col-6 d-flex justify-content-center">
-                  <button type="cancel" class="btn btn-lg btn-outline-primary py-2 px-5">Cancel</button>
+              <!-- Start: Tab 2 -->
+              <div class="tab-pane fade d-flex flex-column justify-content-start mb-4" id="recovery-2" role="tabpanel"
+                aria-labelledby="nav-equipment-2-tab">
+
+                <h4>Leak Test Result <span class="text-danger fw-bold">*</span></h4>
+
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" />
+                  <label class="form-check-label">Leak Detected - Do not add refrigerant until repaired</label>
                 </div>
-                <div class="col-6 d-flex justify-content-center">
-                  <button type="submit" class="btn btn-lg btn-primary py-2 px-5">Next</button>
+
+                <div class="container mb-3">
+                  <div class="row justify-content-center">
+                    <div class="col-6">
+                      <div aria-checked="form-check my-3">
+                        <input class="form-check-input" type="radio" name="radioOption" id="radioOption1"
+                          value="option1" disabled />
+                        <label>Leak Repaired</label>
+                      </div>
+
+                      <div class="mb-2"></div>
+
+                      <div aria-checked="form-check my-3">
+                        <input class="form-check-input" type="radio" name="radioOption" id="radioOption2"
+                          value="option2" disabled />
+                        <label>Leak Not Repaired</label>
+                      </div>
+
+                    </div>
+                  </div>
                 </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" />
+                  <label class="form-check-label">No Leak Detected</label>
+                </div>
+
               </div>
+              <!-- End: Tab 2 -->
+
+
             </div>
-
-            </div>
-
-
           </form>
-          <!-- End: Form -->
+
         </div>
       </div>
-    </div>
   </section>
 
 
