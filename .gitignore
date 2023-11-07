@@ -20,3 +20,6 @@
 
 #DS_Store
 .DS_Store
+
+#Adding lib folder to git ignore
+Lib/
