@@ -176,5 +176,26 @@
 # November 6, 2023
 - Reviewed code and modules
 - Addded documentation code
-- 
+  
+
+# November 7, 2023
+- Reviewed code and modules
+- Added files to static folder including a js file for scrips that are duplicated in templates
+- Ran linesize
+- Cleaned up repo
+
+- **Participants:** Chris, Nithin, Jared, Mansi, Jennifer, Muskan, Sumanth, Yael
+
+### Yesterday's Messages
+
+- Chris raised a question about the usage of `auth.py` over `auth_example.py`.
+- Nithin proposed a meeting at 8 am or 9 am EST, later settled on 11 am EST due to time zone differences.
+- Jared requested a summary of the meeting due to the PST time zone difference.
+- Mansi, Jennifer, and others confirmed their availability for the meeting.
+- You reminded the team to pull the updated code in the morning before starting work.
+
+### Today's Meeting Plan
+
+- Jared suggested breaking into groups and working on specific .py files in /routes.
+- Nithin shared plans for a group of three, focusing on the contractor HTML or new Cylinder Tag.
 
