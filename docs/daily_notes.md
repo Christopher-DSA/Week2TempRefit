@@ -183,6 +183,8 @@
 - Added files to static folder including a js file for scrips that are duplicated in templates
 - Ran linesize
 - Cleaned up repo
+-Christopher added Secure password hashing system to auth.py
+-Christopher and Nithin had a meeting discussing connecting to the database
 
 - **Participants:** Chris, Nithin, Jared, Mansi, Jennifer, Muskan, Sumanth, Yael
 
@@ -198,10 +200,6 @@
 
 - Jared suggested breaking into groups and working on specific .py files in /routes.
 - Nithin shared plans for a group of three, focusing on the contractor HTML or new Cylinder Tag.
-
-# November 7, 2023
--Christopher added Secure password hashing system to auth.py
--Christopher and Nithin had a meeting discussing connecting to the database
 
 # November 8, 2023
 - Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)]
