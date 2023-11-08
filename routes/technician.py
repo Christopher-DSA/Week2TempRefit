@@ -1,6 +1,6 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician
+from models import CRUD, User, User_Detail, Technician, Unit
 from functools import wraps
 technician = Blueprint('technician', __name__)
 
@@ -69,13 +69,50 @@ def dashboardtechnician():
     user=session.get('user_id')
     return render_template("technician/dashboardtechnician.html", user=user)
 
-@technician.route('/equipment/equipment_create')
+@technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
 def equipment_create():
     if request.method == 'POST':
-        latitude = request.form.get('latitude')
-        longitude = request.form.get('longitude')
-        print(f"Received coordinates: Latitude {latitude}, Longitude {longitude}")
-        return "Location received", 200
+        # Get data from form
+        equipmentTagId = request.form.get('equipmentTagId')
+        technicianId = request.form.get('technicianId')
+        createDate = request.form.get('createDate')
+        address = request.form.get('address')
+        organizationId = request.form.get('organizationId')
+        refrigerantType = request.form.get('refrigerantType')
+        refrigerantId = request.form.get('refrigerantId')
+        factoryCharge = request.form.get('factoryCharge')
+        additionalCharge = request.form.get('additionalCharge')
+        totalCharge = request.form.get('totalCharge')
+        manufacturerName = request.form.get('manufacturerName')
+        modelNumber = request.form.get('modelNumber')
+        serialNumber = request.form.get('serialNumber')
+        equipmentType = request.form.get('equipmentType')
+        addRefrigerant = request.form.get('addRefrigerant')
+        # sometimes these fields are empty
+        if addRefrigerant == "yes":
+            additionalRefrigerantAmount = request.form.get('additionalRefrigerantAmount')
+            locationDescription = request.form.get('locationDescription')
+        additionalNotes = request.form.get('additionalNotes')
+
+        print("Equipment Create data successfully retrieved.")
+
+        # latitude = request.form.get('latitude')
+        # longitude = request.form.get('longitude')
+        # print(f"Received coordinates: Latitude {latitude}, Longitude {longitude}")
+        # return "Location received", 200
+    
+        # validate the data and pass data to database
+        # unsure about some of these fields
+        new_unit=CRUD.create(Unit,unit_id = equipmentTagId, technician_id = technicianId,
+                               unit_name= serialNumber, tag_id = equipmentTagId, other_attribute = None,
+                               installation_date = createDate, last_mainenance_date = createDate,
+                               manufacturer = manufacturerName, model = modelNumber, 
+                               type_of_refridgerant = refrigerantType, factory_charge_amount = factoryCharge,
+                               unit_type = equipmentType, store_id = organizationId)
+        
+        return redirect(url_for('technician.dashboardtechnician'))
+        
+    
     return render_template('equipment/equipment_create.html')
 
 @technician.route('/equipment/repair')
