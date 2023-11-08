@@ -3,7 +3,7 @@ from PyPDF4 import PdfFileMerger
 
 # Get all the PDF filenames.
 pdfFiles = []
-for filename in glob.glob('*.pdf'):
+for filename in glob.glob("*.pdf"):
     pdfFiles.append(filename)
 
 print(pdfFiles)

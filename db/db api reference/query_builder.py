@@ -16,9 +16,13 @@ class QueryBuilder:
 
     def insert_into(self, table: str, values: str):
         if self.query:
-            raise Exception("Cannot use 'insert_into' method after any other query methods.")
+            raise Exception(
+                "Cannot use 'insert_into' method after any other query methods."
+            )
 
-        self.query += f"INSERT INTO {table} VALUES ({', '.join(str(v) for v in values)})"
+        self.query += (
+            f"INSERT INTO {table} VALUES ({', '.join(str(v) for v in values)})"
+        )
         return self
 
     def update(self, table: str):
@@ -37,7 +41,9 @@ class QueryBuilder:
 
     def delete_from(self, table):
         if self.query:
-            raise Exception("Cannot use 'delete_from' method after any other query methods.")
+            raise Exception(
+                "Cannot use 'delete_from' method after any other query methods."
+            )
 
         self.query += f"DELETE FROM {table} "
         return self
@@ -51,7 +57,9 @@ class QueryBuilder:
 
     def where(self, condition):
         if self.where_used:
-            raise Exception("Cannot use 'where' method multiple times in the same query.")
+            raise Exception(
+                "Cannot use 'where' method multiple times in the same query."
+            )
 
         self.query += f"WHERE {condition} "
         self.where_used = True
