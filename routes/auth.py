@@ -19,8 +19,9 @@ def login():
         password = request.form["password"]
         
         #Hashing the password to match the hashed password in the database. For security purposes.
-        hashed_password = generate_hash(password, os.getenv('HASH_SECRET'))
-        
+        #hashed_password = generate_hash(password, os.getenv('HASH_SECRET'))
+        hashed_password = generate_hash(password, current_app.secret_key)
+
         #Reminds user that they need to fill out all fields.
         if not entered_email or not password:
             flash("Please fill out all fields.")

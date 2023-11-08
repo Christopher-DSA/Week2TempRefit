@@ -21,9 +21,8 @@ def contractor_required(f):
         # Assuming the user_id in the session is the email of the user.
         user_id= session.get('user_id')
 
-        
 
-        user = CRUD.read(User,user_id=user_id)[0]
+        user = CRUD.read(User,user_id=user_id)
         
         if not user or user.role != 'contractor':
             # Either user doesn't exist, or the user is not an admin.
@@ -53,7 +52,7 @@ def formcontractor():
 
         new_user=CRUD.create(User_Detail, address=address, city=city,province=province, postal_code=postalCode,telephone=phoneNumber)
 
-        new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active')
+        new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active',companyName=companyName,branchId=branchId)
         
     #redirect to the appropriate page
 
