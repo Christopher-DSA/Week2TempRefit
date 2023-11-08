@@ -4,28 +4,33 @@ from models import User, Store, CRUD
 from functools import wraps
 import pandas as pd
 import os
+from dotenv import load_dotenv
 # from main import app
 from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
+load_dotenv()
 auth = Blueprint('auth', __name__)
-
 
 @auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         print("Received POST request")
-        email = request.form["username"]
+        entered_email = request.form["username"]
         password = request.form["password"]
-        print(email, password)
+        
+        #Hashing the password to match the hashed password in the database. For security purposes.
+        hashed_password = generate_hash(password, os.getenv('HASH_SECRET'))
         
         #Reminds user that they need to fill out all fields.
-        if not email or not password:
+        if not entered_email or not password:
             flash("Please fill out all fields.")
             return redirect(url_for('login'))  # Redirecting to the login route
         
         #Find matching row in the database user table by email.
-        user = User.get_user_by_email(email)
-        if (user and user.password == password):# A basic check, but you should hash and verify passwords securely.
+        user = CRUD.read(User, email=entered_email)
+        print(user.password)
+        
+        if (user and user.password == hashed_password):# hashed and verified password securely. Updated from previous basic check.
             session["user_id"] = user.user_id  # Store user ID in session
             print(session)
             print(user.role)
@@ -37,8 +42,8 @@ def login():
                 return redirect(url_for('contractor.dashboardcontractor'))
             elif user.role=='wholesaler':
                 return redirect(url_for('wholesaler.dashboardwholesaler'))
-            
-        return "Invalid credentials", 401
+        else:
+            return flash("Invalid username or password.")
     
     return render_template('auth/login.html')
 
