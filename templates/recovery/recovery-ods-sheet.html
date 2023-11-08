@@ -360,7 +360,7 @@
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" />
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" required/>
                   <label class="form-check-label">No Leak Detected</label>
                 </div>
 
@@ -368,7 +368,7 @@
                   <h4>Other Test Results</h4>
 
                   <div class="form-check mt-3">
-                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                    <input class="form-check-input" type="checkbox" id="flexCheckDefault" required>
                     <label class="form-check-label" for="flexCheckDefault">
                       No longer contains refrigerant
                     </label>
@@ -405,7 +405,7 @@
                     <div class="row justify-content-center">
                       <div class="col-10">
                         <label>PSIG Result<span class="text-danger fw-bold">*</span></label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" required>
                       </div>
                     </div>
                   </div>
@@ -459,10 +459,19 @@
               <div class="tab-pane fade d-flex flex-column justify-content-start mb-4" id="recovery-3" role="tabpanel"
                 aria-labelledby="nav-equipment-3-tab">
 
-                <h4 class="mb-3">Recover Refrigerant</h4>
+                <h4 class="mt-3">Recover Refrigerant</h4>
 
-                <div class="mb-3">
-                  <label for="recover-refrigerant" class="mb-2">Total Recovered from Equipment</label>
+                <div>
+                  <ol>
+                    <li>Scan cylinder QR tag</li>
+                    <li>Recover refrigerant from equipment</li>
+                    <li>Record refrigerant recovered</li>
+                  </ol>
+                </div>
+
+                <div class="mb-5">
+                  <h5 class="mt-3">Recovered to Cylinder 1<span class="text-danger fw-bold">*</span></h5>
+                  <h5 class="mb-3">Cylinder: {{A0081295}}</h5>
                   <div class="row">
                     <div class="col-4">
                       <select class="form-select">
@@ -473,27 +482,50 @@
 
                     <div class="col-4">
                       <div class="input-group">
-                        <input type="number" class="form-control" />
+                        <input type="number" class="form-control" placeholder="1" readonly />
                         <label class="input-group-sm p-2">lb</label>
                       </div>
                     </div>
 
                     <div class="col-4">
                       <div class="input-group">
-                        <input type="number" class="form-control" />
+                        <input type="number" class="form-control" placeholder="3" readonly />
                         <label class="input-group-sm p-2">oz</label>
                       </div>
                     </div>
+                  </div>
 
-                    <div class="d-grid gap-4 mx-auto mt-5">
-                      <button type="button" class="btn btn-primary btn-lg">Review ODS Sheet</button>
+                  <div class="row mt-5">
+                    <div class="col d-flex justify-content-between">
+                      <h4 class="mb-0 mr-5">Total Recovered Refrigerant</h4>
+                      <button type="button" class="btn p-1">Edit</button>
+                    </div>
+
+                    <p class="mb-0 mt-3">Recovered to Cylinder 1<span class="text-danger fw-bold">*</span></p>
+                    <p>Cylinder: {{A0081295}}</p>
+                  </div>
+
+                  <div class="d-flex justify-content-end">
+                    <p>1 lb 3 oz</p>
+                  </div>
+
+                  <div style="border-bottom: 1px black solid;"></div>
+
+                  <div class="row">
+                    <div class="col d-flex justify-content-between mt-2">
+                      <p>Total</p>
+                      <p>1 lb 3 oz</p>
                     </div>
                   </div>
-                </div>
-              </div>
-              <!-- End: Tab 3 -->
 
-            </div>
+                  <div class="d-grid gap-4 mx-auto mt-5">
+                    <button type="button" class="btn btn-primary btn-lg">Scan Another Cylinder</button>
+                    <button type="button" class="btn btn-outline-primary btn-lg">Review ODS Sheet</button>
+                  </div>
+                </div>
+                <!-- End: Tab 3 -->
+
+              </div>
           </form>
 
         </div>
