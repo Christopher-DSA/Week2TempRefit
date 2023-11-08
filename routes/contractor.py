@@ -53,7 +53,7 @@ def formcontractor():
 
         new_user=CRUD.create(User_Detail, address=address, city=city,province=province, postal_code=postalCode,telephone=phoneNumber)
 
-        new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active')
+        new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active',companyName=companyName,branchId=branchId)
         
     #redirect to the appropriate page
 
