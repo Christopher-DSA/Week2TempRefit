@@ -183,8 +183,8 @@
 - Added files to static folder including a js file for scrips that are duplicated in templates
 - Ran linesize
 - Cleaned up repo
--Christopher added Secure password hashing system to auth.py
--Christopher and Nithin had a meeting discussing connecting to the database
+- Christopher added Secure password hashing system to auth.py
+- Christopher and Nithin had a meeting discussing connecting to the database
 
 - **Participants:** Chris, Nithin, Jared, Mansi, Jennifer, Muskan, Sumanth, Yael
 

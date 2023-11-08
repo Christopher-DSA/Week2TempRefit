@@ -66,6 +66,7 @@ def formtechnician():
 @technician_required
 def dashboardtechnician():
     # Render the dashboard
+    print("Rendering dashboard")
     user=session.get('user_id')
     return render_template("technician/dashboardtechnician.html", user=user)
 

@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 # from main import app
 from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
+#Load enviroment variables
 load_dotenv()
+#os.getenv to get HASH_SECRET from .env file
+secret_key = os.getenv('HASH_SECRET')
 auth = Blueprint('auth', __name__)
 
 @auth.route("/", methods=["GET", "POST"])
@@ -18,8 +21,9 @@ def login():
         entered_email = request.form["username"]
         password = request.form["password"]
         
-        #Hashing the password to match the hashed password in the database. For security purposes.
-        hashed_password = generate_hash(password, os.getenv('HASH_SECRET'))
+        password_to_hash = password
+        message = {'password': password_to_hash}
+        result = generate_hash(message, secret_key)
         
         #Reminds user that they need to fill out all fields.
         if not entered_email or not password:
@@ -28,12 +32,15 @@ def login():
         
         #Find matching row in the database user table by email.
         user = CRUD.read(User, email=entered_email)
-        print(user.password)
+        #Password from the database.
+        db_password = user.password
         
-        if (user and user.password == hashed_password):# hashed and verified password securely. Updated from previous basic check.
-            session["user_id"] = user.user_id  # Store user ID in session
-            print(session)
-            print(user.role)
+        
+        print("About to enter if statement for password check")
+        if (db_password == result):# hashed and verified password securely. Updated from previous basic check.
+            #session["user_id"] = user.user_id  # Store user ID in session
+            print('Made it in, test test test')
+            #print(user.role)
             if user.role=='technician':
                 return redirect(url_for('technician.dashboardtechnician'))
             elif user.role=='admin':
