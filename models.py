@@ -89,7 +89,7 @@ class Contractor(Base):
     employees = Column(Integer)
     are_they_tracking_refrigerant = Column(String)
     time_basis = Column(String)
-    companyName = Column(String) 
+    companyName = Column(String)
     branchId = Column(Integer)    
     user = relationship('User', backref='Contractor')
 

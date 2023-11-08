@@ -200,3 +200,4 @@
 - Nithin shared plans for a group of three, focusing on the contractor HTML or new Cylinder Tag.
 
 # November 8, 2023
+- Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)]
