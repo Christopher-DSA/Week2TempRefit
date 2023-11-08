@@ -199,3 +199,4 @@
 - Jared suggested breaking into groups and working on specific .py files in /routes.
 - Nithin shared plans for a group of three, focusing on the contractor HTML or new Cylinder Tag.
 
+# November 8, 2023
