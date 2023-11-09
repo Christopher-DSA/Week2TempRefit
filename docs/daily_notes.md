@@ -202,4 +202,4 @@
 # November 8, 2023
 - Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)]
 - Sidney added a test email account to use for testing, settings are in the password file.
-- 
+- Jennifer: Attended a group meeting, focusing on discussing the addition of new columns.  Started working on a draft Python file for the cylinder.
