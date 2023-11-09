@@ -4,19 +4,19 @@
 /uploads/*
 !/uploads/.gitkeep
 
-# # Omit environment variable and virtual enviroments
-# .env
+# Omit environment variable and virtual environments
+.env
 # env
 
 # QR code files
-.pyc
+*.pyc
 
 # Assets
 # /static/assets/*
 # !/static/assets/.gitkeep
 
 # Database
-.db
+*.db
 
 #DS_Store
 .DS_Store

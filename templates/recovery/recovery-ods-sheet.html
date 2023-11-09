@@ -181,7 +181,7 @@
 
           <!-- Tab Navigation -->
           <div>
-            <ul class="nav nav-underline mb-3" id="recovery-form-tab" role="tablist">
+            <ul class="nav nav-underline mb-3 justify-content-evenly" id="recovery-form-tab" role="tablist">
               <li class="nav-item me-3" role="presentation">
                 <button class="nav-link active" id="recovery-1-tab" type="button" role="tab" data-bs-toggle="tab"
                   data-bs-target="#recovery-1" aria-controls="recovery-1-tab-pane" aria-selected="true">1</button>
@@ -190,11 +190,10 @@
                 <button class="nav-link" id="recovery-2-tab" type="button" role="tab" data-bs-toggle="tab"
                   data-bs-target="#recovery-2" aria-controls="recovery-2-tab-pane" aria-selected="false">2</button>
               </li>
-              <!-- <li class="nav-item ms-3" role="presentation">
-                <button class="nav-link" id="new-equipment-3-tab" type="button" role="tab" data-bs-toggle="tab"
-                  data-bs-target="#new-equipment-3" aria-controls="new-equipment-3-tab-pane"
-                  aria-selected="false">3</button>
-              </li> -->
+              <li class="nav-item ms-3" role="presentation">
+                <button class="nav-link" id="recovery-3-tab" type="button" role="tab" data-bs-toggle="tab"
+                  data-bs-target="#recovery-3" aria-controls="recovery-3-tab-pane" aria-selected="false">3</button>
+              </li>
             </ul>
           </div>
           <div>
@@ -325,12 +324,11 @@
                     </div>
                   </div>
                 </div>
-
               </div>
               <!-- End: Tab 1 -->
 
               <!-- Start: Tab 2 -->
-              <div class="tab-pane fade d-flex flex-column justify-content-start mb-4" id="recovery-2" role="tabpanel"
+              <div class="tab-pane fade justify-content-start" id="recovery-2" role="tabpanel"
                 aria-labelledby="nav-equipment-2-tab">
 
                 <h4>Leak Test Result <span class="text-danger fw-bold">*</span></h4>
@@ -362,15 +360,172 @@
                 </div>
 
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" />
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" required/>
                   <label class="form-check-label">No Leak Detected</label>
                 </div>
 
+                <div class="mt-5">
+                  <h4>Other Test Results</h4>
+
+                  <div class="form-check mt-3">
+                    <input class="form-check-input" type="checkbox" id="flexCheckDefault" required>
+                    <label class="form-check-label" for="flexCheckDefault">
+                      No longer contains refrigerant
+                    </label>
+                  </div>
+
+                  <div class="mb-3"></div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Vacuum test performed
+                    </label>
+                  </div>
+
+                  <div class="mb-3"></div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Compressor oil removed
+                    </label>
+                  </div>
+
+                  <div class="mb-3"></div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Pressure test performed
+                    </label>
+                  </div>
+
+                  <div class="container mt-3">
+                    <div class="row justify-content-center">
+                      <div class="col-10">
+                        <label>PSIG Result<span class="text-danger fw-bold">*</span></label>
+                        <input type="text" class="form-control" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-floating mt-3">
+                    <h5>Additional Notes</h5>
+                    <p class="mb-1">Recovery Notes</p>
+                    <textarea class="form-control"
+                      style="height: 120px; resize: none; word-wrap: break-word;"></textarea>
+                  </div>
+
+                  <div class="row mt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                      <button type="cancel" class="btn btn-lg btn-outline-primary py-2 px-5">Cancel</button>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center">
+                      <button type="submit" class="btn btn-lg btn-primary py-2 px-5" data-bs-toggle="modal"
+                        data-bs-target="#modal">Next</button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <!-- Premium Feature Modal -->
+              <div class="modal" id="modal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Access Premium Feature</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Accurately track cylinder refrigerant by using premium feature of scan then record. Upgrade by
+                        connecting to a contractor employer</p>
+
+                      <input class="form-check-input" type="checkbox">
+                      <label>Don't show me again</label>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Maybe Later</button>
+                      <button type="button" class="btn btn-primary">Upgrade</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End: Premium Feature Modal -->
               <!-- End: Tab 2 -->
 
+              <!-- Start: Tab 3 -->
+              <div class="tab-pane fade d-flex flex-column justify-content-start mb-4" id="recovery-3" role="tabpanel"
+                aria-labelledby="nav-equipment-3-tab">
 
-            </div>
+                <h4 class="mt-3">Recover Refrigerant</h4>
+
+                <div>
+                  <ol>
+                    <li>Scan cylinder QR tag</li>
+                    <li>Recover refrigerant from equipment</li>
+                    <li>Record refrigerant recovered</li>
+                  </ol>
+                </div>
+
+                <div class="mb-5">
+                  <h5 class="mt-3">Recovered to Cylinder 1<span class="text-danger fw-bold">*</span></h5>
+                  <h5 class="mb-3">Cylinder: {{A0081295}}</h5>
+                  <div class="row">
+                    <div class="col-4">
+                      <select class="form-select">
+                        <option>lb/oz</option>
+                        <option>kg/g</option>
+                      </select>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="1" readonly />
+                        <label class="input-group-sm p-2">lb</label>
+                      </div>
+                    </div>
+
+                    <div class="col-4">
+                      <div class="input-group">
+                        <input type="number" class="form-control" placeholder="3" readonly />
+                        <label class="input-group-sm p-2">oz</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-5">
+                    <div class="col d-flex justify-content-between">
+                      <h4 class="mb-0 mr-5">Total Recovered Refrigerant</h4>
+                      <button type="button" class="btn p-1">Edit</button>
+                    </div>
+
+                    <p class="mb-0 mt-3">Recovered to Cylinder 1<span class="text-danger fw-bold">*</span></p>
+                    <p>Cylinder: {{A0081295}}</p>
+                  </div>
+
+                  <div class="d-flex justify-content-end">
+                    <p>1 lb 3 oz</p>
+                  </div>
+
+                  <div style="border-bottom: 1px black solid;"></div>
+
+                  <div class="row">
+                    <div class="col d-flex justify-content-between mt-2">
+                      <p>Total</p>
+                      <p>1 lb 3 oz</p>
+                    </div>
+                  </div>
+
+                  <div class="d-grid gap-4 mx-auto mt-5">
+                    <button type="button" class="btn btn-primary btn-lg">Scan Another Cylinder</button>
+                    <button type="button" class="btn btn-outline-primary btn-lg">Review ODS Sheet</button>
+                  </div>
+                </div>
+                <!-- End: Tab 3 -->
+
+              </div>
           </form>
 
         </div>
