@@ -6,3 +6,4 @@ python-dotenv>=1.0.0   # Load environment variables from .env file
 psycopg2>=2.9.6        # PostgreSQL library
 SQLAlchemy>=2.0.17      # SQL manipulation library
 Flask-SQLAlchemy>=3.0.3 
+pandas
