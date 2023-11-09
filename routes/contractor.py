@@ -23,7 +23,7 @@ def contractor_required(f):
 
         
 
-        user = CRUD.read(User,user_id=user_id)[0]
+        user = CRUD.read(User,user_id=user_id)
         
         if not user or user.role != 'contractor':
             # Either user doesn't exist, or the user is not an admin.
