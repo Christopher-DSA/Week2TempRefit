@@ -31,23 +31,22 @@ def login():
             return redirect(url_for('login'))  # Redirecting to the login route
         
         #Find matching row in the database user table by email.
-        user = CRUD.read(User, email=entered_email)
+        current_user = CRUD.read(User, email=entered_email)
         #Password from the database.
-        db_password = user.password
+        db_password = current_user.password
         
         
         print("About to enter if statement for password check")
         if (db_password == result):# hashed and verified password securely. Updated from previous basic check.
-            #session["user_id"] = user.user_id  # Store user ID in session
-            print('Made it in, test test test')
-            #print(user.role)
-            if user.role=='technician':
+            session["user_id"] = current_user.user_id  # Store user ID in session
+            if current_user.role=='technician':
+                #A Technician has logged in!
                 return redirect(url_for('technician.dashboardtechnician'))
-            elif user.role=='admin':
+            elif current_user.role=='admin':
                 return redirect(url_for('admin.user_page'))
-            elif user.role=='contractor':
+            elif current_user.role=='contractor':
                 return redirect(url_for('contractor.dashboardcontractor'))
-            elif user.role=='wholesaler':
+            elif current_user.role=='wholesaler':
                 return redirect(url_for('wholesaler.dashboardwholesaler'))
         else:
             return flash("Invalid username or password.")
