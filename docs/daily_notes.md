@@ -203,3 +203,6 @@
 - Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)] + on Model Contractror.
 - Sidney added a test email account to use for testing, settings are in the password file.
 - Fixed contractor.py now it allows log in as role contractor.
+
+# November 9, 2023
+- Nithin Created cylinder.py (not mapped to db/ testing phase)
