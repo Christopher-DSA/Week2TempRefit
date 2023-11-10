@@ -16,8 +16,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure random string
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Update the database URI
+app.config['SECRET_KEY'] = '0f763b886315c9bef99ab685087f8999e193ae0474ab61726f4f198b54bcc83c'  # Change this to a secure random string
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sofvie:gXq!%g^&dm*OuWfK8HhC@refitdb.czvko9baktul.ca-central-1.rds.amazonaws.com:5432/postgres?sslmode=require'  # Update the database URI
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Session configuration

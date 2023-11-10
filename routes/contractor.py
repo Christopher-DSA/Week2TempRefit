@@ -10,7 +10,7 @@ contractor = Blueprint('contractor', __name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
+        if 'user_email' not in session:
             return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
     return decorated_function
@@ -23,9 +23,9 @@ def contractor_required(f):
 
         
 
-        user = CRUD.read(User,user_id=user_id)
+        user = CRUD.read(User,user_id=user_id)[0]
         
-        if not user or user.role != 'contractor':
+        if not current_user.role or current_user.role != 'contractor':
             # Either user doesn't exist, or the user is not an admin.
             return "Unauthorized", 403
         

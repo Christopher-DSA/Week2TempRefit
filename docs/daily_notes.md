@@ -183,6 +183,8 @@
 - Added files to static folder including a js file for scrips that are duplicated in templates
 - Ran linesize
 - Cleaned up repo
+- Christopher added Secure password hashing system to auth.py
+- Christopher and Nithin had a meeting discussing connecting to the database
 
 - **Participants:** Chris, Nithin, Jared, Mansi, Jennifer, Muskan, Sumanth, Yael
 
@@ -202,7 +204,4 @@
 # November 8, 2023
 - Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)] + on Model Contractror.
 - Sidney added a test email account to use for testing, settings are in the password file.
-- Fixed contractor.py now it allows log in as role contractor.
-
-# November 9, 2023
-- Nithin Created cylinder.py (not mapped to db/ testing phase)
+- 
