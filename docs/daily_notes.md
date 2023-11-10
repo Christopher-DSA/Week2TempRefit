@@ -202,7 +202,7 @@
 - Nithin shared plans for a group of three, focusing on the contractor HTML or new Cylinder Tag.
 
 # November 8, 2023
-- Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)]
+- Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)] + on Model Contractror.
 - Sidney added a test email account to use for testing, settings are in the password file.
 - Jennifer: Attended a group meeting, focusing on discussing the addition of new columns.  Started working on a draft Python file for the cylinder.
 - Christopher met with Yael to discuss plan on implementing forgot password system
@@ -211,4 +211,3 @@
 # November 9, 2023
 -Christopher connected the admin route, it is now possible to log into the admin dashboard page.
 -Christopher: The admin dashboard now shows the admin's information as it should instead of the placeholder text.
-

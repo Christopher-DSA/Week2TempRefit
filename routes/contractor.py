@@ -19,9 +19,11 @@ def contractor_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Assuming the user_id in the session is the email of the user.
-        user_email= session.get('user_email')
+        user_id= session.get('user_id')
 
-        current_user = CRUD.read(User,email=user_email)
+        
+
+        user = CRUD.read(User,user_id=user_id)[0]
         
         if not current_user.role or current_user.role != 'contractor':
             # Either user doesn't exist, or the user is not an admin.
