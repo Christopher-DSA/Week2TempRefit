@@ -30,7 +30,7 @@
 #         for address in addresses:
 #             # Calculate the similarity score between the substring and the address
 #             similarity_score = fuzz.partial_ratio(substring, address)
-
+            
 #             # You can adjust the threshold as needed to control the matching sensitivity
 #             if similarity_score >= 100:  # You can adjust this threshold
 #                 matching_addresses.append(address.strip())  # Remove newline character
