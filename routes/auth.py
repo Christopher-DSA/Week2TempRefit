@@ -21,6 +21,12 @@ def login():
         entered_email = request.form["username"]
         password = request.form["password"]
         
+
+        #Hashing the password to match the hashed password in the database. For security purposes.
+        #hashed_password = generate_hash(password, os.getenv('HASH_SECRET'))
+        hashed_password = generate_hash(password, current_app.secret_key)
+
+
         password_to_hash = password
         message = {'password': password_to_hash}
         result = generate_hash(message, secret_key)
@@ -85,18 +91,18 @@ def forgot_password():
               # add code to email user with password reset link , if it matches account in database 
               # reset link should be a  new , secure page  if email was validated 
               # reset link should be created here and sent in the email if it was validated 
-               reset_token = generate_reset_token(user)  # placeholder , need to create function to generate unqiue link
-               send_reset_email(user.email, reset_token) 
+                reset_token = generate_reset_token(user)  # placeholder , need to create function to generate unqiue link
+                send_reset_email(user.email, reset_token) 
             #def send_reset_email(email, reset_token):
-    ##Create a Flask-Mail message:
-    #msg = Message('Password Reset Request', sender='dev_refit@sidneyshapiro.com', recipient=[email])
+            ##Create a Flask-Mail message:
+            #msg = Message('Password Reset Request', sender='dev_refit@sidneyshapiro.com', recipient=[email])
 
-    ## Customize the email body with the reset link:
-    #reset_link = url_fgitor('auth.reset_password', token=reset_token, _external=True)
-    #msg.body = f'Click the following link to reset your password: {reset_link}'
+            ## Customize the email body with the reset link:
+            #reset_link = url_fgitor('auth.reset_password', token=reset_token, _external=True)
+            #msg.body = f'Click the following link to reset your password: {reset_link}'
 
-    # Send the email
-    #mail.send(msg)
+            # Send the email
+            #mail.send(msg)
             
 
 
