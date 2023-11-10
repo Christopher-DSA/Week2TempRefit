@@ -35,18 +35,25 @@ def login():
         #Password from the database.
         db_password = current_user.password
         
+        #Session Variables
+        session['user_email'] = entered_email
+        
+        print("From Auth.py: ", session['user_email'])
         
         print("About to enter if statement for password check")
         if (db_password == result):# hashed and verified password securely. Updated from previous basic check.
             session["user_id"] = current_user.user_id  # Store user ID in session
             if current_user.role=='technician':
-                #A Technician has logged in!
+                #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
             elif current_user.role=='admin':
+                #An admin has logged in! This is now functional.
                 return redirect(url_for('admin.user_page'))
             elif current_user.role=='contractor':
+                #Work in progress
                 return redirect(url_for('contractor.dashboardcontractor'))
             elif current_user.role=='wholesaler':
+                #Work in progress
                 return redirect(url_for('wholesaler.dashboardwholesaler'))
         else:
             return flash("Invalid username or password.")
