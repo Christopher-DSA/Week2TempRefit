@@ -50,7 +50,7 @@ def login():
                 #An admin has logged in! This is now functional.
                 return redirect(url_for('admin.user_page'))
             elif current_user.role=='contractor':
-                #Work in progress
+                #Work in progress.
                 return redirect(url_for('contractor.dashboardcontractor'))
             elif current_user.role=='wholesaler':
                 #Work in progress
