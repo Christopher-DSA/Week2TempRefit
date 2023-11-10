@@ -2,8 +2,10 @@ from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from functools import wraps
 
-from flask.cli import get_version
-from models import User
+#flask.cli does not have a get_version function so we will comment this out for now. Not sure how this got here.
+#from flask.cli import get_version
+from models import User, Store, CRUD
+
 
 admin = Blueprint('admin', __name__)
 
@@ -15,7 +17,7 @@ admin = Blueprint('admin', __name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
+        if 'user_email' not in session:
             return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
     return decorated_function
@@ -23,12 +25,10 @@ def login_required(f):
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        # Assuming the user_id in the session is the email of the user.
-        email = session.get('user_id')
+        # Assuming the user_email in the session is the email of the user.
+        user_email = session.get('user_email')
 
-        
-
-        user = User.get_user_by_email(email)
+        user = CRUD.read(User, email = user_email)
         
         if not user or user.role != 'admin':
             # Either user doesn't exist, or the user is not an admin.
@@ -42,11 +42,9 @@ def admin_required(f):
 @login_required
 @admin_required
 def user_page():
-    
-
-    data=get_version().query(User).all()
-
-    
+    user_email = session.get('user_email')
+    print("From Admin.py: ", session['user_email'])
+    data = CRUD.read(User, all = True, email = user_email)    
     return render_template('admin/admin.html', data=data)
 # def dashboard():
 #     return render_template('admin/dashboard.html')

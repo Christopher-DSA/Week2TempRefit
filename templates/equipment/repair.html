@@ -1,121 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Repair Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair ODS Sheet</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
-    <h1>Repair Form</h1>
-    <form id="repairForm" onsubmit="submitForm(event)">
-        <h2>Auto Populated Information</h2>
-        <label for="equipmentTagId">Equipment Tag ID:</label>
-        <input type="text" id="equipmentTagId" name="equipmentTagId" value="EQUIP001" readonly>
 
-        <label for="technicianId">Technician ID:</label>
-        <input type="text" id="technicianId" name="technicianId" value="TECH001" readonly>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <!-- Back Button -->
+                <button class="btn btn-link">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
 
-        <label for="repairDate">Repair Date:</label>
-        <input type="date" id="repairDate" name="repairDate" value="" required>
+            <div class="col-12">
+                <!-- Title and Reference Numbers -->
+                <h2 class="font-weight-bold">Repair ODS Sheet</h2>
+                <p>Control Number: 123123<br>Equipment QR Ref Number: A0081295</p>
+            </div>
 
-        <label for="refrigerantId">Refrigerant ID:</label>
-        <input type="text" id="refrigerantId" name="refrigerantId" value="" required>
+            <div class="col-12">
+                <!-- Step Indicator -->
+                <div class="d-flex mb-4">
+                    <div class="px-3 py-1 border-bottom border-primary text-primary">1</div>
+                    <div class="px-3 py-1 ml-2 text-secondary">2</div>
+                    <div class="px-3 py-1 ml-2 text-secondary">3</div>
+                </div>
+            </div>
 
-        <label for="refrigerationType">Refrigeration Type:</label>
-        <input type="text" id="refrigerationType" name="refrigerationType" value="" required>
+            <div class="col-12">
+                <!-- Required Fields Note -->
+                <p>Fields with an asterisk (<span class="text-danger">*</span>) are required.</p>
+            </div>
 
-        <label for="factoryChargeAmount">Factory Charge Amount Refrigerant (lbs):</label>
-        <input type="number" id="factoryChargeAmount" name="factoryChargeAmount" value="" required>
-        <br>
-        <label for="additionalAmount">Additional Amount added (lbs):</label>
-        <input type="number" id="additionalAmount" name="additionalAmount" value="" required>
+            <div class="col-12">
+                <!-- Repair Information Section -->
+                <h4 class="font-weight-bold">Repair Information</h4>
+                <form>
+                    <div class="form-group">
+                        <!-- Repair Date -->
+                        <label for="repairDate">Repair Date<span class="text-danger">*</span></label>
+                        <input type="date" id="repairDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <!-- Job Number -->
+                        <label for="jobNumber">Job Number</label>
+                        <input type="text" id="jobNumber" class="form-control" placeholder="Enter Job Number">
+                    </div>
 
-        <label for="totalRefAmount">Total Ref Amount in the equipment (lbs):</label>
-        <input type="number" id="totalRefAmount" name="totalRefAmount" value="" readonly>
-        <br>
-        <button type="button" onclick="calculateTotalRefAmount()">Calculate Total Ref Amount</button>
-        <br><br>
+                    <!-- Equipment Refrigerant Information Section -->
+                    <h4 class="font-weight-bold mt-4">Equipment Refrigerant Information</h4>
+                    <div class="form-group">
+                        <!-- Refrigerant Type -->
+                        <label for="refrigerantType">Refrigerant Type</label>
+                        <input type="text" id="refrigerantType" class="form-control" value="R-134A" disabled>
+                    </div>
+                    <div class="form-group">
+                        <!-- Factory Refrigerant Weight -->
+                        <label for="factoryRefrigerantWeight">Factory Refrigerant Weight</label>
+                        <input type="text" id="factoryRefrigerantWeight" class="form-control" value="12 lb 0 oz"
+                            disabled>
+                    </div>
+                    <div class="form-group">
+                        <!-- Additional Refrigerant Weight -->
+                        <label for="additionalRefrigerantWeight">Additional Refrigerant Weight</label>
+                        <input type="text" id="additionalRefrigerantWeight" class="form-control" value="2 lb 3 oz"
+                            disabled>
+                    </div>
+                    <div class="form-group">
+                        <!-- Total Refrigerant Weight -->
+                        <label for="totalRefrigerantWeight">Total Refrigerant Weight</label>
+                        <input type="text" id="totalRefrigerantWeight" class="form-control" value="14 lb 3 oz" disabled>
+                    </div>
 
-        <label for="modelNumber">Model Number:</label>
-        <input type="text" id="modelNumber" name="modelNumber" required>
-
-        <label for="serialNumber">Serial Number:</label>
-        <input type="text" id="serialNumber" name="serialNumber" required>
-
-        <label for="odsSheetNumber">ODS Sheet number:</label>
-        <input type="text" id="odsSheetNumber" name="odsSheetNumber" required>
-
-        <h2>Repair Details</h2>
-        <label for="testResults">Test Results:</label><br>
-        <input type="checkbox" id="repairedDischarge" name="testResults" value="repairedDischarge">
-        <label for="repairedDischarge">Repaired Discharge</label><br>
-
-        <input type="checkbox" id="lineOnCompressor" name="testResults" value="lineOnCompressor">
-        <label for="lineOnCompressor">Line on Compressor</label><br>
-
-        <input type="checkbox" id="leakDetected" name="testResults" value="leakDetected">
-        <label for="leakDetected">Leak detected, Do not add refrigerant until repair</label><br>
-
-        <input type="checkbox" id="leakRepair" name="testResults" value="leakRepair">
-        <label for="leakRepair">Leak Repair</label><br>
-
-        <input type="checkbox" id="vacuumTestPerformed" name="testResults" value="vacuumTestPerformed">
-        <label for="vacuumTestPerformed">Vacuum Test Performed</label><br>
-
-        <input type="checkbox" id="leakNotRepaired" name="testResults" value="leakNotRepaired">
-        <label for="leakNotRepaired">Leak Not Repaired</label><br>
-
-        <input type="checkbox" id="noLeakDetected" name="testResults" value="noLeakDetected">
-        <label for="noLeakDetected">No Leak Detected</label><br>
-
-        <input type="checkbox" id="noLongerContainsRef" name="testResults" value="noLongerContainsRef">
-        <label for="noLongerContainsRef">No Longer Contains Refrigerant</label><br>
-
-        <label for="compressorOilRemoved">Compressor Oil Removed:</label><br>
-        <input type="radio" id="compressorOilYes" name="compressorOilRemoved" value="Yes">
-        <label for="compressorOilYes">Yes</label><br>
-        <input type="radio" id="compressorOilNo" name="compressorOilRemoved" value="No">
-        <label for="compressorOilNo">No</label><br>
-
-        <input type="checkbox" id="otherCheckbox" name="testResults" value="other">
-        <label for="otherCheckbox">Other</label><br>
-
-        <div id="otherDetailsSection" style="display: none;">
-            <label for="otherDetails">Other Details:</label>
-            <textarea id="otherDetails" name="otherDetails" rows="4" cols="50"></textarea>
+                    <!-- Form Buttons -->
+                    <div class="form-group d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
 
-        <button type="submit">Submit</button>
-    </form>
-
-    <script>
-        function calculateTotalRefAmount() {
-            const factoryCharge = parseFloat(document.getElementById('factoryChargeAmount').value) || 0;
-            const additionalAmount = parseFloat(document.getElementById('additionalAmount').value) || 0;
-            const totalRefAmount = factoryCharge + additionalAmount;
-            document.getElementById('totalRefAmount').value = totalRefAmount.toFixed(2);
-        }
-
-        function submitForm(event) {
-            event.preventDefault();
-            
-            const jobNumber = prompt("Enter Job Number:");
-            if (jobNumber) {
-                
-                alert("Form submitted successfully!");
-            } else {
-                alert("Please enter a valid Job Number.");
-            }
-        }
-
-        document.getElementById('otherCheckbox').addEventListener('change', function() {
-            const otherDetailsSection = document.getElementById('otherDetailsSection');
-            if (this.checked) {
-                otherDetailsSection.style.display = 'block';
-            } else {
-                otherDetailsSection.style.display = 'none';
-            }
-        });
-    </script>
+    <!-- Bootstrap JS and its dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
 
 
+<script>
+    function calculateTotalRefAmount() {
+        const factoryCharge = parseFloat(document.getElementById('factoryChargeAmount').value) || 0;
+        const additionalAmount = parseFloat(document.getElementById('additionalAmount').value) || 0;
+        const totalRefAmount = factoryCharge + additionalAmount;
+        document.getElementById('totalRefAmount').value = totalRefAmount.toFixed(2);
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+
+        const jobNumber = prompt("Enter Job Number:");
+        if (jobNumber) {
+
+            alert("Form submitted successfully!");
+        } else {
+            alert("Please enter a valid Job Number.");
+        }
+    }
+
+    document.getElementById('otherCheckbox').addEventListener('change', function() {
+        const otherDetailsSection = document.getElementById('otherDetailsSection');
+        if (this.checked) {
+            otherDetailsSection.style.display = 'block';
+        } else {
+            otherDetailsSection.style.display = 'none';
+        }
+    });
+</script>
+</body>
+
+</html>
