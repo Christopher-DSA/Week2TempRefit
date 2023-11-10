@@ -20,13 +20,13 @@ def technician_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Assuming the user_id in the session is the email of the user.
-        user_id = session.get('user_id')
+        current_user_id = session.get('user_id')
 
         
 
-        user = CRUD.read(User,user_id=user_id)[0]
+        current_user = CRUD.read(User,user_id=current_user_id)
         
-        if not user or user.role != 'technician':
+        if not current_user or current_user.role != 'technician':
             # Either user doesn't exist, or the user is not an admin.
             return "Unauthorized", 403
         
@@ -66,8 +66,9 @@ def formtechnician():
 @technician_required
 def dashboardtechnician():
     # Render the dashboard
-    user=session.get('user_id')
-    return render_template("technician/dashboardtechnician.html", user=user)
+    print("Rendering dashboard")
+    user_current=session.get('user_id')
+    return render_template("technician/dashboardtechnician.html", user=user_current)
 
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
 def equipment_create():

@@ -11,7 +11,7 @@ wholesaler = Blueprint('wholesaler', __name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
+        if 'user_email' not in session:
             return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
     return decorated_function
@@ -20,13 +20,13 @@ def wholesaler_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Assuming the user_id in the session is the email of the user.
-        email = session.get('user_id')
+        user_email = session.get('user_email')
 
         
-
-        user = User.get_user_by_email(email)
+        #renamed this variable from user to current_user because the user name was already in use for the User class.
+        current_user = CRUD.read(User, email=user_email)
         
-        if not user or user.role != 'wholesaler':
+        if not current_user or current_user.role != 'wholesaler':
             # Either user doesn't exist, or the user is not an admin.
             return "Unauthorized", 403
         

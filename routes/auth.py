@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 # from main import app
 from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
+#Load enviroment variables
 load_dotenv()
+#os.getenv to get HASH_SECRET from .env file
+secret_key = os.getenv('HASH_SECRET')
 auth = Blueprint('auth', __name__)
 
 @auth.route("/", methods=["GET", "POST"])
@@ -18,30 +21,45 @@ def login():
         entered_email = request.form["username"]
         password = request.form["password"]
         
+
         #Hashing the password to match the hashed password in the database. For security purposes.
         #hashed_password = generate_hash(password, os.getenv('HASH_SECRET'))
         hashed_password = generate_hash(password, current_app.secret_key)
 
+
+        password_to_hash = password
+        message = {'password': password_to_hash}
+        result = generate_hash(message, secret_key)
+        
         #Reminds user that they need to fill out all fields.
         if not entered_email or not password:
             flash("Please fill out all fields.")
             return redirect(url_for('login'))  # Redirecting to the login route
         
         #Find matching row in the database user table by email.
-        user = CRUD.read(User, email=entered_email)
-        print(user.password)
+        current_user = CRUD.read(User, email=entered_email)
+        #Password from the database.
+        db_password = current_user.password
         
-        if (user and user.password == hashed_password):# hashed and verified password securely. Updated from previous basic check.
-            session["user_id"] = user.user_id  # Store user ID in session
-            print(session)
-            print(user.role)
-            if user.role=='technician':
+        #Session Variables
+        session['user_email'] = entered_email
+        
+        print("From Auth.py: ", session['user_email'])
+        
+        print("About to enter if statement for password check")
+        if (db_password == result):# hashed and verified password securely. Updated from previous basic check.
+            session["user_id"] = current_user.user_id  # Store user ID in session
+            if current_user.role=='technician':
+                #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
-            elif user.role=='admin':
+            elif current_user.role=='admin':
+                #An admin has logged in! This is now functional.
                 return redirect(url_for('admin.user_page'))
-            elif user.role=='contractor':
+            elif current_user.role=='contractor':
+                #Work in progress.
                 return redirect(url_for('contractor.dashboardcontractor'))
-            elif user.role=='wholesaler':
+            elif current_user.role=='wholesaler':
+                #Work in progress
                 return redirect(url_for('wholesaler.dashboardwholesaler'))
         else:
             return flash("Invalid username or password.")
@@ -57,21 +75,40 @@ def logout():
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
     if request.method == "POST":
-        email = request.form.get('username')
-        new_password = request.form.get('new_password')
+        email = request.form.get('username') # assuming username is the same as email
+        #new_password = request.form.get('new_password')  # shouldn't this be deleted ? new password only happens in reset link sent after email authenticated
         
-        if email and new_password:
-            # Use a query to find the user by email
+        if email :# removed 'and password' - because user forgot password and new password creation page is a link sent by email( if matches db)
+           
             
             # user = CRUD.get_user_by_email(email)
             users = CRUD.read(User, email=email)
            
+
             if users:
-                user=users[0]
-                
+
+                user=users[0]  #assuming each user has a distinct email and multiple users dont share one email
+              # add code to email user with password reset link , if it matches account in database 
+              # reset link should be a  new , secure page  if email was validated 
+              # reset link should be created here and sent in the email if it was validated 
+                reset_token = generate_reset_token(user)  # placeholder , need to create function to generate unqiue link
+                send_reset_email(user.email, reset_token) 
+            #def send_reset_email(email, reset_token):
+            ##Create a Flask-Mail message:
+            #msg = Message('Password Reset Request', sender='dev_refit@sidneyshapiro.com', recipient=[email])
+
+            ## Customize the email body with the reset link:
+            #reset_link = url_fgitor('auth.reset_password', token=reset_token, _external=True)
+            #msg.body = f'Click the following link to reset your password: {reset_link}'
+
+            # Send the email
+            #mail.send(msg)
+            
+
+
             #     # Use the CRUD update method to change the password
-                updated_user = CRUD.update(User, user.user_id, password=new_password)
-                return jsonify({'message': 'Password changed successfully'})
+                updated_user = CRUD.update(User, user.user_id, password=new_password) # shouldn't this be happening in the reset pass page?
+                return jsonify({'message': 'Password reset link sent '}) # removed 'Password changed successfully' because pass reset should be on a different page
             else:
                 return jsonify({'error': 'User not found'})
 
