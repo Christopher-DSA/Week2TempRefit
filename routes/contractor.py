@@ -10,7 +10,7 @@ contractor = Blueprint('contractor', __name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
+        if 'user_email' not in session:
             return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
     return decorated_function
@@ -25,7 +25,7 @@ def contractor_required(f):
 
         user = CRUD.read(User,user_id=user_id)[0]
         
-        if not user or user.role != 'contractor':
+        if not current_user.role or current_user.role != 'contractor':
             # Either user doesn't exist, or the user is not an admin.
             return "Unauthorized", 403
         
@@ -53,7 +53,7 @@ def formcontractor():
 
         new_user=CRUD.create(User_Detail, address=address, city=city,province=province, postal_code=postalCode,telephone=phoneNumber)
 
-        new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active')
+        new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active',companyName=companyName,branchId=branchId)
         
     #redirect to the appropriate page
 

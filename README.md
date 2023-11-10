@@ -6,6 +6,10 @@
 - Sidney (Data Science Manager)
 - Vinh (Data Scientist)
 
+- Jared (ICT)
+- Christopher (ICT)
+- Yahel (ICT)
+
 ## Project Description
 Refit is an application to track and manage refridgerant gasses
 

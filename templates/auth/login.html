@@ -8,6 +8,19 @@
 <body>
     <h1>REFit Login</h1>
     <h3>Welcome to use the REFit App!</h3>
+
+    <!-- Begin Flash message display -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <!-- End Flash message display -->
+
     <form method="post" action="{{ url_for('auth.login') }}">
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username"><br>

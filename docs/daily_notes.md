@@ -140,3 +140,74 @@
 
 # Sept 11, 2023
 - Sample Sowmya Edit
+
+# October 31, 2023
+- Met with Cambrian students to discuss project
+
+# Novemeber 1, 2023
+
+- Met with the ICT and got them up to speed on the project. The students are connected to click up and the Google folder they have access to the documentation and we are going to review before setting tasks for next week 
+
+
+
+- Met with the ICT and got them up to speed on the project. The students are connectedto click up and the Googlefolderthey have access to the documentation and we are going to review before setting tasks for next week 
+
+
+
+# November 2, 2023
+- Meeting with ICT and Cambrian
+
+# November 3, 2023
+- Summary
+
+- A new unit testing file was created in the tests folder, named test_user.py.
+- The models.py file was examined, which contains SQLAlchemy models for various database tables.
+- Unit tests were created for the User and User_Detail models.
+- Several separate unit testing files were created for the Technician, Admin, and Contractor models.
+- The complete test_technician.py, test_admin.py, and test_contractor.py files were provided for testing the respective models.
+- Files
+- test_user.py - Unit tests for the User model.
+- test_user_detail.py - Unit tests for the User_Detail model.
+- test_technician.py - Unit tests for the Technician model.
+- test_admin.py - Unit tests for the Admin model.
+- test_contractor.py - Unit tests for the Contractor model.
+
+
+# November 6, 2023
+- Reviewed code and modules
+- Addded documentation code
+  
+
+# November 7, 2023
+- Reviewed code and modules
+- Added files to static folder including a js file for scrips that are duplicated in templates
+- Ran linesize
+- Cleaned up repo
+- Christopher added Secure password hashing system to auth.py
+- Christopher and Nithin had a meeting discussing connecting to the database
+
+- **Participants:** Chris, Nithin, Jared, Mansi, Jennifer, Muskan, Sumanth, Yael
+
+### Yesterday's Messages
+
+- Chris raised a question about the usage of `auth.py` over `auth_example.py`.
+- Nithin proposed a meeting at 8 am or 9 am EST, later settled on 11 am EST due to time zone differences.
+- Jared requested a summary of the meeting due to the PST time zone difference.
+- Mansi, Jennifer, and others confirmed their availability for the meeting.
+- You reminded the team to pull the updated code in the morning before starting work.
+
+### Today's Meeting Plan
+
+- Jared suggested breaking into groups and working on specific .py files in /routes.
+- Nithin shared plans for a group of three, focusing on the contractor HTML or new Cylinder Tag.
+
+# November 8, 2023
+- Nithin added two columns to Contractror Table [companyName = Column(String), branchId = Column(Integer)] + on Model Contractror.
+- Sidney added a test email account to use for testing, settings are in the password file.
+- Jennifer: Attended a group meeting, focusing on discussing the addition of new columns.  Started working on a draft Python file for the cylinder.
+- Christopher met with Yael to discuss plan on implementing forgot password system
+- Christopher fixed bugged with password hashing and login system works properly now.
+
+# November 9, 2023
+-Christopher connected the admin route, it is now possible to log into the admin dashboard page.
+-Christopher: The admin dashboard now shows the admin's information as it should instead of the placeholder text.

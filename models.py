@@ -89,7 +89,8 @@ class Contractor(Base):
     employees = Column(Integer)
     are_they_tracking_refrigerant = Column(String)
     time_basis = Column(String)
-
+    companyName = Column(String)
+    branchId = Column(Integer)    
     user = relationship('User', backref='Contractor')
 
     def __repr__(self):
@@ -496,7 +497,7 @@ class Maintenance_Detail(Base):
     def __repr__(self):
         return 'Maintenance Detail Model'
     
-# Class CRUD with all important features to worth with the Database.
+# Class CRUD with all important features to work with the Database.
 class CRUD:
 
     ''' This class is the main CRUD class with methods to create, read, update, and delete records. 

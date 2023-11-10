@@ -1,0 +1,249 @@
+    <section>
+      <div class="d-flex flex-column justify-content-center align-items-center mb-4">
+        <!-- Page Header -->
+        <div class="d-flex flex-column align-items-center">
+          <h1>New Equipment Tag</h1>
+          <p>Equipment QR Ref Number: 'NUMBER'</p>
+        </div>
+        
+          <!-- Tab Navigation -->
+        <ul class="nav nav-underline mb-3" id="new-equipment-form-tab" role="tablist">
+          <li class="nav-item me-3" role="presentation">
+            <button class="nav-link active" id="new-equipment-1-tab" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#new-equipment-1" aria-controls="new-equipment-1-tab-pane" aria-selected="true">1</button>
+          </li>
+          <li class="nav-item ms-3" role="presentation">
+            <button class="nav-link" id="new-equipment-2-tab" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#new-equipment-2" aria-controls="new-equipment-2-tab-pane" aria-selected="false">2</button>
+          </li>
+        </ul>
+        
+        <div>
+          <p>Fields with an asterisk (<span class="text-danger fw-bold">*</span>) are required.</p>
+        </div>
+
+        <!-- Start of form-->
+        <form class="px-4"> 
+          <div class="tab-content" id="new-equipment-form-tab-content">
+          
+            <!-- Tab 1-->
+            <div class="tab-pane fade show active" id="new-equipment-1" role="tabpanel" aria-labelledby="nav-equipment-1-tab">
+              <div>
+                <h4>Equipment Unit Information</h4>
+              </div>
+                <!-- Change to boostrap calendar icon 
+                Change date format  -->
+              <div class="mb-3">
+                <label for="Create Date" class="form-label">Create Date<span class="text-danger fw-bold">*</span></label>
+                <div class="input-group">
+                  <input type="date" class="form-control" aria-describedby="Create Date" required>
+                  <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+                  </svg></span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="Unit Type" class="form-label">Equipment Unit Type<span class="text-danger fw-bold">*</span></label>
+                <input type="text" class="form-control" placeholder="Rooftop Unit" required>
+              </div>
+              <div class="mb-3">
+                <label for="Unit Number" class="form-label">Equipment Unit Number</label>
+                <input type="text" class="form-control" placeholder="Rooftop Unit 4" pattern=".*[0-9].*">
+              </div>
+              <div class="mb-3">
+                <label for="Manufacturer Name" class="form-label">Manufacturer's Name<span class="text-danger fw-bold">*</span></label>
+                <input type="text" class="form-control" autocapitalize="sentences" required>
+              </div>
+              <div class="mb-3">
+                <label for="Model Number" class="form-label">Model Number<span class="text-danger fw-bold">*</span></label>
+                <input type="text" class="form-control" pattern="^[A-Za-z0-9_-]*$" required>
+              </div>
+              <div class="mb-3">
+                <label for="Serial Number" class="form-label">Serial Number<span class="text-danger fw-bold">*</span></label>
+                <input type="text" class="form-control" pattern="^[A-Za-z0-9_-]*$" required>
+              </div>
+                <!-- icon clicked permission modal for users location
+                  boostrap geo-alt logo -->
+              <div class="mb-3">
+                <label for="Unit Address" class="form-label">Equipment Unit Address</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" autocapitalize="sentences">
+                  <span class="input-group-text" id="locationIcon"><button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#locationPermissionModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="Organization Name" class="form-label">Organization Name<span class="text-danger fw-bold">*</span></label>
+                <input type="text" class="form-control" autocapitalize="sentences" placeholder="Costco" required>
+              </div>
+              <div class="mb-3">
+                <label for="Equipment Location" class="form-label">Location of Equipment<span class="text-danger fw-bold">*</span></label>
+                <textarea class="form-control" placeholder="NE rooftop corner" style="height:100px"></textarea>
+              </div>
+              <div class="d-flex justify-content-center gap-3 mt-2">
+                <button type="button" class="btn btn-outline-primary btn-lg py-2 px-5" data-bs-toggle="modal" data-bs-target="#modal-1">Cancel</button>
+                <button type="button" class="btn btn-primary btn-lg py-2 px-5" id="next-to-equipment-2" role="tab" data-bs-toggle="tab" data-bs-target="#new-equipment-2" aria-controls="new-equipment-2" aria-selected="false">Next</button>
+              </div>
+            </div>
+                          
+            <!-- Tab 2-->
+            <div class="tab-pane fade mb-4" id="new-equipment-2" role="tabpanel" aria-labelledby="nav-equipment-2-tab">
+              <div>
+                <h4>Equipment Refrigerant Information</h4>
+              </div>
+              <div>
+                <label for="Refrigerant Type" class="form-label">Refrigerant Type<span class="text-danger fw-bold">*</span></label>
+                <input type="text" class="form-control mb-3" required>
+              </div>
+              <div>
+                <label for="Unit Type" class="form-label">Factory Refrigerant Weight<span class="text-danger fw-bold">*</span></label>
+                <div class="d-flex justify-content-evenly gap-3">
+                  <div>
+                    <button class="btn btn-outline-secondary btn-md btn-dropdown-toggle d-flex" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span id="unitButtonText1">lb/oz</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down ms-2 mt-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                      </svg>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a href="#" class="dropdown-item" onclick="changeUnits('lb', 'oz', '1')">lb/oz</a></li>
+                      <li><a href="#" class="dropdown-item" onclick="changeUnits('kg', 'g', '1')">kg/g</a></li>
+                    </ul>
+                  </div>
+                  <div class=" input-group "><input class="form-control" type="number" required=""><span class="input-group-text" id="primaryUnitLabel1">lb</span></div>
+                  <div class=" input-group "><input class="form-control" type="number" required=""><span class="input-group-text" id="secondaryUnitLabel1">oz</span></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <p>Additional Refrigerant Charge Required <span class="text-danger fw-bold">*</span></p>
+                <div class="d-flex justify-content-evenly">
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input me-2" type="radio" name="charge-required">
+                    <label class="form-check-label" for="">Yes</label>
+                  </div>
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input me-2" type="radio" name="charge-required">
+                    <label class="form-check-label" for="">No</label>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="form-label">Additional Refrigerant Weight<span class="text-danger fw-bold">*</span></label>
+                <div class="d-flex justify-content-evenly gap-3">
+                  <div class="">
+                    <button class="btn btn-outline-secondary btn-md btn-dropdown-toggle d-flex" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span id="unitButtonText2">lb/oz</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down ms-2 mt-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                      </svg>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                      <li><a href="#" class="dropdown-item" onclick="changeUnits('lb', 'oz', '2')">lb/oz</a></li>
+                      <li><a href="#" class="dropdown-item" onclick="changeUnits('kg', 'g', '2')">kg/g</a></li>
+                    </ul>
+                  </div>
+                  <div class="input-group "><input class="form-control" type="number" required=""><span class="input-group-text" id="primaryUnitLabel2">lb</span></div>
+                  <div class="input-group "><input class="form-control" type="number" required=""><span class="input-group-text" id="secondaryUnitLabel2">oz</span></div>
+                </div>
+              </div>
+              <div>
+                <label class="form-label">Total Refrigerant Weight<span class="text-danger fw-bold">*</span></label>
+                <div class="d-flex justify-content-evenly gap-3">
+                  <div>
+                    <button class="btn btn-outline-secondary btn-md btn-dropdown-toggle d-flex" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span id="unitButtonText3">lb/oz</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down ms-2 mt-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                      </svg>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                      <li><a href="#" class="dropdown-item" onclick="changeUnits('lb', 'oz', '3')">lb/oz</a></li>
+                      <li><a href="#" class="dropdown-item" onclick="changeUnits('kg', 'g', '3')">kg/g</a></li>
+                    </ul>
+                  </div>
+                    <div class="input-group "><input class="form-control" type="number" required="" readonly><span class="input-group-text" id="primaryUnitLabel3" >lb</span></div>
+                    <div class="input-group "><input class="form-control" type="number" required="" readonly><span class="input-group-text" id="secondaryUnitLabel3">oz</span></div>
+                </div>
+              </div>
+              <h4>Additional Notes</h4>
+              <div class="mb-3">
+                <label for="Equipment Location" class="form-label">Notes</label>
+                <textarea class="form-control" style="height:100px"></textarea>
+              </div>
+              
+              <div class="row">
+                <div class="col-6 d-flex justify-content-center">
+                  <button type="button" class="btn btn-lg btn-outline-primary py-2 px-5" data-bs-toggle="modal" data-bs-target="#modal-1">Cancel</button>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                  <button type="submit" class="btn btn-lg btn-primary py-2 px-5">Submit</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>  
+      </div>    
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+      function changeUnits(primary, secondary, componentNumber) {
+        let unitText = document.getElementById('unitButtonText' + componentNumber);
+        let primaryInput = document.getElementById('primaryUnitInput' + componentNumber);
+        let secondaryInput = document.getElementById('secondaryUnitInput' + componentNumber);
+        let primaryLabel = document.getElementById('primaryUnitLabel' + componentNumber);
+        let secondaryLabel = document.getElementById('secondaryUnitLabel' + componentNumber);
+
+        unitText.textContent = `${primary}/${secondary}`;
+        primaryLabel.textContent = primary;
+        secondaryLabel.textContent = secondary;
+
+        primaryInput.value = '';
+        secondaryInput.value = '';
+      }
+    </script>
+
+    <!-- Start: Form Modals -->
+    <div class="row">
+      <div class="col">
+          <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title">Leave Form?</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+                          <p>Changes that you made may not be saved.</p>
+                      </div>
+                      <div class="modal-footer"><button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Back</button><button class="btn btn-danger" type="button">Leave</button></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+     
+    <!-- Start: Permission Modal -->
+    <section>
+      <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">Toggle Modal</button> -->
+      <div class="modal" id="locationPermissionModal" tabindex="0">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Permission</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Allow ReFit to access your phone's location?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
+              <button type="button" class="btn btn-primary">Accept</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
