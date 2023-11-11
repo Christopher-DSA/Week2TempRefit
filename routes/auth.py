@@ -8,28 +8,25 @@ from dotenv import load_dotenv
 # from main import app
 from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
-
 #Email imports
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-#Load enviroent variables
+#Load enviroment variables
 load_dotenv()
-
 #Server Email information
 MAIL_SERVER = os.getenv('MAIL_SERVER')
 MAIL_PORT = os.getenv('MAIL_PORT')
 MAIL_USERNAME = os.getenv('MAIL_USERNAME')
 MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-
-
-#os.getenv to get HASH_SECRET from .env file
 secret_key = os.getenv('HASH_SECRET')
+
+#Blueprint for auth
 auth = Blueprint('auth', __name__)
 
-#Testing email configuration
+#Test function for email.
 def send_email(to_address, subject, body):
     msg = MIMEMultipart()
     msg['From'] = MAIL_USERNAME
@@ -49,35 +46,38 @@ def send_email(to_address, subject, body):
 @auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        print("Received POST request")
+        print("Received POST request for login.")
+        
+        #1. Get the data from the form.
         entered_email = request.form["username"]
         password = request.form["password"]
-        
-
-        #Hashing the password to match the hashed password in the database. For security purposes.
-        #hashed_password = generate_hash(password, os.getenv('HASH_SECRET'))
-        hashed_password = generate_hash(password, current_app.secret_key)
-
-
-        password_to_hash = password
-        message = {'password': password_to_hash}
-        result = generate_hash(message, secret_key)
         
         #Reminds user that they need to fill out all fields.
         if not entered_email or not password:
             flash("Please fill out all fields.")
             return redirect(url_for('login'))  # Redirecting to the login route
+    
+        #2. Hash the password from the form.
+        password_to_hash = password
+        message = {'password': password_to_hash}
+        result = generate_hash(message, secret_key)
         
-        #Find matching row in the database user table by email.
-        current_user = CRUD.read(User, email=entered_email)
-        #Password from the database.
+        #3. Check if the email exists in the database.
+        current_user = CRUD.read(User, email=entered_email)        
+        
+        # If no user is found with the entered email, redirect to the login page
+        if not current_user:
+            flash("No account found with that email. Please try again.")
+            return redirect(url_for('login'))  # Redirecting to the login route
+        
+        #4. Check if the password matches the hashed password in the database.
         db_password = current_user.password
         
         #Session Variables
         session['user_email'] = entered_email
-        
         print("From Auth.py: ", session['user_email'])
         
+        #5. Redirect to the appropriate page based on the user's role.
         print("About to enter if statement for password check")
         if (db_password == result):# hashed and verified password securely. Updated from previous basic check.
             session["user_id"] = current_user.user_id  # Store user ID in session
@@ -88,10 +88,10 @@ def login():
                 #An admin has logged in! This is now functional.
                 return redirect(url_for('admin.user_page'))
             elif current_user.role=='contractor':
-                #Work in progress.
+                #A contractor has logged in! This is now functional.
                 return redirect(url_for('contractor.dashboardcontractor'))
             elif current_user.role=='wholesaler':
-                #Work in progress
+                #A wholesaler has logged in! This is now functional.
                 return redirect(url_for('wholesaler.dashboardwholesaler'))
         else:
             return flash("Invalid username or password.")
