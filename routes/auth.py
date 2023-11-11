@@ -49,8 +49,8 @@ def login():
         print("Received POST request for login.")
         
         #1. Get the data from the form.
-        entered_email = request.form["username"]
-        password = request.form["password"]
+        entered_email = request.form["Email"]
+        password = request.form["Password"]
         
         #Reminds user that they need to fill out all fields.
         if not entered_email or not password:
@@ -95,9 +95,12 @@ def login():
                 return redirect(url_for('wholesaler.dashboardwholesaler'))
         else:
             return flash("Invalid username or password.")
+    elif request.method == "GET":
+        print('GET request login page')
+        return render_template('Login Flow/login.html')
+    else:
+        print('Error in login()')
     
-    return render_template('auth/login.html')
-
 @auth.route('/logout')
 def logout():
     session.pop('user_id', None)  # Remove user ID from session
@@ -143,9 +146,10 @@ def forgot_password():
                 return jsonify({'message': 'Password reset link sent '}) # removed 'Password changed successfully' because pass reset should be on a different page
             else:
                 return jsonify({'error': 'User not found'})
-
-    return render_template("auth/forgot_password.html")
-
+    elif request.method == "GET":
+        return render_template("Login Flow/forgot.html")
+    else:
+        print('Error in forgot_password()')
 
 
 @auth.route("/home", methods=["GET"])
