@@ -102,12 +102,12 @@
   <link rel="icon" type="image/png" sizes="348x122"
     href="/assets/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
-  <link rel="stylesheet" href="/assets/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
-  <link rel="stylesheet" href="/assets/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
-  <link rel="stylesheet" href="/assets/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
-  <link rel="stylesheet" href="/assets/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
-  <link rel="stylesheet" href="/assets/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../assets/css/Inter.css">
+  <link rel="stylesheet" href="../assets/css/Poppins.css">
+  <link rel="stylesheet" href="../assets/css/bs-theme-overrides.css">
+  <link rel="stylesheet" href="../assets/css/QR-Scanner.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
@@ -120,8 +120,12 @@
             <path
               d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z">
             </path>
-          </svg></button><!-- Start: Logo --><img
-          src="/assets/img/refit_logo.png?h=d87102a06ce18b5230476734eee4ab0d"><!-- End: Logo -->
+          </svg></button>
+        <!-- Start: Logo -->
+        <div class="navbar-brand">
+          <img src="../assets/img/refit_logo.png">
+        </div>
+        <!-- End: Logo -->
         <div class="d-flex flex-row justify-content-center align-items-center">
           <div class="theme-switcher dropdown"><a class="dropdown-toggle" aria-expanded="false"
               data-bs-toggle="dropdown" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
@@ -163,80 +167,87 @@
   </section><!-- End: Navbar -->
 
   <section>
-    <div class="row justify-content-center mt-5">
-      <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4 d-flex justify-content-center align-items-center">
+    <div class="d-flex justify-content-center mt-5">
+      <div class="d-flex justify-content-center align-items-center">
         <div class="px-4">
           <h1>Select Cylinder Type</h1>
-          <div class="d-flex justify-content-evenly">
-            <button class="btn btn-outline-primary" onclick="showNewCylinderForm()">New Cylinder</button>
-            <button class="btn btn-primary" onclick="showRecoveryCylinderForm()">Recovery Cylinder</button>
+          <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-outline-primary" style="margin-right: 5px;" onclick="showNewCylinderForm()">New
+              Cylinder</button>
+            <button class="btn btn-primary" onclick="showRecoveryCylinderForm()" style="margin-left: 5px;">Recovery
+              Cylinder</button>
           </div>
 
           <form id="newCylinderForm" style="display: none;">
-            
-            <h2>New Cylinder</h2>
-            <label for="cylinderTagId">Cylinder Tag ID:</label>
-            <input type="text" id="cylinderTagId" name="cylinderTagId" value="ABC12345" readonly>
 
-            <label for="refrigerantId">Refrigerant ID:</label>
-            <input type="text" id="refrigerantId" name="refrigerantId" value="R134a" readonly>
+            <!-- New Cylinder Button -->
+            <h2 class="mt-3">New Cylinder</h2>
+            <label for="cylinderTagId" class="form-label">Cylinder Tag ID:</label>
+            <input type="text" id="cylinderTagId" name="cylinderTagId" value="ABC12345" class="form-control mb-3"
+              readonly>
 
-            <label for="technicianId">Technician ID:</label>
-            <input type="text" id="technicianId" name="technicianId" value="TECH001" readonly>
+            <label for="refrigerantId" class="form-label">Refrigerant ID:</label>
+            <input type="text" id="refrigerantId" name="refrigerantId" value="R134a" class="form-control mb-3" readonly>
 
-            <label for="selectDate">Select Date:</label>
-            <input type="date" id="selectDate" name="selectDate" required>
+            <label for="technicianId" class="form-label">Technician ID:</label>
+            <input type="text" id="technicianId" name="technicianId" value="TECH001" class="form-control mb-3" readonly>
 
-            <label for="refrigerantType">Refrigerant Type:</label>
-            <input type="text" id="refrigerantType" name="refrigerantType" required>
+            <label for="selectDate" class="form-label">Select Date:</label>
+            <input type="date" id="selectDate" name="selectDate" class="form-control mb-3" required>
 
-            <label for="cylinderSize">Cylinder Size (lbs):</label>
-            <input type="number" id="cylinderSize" name="cylinderSize" required>
+            <label for="refrigerantType" class="form-label">Refrigerant Type:</label>
+            <input type="text" id="refrigerantType" name="refrigerantType" class="form-control mb-3" required>
 
-            <label for="refrigerantWeight">Refrigerant Weight (lbs):</label>
-            <input type="number" id="refrigerantWeight" name="refrigerantWeight" required>
+            <label for="cylinderSize" class="form-label">Cylinder Size (lbs):</label>
+            <input type="number" id="cylinderSize" name="cylinderSize" class="form-control mb-3" required>
 
-            <label for="purchaseDate">Purchase Date:</label>
-            <input type="date" id="purchaseDate" name="purchaseDate">
+            <label for="refrigerantWeight" class="form-label">Refrigerant Weight (lbs):</label>
+            <input type="number" id="refrigerantWeight" name="refrigerantWeight" class="form-control mb-3" required>
 
-            <label for="wholesaler">Wholesaler:</label>
-            <input type="text" id="wholesaler" name="wholesaler" required>
+            <label for="purchaseDate" class="form-label">Purchase Date:</label>
+            <input type="date" id="purchaseDate" name="purchaseDate" class="form-control mb-3">
 
-            <button type="submit">Submit</button>
+            <label for="wholesaler" class="form-label">Wholesaler:</label>
+            <input type="text" id="wholesaler" name="wholesaler" class="form-control mb-3" required>
+
+            <button type="submit" class="btn btn-primary mb-3">Submit</button>
           </form>
 
           <form id="recoveryCylinderForm" style="display: none;">
-            <h2>Recovery Cylinder</h2>
-            <label for="cylinderTagId">Cylinder Tag ID:</label>
-            <input type="text" id="cylinderTagId" name="cylinderTagId" value="XYZ98765" readonly>
+            <!-- Recovery Cylinder Button -->
+            <h2 class="mt-3">Recovery Cylinder</h2>
+            <label for="cylinderTagId" class="form-label">Cylinder Tag ID:</label>
+            <input type="text" id="cylinderTagId" name="cylinderTagId" value="XYZ98765" class="form-control mb-3"
+              readonly>
 
-            <label for="companyName">Company Name:</label>
-            <input type="text" id="companyName" name="companyName" value="ABC Company" readonly>
+            <label for="companyName" class="form-label">Company Name:</label>
+            <input type="text" id="companyName" name="companyName" value="ABC Company" class="form-control mb-3"
+              readonly>
 
-            <label for="refrigerantId">Refrigerant ID:</label>
-            <input type="text" id="refrigerantId" name="refrigerantId" value="R410a" readonly>
+            <label for="refrigerantId" class="form-label">Refrigerant ID:</label>
+            <input type="text" id="refrigerantId" name="refrigerantId" value="R410a" class="form-control mb-3" readonly>
 
-            <label for="technicianId">Technician ID:</label>
-            <input type="text" id="technicianId" name="technicianId" value="TECH002" readonly>
+            <label for="technicianId" class="form-label">Technician ID:</label>
+            <input type="text" id="technicianId" name="technicianId" value="TECH002" class="form-control mb-3" readonly>
 
-            <label for="recoveryDate">Recovery Date:</label>
-            <input type="date" id="recoveryDate" name="recoveryDate" value="2023-07-21">
+            <label for="recoveryDate" class="form-label">Recovery Date:</label>
+            <input type="date" id="recoveryDate" name="recoveryDate" value="2023-07-21" class="form-control mb-3">
 
-            <label for="refrigerantType">Refrigerant Type:</label>
-            <select id="refrigerantType" name="refrigerantType" required>
+            <label for="refrigerantType" class="form-label">Refrigerant Type:</label>
+            <select id="refrigerantType" name="refrigerantType" class="form-select mb-3" required>
               <option value="" selected disabled>Select refrigerant type</option>
               <option value="clean">Clean/Reuse</option>
               <option value="nonUsable">Non-Usable</option>
               <option value="burnout">Burnout</option>
             </select>
 
-            <label for="cylinderSize">Cylinder Size (lbs):</label>
-            <input type="number" id="cylinderSize" name="cylinderSize" required>
+            <label for="cylinderSize" class="form-label">Cylinder Size (lbs):</label>
+            <input type="number" id="cylinderSize" name="cylinderSize" class="form-control mb-3" required>
 
-            <label for="refrigerantTypeLbs">Refrigerant Type (lbs):</label>
-            <input type="number" id="refrigerantTypeLbs" name="refrigerantTypeLbs" required>
+            <label for="refrigerantTypeLbs" class="form-label">Refrigerant Type (lbs):</label>
+            <input type="number" id="refrigerantTypeLbs" name="refrigerantTypeLbs" class="form-control mb-3" required>
 
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn btn-primary mb-3">Submit</button>
           </form>
 
         </div>
@@ -261,8 +272,8 @@
       recoveryCylinderForm.style.display = 'block';
     }
 
-
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
