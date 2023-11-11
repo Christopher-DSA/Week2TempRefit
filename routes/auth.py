@@ -8,11 +8,43 @@ from dotenv import load_dotenv
 # from main import app
 from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
-#Load enviroment variables
+
+#Email imports
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+
+#Load enviroent variables
 load_dotenv()
+
+#Server Email information
+MAIL_SERVER = os.getenv('MAIL_SERVER')
+MAIL_PORT = os.getenv('MAIL_PORT')
+MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+
+
 #os.getenv to get HASH_SECRET from .env file
 secret_key = os.getenv('HASH_SECRET')
 auth = Blueprint('auth', __name__)
+
+#Testing email configuration
+def send_email(to_address, subject, body):
+    msg = MIMEMultipart()
+    msg['From'] = MAIL_USERNAME
+    msg['To'] = to_address
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP_SSL(MAIL_SERVER, MAIL_PORT)
+        server.login(MAIL_USERNAME, MAIL_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error sending email: {e}")
 
 @auth.route("/", methods=["GET", "POST"])
 def login():
@@ -123,37 +155,81 @@ def home():
     return render_template("auth/home.html",user=user)
 
 
-@auth.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user_type = request.form['user_type']
-        added_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        user_detail = user_type
+# Replacing this with the new page from the design team.
+# @auth.route("/register", methods=["GET", "POST"])
+# def register():
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         password = request.form['password']
+#         user_type = request.form['user_type']
+#         added_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+#         user_detail = user_type
 
-        hashed_password = generate_hash(password, current_app.secret_key)
+#         hashed_password = generate_hash(password, current_app.secret_key)
 
-        if not username or not password or not user_type:
-            flash('Please fill out all fields.')
+#         if not username or not password or not user_type:
+#             flash('Please fill out all fields.')
         
-        else:
-            CRUD.create(User, False, email=username, password=hashed_password, role=user_type, added_date=added_date)    
+#         else:
+#             CRUD.create(User, False, email=username, password=hashed_password, role=user_type, added_date=added_date)    
 
-            # Redirect to different forms based on user_type
-            if user_type == 'contractor':
-                return redirect(url_for('contractor.formcontractor'))
-            elif user_type == 'technician':
-                return redirect(url_for('technician.formtechnician'))
-            elif user_type == 'wholesaler':
-                return redirect(url_for('wholesaler.formwholesaler'))
-            elif user_type == 'admin':
-                return redirect(url_for('auth.formadmin'))
+#             # Redirect to different forms based on user_type
+#             if user_type == 'contractor':
+#                 return redirect(url_for('contractor.formcontractor'))
+#             elif user_type == 'technician':
+#                 return redirect(url_for('technician.formtechnician'))
+#             elif user_type == 'wholesaler':
+#                 return redirect(url_for('wholesaler.formwholesaler'))
+#             elif user_type == 'admin':
+#                 return redirect(url_for('auth.formadmin'))
             
-            #return redirect(url_for('auth.login'))
-    print("******************************* failed to Register ********************************")   
-    return render_template("auth/register.html")
+#             #return redirect(url_for('auth.login'))
+#     print("******************************* failed to Register ********************************")   
+#     return render_template("auth/register.html")
 
+
+@auth.route("/create", methods=["GET", "POST"])
+def register():
+    print("test")
+    if request.method == 'POST':
+        print("In Post")
+        
+        #1. Get the data from the form.
+        user_email = request.form['Email']
+        password_1 = request.form['Password1']
+        password_confirmation_2 = request.form['Password2']
+        added_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        #1.5 Check if the passwords match.
+        if password_1 != password_confirmation_2:
+            print("Passwords do not match")
+        
+        #2.Hashed version of the password for the database instead of plain text.
+        message = {'password': password_1}
+        result = generate_hash(message, secret_key)
+        
+        #3. Send the data to the database.
+        is_email_already_in_use = True
+        if is_email_already_in_use:
+            pass
+        else:
+            CRUD.create(User, False, email=user_email, password=result, role='not_selected', added_date=added_date, is_email_verified=False)
+        
+        #print(user_email,password_1,password_confirmation_2,added_date)
+        
+        #4. Move on to verify email page
+        
+        return render_template('/Login Flow/verify.html')
+    
+    elif request.method == 'GET':
+        print("In Get")
+        #Send an email
+        print("Sending an email")
+        #Call the send email function.
+        send_email("refit713@gmail.com", "Hello!", "This is a test email from my own SMTP server!")
+
+        return render_template('Account Setup/create.html')
+        
 
 @auth.route('/upload', methods=['GET', 'POST'])
 def upload():
