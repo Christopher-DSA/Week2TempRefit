@@ -17,7 +17,6 @@ engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 
 
-
 class User(Base):
 
     __tablename__ = "User"
@@ -29,6 +28,7 @@ class User(Base):
     added_date = Column(String)
     user_detail = Column(String)
     status = Column(String)
+    is_email_verified = Column(Boolean)
 
 
     def __repr__(self):
