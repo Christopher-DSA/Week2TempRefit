@@ -213,8 +213,10 @@ def register():
         result = generate_hash(message, secret_key)
         
         #3. Send the data to the database.
-        is_email_already_in_use = True
-        if is_email_already_in_use:
+        is_email_already_in_use = CRUD.read(User, email=user_email)
+        print(is_email_already_in_use)
+        if is_email_already_in_use == None:
+            #USER DOES NOT EXIST IN DATABASE
             pass
         else:
             CRUD.create(User, False, email=user_email, password=result, role='not_selected', added_date=added_date, is_email_verified=False)
