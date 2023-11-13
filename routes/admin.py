@@ -17,6 +17,10 @@ admin = Blueprint('admin', __name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        """
+        Assuming the user_email in the session is the email of the user.
+        If the user_email is not in the session, redirect to login page.
+        """
         if 'user_email' not in session:
             return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
