@@ -116,13 +116,41 @@ def equipment_create():
     
     return render_template('equipment/equipment_create.html')
 
-@technician.route('/equipment/repair')
-def repair():
-    return render_template('equipment/repair.html')
-
-@technician.route('/equipment/recovery')
-def recovery():
-    return render_template('equipment/recovery.html')
+##@technician.route('/equipment/repair')
+##def repair():
+ ##   return render_template('equipment/repair.html')
 
 
 
+##@technician.route('/equipment/recovery')
+
+##def recovery():
+
+   ## return render_template('equipment/recovery.html')
+
+@technician.route('/New Cylinder/tag-linked')
+def add_qr():
+
+
+    return render_template('New Cylinder/tag-linked.html')
+
+
+@technician.route('/equipment/repair_ODS_Sheet')
+def repair_ODS_Sheet():
+
+
+    return render_template('equipment/repair_ODS_Sheet.html')
+
+
+
+@technician.route('/equipment common/qr-scan')
+def qr_scan():
+
+
+    return render_template('equipment common/qr-scan.html')
+
+@technician.route('/recovery/recovery-ods-sheet')
+def recovery_ods_sheet():
+
+
+    return render_template('recovery/recovery-ods-sheet.html')
