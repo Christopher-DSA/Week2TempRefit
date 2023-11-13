@@ -13,31 +13,36 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-@cylinder.route("/cylinder", methods=['GET', 'POST'])
-def cylinder():
-    if request.method == 'POST':
-        cylinderTagId       = request.form.get('cylinderTagId')
-        refrigerantId       = request.form.get('refrigerantId')
-        technicianId        = request.form.get('technicianId')
-        cylinderType        = request.form.get('cylinderType')
-        cylinderSize        = request.form.get('cylinderSize')
-        createDate          = request.form.get('createDate')
-        refrigerantWeight   = request.form.get('refrigerantWeight')
-        refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
-        refrigerantWeightAdded        = request.form.get('refrigerantWeightAdded')
-        add_cylinder                  = request.form.get('addcylinder')
-        print(cylinderTagId)
-        return redirect(url_for('cylinder.cylinder_recovery.html')) #for testing
-    return redirect(url_for('cylinder.cylinder')) #for testing
+@cylinder.route("/cylinder")
+@login_required
+def cy():
+    return render_template('New Cylinder/cylinder-type.html')
 
-@cylinder.route("/cylinder", methods=["GET", "POST"])
-def formcylinder():
-    if request.method == 'POST':
-        # Get data from form
+
+# @cylinder.route("/cylinder", methods=['GET', 'POST'])
+# def cylinder():
+#     if request.method == 'POST':
+#         cylinderTagId       = request.form.get('cylinderTagId')
+#         refrigerantId       = request.form.get('refrigerantId')
+#         technicianId        = request.form.get('technicianId')
+#         cylinderType        = request.form.get('cylinderType')
+#         cylinderSize        = request.form.get('cylinderSize')
+#         createDate          = request.form.get('createDate')
+#         refrigerantWeight   = request.form.get('refrigerantWeight')
+#         refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
+#         refrigerantWeightAdded        = request.form.get('refrigerantWeightAdded')
+#         add_cylinder                  = request.form.get('addcylinder')
+#         print(cylinderTagId)
+#         return redirect(url_for('cylinder.cylinder_recovery.html')) #for testing
+#     return redirect(url_for('cylinder.cylinder')) #for testing
+
+# @cylinder.route("/cylinder", methods=["GET", "POST"])
+# def formcylinder():
+#     if request.method == 'POST':
+#         # Get data from form
         
         
-    #redirect to the appropriate page
+#     #redirect to the appropriate page
 
-        return redirect(url_for('contractor.dashboardcontractor'))
-    return render_template("New Cylinder/cylinder-type.html")
-
+#         return redirect(url_for('contractor.dashboardcontractor'))
+#     return render_template("New Cylinder/cylinder-type.html")
