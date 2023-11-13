@@ -136,6 +136,18 @@ def forgot_password():
         print("POST request for forgot_password()")
         
         email = request.form.get('Email') # assuming username is the same as email
+        
+        try:
+            #Send an email to the email address typed in the form.
+            smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+            smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', 'Subject: Forgot Password Test Email')  # Sending the email, nya~
+            smtpObj.quit()  # Quitting the connection
+            print("Email sent successfully!")
+        except Exception as e:
+            print("Oops, something went wrong: ", e)
+
+        
         print(email)
         flash("If your email is registered with us, you'll receive a password reset link shortly.")
         return redirect(url_for('auth.forgot_password'))
