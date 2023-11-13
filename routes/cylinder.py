@@ -16,7 +16,7 @@ def login_required(f):
 @cylinder.route("/cylinder")
 @login_required
 def cy():
-    return "This is the cylinder page"
+    return render_template('New Cylinder/cylinder-type.html')
 
 
 # @cylinder.route("/cylinder", methods=['GET', 'POST'])
