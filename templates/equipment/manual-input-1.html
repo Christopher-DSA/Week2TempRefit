@@ -28,18 +28,6 @@
   <link rel="stylesheet" href="/assets/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
   <link rel="stylesheet" href="/assets/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
 </head>
-<style>
-  .custom-dropdown-btn {
-    border: 2px solid rgb(161, 161, 161);
-    background-color: #fff;
-    color: rgb(0, 0, 0);
-  }
-
-  .button-text {
-    display: inline-block;
-    margin-right: 50%;
-  }
-</style>
 
 <body>
   <!-- Start: Navbar -->
@@ -57,19 +45,12 @@
               <div>
                 <p>Choose one of the following to locate the equipment.</p>
               </div>
-              <br />
-              <h4 class="mb-3">Repair Information</h4>
               <div class="py-3">
-                <p>Identifier <span class="text-danger">*</span></p>
-                <div class="btn-group w-100">
-                  <button type="button" class="btn btn-primary dropdown-toggle custom-dropdown-btn"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="button-text">Select Identifier</span>
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">QR Ref Nr</a>
-                    <a class="dropdown-item" href="#">Equipment Serial Nr</a>
-                  </div>
+                <div class="mb-3"><label class="form-label">Identifier <span class="text-danger">*</span></label>
+                  <div class="d-flex justify-content-between gap-3"><select class="form-select">
+                      <option value="12" selected="">lb/oz</option>
+                      <option value="13">kg/g</option>
+                    </select>
                 </div>
               </div>
               <div class="row d-flex mt-5 pt-5 justify-content-center">
