@@ -211,3 +211,6 @@
 # November 9, 2023
 -Christopher connected the admin route, it is now possible to log into the admin dashboard page.
 -Christopher: The admin dashboard now shows the admin's information as it should instead of the placeholder text.
+
+# November 13, 2023
+- Tean neeting, discussed the progress of the project and the next steps.
