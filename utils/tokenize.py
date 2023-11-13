@@ -3,6 +3,11 @@ import hmac
 import json
 import secrets
 import string
+import os
+from dotenv import load_dotenv
+
+#os.getenv to get HASH_SECRET from .env file
+secret_key = os.getenv('HASH_SECRET')
 
 def generate_hash(message, secret):
     """Generates an HMAC-SHA256 hash of a JSON message using a secret key.
