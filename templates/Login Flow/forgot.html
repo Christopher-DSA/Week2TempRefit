@@ -133,7 +133,7 @@
     <section>
         <div class="row justify-content-center mt-5">
             <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
-                <form class="px-4">
+                <form class="px-4" method = "post" action ="/forgot_password">
                     <!-- Start: Form Header -->
                     <div class="row mb-3">
                         <div class="col"><a class="btn mb-4 p-0" role="button" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-left fs-4 me-2">
@@ -143,6 +143,11 @@
                             <p>Enter the email address to receive a link to reset your password.</p>
                         </div>
                     </div><!-- End: Form Header -->
+                    {% with message = get_flashed_messages() %}
+                        {% if message %}
+                            <p><i>{{ message[0] }}<i></p> <!-- Displaying the single message here -->
+                        {% endif %}
+                    {% endwith %}
                     <!-- Start: Form Input -->
                     <div class="row mb-5">
                         <div class="col">

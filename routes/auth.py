@@ -130,47 +130,19 @@ def logout():
 
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
+    print("In forgot_password()")
     if request.method == "POST":
-        email = request.form.get('username') # assuming username is the same as email
-        #new_password = request.form.get('new_password')  # shouldn't this be deleted ? new password only happens in reset link sent after email authenticated
+        print("POST request for forgot_password()")
         
-        if email :# removed 'and password' - because user forgot password and new password creation page is a link sent by email( if matches db)
+        email = request.form.get('Email') # assuming username is the same as email
+        print(email)
+        flash("If your email is registered with us, you'll receive a password reset link shortly.")
+        return redirect(url_for('auth.forgot_password'))
+
            
-            
-            # user = CRUD.get_user_by_email(email)
-            users = CRUD.read(User, email=email)
-           
-
-            if users:
-
-                user=users[0]  #assuming each user has a distinct email and multiple users dont share one email
-              # add code to email user with password reset link , if it matches account in database 
-              # reset link should be a  new , secure page  if email was validated 
-              # reset link should be created here and sent in the email if it was validated 
-                reset_token = generate_reset_token(user)  # placeholder , need to create function to generate unqiue link
-                send_reset_email(user.email, reset_token) 
-            #def send_reset_email(email, reset_token):
-            ##Create a Flask-Mail message:
-            #msg = Message('Password Reset Request', sender='dev_refit@sidneyshapiro.com', recipient=[email])
-
-            ## Customize the email body with the reset link:
-            #reset_link = url_fgitor('auth.reset_password', token=reset_token, _external=True)
-            #msg.body = f'Click the following link to reset your password: {reset_link}'
-
-            # Send the email
-            #mail.send(msg)
-            
-
-
-            #     # Use the CRUD update method to change the password
-                updated_user = CRUD.update(User, user.user_id, password=new_password) # shouldn't this be happening in the reset pass page?
-                return jsonify({'message': 'Password reset link sent '}) # removed 'Password changed successfully' because pass reset should be on a different page
-            else:
-                return jsonify({'error': 'User not found'})
     elif request.method == "GET":
         return render_template("Login Flow/forgot.html")
-    else:
-        print('Error in forgot_password()')
+    
 
 
 @auth.route("/home", methods=["GET"])
