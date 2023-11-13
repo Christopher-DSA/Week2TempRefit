@@ -21,12 +21,13 @@ def contractor_required(f):
         # Assuming the user_id in the session is the email of the user.
         user_id= session.get('user_id')
 
+        #user = CRUD.read(User,user_id=user_id
         
-
-        user = CRUD.read(User,user_id=user_id)[0]
+        users_row_in_db = CRUD.read(User,user_id=user_id)
+        user_role = users_row_in_db.role
         
-        if not current_user.role or current_user.role != 'contractor':
-            # Either user doesn't exist, or the user is not an admin.
+        if not user_role or user_role != 'contractor':
+            # Either user doesn't exist, or the user is not a contractor.
             return "Unauthorized", 403
         
         return f(*args, **kwargs)
@@ -65,9 +66,9 @@ def formcontractor():
 @contractor_required
 def dashboardcontractor():
     # Render the dashboard
-    user=session.get('user_id')
+    user_id =session.get('user_id')
 
-    return render_template("contractor/dashboardcontractor.html",user=user)
+    return render_template("contractor/dashboardcontractor.html",user=user_id)
 
 @contractor.route('/handle_qr_code', methods=['POST'])
 @login_required
