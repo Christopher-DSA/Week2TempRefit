@@ -213,4 +213,6 @@
 -Christopher: The admin dashboard now shows the admin's information as it should instead of the placeholder text.
 
 # November 13, 2023
-- Tean neeting, discussed the progress of the project and the next steps.
+- Team meeting, discussed the progress of the project and the next steps.
+- Muskan and Jared : Updated the Technician dashbaord, rerouting all the pages to the latest templates
+- Prashant and Sumanth : created technician history basic html webpage- to view all the ODS sheet of a specific cylinder by scanning QR tag
