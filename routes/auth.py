@@ -5,7 +5,7 @@ from functools import wraps
 import pandas as pd
 import os
 from dotenv import load_dotenv
-from flask_mail import Mail, Message # yael 
+#from flask_mail import Mail, Message # yael 
 # from main import app
 from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
