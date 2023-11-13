@@ -9,7 +9,7 @@ from routes.organization import organization
 from routes.technician import technician
 from routes.wholesaler import wholesaler
 from routes.contractor import contractor
-# from routes.cylinder import cylinder
+from routes.cylinder import cylinder
 from routes.auth import auth
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -31,7 +31,7 @@ app.register_blueprint(organization)
 app.register_blueprint(technician)
 app.register_blueprint(wholesaler)
 app.register_blueprint(contractor)
-# app.register_blueprint(cylinder)
+##app.register_blueprint(cylinder)
 app.register_blueprint(auth)
 
 db = SQLAlchemy(app)

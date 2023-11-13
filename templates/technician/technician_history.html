@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My History</title>
+
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin: 10px auto; /* Center-align the list items */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 200px;
+      box-sizing: border-box;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>My History</h1>
+
+  <!-- Button to sort the list -->
+  <button onclick="sortList()">Sort List</button>
+
+  <ul id="technicianList">
+    <!-- Clickable items with links to related pages -->
+    <li><a href="ODS_2023_11.html">ODS_2023_11</a></li>
+    <li><a href="ODS_2023_10.html">ODS_2023_10</a></li>
+    <li><a href="ODS_2023_09.html">ODS_2023_09</a></li>
+    <!-- Add more items as needed -->
+  </ul>
+
+  <script>
+    function sortList() {
+      var list = document.getElementById("technicianList");
+      var items = list.getElementsByTagName("li");
+      var itemsArray = [];
+
+      // Convert NodeList to array
+      for (var i = 0; i < items.length; i++) {
+        itemsArray.push(items[i]);
+      }
+
+      // Sort the array based on the text content (month and year)
+      itemsArray.sort(function (a, b) {
+        var aValue = a.textContent.trim().toLowerCase();
+        var bValue = b.textContent.trim().toLowerCase();
+        return aValue.localeCompare(bValue);
+      });
+
+      // Reverse the array to sort in descending order
+      itemsArray.reverse();
+
+      // Clear the list
+      while (list.firstChild) {
+        list.removeChild(list.firstChild);
+      }
+
+      // Append the sorted items back to the list
+      for (var i = 0; i < itemsArray.length; i++) {
+        list.appendChild(itemsArray[i]);
+      }
+    }
+  </script>
+
+</body>
+
+</html>
