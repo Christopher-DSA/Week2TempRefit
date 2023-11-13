@@ -15,7 +15,7 @@ def login_required(f):
 
 @cylinder.route("/cylinder")
 @login_required
-def cy():
+def cylindertype():
     return render_template('New Cylinder/cylinder-type.html')
 
 
