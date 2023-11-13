@@ -120,47 +120,43 @@
   <!-- End: Navbar -->
 
 
-  <div class="container d-flex justify-content-center mt-5">
-    <div class="card" style="width: 80%; height: 100%;">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="card mb-5" style="width: 80%; position: relative;">
       <div class="card-body">
-        <div class="row justify-content-center mt-5">
+        <div class="mt-3 mb-0 d-flex justify-content-center">
+          <h2>Login to REFit</h2>
+        </div>
+        <div class="row justify-content-center mt-4">
           <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
-            <form class="ps-4" action="/" method="post">
-              <!-- Start: Form Header -->
+            <form class="px-4" action="/" method="post">
               <div class="row mb-5">
                 <div class="col">
-                  <h2>Log In</h2>
-                </div>
-              </div>
-              <!-- End: Form Header -->
-
-              <div class="row mb-5">
-                <div class="col d-flex flex-column align-items-center">
                   <!-- Start: Email -->
                   <div class="mb-4">
                     <label class="form-label">Email<span class="text-danger fw-bold">*</span></label>
-                    <input class="form-control" type="email"
-                      required name="Email"></div>
+                    <input class="form-control" type="email" required name="Email">
+                  </div>
                   <!-- End: Email -->
 
                   <!-- Start: Password -->
-                  <div class="mb-2">
+                  <div>
                     <label class="form-label">Password<span class="text-danger fw-bold">*</span></label>
-                    <input class="form-control" type="password"
-                      required name="Password">
-                    </div>
+                    <input class="form-control mb-3" type="password" required name="Password">
+                  </div>
                   <!-- End: Password -->
-                  <a class="float-end" href="/forgot_password">Forgot
+                  <a href="/forgot_password">Forgot
                     Password?</a>
                 </div>
               </div>
 
               <!-- Start: Form Submit -->
-              <div class="row">
-                <div class="col d-flex flex-column align-items-center"><input class="btn btn-lg btn-primary w-100 mb-5"
-                    type="submit" value="Log In" name="Log In"><a class="text-center" href="/create">Don't have an
-                    account?
-                    Sign Up</a></div>
+
+              <div class="row mb-3">
+                <div class="col d-flex flex-column align-items-center">
+                  <button  class="btn btn-lg btn-primary w-100 mb-3" type="submit" value="Log In" name="Log In">Login</button>
+                  <span>Don't have an account?</span>
+                  <a class="text-center" href="/create">Sign Up</a>
+                </div>
               </div>
             </form>
             <!-- End: Login Form -->
