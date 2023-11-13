@@ -1,0 +1,12 @@
+How to start up a local email server for testing email features.
+
+Newer versions of python (3.8-3.12):
+1. pip install aiosmtpd
+2. Open cmd prompt and run the command below.
+3. python -m aiosmtpd -n -l localhost:1025
+
+OR
+
+Older versions of python:
+1. Open cmd prompt and run the command below.
+2. python -m smtpd -c DebuggingServer -n localhost:1025
