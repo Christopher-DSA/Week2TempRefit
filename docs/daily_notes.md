@@ -213,4 +213,43 @@
 -Christopher: The admin dashboard now shows the admin's information as it should instead of the placeholder text.
 
 # November 13, 2023
-- Tean neeting, discussed the progress of the project and the next steps.
+- Team meeting, discussed the progress of the project and the next steps.
+- Muskan and Jared : Updated the Technician dashbaord, rerouting all the pages to the latest templates
+- Prashant and Sumanth : created technician history basic html webpage- to view all the ODS sheet of a specific cylinder by scanning QR tag
+
+- Vinh Lam initiated a request for team members to pull from the main repository and addressed specific individuals, Nithin Shajan and Jared Chuang, to resolve conflicts.
+
+- Asset organization: You instructed Rob Lachapelle to inform the front-end team that all assets/fonts/images are now in the static folder.
+
+- General pull request: You reminded the team to pull from the main repository.
+
+- Chris _(christopher473)_ shared updates and edits on various features:
+  - Decommission Cylinder Feature: Detailed changes, including gas amount display, decommissioning with any gas amount, automatic loss calculation, decommissioning limit, and reminders for tag replacement.
+  - Email Templates: HTML and text versions for different email clients.
+  - GPS Feature: Mentioned without specific details.
+  - Contractor Role: Contractors can invite themselves for personal jobs; the possibility of uploading licenses and filling out ODS sheets.
+  - Equipment and Cylinder Tags: Different purposes but both enable app login when scanned.
+  - Cylinder Tags: Serve three fixed purposes throughout their lifetime; specific refrigerants restricted to certain cylinders.
+  - Questions Raised: Possibility of auto-generating a monthly gas loss report.
+  - Program to generate QR-Codes?
+  - New Feature - Monthly Leak Loss Report: Incorporation of QR codes; updating the cylinder table for accurate leak loss calculations and database integration.
+  
+- Action Items for V9 Database: Database of Cylinder Data. You sought confirmation from Sidney Shapiro on the backend team's tasks.
+
+- Chris _(christopher473)_ assigned tasks to team members:
+  - Jared, Muskan, Sumanth, Prashant: Working on QR code system for cylinder tags, establishing the flow between existing templates.
+  - Nithin, Jennifer, Mansi: Working on Cylinder.py file, connecting new cylinder templates to the code.
+  - Chris, Yael: Working on Database V9, creating a space to store data for other teams, and implementing a forgot password system.
+
+- Nithin Shajan updated on progress related to routing pages and new cylinder pages, clarifying potential overlap with Jennifer's work.
+
+- Jennifer Zhao reported her work on a .py file for the new cylinder HTML and assured no overlap with existing tasks.
+
+- You provided updates on overall progress and requested the team to pull from the main repository.
+
+- Chris _(christopher473)_ presented a chart created by Jared, showing current HTML templates and identifying ones still to be created.
+
+- Nithin Shajan completed the assigned templates promptly.
+
+- Nithin Shajan requested Rob Lachapelle to create two HTML templates, and Rob Lachapelle confirmed the plan, indicating it would be one dynamic template instead of two.
+
