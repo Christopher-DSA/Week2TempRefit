@@ -18,6 +18,18 @@ def login_required(f):
 def cylindertype():
     return render_template('New Cylinder/cylinder-type.html')
 
+@cylinder.route('/new-cylinder')
+def new_cylinder():
+    return render_template('New Cylinder/new-cylinder.html')
+
+@cylinder.route('/cylinder-recovery')
+def cylinder_recovery():
+    return render_template('cylinder/cylinder_recovery.html')
+
+@cylinder.route('/cylinder-recovery-newequipment')
+def cylinder_recovery_newequipment():
+    return render_template('cylinder/cylinder_recovery_newequipment.html')
+
 
 # @cylinder.route("/cylinder", methods=['GET', 'POST'])
 # def cylinder():
