@@ -135,22 +135,32 @@ def forgot_password():
     if request.method == "POST":
         print("POST request for forgot_password()")
         
-        email = request.form.get('Email') # assuming username is the same as email
+        current_user_email = request.form.get('Email') # assuming username is the same as email
         
         try:
+            
+            msg = MIMEMultipart()
+            msg['From'] = 'refit_dev@sidneyshapiro.com'
+            msg['To'] = 'refit_dev@sidneyshapiro.com'
+            msg['Subject'] = 'Forgot Password Test Email'
+
+            body = 'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.'
+            msg.attach(MIMEText(body, 'plain'))
+            
+            email_text = msg.as_string()
+
             #Send an email to the email address typed in the form.
             smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
             smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
-            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', 'Subject: Forgot Password Test Email')  # Sending the email, nya~
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
             smtpObj.quit()  # Quitting the connection
             print("Email sent successfully!")
         except Exception as e:
             print("Oops, something went wrong: ", e)
 
         
-        print(email)
-        flash("If your email is registered with us, you'll receive a password reset link shortly.")
-        return redirect(url_for('auth.forgot_password'))
+        print(current_user_email)
+        return render_template("Login Flow/reset.html")
 
            
     elif request.method == "GET":
