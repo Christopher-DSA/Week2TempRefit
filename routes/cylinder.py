@@ -23,15 +23,15 @@ def cylindertype():
 def new_cylinder():
     return render_template('New Cylinder/new-cylinder.html')
 
-@cylinder.route('/cylinder-recovery')
+@cylinder.route('/recover_cylinder_clean')
 # @login_required
 def cylinder_recovery():
-    return render_template('cylinder/cylinder_recovery.html')
+    return render_template('New Cylinder/clean-cylinder.html')
 
-@cylinder.route('/cylinder-recovery-newequipment')
+@cylinder.route('/recover_cylinder_burnout')
 # @login_required
 def cylinder_recovery_newequipment():
-    return render_template('cylinder/cylinder_recovery_newequipment.html')
+    return render_template('New Cylinder/burnout-cylinder.html')
 
 
 # @cylinder.route("/cylinder", methods=['GET', 'POST'])
