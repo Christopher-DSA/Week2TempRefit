@@ -135,13 +135,21 @@ def forgot_password():
     if request.method == "POST":
         print("POST request for forgot_password()")
         
-        email = request.form.get('Email') # assuming username is the same as email
-        
+        current_user_email = request.form.get('Email') # assuming username is the same as email
         try:
+
+            msg = MIMEMultipart()
+            msg['From'] = 'refit_dev@sidneyshapiro.com'
+            msg['To'] = 'refit_dev@sidneyshapiro.com'
+            msg['Subject'] = 'Forgot Password Test Email'
+            body = 'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.'
+            msg.attach(MIMEText(body, 'plain'))
+                
+            email_text = msg.as_string()
             #Send an email to the email address typed in the form.
             smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
             smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
-            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', 'Subject: Forgot Password Test Email')  # Sending the email, nya~
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
             smtpObj.quit()  # Quitting the connection
             print("Email sent successfully!")
         except Exception as e:
@@ -150,12 +158,58 @@ def forgot_password():
         
         print(email)
         flash("If your email is registered with us, you'll receive a password reset link shortly.")
-        return redirect(url_for('auth.forgot_password'))
+
+        session['user_email'] = current_user_email
+       
+        
+        #return render_template('Login Flow/reset.html')
+        return render_template("Login Flow/forgot.html")
 
            
     elif request.method == "GET":
         return render_template("Login Flow/forgot.html")
     
+
+@auth.route("/reset_password", methods=["GET", "POST"])
+def reset_password():
+    print('1234')
+    if request.method == "POST" :
+        print('post method')
+        # get submitted form data
+        password1 = request.form['Password1']
+        password2 = request.form['Password2']
+        # check if passwords match
+        if password1 == password2:
+            print('pass matches')
+            # pull user email from session
+            current_user_email = session['user_email']
+
+            # hash password
+            message ={'password' :password1}
+           
+            hashed_pass =  generate_hash(message,secret_key)
+            print(hashed_pass)
+            # update password in database
+            CRUD.update(User,'password',new=hashed_pass,email=current_user_email)
+            return redirect(url_for('auth.login'))
+
+        else:
+            print('passwords do not match')
+
+            return redirect(url_for('auth.login'))
+       
+
+        
+        
+
+
+
+
+        
+
+
+
+
 
 
 @auth.route("/home", methods=["GET"])
@@ -230,7 +284,6 @@ def upload():
             return redirect(url_for('auth.upload'))
 
     return render_template('auth/csv.html')
-
 
 
 
