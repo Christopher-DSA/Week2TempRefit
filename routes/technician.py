@@ -158,12 +158,29 @@ def recovery_ods_sheet():
 @technician.route('/equipment/equipment_pages', methods = ['GET', 'POST'])
 def equipment_page():
     
-    print('reached 1')
     if request.method == 'GET':
-        print('reached 2')
         return render_template('equipment/equipment_pages.html')
     else:
         print('error')
+        return render_template('equipment/equipment_pages.html')
+    
+@technician.route('/equipment/ODS-history', methods = ['GET', 'POST'])
+def ODS_history():
 
-    return render_template('equipment/equipment_pages.html')
+    if request.method == 'GET':
+        return render_template('equipment/ODS-history.html')
+    else:
+        print('error')
+        return render_template('equipment/ODS-history.html')
+    
+@technician.route('/equipment/maintenance_history', methods = ['GET', 'POST'])
+def maintenance_history():
+
+    if request.method == 'GET':
+        return render_template('equipment/maintenance_history.html')
+    else:
+        print('error')
+        return render_template('equipment/maintenance_history.html')
+
+
         
