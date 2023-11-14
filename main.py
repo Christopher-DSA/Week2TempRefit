@@ -25,6 +25,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sofvie:gXq!%g^&dm*OuWfK8Hh
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["REMEMBER_COOKIE_HTTPONLY"] = True
 
+app.register_blueprint(auth)
 app.register_blueprint(store)
 app.register_blueprint(admin)
 app.register_blueprint(organization)
@@ -32,7 +33,7 @@ app.register_blueprint(technician)
 app.register_blueprint(wholesaler)
 app.register_blueprint(contractor)
 app.register_blueprint(cylinder)
-app.register_blueprint(auth)
+
 
 db = SQLAlchemy(app)
     
