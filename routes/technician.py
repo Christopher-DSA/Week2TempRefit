@@ -154,3 +154,16 @@ def recovery_ods_sheet():
 
 
     return render_template('recovery/recovery-ods-sheet.html')
+
+@technician.route('/equipment/equipment_pages', methods = ['GET', 'POST'])
+def equipment_page():
+    
+    print('reached 1')
+    if request.method == 'GET':
+        print('reached 2')
+        return render_template('equipment/equipment_pages.html')
+    else:
+        print('error')
+
+    return render_template('equipment/equipment_pages.html')
+        
