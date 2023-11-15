@@ -33,23 +33,33 @@ def cylinder_recovery():
 def cylinder_recovery_newequipment():
     return render_template('New Cylinder/burnout-cylinder.html')
 
+#Temp routing to create/update cylinder
+@cylinder.route('/create_cylinder', methods=['GET', 'POST'])
+def cylinderform():
+    if request.method == 'POST':
+        cylinderTagId       = request.form.get('cylinderTagId')
+        refrigerantId       = request.form.get('refrigerantId')
+        technicianId        = request.form.get('technicianId')
+        cylinderType        = request.form.get('cylinderType')
+        cylinderSize        = request.form.get('cylinderSize')
+        createDate          = request.form.get('createDate')
+        refrigerantWeight   = request.form.get('refrigerantWeight')
+        refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
+        refrigerantWeightAdded        = request.form.get('refrigerantWeightAdded')
+        addCylinder                  = request.form.get('addcylinder')
+        print("------------------------------")
+        print(cylinderTagId)
+        print(refrigerantId)
+        print(technicianId)
+        print(cylinderType)
+        print(cylinderSize)
+        print(createDate)
+        print(refrigerantWeight)
+        print(refrigerantWeightAfterService)
+        print(refrigerantWeightAdded)
+        print(addCylinder)
 
-# @cylinder.route("/cylinder", methods=['GET', 'POST'])
-# def cylinder():
-#     if request.method == 'POST':
-#         cylinderTagId       = request.form.get('cylinderTagId')
-#         refrigerantId       = request.form.get('refrigerantId')
-#         technicianId        = request.form.get('technicianId')
-#         cylinderType        = request.form.get('cylinderType')
-#         cylinderSize        = request.form.get('cylinderSize')
-#         createDate          = request.form.get('createDate')
-#         refrigerantWeight   = request.form.get('refrigerantWeight')
-#         refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
-#         refrigerantWeightAdded        = request.form.get('refrigerantWeightAdded')
-#         add_cylinder                  = request.form.get('addcylinder')
-#         print(cylinderTagId)
-#         return redirect(url_for('cylinder.cylinder_recovery.html')) #for testing
-#     return redirect(url_for('cylinder.cylinder')) #for testing
+    return render_template(('cylinder/cylinder.html')) #for testing
 
 # @cylinder.route("/cylinder", methods=["GET", "POST"])
 # def formcylinder():
@@ -57,7 +67,7 @@ def cylinder_recovery_newequipment():
 #         # Get data from form
         
         
-#     #redirect to the appropriate page
+    #redirect to the appropriate page
 
-#         return redirect(url_for('contractor.dashboardcontractor'))
-#     return render_template("New Cylinder/cylinder-type.html")
+    #     return redirect(url_for('contractor.dashboardcontractor'))
+    # return render_template("New Cylinder/cylinder-type.html")
