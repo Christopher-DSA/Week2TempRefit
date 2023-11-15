@@ -104,15 +104,19 @@ def login():
         if (db_password == result):# hashed and verified password securely. Updated from previous basic check.
             session["user_id"] = current_user.user_id  # Store user ID in session
             if current_user.role=='technician':
+                session['user_role'] = 'technician'
                 #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
             elif current_user.role=='admin':
+                session['user_role'] = 'admin'
                 #An admin has logged in! This is now functional.
                 return redirect(url_for('admin.user_page'))
             elif current_user.role=='contractor':
+                session['user_role'] = 'contractor'                
                 #A contractor has logged in! This is now functional.
                 return redirect(url_for('contractor.dashboardcontractor'))
             elif current_user.role=='wholesaler':
+                session['user_role'] = 'wholesaler'                
                 #A wholesaler has logged in! This is now functional.
                 return redirect(url_for('wholesaler.dashboardwholesaler'))
         else:
