@@ -33,6 +33,38 @@ def cylinder_recovery():
 def cylinder_recovery_newequipment():
     return render_template('New Cylinder/burnout-cylinder.html')
 
+@cylinder.route('/update_cylinder',methods=['GET','POST'])
+def cylinderform():
+    print('not post')
+    if request.method == 'POST':
+        print('this inside post')
+        cylinderTagId       = request.form.get('cylinderTagId')
+        refrigerantId       = request.form.get('refrigerantId')
+        technicianId        = request.form.get('technicianId')
+        cylinderType        = request.form.get('cylinderType')
+        cylinderSize        = request.form.get('cylinderSize')
+        createDate          = request.form.get('createDate')
+        refrigerantWeight   = request.form.get('refrigerantWeight')
+        refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
+        refrigerantWeightAdded        = request.form.get('refrigerantWeightAdded')
+        addCylinder                  = request.form.get('addCylinder')
+        print("------------------------------")
+        print(cylinderTagId)
+        print(refrigerantId)
+        print(technicianId)
+        print(cylinderType)
+        print(cylinderSize)
+        print(createDate)
+        print(refrigerantWeight)
+        print(refrigerantWeightAfterService)
+        print(refrigerantWeightAdded)
+        print(addCylinder)
+        # return redirect(url_for('technician.dashboardtechnician'))
+        return render_template(('technician/dashboardtechnician.html'))
+    print(request.method)
+    print('rendering cylinder form')
+    return render_template(('cylinder/cylinder.html')) #for testing
+
 
 # @cylinder.route("/cylinder", methods=['GET', 'POST'])
 # def cylinder():
