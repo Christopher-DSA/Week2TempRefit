@@ -253,3 +253,59 @@
 
 - Nithin Shajan requested Rob Lachapelle to create two HTML templates, and Rob Lachapelle confirmed the plan, indicating it would be one dynamic template instead of two.
 
+**Chris _ (christopher473), 2 min**
+
+**Decommission Cylinder Feature:**
+- Shows gas amount when scanned.
+- Can be decommissioned with any amount of gas.
+- Automatic calculation of loss amount; no manual editing.
+- Decommissioning limit is 5LB, and cylinders must be returned empty.
+- Reminders to replace tags after decommissioning.
+
+**Email Templates:**
+- Both HTML and text versions for different email clients.
+- Start with text, then create the HTML version.
+
+**GPS Feature:** (Mentioned but no specific details provided)
+
+**Contractor Role:**
+- Ability for contractors to invite themselves for personal jobs.
+- Perhaps allow both contractors and technicians to upload their ODS license and once they do give them the perms to fill out ODS sheets.
+
+**Equipment and Cylinder Tags:**
+- Different purposes but both enable app login when scanned.
+- ODS sheets required for pushing or recovering refrigerant.
+
+**Cylinder Tags:**
+- Serve three fixed purposes throughout their lifetime.
+- Specific refrigerants restricted to certain cylinders.
+
+**Questions Raised:**
+- Possibility of auto-generating a monthly gas loss report.
+
+**Program to generate QR-Codes?**
+
+**New Feature - Monthly Leak Loss Report:**
+- Incorporation of QR codes.
+- Update cylinder table for accurate leak loss calculations and database integration.
+
+**Action Items for V9 Database: Database of Cylinder Data:**
+- Adding columns to database to store data relating to leak loss and the decommission feature.
+
+Hi Sidney, here is the list of features that I noted from the meeting. Is there anything else we should add to this list?
+
+**Jared, Muskan, Sumanth, Prashant:**
+- Working on QR code system for cylinder tags. Being able to see the ODS Sheet history of a cylinder through QR code.
+- Establishing the flow between the templates we currently have. (Jared)
+
+**Nithin, Jennifer, Mansi:**
+- Cylinder.py file, Connecting new cylinder templates to the code.
+- cylinder-type.html page which leads into the next 3 pages:
+  1. cylinder_recover_newequipment.html
+  2. cylinder_recover.html
+  3. cylinder.html
+
+**Chris, Yael:**
+- Working on: Database V9/Creating a space to store data for other teams as requested and forgot password system.
+
+
