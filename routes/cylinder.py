@@ -14,14 +14,14 @@ def login_required(f):
     return decorated_function
 
 def convert_to_oz(lb, oz):
-    lb = lb
-    oz = oz
+    lb = float(lb)
+    oz = float(oz)
     total_oz = lb * 16 + oz
     return total_oz
 
 def convert_kg_to_oz(kg, gm):
-    kg = kg
-    gm = gm
+    kg = float(kg)
+    gm = float(gm)
     total_gm = kg * 1000 + gm
     total_oz = total_gm * 0.035
     return total_oz
@@ -89,26 +89,34 @@ def formcylinder():
             # Cylinder information
         cylinderTareWeightUnit = request.form.get('tareWeightUnit')
 
-        # if cylinderTareWeightUnit == 12:
-        #     tareWeight = convert_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
-        #     # return str(tareWeight)
-        # else:
-        #     tareWeight = convert_kg_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
-        #     # return str(tareWeight)
+        print("cylinderTareWeightUnit:" + cylinderTareWeightUnit)
+
+        if cylinderTareWeightUnit == 12:
+            tareWeight = convert_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
+            print("Tare weight:" + str(tareWeight))
+        else:
+            tareWeight = convert_kg_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
+            print("Tare weight:" + str(tareWeight))
   
 
 
-            #Refrigerant information
+       #Refrigerant information
         refrigerantType = request.form.get('refrigerantType')
+        print("refrigerantType:" + refrigerantType)
+
         currentRefrigerantweightUnit = request.form.get('currentRefrigerantWeightUnit')
+        print("currentRefrigerantweightUnit:" + cylinderTareWeightUnit)
 
                                                     
-        # if currentRefrigerantweightUnit == 12:
-        #     currentRefrigerantweight = convert_to_oz(request.form.get('currentRefrigerantweight1'), request.form.get('currentRefrigerantWeight2'))
-        #     # return str(currentRefrigerantweight)
-        # else:
-        #     currentRefrigerantweight = convert_kg_to_oz(request.form.get('currentRefrigerantweight1'), request.form.get('currentRefrigerantWeight2'))
-        #     # return str(currentRefrigerantweight)
+        if currentRefrigerantweightUnit == 12:
+            currentRefrigerantweight = convert_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
+            print("currentRefrigerantweight" + str(currentRefrigerantweight))
+
+        else:
+            print("ref weight 1 is:")
+            print(request.form.get('currentRefrigerantWeight1'))
+            currentRefrigerantweight = convert_kg_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
+            print("currentRefrigerantweight:" + str(currentRefrigerantweight))
 
         print("New cylinder data succssfully retrieved.")
 
