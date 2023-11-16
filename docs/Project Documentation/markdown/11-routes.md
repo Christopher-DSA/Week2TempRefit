@@ -66,6 +66,21 @@ The provided code creates a 'technician' blueprint in a Flask web application, h
 
    - The "/equipment/recovery" route: This handles GET requests and renders the recovery page via the "equipment/recovery.html" template.
 
+   -  The "New Cylinder/tag-linked" route : This handles GET requests and renders the Add Cylinder tag page via the New Cylinder/tag-linked.html template
+
+   - The "/equipment/repair_ODS_Sheet" route :  This handles GET requests and renders the Repair ODS sheet  page via the "equipment/repair_ODS_Sheet.html" template
+
+   - The "/equipment common/qr-scan" route : This handles GET requests and renders the  QR scan page via the "equipment common/qr-scan.html" template
+   
+   - The "/recovery/recovery-ods-sheet" route : This handles GET requests and renders the Recovery ODS sheet  page via the "/recovery/recovery-ods-sheet.html" template
+
+   - The "/equipment/equipment_pages" route : This handles GET requests and renders the Equipment  page  with 4 options - via the "equipment/equipment_pages.html" template
+
+   - The "/equipment/ODS-history" route : This handles GET requests and renders the ODS history page  via the "/equipment/ODS-history.html" template
+    
+   - The "/equipment/maintenance_history" route : This handles GET requests and renders the Maintenance history page  via the "/equipment/maintenance_history.html" template
+   
+
 This blueprint essentially allows the application to handle technician registration, display the technician dashboard, and manage equipment-related activities such as creation, repair, and recovery.
 
 
