@@ -27,23 +27,6 @@ secret_key = os.getenv('HASH_SECRET')
 #Blueprint for auth
 auth = Blueprint('auth', __name__)
 
-# #Test function for email.
-# def send_email(to_address, subject, body):
-#     msg = MIMEMultipart()
-#     msg['From'] = MAIL_USERNAME
-#     msg['To'] = to_address
-#     msg['Subject'] = subject
-#     msg.attach(MIMEText(body, 'plain'))
-
-#     try:
-#         server = smtplib.SMTP('localhost')
-#         #server.login(MAIL_USERNAME, MAIL_PASSWORD)
-#         server.send_message(msg)
-#         server.quit()
-#         print("Email sent successfully!")
-#     except Exception as e:
-#         print(f"Error sending email: {e}")
-
 def email():
     # This is your message.
     message_text = "Hello there!"
@@ -226,8 +209,7 @@ def home():
 def register():
     print("test")
     if request.method == 'POST':
-        print("In Post")
-        
+        print("In Post")      
         #1. Get the data from the form.
         user_email = request.form['Email']
         password_1 = request.form['Password1']
@@ -243,18 +225,22 @@ def register():
         result = generate_hash(message, secret_key)
         
         #3. Send the data to the database.
-        is_email_already_in_use = CRUD.read(User, email=user_email)
-        print(is_email_already_in_use)
-        if is_email_already_in_use == None:
-            #USER DOES NOT EXIST IN DATABASE
-            pass
-        else:
-            CRUD.create(User, False, email=user_email, password=result, role='not_selected', added_date=added_date, is_email_verified=False)
+        #is_email_already_in_use = CRUD.read(User, email=user_email)
+        is_email_already_in_use = False
+        # print(is_email_already_in_use)
+        # if is_email_already_in_use == None:
+        #     #USER DOES NOT EXIST IN DATABASE
+        #     pass
+        # else:
+        #     CRUD.create(User, False, email=user_email, password=result, role='not_selected', added_date=added_date, is_email_verified=False)
         
         #print(user_email,password_1,password_confirmation_2,added_date)
         
         #4. Move on to verify email page
-        return render_template('/Login Flow/verify.html')
+        #return render_template('/Login Flow/verify.html')
+        
+        #5. Move on to the select role page (Technician, Admin, Contractor, Wholesaler)
+        return render_template('/Account Setup/setup.html')
     
     elif request.method == 'GET':
         print("In Get")
@@ -262,6 +248,14 @@ def register():
         #Call the send email function.
         #email() Uncomment this function when you want to send an email. You must have a local SMTP server running. Port 1025.
         
+
+@auth.route('/role', methods=['POST'])
+def handle_role():
+    data = request.get_json()  # This will get the JSON data sent by the fetch call
+    role_name = data['role']
+    print(role_name)  # This will print the role name to the console
+    # You can add additional logic here based on the role_name if needed
+    return jsonify({'message': 'Successfully received the role name!'}), 200
 
 @auth.route('/upload', methods=['GET', 'POST'])
 def upload():
