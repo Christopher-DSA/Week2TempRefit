@@ -28,12 +28,44 @@
   <link rel="stylesheet" href="/assets/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
   <link rel="stylesheet" href="/assets/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
   <link rel="stylesheet" href="/assets/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+  <script src="https://kit.fontawesome.com/2a39c604a1.js" crossorigin="anonymous"></script>
+  <style>
+    .btn-close {
+      color: rgb(76, 146, 28);
+      opacity: 1;
+    }
+  </style>
 </head>
 
 <body>
   <!-- Start: Navbar -->
   <section>
-    
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Access Camera Modal
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="btn-close mx-2 my-2" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="container">
+            <i class="d-flex mb-4 mt-3 fa-solid fa-camera fa-2xl justify-content-center"></i>
+            <h5 class="mx-5 justify-content-center">
+              "REFit" Would like to Access the Camera
+            </h5>
+            <p class="mx-3 justify-content-center">
+              This app requires access to the camera so you can scan your QR code.
+            </p>
+          </div>
+          <div class="row d-flex mx-5 mb-5 justify-content-center">
+            <div class="d-flex flex-col align-items-center gap-1">
+              <a href="/dashboardtechnician" class="btn btn-outline-primary btn-md w-100" role="button">Don't Allow</a>
+              <input class="btn btn-md btn-primary w-100" type="submit" name="Scan Cylinder" value="OK">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
   <section>
     <div class="row justify-content-center mt-5">
@@ -67,7 +99,7 @@
 
               <script>
               </script><!-- End: QR Scanner -->
-            <a class="d-flex justify-content-center" href="#">QR code not working?</a>
+              <a class="d-flex justify-content-center" href="#">QR code not working?</a>
             </div>
           </div><!-- End: Form QR -->
           <!-- Start: Form Support -->
