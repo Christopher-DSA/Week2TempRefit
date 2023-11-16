@@ -14,14 +14,14 @@ def login_required(f):
     return decorated_function
 
 def convert_to_oz(lb, oz):
-    lb = float(lb)
-    oz = float(oz)
+    lb = lb
+    oz = oz
     total_oz = lb * 16 + oz
     return total_oz
 
 def convert_kg_to_oz(kg, gm):
-    kg = float(kg)
-    gm = float(gm)
+    kg = kg
+    gm = gm
     total_gm = kg * 1000 + gm
     total_oz = total_gm * 0.035
     return total_oz
@@ -91,10 +91,10 @@ def formcylinder():
 
         # if cylinderTareWeightUnit == 12:
         #     tareWeight = convert_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
-        #     return str(tareWeight)
+        #     # return str(tareWeight)
         # else:
         #     tareWeight = convert_kg_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
-        #     return str(tareWeight)
+        #     # return str(tareWeight)
   
 
 
@@ -105,10 +105,10 @@ def formcylinder():
                                                     
         # if currentRefrigerantweightUnit == 12:
         #     currentRefrigerantweight = convert_to_oz(request.form.get('currentRefrigerantweight1'), request.form.get('currentRefrigerantWeight2'))
-        #     return str(currentRefrigerantweight)
+        #     # return str(currentRefrigerantweight)
         # else:
         #     currentRefrigerantweight = convert_kg_to_oz(request.form.get('currentRefrigerantweight1'), request.form.get('currentRefrigerantWeight2'))
-        #     return str(currentRefrigerantweight)
+        #     # return str(currentRefrigerantweight)
 
         print("New cylinder data succssfully retrieved.")
 
@@ -128,15 +128,17 @@ def formcylinder():
         print(createDate)
         print(name)
         print(cylinderTareWeightUnit)
-        print(cylinderTareWeight1)
-        print(cylinderTareWeight2)
-        print(cylinderTareWeight)
+        # print(cylinderTareWeight1)
+        # print(cylinderTareWeight2)
+        # print(cylinderTareWeight)
         print(refrigerantType)
         print(currentRefrigerantweightUnit)
-        print(currentRefrigerantweight1)
-        print(currentRefrigerantweight2)
-        print(currentRefrigerantweight)
+        # print(currentRefrigerantweight1)
+        # print(currentRefrigerantweight2)
+        # print(currentRefrigerantweight)
         print(request.method)
+        print(type((request.form.get('tareWeight1'))))
+        print(type((request.form.get('currentRefrigerantweight1'))))
         
 
         return render_template ("cylinder/cylinder.html") #redirect(url_for('cylinder.cylinder'))
