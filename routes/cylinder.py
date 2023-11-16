@@ -46,7 +46,6 @@ def cylinder_recovery():
 def cylinder_recovery_newequipment():
     return render_template('New Cylinder/burnout-cylinder.html')
 
-
 @cylinder.route("/new_cylinder", methods=["GET", "POST"])
 def formcylinder():
     if request.method == 'POST':
@@ -123,9 +122,11 @@ def formcylinder():
     return render_template("New Cylinder/new-cylinder.html")
 
 #Temp routing to create/update cylinder
-@cylinder.route('/create_cylinder', methods=['GET', 'POST'])
+@cylinder.route('/update_cylinder',methods=['GET','POST'])
 def cylinderform():
+    print('not post')
     if request.method == 'POST':
+        print('this inside post')
         cylinderTagId       = request.form.get('cylinderTagId')
         refrigerantId       = request.form.get('refrigerantId')
         technicianId        = request.form.get('technicianId')
@@ -135,7 +136,7 @@ def cylinderform():
         refrigerantWeight   = request.form.get('refrigerantWeight')
         refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
         refrigerantWeightAdded        = request.form.get('refrigerantWeightAdded')
-        addCylinder                  = request.form.get('addcylinder')
+        addCylinder                  = request.form.get('addCylinder')
         print("------------------------------")
         print(cylinderTagId)
         print(refrigerantId)
@@ -147,16 +148,76 @@ def cylinderform():
         print(refrigerantWeightAfterService)
         print(refrigerantWeightAdded)
         print(addCylinder)
-
+        return render_template(('technician/dashboardtechnician.html'))
+    print(request.method)
+    # print('rendering cylinder form')
     return render_template(('cylinder/cylinder.html')) #for testing
 
-# @cylinder.route("/cylinder", methods=["GET", "POST"])
-# def formcylinder():
-#     if request.method == 'POST':
-#         # Get data from form
-        
-        
-    #redirect to the appropriate page
+@cylinder.route("/new_cylinder", methods=["GET", "POST"])
+def formcylinder():
+    if request.method == 'POST':
 
-    #     return redirect(url_for('contractor.dashboardcontractor'))
-    # return render_template("New Cylinder/cylinder-type.html")
+        # Get data from form
+        createDate = request.form.get('createDate')
+        name = request.form.get('wholeSaler')
+
+            # Cylinder information
+        cylinderTareWeightUnit = request.form.get('tareWeightUnit')
+
+        print("cylinderTareWeightUnit:" + cylinderTareWeightUnit)
+        print(type(cylinderTareWeightUnit))
+
+        if cylinderTareWeightUnit == "12":
+            tareWeight = convert_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
+            print("Tare weight in OZ:" + str(tareWeight))
+        else:
+            tareWeight = convert_kg_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
+            print("Tare weight in OZ:" + str(tareWeight))
+  
+
+
+       #Refrigerant information
+        refrigerantType = request.form.get('refrigerantType')
+        
+
+        currentRefrigerantweightUnit = request.form.get('currentRefrigerantWeightUnit')
+        print("currentRefrigerantweightUnit:" + cylinderTareWeightUnit)
+
+                                                    
+        if currentRefrigerantweightUnit == "12":
+            currentRefrigerantweight = convert_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
+            print("currentRefrigerantweight" + str(currentRefrigerantweight))
+
+        else:
+            print("ref weight 1 is:")
+            print(request.form.get('currentRefrigerantWeight1'))
+            currentRefrigerantweight = convert_kg_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
+            print("currentRefrigerantweight:" + str(currentRefrigerantweight))
+
+        print("New cylinder data succssfully retrieved.")
+
+        #validate the data and pass data to database
+        #new_cylinder=CRUD.create(Cylinder_Type, type_name=type_name)
+        #new_cylinder=CRUD.create(Cylinder, 
+                                 #create_date=createDate, cylinder_tare_weight=cylinderTareWeight) 
+
+        #new_wholesaler=CRUD.create(Wholesaler,
+                                   # name=name)
+
+        # new_refrigerant=CRUD.create(Refrigerant, 
+        #                             currentRefrigerantWeight=currentRefrigerantWeight)                             
+        # new_unit=CRUD.create(Unit, 
+        #                      type_of_refrigerant=refrigerantType)
+
+        print(f"CreateDate is{createDate}")
+        print(f"wholeSaler name is {name}")
+        print(f"cylinderTareWeightUnit is {cylinderTareWeightUnit}")
+        print(f"refrigerantType: {refrigerantType}")
+        print(request.method)
+           
+
+        return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
+
+    return render_template("New Cylinder/new-cylinder.html")
+
+#end
