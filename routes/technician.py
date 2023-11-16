@@ -20,13 +20,13 @@ def technician_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Assuming the user_id in the session is the email of the user.
-        user_id = session.get('user_id')
+        current_user_id = session.get('user_id')
 
         
 
-        user = CRUD.read(User,user_id=user_id)[0]
+        current_user = CRUD.read(User,user_id=current_user_id)
         
-        if not user or user.role != 'technician':
+        if not current_user or current_user.role != 'technician':
             # Either user doesn't exist, or the user is not an admin.
             return "Unauthorized", 403
         
@@ -66,8 +66,9 @@ def formtechnician():
 @technician_required
 def dashboardtechnician():
     # Render the dashboard
-    user=session.get('user_id')
-    return render_template("technician/dashboardtechnician.html", user=user)
+    print("Rendering dashboard")
+    user_current=session.get('user_id')
+    return render_template("technician/dashboardtechnician.html", user=user_current)
 
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
 def equipment_create():
@@ -115,13 +116,71 @@ def equipment_create():
     
     return render_template('equipment/equipment_create.html')
 
-@technician.route('/equipment/repair')
-def repair():
-    return render_template('equipment/repair.html')
-
-@technician.route('/equipment/recovery')
-def recovery():
-    return render_template('equipment/recovery.html')
+##@technician.route('/equipment/repair')
+##def repair():
+ ##   return render_template('equipment/repair.html')
 
 
 
+##@technician.route('/equipment/recovery')
+
+##def recovery():
+
+   ## return render_template('equipment/recovery.html')
+
+@technician.route('/New Cylinder/tag-linked')
+def add_qr():
+
+
+    return render_template('New Cylinder/tag-linked.html')
+
+
+@technician.route('/equipment/repair_ODS_Sheet')
+def repair_ODS_Sheet():
+
+
+    return render_template('equipment/repair_ODS_Sheet.html')
+
+
+
+@technician.route('/equipment common/qr-scan')
+def qr_scan():
+
+
+    return render_template('equipment common/qr-scan.html')
+
+@technician.route('/recovery/recovery-ods-sheet')
+def recovery_ods_sheet():
+
+
+    return render_template('recovery/recovery-ods-sheet.html')
+
+@technician.route('/equipment/equipment_pages', methods = ['GET', 'POST'])
+def equipment_page():
+    
+    if request.method == 'GET':
+        return render_template('equipment/equipment_pages.html')
+    else:
+        print('error')
+        return render_template('equipment/equipment_pages.html')
+    
+@technician.route('/equipment/ODS-history', methods = ['GET', 'POST'])
+def ODS_history():
+
+    if request.method == 'GET':
+        return render_template('equipment/ODS-history.html')
+    else:
+        print('error')
+        return render_template('equipment/ODS-history.html')
+    
+@technician.route('/equipment/maintenance_history', methods = ['GET', 'POST'])
+def maintenance_history():
+
+    if request.method == 'GET':
+        return render_template('equipment/maintenance_history.html')
+    else:
+        print('error')
+        return render_template('equipment/maintenance_history.html')
+
+
+        

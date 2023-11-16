@@ -1,6 +1,6 @@
 # In each table, one forignkey go with one relationship, other relationships should be deleted as they are duplicated from the reference table.
 # From user to company, in the user table, there should be empty, but in the user table, it shpould be a forignkey and a relationship.
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, create_engine
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, Numeric, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.sql import func
 import os
@@ -17,7 +17,6 @@ engine = create_engine(os.getenv('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 
 
-
 class User(Base):
 
     __tablename__ = "User"
@@ -29,6 +28,8 @@ class User(Base):
     added_date = Column(String)
     user_detail = Column(String)
     status = Column(String)
+    is_email_verified = Column(Boolean)
+    has_ods_license = Column(Boolean) #Using american spelling of the word license
 
 
     def __repr__(self):
@@ -358,7 +359,7 @@ class Cylinder(Base):
     cylinder_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     cylinder_size = Column(String)
     cylinder_type_id = Column(String, ForeignKey('Cylinder_Type.cylinder_type_id'), nullable= True)
-    cylinder_weight = Column(String)
+    cylinder_tare_weight = Column(String)
     added_date = Column(String)
     refrigerant_id = Column(Integer,ForeignKey('Refrigerant.refrigerant_id'), nullable= True)
     technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
@@ -366,6 +367,7 @@ class Cylinder(Base):
     supplier = Column(String)
     last_refill_date = Column(String)
     condition = Column(String)
+    current_refrigerant_weight = Column(Numeric)
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')
     technician = relationship('Technician', backref='Cylinder')
