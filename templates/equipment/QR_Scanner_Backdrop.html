@@ -33,18 +33,32 @@
 <body>
   <!-- Start: Navbar -->
   <section>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
   <section>
     <div class="row justify-content-center mt-5">
       <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
         <form class="px-4">
           <div class="row mb-3">
-            <div class="col"><button class="btn mb-4 p-0" type="button"><svg xmlns="http://www.w3.org/2000/svg"
-                  width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-left fs-4 me-2">
-                  <path fill-rule="evenodd"
-                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
-                  </path>
-                </svg>Back</button>
+            <div class="col">
               <h2>Scan QR Code</h2>
             </div>
           </div>
