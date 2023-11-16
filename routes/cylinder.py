@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
+from models import CRUD,Cylinder,Reclaim_Recovery,Cylinder_Type,Wholesaler,Refrigerant,Unit
 from models import CRUD,Cylinder,Reclaim_Recovery,Unit,Wholesaler,Refrigerant
 from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
@@ -161,8 +162,24 @@ def formcylinder():
         createDate = request.form.get('createDate')
         name = request.form.get('wholeSaler')
 
-            # Cylinder information
+        # Cylinder information
         cylinderTareWeightUnit = request.form.get('tareWeightUnit')
+
+        print("cylinderTareWeightUnit:" + cylinderTareWeightUnit)
+
+        if cylinderTareWeightUnit == 12:
+            tareWeight = convert_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
+            print("Tare weight:" + str(tareWeight))
+        else:
+            tareWeight = convert_kg_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
+            print("Tare weight:" + str(tareWeight))
+  
+
+
+        #Refrigerant information
+        refrigerantType = request.form.get('refrigerantType')
+        print("refrigerantType:" + refrigerantType)
+
 
         print("cylinderTareWeightUnit:" + cylinderTareWeightUnit)
         print(type(cylinderTareWeightUnit))
@@ -180,11 +197,13 @@ def formcylinder():
         refrigerantType = request.form.get('refrigerantType')
         
 
+
         currentRefrigerantweightUnit = request.form.get('currentRefrigerantWeightUnit')
         print("currentRefrigerantweightUnit:" + cylinderTareWeightUnit)
 
                                                     
-        if currentRefrigerantweightUnit == "12":
+
+        if currentRefrigerantweightUnit == 12:
             currentRefrigerantweight = convert_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
             print("currentRefrigerantweight" + str(currentRefrigerantweight))
 
@@ -194,20 +213,28 @@ def formcylinder():
             currentRefrigerantweight = convert_kg_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
             print("currentRefrigerantweight:" + str(currentRefrigerantweight))
 
-        print("New cylinder data succssfully retrieved.")
+        print("Received New cylinder data succssfully.")
 
         #validate the data and pass data to database
-        #new_cylinder=CRUD.create(Cylinder_Type, type_name=type_name)
-        #new_cylinder=CRUD.create(Cylinder, 
-                                 #create_date=createDate, cylinder_tare_weight=cylinderTareWeight) 
+        #new_cylinder=CRUD.create(Cylinder_Type, type_name="Very Very Cold")
+        new_cylinder=CRUD.create(Cylinder, 
+                                 current_refrigerant_weight = currentRefrigerantweight,
+                                 added_date=createDate, cylinder_tare_weight=tareWeight) 
 
-        #new_wholesaler=CRUD.create(Wholesaler,
-                                   # name=name)
+        new_wholesaler=CRUD.create(Wholesaler,
+                                   name=name)
 
         # new_refrigerant=CRUD.create(Refrigerant, 
-        #                             currentRefrigerantWeight=currentRefrigerantWeight)                             
+        #                             currentRefrigerantWeight=currentRefrigerantweight)                             
         # new_unit=CRUD.create(Unit, 
         #                      type_of_refrigerant=refrigerantType)
+
+
+        print("createdate:" + createDate)
+        print("name:" + name)
+
+  
+        
 
         print(f"CreateDate is{createDate}")
         print(f"wholeSaler name is {name}")
@@ -216,8 +243,11 @@ def formcylinder():
         print(request.method)
            
 
+
         return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
 
     return render_template("New Cylinder/new-cylinder.html")
 
+
 #end
+
