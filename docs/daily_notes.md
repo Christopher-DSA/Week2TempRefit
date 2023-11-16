@@ -309,3 +309,10 @@ Hi Sidney, here is the list of features that I noted from the meeting. Is there 
 - Working on: Database V9/Creating a space to store data for other teams as requested and forgot password system.
 
 
+# November 15th
+
+Christopher: Added list of refrigerants to database.
+Christopher: Added documentation to google drive. The first document contains our questions for the stakeholders at Refit.
+The second document contains questions for our internal teams.
+Christopher: Created a flow chart to show stakeholder at refits to answer our questions of: Who can register a cylinder tag and when can they register a cylinder tag.
+Christopher: Next steps is documenting tasks that are up next for our teams to work on. (Started this process by adding tasks to the google chat's 'tasks' tab)
