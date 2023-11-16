@@ -28,7 +28,8 @@
   <section>
     <div class="row justify-content-center mt-5">
       <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
-        <form class="px-4">
+        <form method="post" action="/new_cylinder" class="px-4">
+          
           <!-- Start: Form Header -->
           <div class="row mb-3">
             <div class="col"><a class="btn mb-4 p-0" role="button" href="/New%20Cylinder/new-cylinder.html"><svg
@@ -57,22 +58,22 @@
               <!-- Start: General Information -->
               <div class="mb-5">
                 <h4 class="mb-3">General Information</h4>
-                <div class="mb-3"><label class="form-label">Create Date*</label><input class="form-control" type="date"
+                <div class="mb-3"><label class="form-label">Create Date*</label><input name= "createDate" class="form-control" type="date"
                     required=""></div>
-                <div><label class="form-label">Wholesaler*</label><input class="form-control" type="text" required="">
+                <div><label class="form-label">Wholesaler*</label><input name="wholeSaler" class="form-control" type="text" required="">
                 </div>
               </div><!-- End: General Information -->
               <!-- Start: Cylinder Information -->
               <div class="mb-5">
                 <h4 class="mb-3">Cylinder Information</h4>
                 <div class="mb-3"><label class="form-label">Cylinder Tare Weight*</label>
-                  <div class="d-flex justify-content-between gap-3"><select class="form-select">
+                  <div class="d-flex justify-content-between gap-3"><select name="tareWeightUnit" class="form-select">
                       <option value="12" selected="">lb/oz</option>
                       <option value="13">kg/g</option>
                     </select>
-                    <div class="input-group"><input class="form-control" type="number"><span
+                    <div class="input-group"><input name="tareWeight1" class="form-control" type="number" ><span
                         class="input-group-text">lb</span></div>
-                    <div class="input-group"><input class="form-control" type="number"><span
+                    <div class="input-group"><input name="tareWeight2" class="form-control" type="number"><span
                         class="input-group-text">oz</span></div>
                   </div><sub>You can input values in either one or both boxes.</sub>
                 </div>
@@ -80,16 +81,16 @@
               <!-- Start: Refrigerant Information -->
               <div>
                 <h4 class="mb-3">Refrigerant Information</h4>
-                <div class="mb-3"><label class="form-label">Refrigerant Type*</label><input class="form-control"
+                <div class="mb-3"><label class="form-label">Refrigerant Type*</label><input name="refrigerantType" class="form-control"
                     type="text" required=""></div>
                 <div class="mb-3"><label class="form-label">Current Refrigerant Weight in Cylinder*</label>
-                  <div class="d-flex justify-content-between gap-3"><select class="form-select">
+                  <div class="d-flex justify-content-between gap-3"><select name="currentRefrigerantWeightUnit" class="form-select">
                       <option value="12" selected="">lb/oz</option>
                       <option value="13">kg/g</option>
                     </select>
-                    <div class="input-group"><input class="form-control" type="number" required=""><span
+                    <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control" type="number" required=""><span
                         class="input-group-text">lb</span></div>
-                    <div class="input-group"><input class="form-control" type="number" required=""><span
+                    <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control" type="number" required=""><span
                         class="input-group-text">oz</span></div>
                   </div>
                 </div>
