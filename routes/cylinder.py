@@ -90,25 +90,26 @@ def formcylinder():
         cylinderTareWeightUnit = request.form.get('tareWeightUnit')
 
         print("cylinderTareWeightUnit:" + cylinderTareWeightUnit)
+        print(type(cylinderTareWeightUnit))
 
-        if cylinderTareWeightUnit == 12:
+        if cylinderTareWeightUnit == "12":
             tareWeight = convert_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
-            print("Tare weight:" + str(tareWeight))
+            print("Tare weight in OZ:" + str(tareWeight))
         else:
             tareWeight = convert_kg_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
-            print("Tare weight:" + str(tareWeight))
+            print("Tare weight in OZ:" + str(tareWeight))
   
 
 
        #Refrigerant information
         refrigerantType = request.form.get('refrigerantType')
-        print("refrigerantType:" + refrigerantType)
+        
 
         currentRefrigerantweightUnit = request.form.get('currentRefrigerantWeightUnit')
         print("currentRefrigerantweightUnit:" + cylinderTareWeightUnit)
 
                                                     
-        if currentRefrigerantweightUnit == 12:
+        if currentRefrigerantweightUnit == "12":
             currentRefrigerantweight = convert_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
             print("currentRefrigerantweight" + str(currentRefrigerantweight))
 
@@ -133,23 +134,14 @@ def formcylinder():
         # new_unit=CRUD.create(Unit, 
         #                      type_of_refrigerant=refrigerantType)
 
-        print(createDate)
-        print(name)
-        print(cylinderTareWeightUnit)
-        # print(cylinderTareWeight1)
-        # print(cylinderTareWeight2)
-        # print(cylinderTareWeight)
-        print(refrigerantType)
-        print(currentRefrigerantweightUnit)
-        # print(currentRefrigerantweight1)
-        # print(currentRefrigerantweight2)
-        # print(currentRefrigerantweight)
+        print(f"CreateDate is{createDate}")
+        print(f"wholeSaler name is {name}")
+        print(f"cylinderTareWeightUnit is {cylinderTareWeightUnit}")
+        print(f"refrigerantType: {refrigerantType}")
         print(request.method)
-        print(type((request.form.get('tareWeight1'))))
-        print(type((request.form.get('currentRefrigerantweight1'))))
-        
+           
 
-        return render_template ("cylinder/cylinder.html") #redirect(url_for('cylinder.cylinder'))
+        return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
 
     return render_template("New Cylinder/new-cylinder.html")
 
