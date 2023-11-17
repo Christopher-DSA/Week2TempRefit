@@ -1,0 +1,5 @@
+Definitions of HVACR Terms:
+
+Halocarbons: Halocarbons are chemicals that include one or more halogens (fluorine, chlorine, bromine, or iodine) bonded to carbon. They are often used as refrigerants, solvents, and in other applications such as fire extinguishers.
+
+Halocarbon Charging: Halocarbon charging refers to the process of adding a halocarbon-based refrigerant to a system, like an air conditioner or a refrigerator. This is a critical part of maintaining such systems because the refrigerant is the substance that absorbs heat from the interior and releases it to the exterior, thus creating the cooling effect. Accurate recording of halocarbon charging is necessary to track the use of these substances, which can be ozone-depleting or contribute to global warming if released into the atmosphere.
