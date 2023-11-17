@@ -316,3 +316,7 @@ Christopher: Added documentation to google drive. The first document contains ou
 The second document contains questions for our internal teams.
 Christopher: Created a flow chart to show stakeholder at refits to answer our questions of: Who can register a cylinder tag and when can they register a cylinder tag.
 Christopher: Next steps is documenting tasks that are up next for our teams to work on. (Started this process by adding tasks to the google chat's 'tasks' tab)
+
+# November 17
+Yael : added flask-jwt-extended to requirements.txt for generating secure password reset tokens
+Yael : protected /reset route ( may be unnecessary) , generated JWT, sent it in reset password email
