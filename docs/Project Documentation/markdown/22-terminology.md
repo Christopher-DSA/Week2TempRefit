@@ -7,6 +7,10 @@ Halocarbon Charging: Halocarbon charging refers to the process of adding a haloc
 
 # Types of HVACR Cylinders and Their Uses
 
+## Note: The tech can use their cylinder however they would like but it is common that certian sizes and types 
+## of cylinders are preferred for diffrent tasks, for cost effectiveness.
+## Eg. using a smaller cylinder if you know you will be disposing of it (Disposable Cylinder).
+
 1. **Disposable Cylinder:** A small, portable cylinder often used for residential and small-scale applications. It's typically used for one-time refrigerant additions.
 
 2. **Recovery Cylinder:** Designed for collecting and storing used refrigerants during servicing or recovery processes. It's used to safely store reclaimed refrigerant.
