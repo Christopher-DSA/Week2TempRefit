@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Technician Dashboard</title>
+    </script>
+    <link rel="icon" type="image/png" sizes="130x165"
+        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="130x165"
+        href="/assets/img/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="130x165"
+        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="130x165"
+        href="/assets/img/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="130x165"
+        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="130x165"
+        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="348x122"
+        href="/assets/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
+    <link rel="stylesheet" href="/assets/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+    <link rel="stylesheet" href="/assets/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel="stylesheet" href="/assets/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+    <link rel="stylesheet" href="/assets/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+    <link rel="stylesheet" href="/assets/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+</head>
+
+</head>
+
+<body>
+
+    <div
+        style="width: 100%; text-align: center; color: #121212; font-size: 28px; font-family: Poppins; font-weight: 600; line-height: 33.60px; word-wrap: break-word">
+        Welcome back<br />{{user}}</div>
+    <div class="container">
+        <div class="row">
+            <!-- Card box 1 -->
+            <div class="container">
+                <div class="row">
+                    <!-- Card box 1 -->
+                    <div class="col-md-6 col-12 mb-3">
+                        <div class="card h-100 border btn p-0"
+                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                <button class="btn mb-4 mb-md-0 p-0" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
+                                        viewBox="0 0 512 512">
+                                        <path
+                                            d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                                    </svg>
+                                </button>
+                                <p style="font-size: 12px; word-wrap: break-word;">Add New QR Tag</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card box 2 -->
+                    <div class="col-md-6 col-12 mb-3">
+                        <div class="card h-100 border btn p-0"
+                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                <button class="btn mb-4 mb-md-0 p-0" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
+                                        class="bi bi-qr-code-scan" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0v-3Zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5ZM.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5Zm15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5ZM4 4h1v1H4V4Z" />
+                                        <path d="M7 2H2v5h5V2ZM3 3h3v3H3V3Zm2 8H4v1h1v-1Z" />
+                                        <path d="M7 9H2v5h5V9Zm-4 1h3v3H3v-3Zm8-6h1v1h-1V4Z" />
+                                        <path
+                                            d="M9 2h5v5H9V2Zm1 1v3h3V3h-3ZM8 8v2h1v1H8v1h2v-2h1v2h1v-1h2v-1h-3V8H8Zm2 2H9V9h1v1Zm4 2h-1v1h-2v1h3v-2Zm-4 2v-1H8v1h2Z" />
+                                        <path d="M12 9h2V8h-2v1Z" />
+                                    </svg>
+                                </button>
+                                <p style="font-size: 12px; word-wrap: break-word;">Scan QR Tags</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Card box 3 -->
+                    <div class="col-md-6 col-12 mb-3">
+                        <div class="card h-100 border btn p-0"
+                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                <button class="btn mb-4 mb-md-0 p-0" type="button">
+                                    <!-- SVG for Card 3 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
+                                        class="bi bi-tools" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0Zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708ZM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11Z" />
+                                    </svg>
+                                </button>
+                                <p style="font-size: 12px; word-wrap: break-word;">Repair and ODS</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card box 4 -->
+                    <div class="col-md-6 col-12 mb-3">
+                        <div class="card h-100 border btn p-0"
+                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                <button class="btn mb-4 mb-md-0 p-0" type="button">
+                                    <!-- SVG for Card 4 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
+                                        viewBox="0 0 512 512">
+                                        <path
+                                            d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z" />
+                                    </svg>
+                                </button>
+                                <p style="font-size: 12px; word-wrap: break-word;">Recover And Decommission</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Card box 5 -->
+                    <div class="col-md-6 col-12 mb-3">
+                        <div class="card h-100 border btn p-0"
+                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                <button class="btn mb-4 mb-md-0 p-0" type="button">
+                                    <!-- SVG for Card 5 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
+                                        class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                                        <path
+                                            d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+                                        <path
+                                            d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                                    </svg>
+                                </button>
+                                <p style="font-size: 12px; word-wrap: break-word;">View My History</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card box 6 -->
+                    <div class="col-md-6 col-12 mb-3">
+                        <div class="card h-100 border btn p-0"
+                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                <button class="btn mb-4 mb-md-0 p-0" type="button">
+                                    <!-- SVG for Card 6 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
+                                        viewBox="0 0 448 512">
+                                        <path
+                                            d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm79 143c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+                                    </svg>
+                                </button>
+                                <p style="font-size: 12px; word-wrap: break-word;">Remove QR Code </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <!-- Card box 7 (Centered) -->
+                    <div class="col-md-6 col-12 mb-3">
+                        <div class="card h-100 border btn p-0"
+                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                <button class="btn mb-4 mb-md-0 p-0" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+                                    </svg>
+                                </button>
+                                <p style="font-size: 12px; word-wrap: break-word;">Buy QR Tags</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
