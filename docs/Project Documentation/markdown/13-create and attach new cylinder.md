@@ -27,6 +27,8 @@ Please select a cylinder type:
 
 ## New Cylinder Form
 
+
+
 ### Auto Populated Information
 
 - Cylinder Tag ID: [Cylinder Tag ID]
@@ -69,5 +71,27 @@ Please select a cylinder type:
   - [ ] Burnout
 - Cylinder Size (lbs): [Enter Cylinder Size]
 - Refrigerant Type (lbs): [Enter Refrigerant Type]
+
+
+## Update Cylinder form 
+This form allows user(Technichian) to update refrigernat in unit from the cylinder. It shows auto populated fields like technician id, Cylinder Id, Refrigerent Id, Cylinder Type, Cylinder size(lbs). it allows user to update Refrigerant Weight Added to Equipment (lbs). It checks to make sure refrigerent wieght does not exceed then its original weight. Later, Radio selection option ask user to either add cylinder(New Cylinder - replace) or just update the one added already above. 
+
+## Update Cylinder Form 
+
+### Auto Populated Information
+
+- Cylinder Tag ID: [Cylinder Tag ID]
+- Refrigerant ID: [Refrigerant ID]
+- Technician ID: [Technician ID]
+- Cylinder Type
+- Cylinder Size 
+- Current Refrigerant Weight (lbs)
+
+### Update Cylinder Details
+- Create Date(Logging Date)
+- Refrigerant Weight After Service (lbs): Changes based on refrigerant needed to be added to the unit 
+- Add cylinder : Radio selection to add new cylinder or to update existing. 
+
+
 
 
