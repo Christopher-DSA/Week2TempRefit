@@ -21,13 +21,16 @@ Columns:
     role: User's role in the application.
     added_date: Date the user was added to the system.
     user_detail: Additional details about the user.
-    status: User's account status (active, inactive, etc.). 
+    status: User's account status (active, inactive, etc.).
+    is_email_verified: Whether a user has verified their email address.
+    has_ods_license: Whether has a valid ods_license.
 
 ###Technician Table
 Purpose: Stores information about technicians associated with contractors.
 Columns:
     technician_id (Primary Key): Unique identifier for the technician.
     user_detail: Additional details about the technician.
+    ods_licence_number = Users ODS Licence number.
     user_id: Foreign key referencing the User table to link with the corresponding user.
     contractor_id: Foreign key referencing the Contractor table to link with the associated contractor.
     date_begin: Start date of the technician's association with the contractor.
@@ -45,17 +48,11 @@ Columns:
     status: Contractor's status.
     subscription_id: Foreign key referencing the Subscription table to link with the associated subscription.
     code_2fa_code: Two-factor authentication code for the contractor's account.
-
-###Contractor_Detail Table
-Purpose: Stores additional details about contractors.
-Columns:
-    contractor_id (Primary Key): Unique identifier for the contractor.
-    name: Contractor's name.
-    phone: Contractor's phone number.
-    address: Contractor's address.
-    employees: Number of employees working for the contractor.
-    are_they_tracking_refrigerant: Indicates if the contractor tracks refrigerant.
+    employees: Associated employees
+    are_they_tracking_refrigerant: Whether or not they are tracking refrigerant in the REFit system.
     time_basis: Basis of time calculation for the contractor (hourly, daily, etc.).
+    companyName: The name of the contractor's company
+    branchId: ???
 
 ###Refit_admin Table
 Purpose: Stores information about administrators associated with the application.
@@ -74,14 +71,12 @@ Columns:
     name: Wholesaler's name.
     user_id: Foreign key referencing the User table to link with the corresponding user.
     status: Wholesaler's status.
-    tag_id: Foreign key referencing the Tags table to link with associated tags.
 
-###Invoices Table
+###Invoice Table
 Purpose: Stores invoice information related to subscriptions and tags.
 Columns:
     invoice_id (Primary Key): Unique identifier for the invoice.
     subscription_id: Foreign key referencing the Subscription table to link with the associated subscription.
-    tag_id: Foreign key referencing the Tags table to link with the associated tag.
     amount: Invoice amount.
     payment_method: Payment method used.
     tax: Tax amount.
@@ -104,6 +99,8 @@ Columns:
     tag_url: URL or path associated with the tag.
     type: Type of the tag.
     cylinder_id: Foreign key referencing the Cylinder table to link with associated cylinders.
+    wholesaler_id: Foreign key referencing the Wholesaler table to link with associated wholesaler who sold the tag.
+    invoice_id: Foreign key referencing the Invoice table. 
 
 ###USER LOGGING Table
 Purpose: Stores logging information for user activities.
@@ -118,13 +115,13 @@ Columns:
 ###User_detail Table
 Purpose: Stores additional details about users.
 Columns:
-    user_id (Primary Key): Unique identifier for the user.
-    ODS_license_number: License number for Ozone Depleting Substances handling.
+    user_detail_id (Primary Key): Unique identifer for the user_detail.
+    user_id: Foreign Key referencing the Unique identifier for the user.
     first_name: User's first name.
     middle_name: User's middle name.
     last_name: User's last name.
-    birthdate: User's date of birth.
-    gender: User's gender.
+    birthdate: User's date of birth. # Is not yet in the database.
+    gender: User's gender. # Is not yet in the database.
     address: User's address.
     province: User's province.
     city: User's city.
@@ -282,3 +279,27 @@ Columns:
     Right-click on the connected database on left-panel.
     Click on view diagram. 
 
+
+# This table no longer exists in the database.
+###Contractor_Detail Table
+Purpose: Stores additional details about contractors.
+Columns:
+    contractor_id (Primary Key): Unique identifier for the contractor.
+    name: Contractor's name.
+    phone: Contractor's phone number.
+    address: Contractor's address.
+    employees: Number of employees working for the contractor.
+    are_they_tracking_refrigerant: Indicates if the contractor tracks refrigerant.
+    time_basis: Basis of time calculation for the contractor (hourly, daily, etc.).
+
+# Old documentation for Invoice Table. There have been changes.
+###Invoice Table
+Purpose: Stores invoice information related to subscriptions and tags.
+Columns:
+    invoice_id (Primary Key): Unique identifier for the invoice.
+    subscription_id: Foreign key referencing the Subscription table to link with the associated subscription.
+    tag_id: Foreign key referencing the Tags table to link with the associated tag.
+    amount: Invoice amount.
+    payment_method: Payment method used.
+    tax: Tax amount.
+    date: Date of the invoice.
