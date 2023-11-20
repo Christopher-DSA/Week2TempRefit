@@ -1,0 +1,36 @@
+<html>
+<h1>Cylinder Information</h1>
+Information for Scanned Cylinder
+
+<table border class="table table-hover table-dark">
+    <head>
+        <tr>
+            <!-- Your Columns HERE -->
+            <th scope="col">Cylinder_ID</th>
+            <th scope="col">Size</th>
+            <th scope="col">Type</th>
+            <th scope="col">Refrigerant_name</th>
+            <th scope="col">Supplier</th>
+
+        </tr>
+    <head>
+    <body>
+        <!-- Your rows inside the table HERE: -->
+            <tr>
+                <td>{{data.cylinder_id}}</td>
+                <td>{{data.cylinder_size}}</td>
+                <td>{{name.cylinder_type}}</td>
+                <td>{{name.refrigerant_name}}</td>
+                <td>{{data.supplier}}</td>
+
+
+                <td>
+                    <button class="btn btn-outline btn-info">Refill Cylinder</button>
+                    <button class="btn btn-outline btn-success">Decommission Cylinder</button>
+
+                </td>
+
+            </tr>
+    <body>
+</table>     
+</html>
