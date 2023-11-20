@@ -1,107 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+<section>
+  <div class="row justify-content-center mt-5">
+    <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4 d-flex justify-content-center align-items-center">
+      <form class="px-4">
+        <!-- Start: Form Header -->
+        <div class="row mb-3">
+          <div class="col">
+            <h2>Recovery ODS Sheet</h2>
+            <p class="mb-0">Control Number: {{123123}}</p>
+            <p>Equipment QR Ref Number: {{A0081295}}</p>
+          </div>
+          <div>
+            <ul class="nav nav-underline mb-3 justify-content-evenly" id="recovery-form-tab" role="tablist">
+              <li class="nav-item me-3" role="presentation">
+                <button class="nav-link active" id="recovery-1-tab" type="button" role="tab" data-bs-toggle="tab"
+                  data-bs-target="#recovery-1" aria-controls="recovery-1-tab-pane" aria-selected="true">1</button>
+              </li>
+              <li class="nav-item ms-3" role="presentation">
+                <button class="nav-link" id="recovery-2-tab" type="button" role="tab" data-bs-toggle="tab"
+                  data-bs-target="#recovery-2" aria-controls="recovery-2-tab-pane" aria-selected="false">2</button>
+              </li>
+              <li class="nav-item ms-3" role="presentation">
+                <button class="nav-link" id="recovery-3-tab" type="button" role="tab" data-bs-toggle="tab"
+                  data-bs-target="#recovery-3" aria-controls="recovery-3-tab-pane" aria-selected="false">3</button>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p>Fields with an asterisk (<span class="text-danger fw-bold">*</span>) are required.</p>
+          </div>
+        </div><!-- End: Form Header -->
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>Unpaid ODS Sheet</title>
-  <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
-  <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-dark.png"
-    media="(prefers-color-scheme: dark)">
-  <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
-  <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-dark.png"
-    media="(prefers-color-scheme: dark)">
-  <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
-  <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
-  <link rel="icon" type="image/png" sizes="348x122" href="../static/images/refit-logo-light.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="manifest" href="../manifest.json">
-  <link rel="stylesheet" href="../../static/css/Inter.css">
-  <link rel="stylesheet" href="../../static/css/Poppins.css">
-  <link rel="stylesheet" href="../../static/css/bs-theme-overrides.css">
-  <link rel="stylesheet" href="../../static/css/QR-Scanner.css">
-  <link rel="stylesheet" href="../../static/css/styles.css">
-</head>
+        <div class="container">
 
-<body>
-  <section>
-    <div class="row justify-content-center mt-5">
-      <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4 d-flex justify-content-center align-items-center">
-        <form class="px-4">
-          <!-- Start: Form Header -->
-          <div class="row mb-3">
-            <div class="col"><button class="btn mb-4 p-0" type="button"><svg xmlns="http://www.w3.org/2000/svg"
-                  width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-left fs-4 me-2">
-                  <path fill-rule="evenodd"
-                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
-                  </path>
-                </svg>Back</button>
-              <h2>Recovery ODS Sheet</h2>
-              <p class="mb-0">Control Number: {{123123}}</p>
-              <p>Equipment QR Ref Number: {{A0081295}}</p>
-            </div>
-            <div>
-              <ul class="nav nav-underline mb-3 justify-content-evenly" id="recovery-form-tab" role="tablist">
-                <li class="nav-item me-3" role="presentation">
-                  <button class="nav-link active" id="recovery-1-tab" type="button" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#recovery-1" aria-controls="recovery-1-tab-pane" aria-selected="true">1</button>
-                </li>
-                <li class="nav-item ms-3" role="presentation">
-                  <button class="nav-link" id="recovery-2-tab" type="button" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#recovery-2" aria-controls="recovery-2-tab-pane" aria-selected="false">2</button>
-                </li>
-                <li class="nav-item ms-3" role="presentation">
-                  <button class="nav-link" id="recovery-3-tab" type="button" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#recovery-3" aria-controls="recovery-3-tab-pane" aria-selected="false">3</button>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p>Fields with an asterisk (<span class="text-danger fw-bold">*</span>) are required.</p>
-            </div>
-          </div><!-- End: Form Header -->
+          <h4 class="mb-3">Recover Refrigerant</h4>
 
-          <div class="container">
+          <div class="mb-3">
+            <label for="recover-refrigerant" class="mb-2">Total Recovered from Equipment</label>
+            <div class="row">
+              <div class="col-4">
+                <select class="form-select">
+                  <option>lb/oz</option>
+                  <option>kg/g</option>
+                </select>
+              </div>
 
-            <h4 class="mb-3">Recover Refrigerant</h4>
-
-            <div class="mb-3">
-              <label for="recover-refrigerant" class="mb-2">Total Recovered from Equipment</label>
-              <div class="row">
-                <div class="col-4">
-                  <select class="form-select">
-                    <option>lb/oz</option>
-                    <option>kg/g</option>
-                  </select>
+              <div class="col-4">
+                <div class="input-group">
+                  <input type="number" class="form-control" />
+                  <label class="input-group-sm p-2">lb</label>
                 </div>
+              </div>
 
-                <div class="col-4">
-                  <div class="input-group">
-                    <input type="number" class="form-control" />
-                    <label class="input-group-sm p-2">lb</label>
-                  </div>
+              <div class="col-4">
+                <div class="input-group">
+                  <input type="number" class="form-control" />
+                  <label class="input-group-sm p-2">oz</label>
                 </div>
+              </div>
 
-                <div class="col-4">
-                  <div class="input-group">
-                    <input type="number" class="form-control" />
-                    <label class="input-group-sm p-2">oz</label>
-                  </div>
-                </div>
-
-                <div class="d-grid gap-4 mx-auto mt-5">
-                  <button type="button" class="btn btn-primary btn-lg">Review ODS Sheet</button>
-                </div>
+              <div class="d-grid gap-4 mx-auto mt-5">
+                <button type="button" class="btn btn-primary btn-lg">Review ODS Sheet</button>
               </div>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
-  </section>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+  </div>
+</section>
