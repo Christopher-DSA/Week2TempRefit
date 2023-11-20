@@ -122,6 +122,8 @@ def formcylinder():
 
     return render_template("New Cylinder/new-cylinder.html")
 
+
+#Later this will be changed to a dynamic route that will take in the unique cylinder link from the QR code.
 @cylinder.route("/cylinder_info", methods=["GET", "POST"])
 def CylinderInfo():
     if request.method == 'GET':

@@ -11,6 +11,8 @@ Information for Scanned Cylinder
             <th scope="col">Type</th>
             <th scope="col">Refrigerant_name</th>
             <th scope="col">Supplier</th>
+            <th scope="col">Current_Refrigerant_Weight</th>
+            <th scope="col">Options</th>
 
         </tr>
     <head>
@@ -18,10 +20,11 @@ Information for Scanned Cylinder
         <!-- Your rows inside the table HERE: -->
             <tr>
                 <td>{{data.cylinder_id}}</td>
-                <td>{{data.cylinder_size}}</td>
+                <td>{{data.cylinder_size}}lbs</td>
                 <td>{{name.cylinder_type}}</td>
                 <td>{{name.refrigerant_name}}</td>
                 <td>{{data.supplier}}</td>
+                <td>{{data.current_refrigerant_weight}}</td>
 
 
                 <td>
