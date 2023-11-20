@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,Cylinder,Reclaim_Recovery
+from models import CRUD,Cylinder,Reclaim_Recovery, Refrigerant, Cylinder_Type
 from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 
@@ -121,3 +121,27 @@ def formcylinder():
         return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
 
     return render_template("New Cylinder/new-cylinder.html")
+
+@cylinder.route("/cylinder_info", methods=["GET", "POST"])
+def CylinderInfo():
+    if request.method == 'GET':
+        print("inside get for /cylinder_info")
+        
+        data = CRUD.read(Cylinder, all = False, cylinder_id = 5)
+        
+        print(data.refrigerant_id)
+        
+        #Get foreign keys to search other tables.
+        cylinder_refrigerant_id = data.refrigerant_id
+        current_cylinder_type_id = data.cylinder_type_id
+        
+        #Get name of refrigerant and the type of cylinder.
+        refrigerant_table_lookup = CRUD.read(Refrigerant, all = False, refrigerant_id = cylinder_refrigerant_id)
+        cylinder_type_lookup = CRUD.read(Cylinder_Type, all = False, cylinder_type_id = current_cylinder_type_id)    
+        
+        name_data = {
+            "refrigerant_name": refrigerant_table_lookup.refrigerant_name,
+            "cylinder_type": cylinder_type_lookup.type_name
+        }
+        
+        return render_template("beta/cylinder_info.html", data=data, name = name_data)
