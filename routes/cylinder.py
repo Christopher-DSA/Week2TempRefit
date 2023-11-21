@@ -24,7 +24,7 @@ def convert_kg_to_oz(kg, gm):
     kg = float(kg)
     gm = float(gm)
     total_gm = kg * 1000 + gm
-    total_oz = total_gm * 0.035
+    total_oz = total_gm * 0.035274
     return total_oz
 
 
@@ -34,10 +34,10 @@ def cylindertype():
     return render_template('New Cylinder/cylinder-type.html')
 
 
-@cylinder.route('/new-cylinder')
-# @login_required
-def new_cylinder():
-    return render_template('New Cylinder/new-cylinder.html')
+# @cylinder.route('/new-cylinder')
+# # @login_required
+# def new_cylinder():
+#     return render_template('New Cylinder/new-cylinder.html')
 
 
 @cylinder.route('/recover_cylinder_clean')
@@ -141,6 +141,10 @@ def formcylinder():
         print(f"cylinderTareWeightUnit is {cylinderTareWeightUnit}")
         print(f"refrigerantType: {refrigerantType}")
         print(request.method)
+#nithin changes
+        # data_cylinder = CRUD.create(Cylinder, added_date = createDate, cylinder_type_id = 2, cylinder_size = 50, cylinder_tare_weight = tareWeight,current_refrigerant_weight = 50)
+        return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
+
     
     
         ##########Adding Cylinder to the database##############

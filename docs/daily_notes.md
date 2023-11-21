@@ -320,3 +320,6 @@ Christopher: Next steps is documenting tasks that are up next for our teams to w
 # November 17
 Yael : added flask-jwt-extended to requirements.txt for generating secure password reset tokens
 Yael : protected /reset route ( may be unnecessary) , generated JWT, sent it in reset password email
+
+# November 20
+Nithin : tested and fixed two functions in cylinder.py file, removed duplicate routing, team meetings to map data to back end/dicussed use of data capture from url using string manipulation, Also a way to prevent someone from just typing in the URL of a cylinder if they know the cylinder id is to use a decorator function on routing back end code eg:@login_required.
