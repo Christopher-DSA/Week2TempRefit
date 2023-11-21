@@ -11,7 +11,6 @@ from routes.wholesaler import wholesaler
 from routes.contractor import contractor
 
 #from routes.cylinder import cylinder
-from routes.auth import auth # may need to move down
 from routes.cylinder import cylinder
 from routes.auth import auth
 from flask import Flask
