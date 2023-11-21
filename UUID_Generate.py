@@ -13,7 +13,8 @@ class CylinderQRGenerator:
     
     if __name__ == '__main__':
         df = pd.read_csv("RefrigerantTypeLookupData.csv")
-        #print(df.head())
-        refrigerantType = "HC-12a"
-        row = df.loc[df['refrigerant_name'] == refrigerantType]
-        print(row.loc[0, 'refrigerant_id'])
+        # Convert all entries in 'refrigerant_name' column to lowercase
+        df['refrigerant_name'] = df['refrigerant_name'].str.lower()
+
+        # If you want to save the modified DataFrame to a new CSV file
+        df.to_csv('your_modified_file.csv', index=False)

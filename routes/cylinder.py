@@ -148,6 +148,8 @@ def formcylinder():
         #Step 1. Find out refrigerant_id based on the name typed into the form (auto generated value from the database.) based on refrigerant name.
         df = pd.read_csv("RefrigerantTypeLookupData.csv") #csv file with refrigerant types and their corresponding id's.
         
+        #converting to lower case to match csv file where all entries are lowercase.
+        refrigerantType = refrigerantType.lower()
         # Using the query method to filter rows
         filtered_rows = df.query("refrigerant_name == @refrigerantType")
         print(filtered_rows)
@@ -161,7 +163,7 @@ def formcylinder():
             print(single_row)
         else:
             print("No rows found")
-            flash("No matching refrigerant found with name below. (case sensitive for now)", "error")  # The second argument "error" is an optional category.
+            flash("No matching refrigerant found with name below. (Check list of refrigerants in RefrigerantTypeLookupData.csv)", "error")  # The second argument "error" is an optional category.
             return render_template("New Cylinder/new-cylinder.html")
         
         
