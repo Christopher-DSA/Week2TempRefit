@@ -143,7 +143,7 @@ def formcylinder():
         print(request.method)
 #nithin changes
         # data_cylinder = CRUD.create(Cylinder, added_date = createDate, cylinder_type_id = 2, cylinder_size = 50, cylinder_tare_weight = tareWeight,current_refrigerant_weight = 50)
-        return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
+        # return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
 
     
     
