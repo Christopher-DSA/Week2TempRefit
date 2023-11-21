@@ -9,8 +9,6 @@ from routes.organization import organization
 from routes.technician import technician
 from routes.wholesaler import wholesaler
 from routes.contractor import contractor
-
-#from routes.cylinder import cylinder
 from routes.cylinder import cylinder
 from routes.auth import auth
 from flask import Flask
