@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD, User,User_Detail,Contractor
+from models import CRUD, User,User_Detail,Contractor,Technician
 from functools import wraps
 
 contractor = Blueprint('contractor', __name__)
@@ -67,8 +67,8 @@ def formcontractor():
 def dashboardcontractor():
     # Render the dashboard
     user_id =session.get('user_id')
-
-    return render_template("contractor/dashboardcontractor.html",user=user_id)
+    technicians_table_lookup = CRUD.read(Technician, all = False, contractor_id = user_id)
+    return render_template("contractor/dashboardcontractor.html",user=user_id,technicians=technicians_table_lookup)
 
 @contractor.route('/handle_qr_code', methods=['POST'])
 @login_required
