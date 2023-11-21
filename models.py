@@ -368,6 +368,7 @@ class Cylinder(Base):
     last_refill_date = Column(String)
     condition = Column(String)
     current_refrigerant_weight = Column(Numeric)
+    unique_url_id = Column(String)
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')
     technician = relationship('Technician', backref='Cylinder')
@@ -516,45 +517,23 @@ class CRUD:
 
     # Method to create a record.
     @classmethod
-    def create(cls, model, rollback= False, **kargs):
-
-        ''' This classmethod has the main function of creating a record, it receives the model class, the rollback argument, which
-            is just for testing, and the arguments for the class model, such as name= 'My name', email= 'myemail@something.com'... '''
-        
-        # Class initializing.
-        user = cls(model, **kargs)
-        
-        # rollback just for testing.
-        if rollback == True:
+    def create(cls, model, rollback=False, **kwargs):
+        session = Session()
+        try:
+            instance = model(**kwargs)
+            session.add(instance)
+            if rollback:
+                session.rollback()
+            else:
+                session.commit()
+                session.refresh(instance)  # Refresh to make sure the instance has all the attributes
+            return instance
+        except Exception as e:
+            session.rollback()  # Rollback in case of exception
+            raise
+        finally:
+            session.close()  # Make sure to close the session
             
-            # Opening session.
-            session = Session()
-            # Adding the record.
-            session.add(user.model)
-
-            # Avoiding saving the record.
-            session.rollback()
-
-            # Writing the record.
-            session.commit()
-
-            # Closing session.
-            session.close()
-
-        else:
-
-            # Opening session.
-            session = Session()
-            # Adding the record.
-            session.add(user.model)
-            # Writing the record.
-            session.commit()
-
-            # Closing session.
-            session.close()
-            # Returning the user.
-            return user
-
     @classmethod
     def read(cls, model, all=False, latest_field=None, count_only=False, relative_match=None, order_by = False ,**kwargs):
         """
