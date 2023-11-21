@@ -1,19 +1,21 @@
-from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
+from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from datetime import datetime
 from models import User, Store, CRUD
 from functools import wraps
 import pandas as pd
 import os
 from dotenv import load_dotenv
-#from flask_mail import Mail, Message # yael 
-# from main import app
+ 
+#from main import app  
 from utils.tokenize import generate_hash, generate_password
 # from flask_login import login_user,login_required,logout_user
 #Email imports
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+# FLASK_JWT imports for secure reset password tokens
+# from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
+from flask_jwt_extended import  jwt_required, get_jwt_identity,create_access_token
 
 #Load enviroment variables
 load_dotenv()
@@ -26,6 +28,12 @@ secret_key = os.getenv('HASH_SECRET')
 
 #Blueprint for auth
 auth = Blueprint('auth', __name__)
+
+
+#Setup the Flask-JWT-Extended extension
+# app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+# jwt = JWTManager(app)
+
 
 def email():
     # This is your message.
@@ -121,15 +129,22 @@ def forgot_password():
     print("In forgot_password()")
     if request.method == "POST":
         print("POST request for forgot_password()")
+
+        
+
+
         
         current_user_email = request.form.get('Email') # assuming username is the same as email
+        # generate reset   password token
+        access_token = create_access_token(identity=current_user_email)
+
         try:
 
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
             msg['To'] = 'refit_dev@sidneyshapiro.com'
             msg['Subject'] = 'Forgot Password Test Email'
-            body = 'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.'
+            body = f'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.JWT token: {access_token}'
             msg.attach(MIMEText(body, 'plain'))
                 
             email_text = msg.as_string()
@@ -158,6 +173,7 @@ def forgot_password():
     
 
 @auth.route("/reset_password", methods=["GET", "POST"])
+@jwt_required()
 def reset_password():
     print('1234')
     if request.method == "POST" :

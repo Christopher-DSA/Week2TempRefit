@@ -9,10 +9,14 @@ from routes.organization import organization
 from routes.technician import technician
 from routes.wholesaler import wholesaler
 from routes.contractor import contractor
+
+#from routes.cylinder import cylinder
+from routes.auth import auth # may need to move down
 from routes.cylinder import cylinder
 from routes.auth import auth
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager 
 
 
 app = Flask(__name__)
@@ -24,6 +28,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sofvie:gXq!%g^&dm*OuWfK8Hh
 # Session configuration
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["REMEMBER_COOKIE_HTTPONLY"] = True
+
+#Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
+
 
 app.register_blueprint(auth)
 app.register_blueprint(store)

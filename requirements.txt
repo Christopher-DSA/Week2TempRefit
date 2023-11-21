@@ -8,3 +8,4 @@ SQLAlchemy>=2.0.17      # SQL manipulation library
 Flask-SQLAlchemy>=3.0.3 
 pandas
 # Flask-Mail # if we choose to use this library for emailing reset links and account setups
+flask-jwt-extended # for password reset links 
