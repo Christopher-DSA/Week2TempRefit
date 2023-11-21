@@ -83,6 +83,8 @@ def cylinderform():
     # print('rendering cylinder form')
     return render_template(('cylinder/cylinder.html')) #for testing
 
+
+
 @cylinder.route("/new_cylinder", methods=["GET", "POST"])
 def formcylinder():
     if request.method == 'POST':
@@ -90,6 +92,7 @@ def formcylinder():
         createDate = request.form.get('createDate')
         name = request.form.get('wholeSaler')
             # Cylinder information
+        cylinderSize = request.form.get('cylinder_size')
         cylinderTareWeightUnit = request.form.get('tareWeightUnit')
 
         print("cylinderTareWeightUnit:" + cylinderTareWeightUnit)
@@ -140,6 +143,7 @@ def formcylinder():
         print(f"wholeSaler name is {name}")
         print(f"cylinderTareWeightUnit is {cylinderTareWeightUnit}")
         print(f"refrigerantType: {refrigerantType}")
+        print(f"Cylinder Weight: {cylinderSize}")
         print(request.method)
 #nithin changes
         # data_cylinder = CRUD.create(Cylinder, added_date = createDate, cylinder_type_id = 2, cylinder_size = 50, cylinder_tare_weight = tareWeight,current_refrigerant_weight = 50)
@@ -174,7 +178,7 @@ def formcylinder():
         #Step 2: Create a new row in the database for the cylinder
         #Form needs a place for user to type in cylinder_size, right now we are getting the amount of refrigerant in the cylinder which in the case that the cylinder is brand new it would be equal to the size, however in any other case, it will not.
         #The same goes for needing a drop down for cylinder type.
-        new_row =CRUD.create(Cylinder, added_date = createDate, cylinder_tare_weight = tareWeight, refrigerant_id = refrigerant_type_id_from_db, current_refrigerant_weight = currentRefrigerantweight, supplier = name, cylinder_size = 50, cylinder_type_id = 1 )
+        new_row =CRUD.create(Cylinder, added_date = createDate, cylinder_tare_weight = tareWeight, refrigerant_id = refrigerant_type_id_from_db, current_refrigerant_weight = currentRefrigerantweight, supplier = name, cylinder_size = cylinderSize, cylinder_type_id = 1 )
         print(new_row.cylinder_id)
         PK = new_row.cylinder_id
         print("PK:" + str(PK))
