@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD, User,User_Detail,Contractor
+from models import CRUD, User,User_Detail,Contractor,Technician,Cylinder
 from functools import wraps
 
 contractor = Blueprint('contractor', __name__)
@@ -67,7 +67,6 @@ def formcontractor():
 def dashboardcontractor():
     # Render the dashboard
     user_id =session.get('user_id')
-
     return render_template("contractor/dashboardcontractor.html",user=user_id)
 
 @contractor.route('/handle_qr_code', methods=['POST'])
@@ -80,3 +79,19 @@ def handle_qr_code():
 
     # Return a response
     return jsonify({'message': 'QR code received successfully.'}), 200
+
+@contractor.route('/technician_details', methods=['GET', 'POST'])
+def technician_managment():
+    if request.method == 'GET':
+        user_id =session.get('user_id')
+        print(user_id)
+        data = CRUD.read(Cylinder, all = True)
+        
+        print(data.refrigerant_id)
+        
+    
+      
+        return render_template('contractor/technician_details.html')
+    return render_template('contractor/technician_details.html')
+
+# return render_template("contractor/dashboardcontractor.html",user=user_id,technicians=technicians_table_lookup)
