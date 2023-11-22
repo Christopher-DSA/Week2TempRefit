@@ -30,6 +30,7 @@ class User(Base):
     status = Column(String)
     is_email_verified = Column(Boolean)
     has_ods_license = Column(Boolean) #Using american spelling of the word license
+    jwt_token = Column(String)  # if user forgot password 
 
 
     def __repr__(self):
