@@ -1,7 +1,9 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from models import CRUD, User,User_Detail,Contractor,Technician
 from functools import wraps
-# from auth import email
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 contractor = Blueprint('contractor', __name__)
 
@@ -124,17 +126,62 @@ def technician_managment():
     
 @contractor.route('/add_technician', methods=['GET', 'POST'])
 def add_technician():
+    # if request.method == 'GET':
+    #     contractor_user_id =session.get('user_id')
+    #     contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+    #     contractor_id = contractor_data.contractor_id
+    #     return render_template('contractor/add_technician.html',contractor=contractor_id)
     if request.method == 'POST':
         fname = request.form.get('fname')
         mname = request.form.get('mname')
         lname = request.form.get('lname')
         email = request.form.get('email')
+        
+        """Get the contractor id from the session so that the technician 
+        add page can capture the it to add the new technician under the contractor 
+        who sent the invitaiton"""
+        contractor_user_id =session.get('user_id')
+        contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+        contractor_id = contractor_data.contractor_id
+        contractor_name = contractor_data.name
 
+
+        fname_upper = fname.upper()
+        cname_upper = contractor_name.upper()
         print("----------------")
         print(fname)
         print(mname)
         print(lname)
         print(email)
+        print(fname_upper)
+        print(cname_upper)
+        print(f"http://127.0.0.1:5000/register_technician/{contractor_id}")
         print("----------------")
+        try:
 
+            msg = MIMEMultipart()
+            msg['From'] = 'refit_dev@sidneyshapiro.com'
+            msg['To'] = 'refit_dev@sidneyshapiro.com'
+            msg['Subject'] = "You've Been invited to work as a Technician"
+            body = f"Hello {fname_upper} you have been invited to work as a Technician for {cname_upper}. If you accept the offer please click the link http://127.0.0.1:5000/register_technician/{contractor_id} and create an account as a technician."
+            msg.attach(MIMEText(body, 'plain'))
+                
+            email_text = msg.as_string()
+            #Send an email to the email address typed in the form.
+            smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+            smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+            smtpObj.quit()  # Quitting the connection
+            print("Email sent successfully!")
+        except Exception as e:
+            print("Oops, something went wrong: ", e)
+            return render_template('contractor/dashboardcontractor.html')
+        return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
+
+@contractor.route('/register_technician/<int:id>', methods=['GET', 'POST'])
+def signup_technician(id):
+    if request.method == 'GET':
+        contractor_id = id
+        print("Contractor ID: ", contractor_id)
+        return render_template('beta/register_technician.html',dt=contractor_id)
