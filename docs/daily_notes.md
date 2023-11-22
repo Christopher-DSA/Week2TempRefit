@@ -327,3 +327,5 @@ Nithin : tested and fixed two functions in cylinder.py file, removed duplicate r
 # November 21
 SDS-924 : Team has created the technician_details html page and back end code to route/pull and display data from back end. 
 
+# November 21
+SDS-924-Refit- Completed task 2 without pushing data to db
