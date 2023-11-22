@@ -130,4 +130,11 @@ def add_technician():
         lname = request.form.get('lname')
         email = request.form.get('email')
 
+        print("----------------")
+        print(fname)
+        print(mname)
+        print(lname)
+        print(email)
+        print("----------------")
+
     return render_template('contractor/add_technician.html')
