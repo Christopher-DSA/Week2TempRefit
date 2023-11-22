@@ -15,7 +15,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager #New package, you will need to pip install flask-jwt-extended.
 
-
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '0f763b886315c9bef99ab685087f8999e193ae0474ab61726f4f198b54bcc83c'  # Change this to a secure random string
