@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from models import CRUD, User,User_Detail,Contractor,Technician
 from functools import wraps
+from auth import email
 
 contractor = Blueprint('contractor', __name__)
 
@@ -80,3 +81,49 @@ def handle_qr_code():
 
     # Return a response
     return jsonify({'message': 'QR code received successfully.'}), 200
+
+@contractor.route('/technician_details', methods=['GET', 'POST'])
+def technician_managment():
+    if request.method == 'GET':
+        contractor_user_id =session.get('user_id')
+        contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+        contractor_id = contractor_data.contractor_id
+        technician_data = CRUD.read(Technician,contractor_id=contractor_id, all = True)
+        print("----------")
+        print(technician_data[0].user_id)
+        print(technician_data[1].user_id)
+        technician_list = []
+        for item in technician_data:
+            ods_licence_no = item.ods_licence_number
+            date_begin = item.date_begin
+            date_end = item.date_end
+            user_status = item.user_status
+            tech_user_id = item.user_id
+            contactor_status = item.contractor_status
+            user_detail_data = CRUD.read(User_Detail,user_id = tech_user_id )
+            tech_firstname = user_detail_data.first_name
+            tech_lastname = user_detail_data.last_name
+            technician_obj = {
+            "ods_licence_no": ods_licence_no,
+            "date_begin": date_begin,
+            "date_end":date_end,
+            "user_status":user_status,
+            "tech_user_id":tech_user_id,
+            "contactor_status":contactor_status,
+            "firstname":tech_firstname,
+            "lastname":tech_lastname
+            }
+            technician_list.append(technician_obj)
+
+        return render_template('contractor/technician_details.html',technician = technician_list)
+    return render_template('contractor/technician_details.html')
+
+@contractor.route('/add_technician', methods=['GET', 'POST'])
+def add_technician():
+    if request.method == 'POST':
+        fname = request.form.get('fname')
+        mname = request.form.get('mname')
+        lname = request.form.get('lname')
+        email = request.form.get('email')
+
+    return render_template('contractor/add_technician.html')
