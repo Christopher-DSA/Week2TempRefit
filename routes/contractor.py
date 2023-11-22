@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from models import CRUD, User,User_Detail,Contractor,Technician
 from functools import wraps
-from auth import email
+# from auth import email
 
 contractor = Blueprint('contractor', __name__)
 
@@ -121,4 +121,13 @@ def technician_managment():
             return render_template('contractor/technician_details.html',technicians=technician_list)
         return render_template('contractor/technician_details.html')
 
-# return render_template("contractor/dashboardcontractor.html",user=user_id,technicians=technicians_table_lookup)
+    
+@contractor.route('/add_technician', methods=['GET', 'POST'])
+def add_technician():
+    if request.method == 'POST':
+        fname = request.form.get('fname')
+        mname = request.form.get('mname')
+        lname = request.form.get('lname')
+        email = request.form.get('email')
+
+    return render_template('contractor/add_technician.html')
