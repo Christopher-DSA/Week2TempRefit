@@ -17,9 +17,8 @@
     <button onclick="showPurchaseTagsForm()">Purchase Tags</button>
     <button onclick="showReplaceTagsForm()">Replace Tags</button>
     <button onclick="showDeleteTechnicianForm()">Delete Technician Account</button>
-    <button onclick="location.href='/technician_details'">Technician Managment</button>
     <button id="startButton">Reclaim/Recover</button>
-    <video id="video-preview"></video>
+    <button onclick="location.href='/technician_details'">Technician Managment</button>    {{technicians}}
     <p id="scanResult"></p>
 
     <!-- Join My Team Form -->
@@ -48,11 +47,16 @@
             document.getElementById('deleteTechnicianForm').style.display = 'block';
         }
 
+        function showManageTechnicianForm() {
+            hideAllForms();
+            document.getElementById('manageTechnicianForm').style.display = 'block';
+        }
         function hideAllForms() {
             document.getElementById('joinTeamForm').style.display = 'none';
             document.getElementById('purchaseTagsForm').style.display = 'none';
             document.getElementById('replaceTagsForm').style.display = 'none';
             document.getElementById('deleteTechnicianForm').style.display = 'none';
+            document.getElementById('manageTechnicianForm').style.display = 'none';
         }
 
         document.getElementById("startButton").addEventListener("click", function () {
