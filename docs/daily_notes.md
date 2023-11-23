@@ -325,7 +325,10 @@ Yael : protected /reset route ( may be unnecessary) , generated JWT, sent it in 
 Nithin : tested and fixed two functions in cylinder.py file, removed duplicate routing, team meetings to map data to back end/dicussed use of data capture from url using string manipulation, Also a way to prevent someone from just typing in the URL of a cylinder if they know the cylinder id is to use a decorator function on routing back end code eg:@login_required.
 
 # November 21
-SDS-924 : Team has created the technician_details html page and back end code to route/pull and display data from back end. 
+SDS-924-Nithin: Team has created the technician_details html page and back end code to route/pull and display data from back end. 
 
-# November 21
-SDS-924-Refit- Completed task 2 without pushing data to db
+# November 22
+SDS-924-Nithin: Completed task 2 without pushing data to db
+
+# November 22
+SDS-924-Nithin: Inventory managment for Contractor is complete. now the new html page pulls data of cylinder from db for all thechnicians working for the contractor
