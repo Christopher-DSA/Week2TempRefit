@@ -10,6 +10,10 @@ class CylinderQRGenerator:
         return my_cylinder_id + "C-" + str(uuid.uuid4())  # Adding a unique cylinder ID and "C" for cylinder
     
     
+class technicianQRGenerator:
+    @classmethod
+    def generate_technician_unique_id(cls):
+        return str(uuid.uuid4())
     
     if __name__ == '__main__':
         df = pd.read_csv("RefrigerantTypeLookupData.csv")
