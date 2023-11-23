@@ -40,12 +40,12 @@
     </button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <button type="button" class="btn-close mx-2 my-2" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="container">
             <i class="d-flex mb-4 mt-3 fa-solid fa-camera fa-2xl justify-content-center" style="color: #111A66"></i>
-            <h5 class="mx-5 justify-content-center">
+            <h5 class="mx-5 text-center">
               "REFit" Would like to Access the Camera
             </h5>
             <p class="mx-3 justify-content-center">
@@ -63,28 +63,33 @@
     </div>
   </section>
   <section>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QRCodeNotFound">
       QR Code Not Found Modal
     </button>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="QRCodeNotFound" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <button type="button" class="btn-close mx-2 my-2" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="container">
-            <i class="d-flex mb-4 mt-3 fa-solid fa-camera fa-2xl justify-content-center" style="color: #111A66"></i>
-            <h5 class="mx-5 justify-content-center">
+            <i class="d-flex mb-4 mt-3 fa-solid fa-triangle-exclamation fa-2xl justify-content-center"></i>
+            <h5 class="text-center">
               QR Code Not Found
             </h5>
-            <p class="mx-3 justify-content-center">
-              This app requires access to the camera so you can scan your QR code.
+            <p class="mx-4">
+              <i>Try:</i>
             </p>
+            <div class="mx-4">
+              <ul>
+                <li><i>Cleaning the QR tag surface</i></li>
+                <li><i>Scanning the QR tag in the designated box on the screen</i></li>
+              </ul>
           </div>
           <div class="row d-flex mx-5 mb-5 justify-content-center">
-            <div class="d-flex flex-col align-items-center gap-1">
-              <a href="/dashboardtechnician" class="btn btn-outline-primary btn-md w-100" role="button">Don't Allow</a>
-              <input class="btn btn-md btn-primary w-100" type="submit" name="Scan Cylinder" value="OK">
+            <div class="d-flex flex-col align-items-center gap-1 mt-4">
+              <input class="btn btn-md btn-primary w-100" type="submit" name="Scan Cylinder" value="Try Again">
             </div>
+            <a class="mt-4 text-center" href="#">Manually input identifier</a>
           </div>
         </div>
       </div>
