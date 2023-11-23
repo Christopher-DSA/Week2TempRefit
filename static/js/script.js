@@ -77,3 +77,24 @@
       });
   });
 })();
+
+// Start: Script for signup/signin toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    let signInButton = document.getElementById('goToSignIn');
+    let signUpButton = document.getElementById('goToSignUp');
+
+    signInButton.addEventListener('click', function() {
+      document.getElementById('signUpTab').classList.remove('show', 'active');
+
+      let signInTabContent = document.getElementById('signInTab');
+      signInTabContent.classList.add('show', 'active');
+    });
+
+    signUpButton.addEventListener('click', function() {
+      document.getElementById('signInTab').classList.remove('show', 'active');
+
+      let signUpTabContent = document.getElementById('signUpTab');
+      signUpTabContent.classList.add('show', 'active');
+    });
+  });
+//  End: Script for signup/signin toggle
