@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD, User,User_Detail,Contractor,Technician,Cylinder
+from models import CRUD, User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer
 from functools import wraps
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -179,14 +179,7 @@ def add_technician():
         return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
 
-@contractor.route('/register_technician/<token>/<int:id>', methods=['GET', 'POST'])
-def signup_technician(token,id):
-    if request.method == 'GET':
-        contractor_id = id
-        token = token
-        print("Contractor ID: ", contractor_id)
-        print("Token: ", token)
-        return render_template('beta/register_technician.html',dt=contractor_id,tk=token)
+
 
 @contractor.route('/inventory', methods=['GET', 'POST'])
 def inventory():

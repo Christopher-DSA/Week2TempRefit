@@ -1,6 +1,6 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit
+from models import CRUD, User, User_Detail, Technician, Unit,Technician_Offer
 from functools import wraps
 technician = Blueprint('technician', __name__)
 
@@ -12,7 +12,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
-            return redirect(url_for('auth.login'))
+            return render_template('auth/login.html')
         return f(*args, **kwargs)
     return decorated_function
 
@@ -21,9 +21,7 @@ def technician_required(f):
     def decorated_function(*args, **kwargs):
         # Assuming the user_id in the session is the email of the user.
         current_user_id = session.get('user_id')
-
         
-
         current_user = CRUD.read(User,user_id=current_user_id)
         
         if not current_user or current_user.role != 'technician':
@@ -32,6 +30,8 @@ def technician_required(f):
         
         return f(*args, **kwargs)
     return decorated_function
+
+
 
 @technician.route("/formtechnician", methods=["GET", "POST"])
 def formtechnician():
@@ -182,5 +182,32 @@ def maintenance_history():
         print('error')
         return render_template('equipment/maintenance_history.html')
 
+
+@technician.route('/register_technician/<token>/<int:id>', methods=['GET', 'POST'])
+@technician_required
+def signup_technician(token,id):
+    if request.method == 'GET':
+            contractor_id = id
+            token = token
+            print("Contractor ID: ", contractor_id)
+            print("Token: ", token)
+    return render_template('beta/register_technician.html',dt=contractor_id,tk=token)
+    
+@technician.route('/confirm_technician', methods=['GET', 'POST'])
+@technician_required
+def confirm_technician():
+    if request.method == 'POST':
+        contractor_id = request.form['dt']
+        token = request.form['tk']
+        print("Contractor ID: ", contractor_id)
+        print("Token: ", token)
+        
+        CRUD.update(
+            Technician_Offer,
+            token = token,
+            offer_status="Engaged"
+        )
+        return render_template('beta/register_technician.html', dt=contractor_id, tk=token)
+       
 
         
