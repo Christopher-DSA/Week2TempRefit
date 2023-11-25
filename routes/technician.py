@@ -1,7 +1,9 @@
 from flask import make_response, session, Blueprint
+from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 from models import CRUD, User, User_Detail, Technician, Unit
 from functools import wraps
+import UUID_Generate
 technician = Blueprint('technician', __name__)
 
 # @technician.route("/technician/dashboard", methods=['GET', 'POST'])
@@ -70,9 +72,19 @@ def dashboardtechnician():
     user_current=session.get('user_id')
     return render_template("technician/dashboardtechnician.html", user=user_current)
 
+#?
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
 def equipment_create():
+    print("inside equipment_create")
     if request.method == 'POST':
+        print("inside post")
+        #Get users technician id
+        current_user_id=session.get('user_id')
+        
+        current_tech_id = CRUD.read(Technician, user_id=current_user_id).technician_id
+        
+        print(current_tech_id)
+        
         # Get data from form
         equipmentTagId = request.form.get('equipmentTagId')
         technicianId = request.form.get('technicianId')
@@ -104,17 +116,45 @@ def equipment_create():
     
         # validate the data and pass data to database
         # unsure about some of these fields
-        new_unit=CRUD.create(Unit,unit_id = equipmentTagId, technician_id = technicianId,
-                               unit_name= serialNumber, tag_id = equipmentTagId, other_attribute = None,
-                               installation_date = createDate, last_mainenance_date = createDate,
-                               manufacturer = manufacturerName, model = modelNumber, 
-                               type_of_refridgerant = refrigerantType, factory_charge_amount = factoryCharge,
-                               unit_type = equipmentType, store_id = organizationId)
         
-        return redirect(url_for('technician.dashboardtechnician'))
+        ###################################################
+        ###########Add new unit to the database############
+        ###################################################
         
+        #1. Create new row in Unit table
+        #removed tag_id = equipmentTagId for testing
+        # new_unit=CRUD.create(Unit, manufacturer = manufacturerName, model = modelNumber, 
+        #                        type_of_refrigerant = refrigerantType, factory_charge_amount = factoryCharge,
+        #                        unit_type = equipmentType, store_id = organizationId)
+        
+        
+        my_unit=CRUD.create(Unit, type_of_refrigerant = refrigerantType, installation_date = createDate, manufacturer = manufacturerName, unit_type = equipmentType, factory_charge_amount = factoryCharge, serial_number = serialNumber, technician_id = current_tech_id)    
+        #new_row =CRUD.create(Cylinder, added_date = createDate, cylinder_tare_weight = tareWeight, refrigerant_id = refrigerant_type_id_from_db, current_refrigerant_weight = currentRefrigerantweight, supplier = name, cylinder_size = cylinderSize, cylinder_type_id = 1 )
+        
+        #2. Generate unique url for the unit
+        my_equipment_id = my_unit.unit_id
+        unique_url = UUID_Generate.EquipmentQRGenerator.generate_equipment_unique_id(my_equipment_id)
+        
+        #3. Add unique url to database
+        CRUD.update(Unit, 'unique_url_id', new = unique_url, unit_id = my_equipment_id)
+        tech_id = session.get('tech_id')
+        
+        #4. Success page
+        return render_template('equipment/equipment-linked.html', unique_url = unique_url, tech_id = tech_id)
     
-    return render_template('equipment/equipment_create.html')
+    elif request.method == 'GET':
+        current_tech_id = session.get('tech_id')
+        print(current_tech_id)
+        
+        print("inside get")
+        return render_template('equipment/equipment_create.html', tech_id = current_tech_id)
+
+@technician.route('/equipment-tag-linked')
+def successful_add():
+    print("inside successful_add")
+    return render_template('equipment/equipment-linked.html')
+
+
 
 ##@technician.route('/equipment/repair')
 ##def repair():
@@ -130,8 +170,6 @@ def equipment_create():
 
 @technician.route('/New Cylinder/tag-linked')
 def add_qr():
-
-
     return render_template('New Cylinder/tag-linked.html')
 
 
@@ -181,6 +219,45 @@ def maintenance_history():
     else:
         print('error')
         return render_template('equipment/maintenance_history.html')
+    
+    
+@technician.route('/equipment-info/<unique_id>', methods = ['GET', 'POST'])
+def equipment_info_page(unique_id):
+    if request.method == 'GET':
+        #1. Get data from database
+        print("inside get for /equipment-info")        
+        
+        #2 get unique_id from url
+        unit_unique_url = unique_id
+        
+        #3. Get row in database for specific equipment/unit.
+        data = CRUD.read(Unit, all = False, unique_url_id = unit_unique_url)
+                
+        print(data.manufacturer)
+        
+        tech_id = session.get('tech_id')
+        #3. Render html
+        return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
+        
+        # #Get foreign keys to search other tables.
+        # cylinder_refrigerant_id = data.refrigerant_id
+        # current_cylinder_type_id = data.cylinder_type_id
+        
+        # #Get name of refrigerant and the type of cylinder.
+        # refrigerant_table_lookup = CRUD.read(Refrigerant, all = False, refrigerant_id = cylinder_refrigerant_id)
+        # cylinder_type_lookup = CRUD.read(Cylinder_Type, all = False, cylinder_type_id = current_cylinder_type_id)    
+        
+        # name_data = {
+        #     "refrigerant_name": refrigerant_table_lookup.refrigerant_name,
+        #     "cylinder_type": cylinder_type_lookup.type_name
+        # }
+        
+        # return render_template("beta/cylinder_info.html", data=data, name = name_data)
+        
+        #2. Pass data to html
+    else:
+        print('error')
+        return render_template('equipment-info.html')
 
 
         

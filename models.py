@@ -234,6 +234,8 @@ class Unit(Base):
     factory_charge_amount = Column(Integer)
     unit_type = Column(String)
     store_id = Column(Integer,ForeignKey('Store.store_id'), nullable= True)
+    unique_url_id = Column(String)
+    serial_number = Column(String)
     
 
     technician = relationship('Technician', backref='Unit')
