@@ -71,7 +71,7 @@ def dashboardtechnician():
     print("Rendering dashboard")
     user_current=session.get('user_id')
     user_first_name=CRUD.read(User_Detail,user_id=user_current).first_name
-    return render_template("technician/new-dashboard.html", user=user_current,user_first_name = user_first_name)
+    return render_template("technician/dashboardtechnician.html", user=user_current,user_first_name = user_first_name)
 
 #?
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
