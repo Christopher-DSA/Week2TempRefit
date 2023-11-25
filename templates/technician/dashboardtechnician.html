@@ -4,17 +4,10 @@
     <title>Technician Dashboard</title>
 </head>
 <body>
-    <h1>Welcome to Technician Dashboard! {{user}}</h1>
+    <h1>Welcome to the Technician Dashboard, {{user_first_name}}!</h1>
+
+    <h2>These 3 Will be on Final Stylized Technician Dashboard</h2>
     
-    <!-- Add a button that links to the equipment creation page -->
-    <!-- <button onclick="location.href='/equipment/equipment_create'">Create Equipment</button -->
-
-    <!-- Add a button that links to the repair page -->
-   <!-- <button onclick="location.href='/equipment/repair'">Repair Equipment</button -->
-
-    <!-- Add a button that links to the maintenance page -->
-    <!--button onclick="location.href='/equipment/recovery'">Recovery</button -->
-
     <!-- Add a button that links to the QR page -->
     <button onclick="location.href='/equipment common/qr-scan'">Scan QR code</button>
 
@@ -22,12 +15,21 @@
     <button onclick="location.href='/recovery/recovery-ods-sheet'">View My History (W.I.P)</button>
     
     <!-- Add a button that links to the  view_history page -->
-    <button onclick="location.href='/'">Buy QR Tags (W.I.P)</button>
+    <button onclick="location.href='/'">Buy QR (W.I.P)</button>
     <br><br>
 
-    <!-- Add a button that links to the  recovery ODS page -->
-    <button onclick="location.href='/New Cylinder/tag-linked'">Add New QR Tag</button>
+    <h2>QR Tag Registration Features (Just for testing purposes, will not be in final dashboard.)</h2>
 
+    <!-- Add a button that links to the register new equipment tag page, later through qr code scan.-->
+    <button onclick="location.href='/equipment/equipment_create'"> Register New Equipment (later will only be acessed through scanning QR code instead of this)</button>
+
+    <!-- Add a button that links to register a cylinder page, later this will be accessed strictly through scanning a qr code -->
+    <button onclick="location.href='/new_cylinder'"> Register New Cylinder (Now functional, later will only be acessed through scanning QR code instead of this)</button>
+
+    <br>
+
+    <h2>Other (Just for testing purposes, will not be in final dashboard.)</h2>
+    <br>
     <!-- Add a button that links to the  repair ODS page -->
     <button onclick="location.href='/equipment/repair_ODS_Sheet'">Repair and ODS </button>
 
@@ -37,19 +39,31 @@
     <!-- Add a button that links to the  view_history page -->
     <button onclick="location.href='/recovery/recovery-ods-sheet'">View My History, currently is not that.</button>   
 
-    <!-- Add a button that links to a confirmation pop-up -->
-    <button onclick="location.href='/recovery/recovery-ods-sheet'">Delete QR Tag, currently is not that.</button>
-
     <!-- Add a button that links to a equipment page for testing -->
     <button onclick="location.href='/equipment/equipment_pages'"> Equipment Page (Leads to a styled page with four buttons)</button>
 
     <!-- Add a button that links to register a cylinder page, later this will be accessed strictly through scanning a qr code -->
     <button onclick="location.href='/new_cylinder'"> Register a new cylinder (Now functional, later will only be acessed through scanning QR code instead of this)</button>
 
-    <!-- Add a button that links to the register new equipment tag page, later through qr code scan.-->
-    <button onclick="location.href='/equipment/equipment_create'"> Register a new cylinder (later will only be acessed through scanning QR code instead of this)</button>
+    
+    
+    
+    <!-- old buttons -->
+
+    <!-- Add a button that links to the  recovery ODS page
+    <button onclick="location.href='/New Cylinder/tag-linked'">Add New QR Tag</button> -->
+
+
+    <!-- Add a button that links to a confirmation pop-up
+    <button onclick="location.href='/recovery/recovery-ods-sheet'">Delete QR Tag, currently is not that.</button> -->
+
+    <!-- Add a button that links to the equipment creation page -->
+    <!-- <button onclick="location.href='/equipment/equipment_create'">Create Equipment</button -->
+
+    <!-- Add a button that links to the repair page -->
+    <!-- <button onclick="location.href='/equipment/repair'">Repair Equipment</button -->
+
+    <!-- Add a button that links to the maintenance page -->
+    <!--button onclick="location.href='/equipment/recovery'">Recovery</button -->
 </body>
-
-
-
 </html>
