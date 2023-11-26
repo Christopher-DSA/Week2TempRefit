@@ -27,11 +27,11 @@ Information for scanned equipment/unit.
                 <td>{{data.factory_charge_amount}}</td>
                 <td>{{tech_id}}</td>
 
-
                 <td>
-                    <button class="btn btn-outline btn-info">Recover Refrigerant</button>
-                    <button class="btn btn-outline btn-success">Charge Equipment</button>
-                    <button class="btn btn-outline btn-warning">Remove QR Tag</button>
+                    <button class="btn btn-outline btn-info" onclick="location.href='/equipment/repair_ODS_Sheet'"> Perform a Repair</button>
+                    <button class="btn btn-outline btn-success" onclick="location.href='/charge-equipment'">Charge Equipment</button>
+                    <button class="btn btn-outline btn-warning">Decommission Equipment (Not connected yet)</button>
+                    <button class="btn btn-outline btn-warning" onclick="location.href='/remove-qrtag'">Remove QR Tag</button>
                 </td>
 
             </tr>

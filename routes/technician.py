@@ -173,6 +173,13 @@ def successful_add():
 def add_qr():
     return render_template('New Cylinder/tag-linked.html')
 
+@technician.route('/remove-qrtag')
+def remove_qr():
+    return render_template('Equipment Common/qr-remove.html')
+
+@technician.route('/charge-equipment')
+def charge():
+    return render_template('equipment/charge-equipment.html')
 
 @technician.route('/equipment/repair_ODS_Sheet')
 def repair_ODS_Sheet():
