@@ -145,6 +145,7 @@ class Tag(Base):
     type = Column(String)
     cylinder_id = Column(Integer, ForeignKey('Cylinder.cylinder_id'), nullable= True)
     wholesaler_id = Column(Integer, ForeignKey('Wholesaler.wholesaler_id'), nullable= True)
+    unit_id = Column(String)
 
     cylinder = relationship('Cylinder', backref='Tag')
     invoice  = relationship('Invoice', backref='Tag')

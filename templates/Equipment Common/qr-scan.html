@@ -205,16 +205,9 @@ qrcode.callback = res => {
     btnScanQR.hidden = false;
 
 
-    // First check if it's a URL
-    if (res.startsWith("http://") || res.startsWith("https://")) {
-        // Then check if it contains 'equipment-info' or 'cylinder_info'
-        if (res.includes("equipment-info") || res.includes("cylinder_info")) {
-            console.log("Special Refit URL Found: ", res);
-            window.location.href = res; // Navigate to the special URL
-        } else {
-            console.log("URL does not contain special info: ", res);
-        }
-    } else if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(res)) {
+    //Is it a valid uuid/unique token?
+
+    if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(res)) {
         // The string matches the UUID format
         console.log("UUID Found: ", res);
         window.location.href = '/choose-qr-type?unique_token=' + encodeURIComponent(res);

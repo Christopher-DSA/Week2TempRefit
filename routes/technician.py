@@ -82,14 +82,8 @@ def equipment_create():
     print("inside equipment_create")
     if request.method == 'POST':
         print("inside post")
-        #Get users technician id
-        current_user_id=session.get('user_id')
         
-        current_tech_id = CRUD.read(Technician, user_id=current_user_id).technician_id
-        
-        print(current_tech_id)
-        
-        # Get data from form
+        #Get data from form
         equipmentTagId = request.form.get('equipmentTagId')
         technicianId = request.form.get('technicianId')
         createDate = request.form.get('createDate')
@@ -105,7 +99,8 @@ def equipment_create():
         serialNumber = request.form.get('serialNumber')
         equipmentType = request.form.get('equipmentType')
         addRefrigerant = request.form.get('addRefrigerant')
-        # sometimes these fields are empty
+        
+        #Sometimes these fields are empty
         if addRefrigerant == "yes":
             additionalRefrigerantAmount = request.form.get('additionalRefrigerantAmount')
             locationDescription = request.form.get('locationDescription')
@@ -124,33 +119,20 @@ def equipment_create():
         ###################################################
         ###########Add new unit to the database############
         ###################################################
-        
-        #1. Create new row in Unit table
-        #removed tag_id = equipmentTagId for testing
-        # new_unit=CRUD.create(Unit, manufacturer = manufacturerName, model = modelNumber, 
-        #                        type_of_refrigerant = refrigerantType, factory_charge_amount = factoryCharge,
-        #                        unit_type = equipmentType, store_id = organizationId)
-        
-        
-        my_unit=CRUD.create(Unit, type_of_refrigerant = refrigerantType, installation_date = createDate, manufacturer = manufacturerName, unit_type = equipmentType, factory_charge_amount = factoryCharge, serial_number = serialNumber, technician_id = current_tech_id)    
-        #new_row =CRUD.create(Cylinder, added_date = createDate, cylinder_tare_weight = tareWeight, refrigerant_id = refrigerant_type_id_from_db, current_refrigerant_weight = currentRefrigerantweight, supplier = name, cylinder_size = cylinderSize, cylinder_type_id = 1 )
-        
-        #2. Generate unique url for the unit
-        my_equipment_id = my_unit.unit_id
-        unique_url = UUID_Generate.EquipmentQRGenerator.generate_equipment_unique_id(my_equipment_id)
-        
-        #3. Add unique url to database
-        CRUD.update(Unit, 'unique_url_id', new = unique_url, unit_id = my_equipment_id)
+        #0.Get Technician ID from session.
         tech_id = session.get('tech_id')
-        
-        #4. Success page
-        return render_template('equipment/equipment-linked.html', unique_url = unique_url, tech_id = tech_id)
+        #1.Add new unit to the database        
+        my_unit=CRUD.create(Unit, type_of_refrigerant = refrigerantType, installation_date = createDate, manufacturer = manufacturerName, unit_type = equipmentType, factory_charge_amount = factoryCharge, serial_number = serialNumber, technician_id = tech_id)    
+        my_equipment_id = my_unit.unit_id
+        #2.Get the Unique URL for the unit from the QR code.
+        unique_equipment_token = session.get('QR_unique_token')
+        #3.Add the tag to the database "Tag" table.
+        CRUD.create(Tag, tag_url = unique_equipment_token, unit_id = my_equipment_id, type = "equipment")
+        #5.Render Success page
+        return render_template('equipment/equipment-linked.html', unique_url = unique_equipment_token, tech_id = tech_id)
     
     elif request.method == 'GET':
         current_tech_id = session.get('tech_id')
-        print(current_tech_id)
-        
-        print("inside get")
         return render_template('equipment/equipment_create.html', tech_id = current_tech_id)
 
 @technician.route('/equipment-tag-linked')
@@ -182,8 +164,13 @@ def my_choose_qr_type():
     if unique_token != None: #always will have this after a qr scan.
         x = CRUD.read(Tag, all = False, tag_url = unique_token)
         if x != None: #qr is registered in the system
-            url = 'cylinder_info/' + str(unique_token)
-            return redirect(url)
+            if x.type == "equipment":
+                print("this is an equipment qr tag")
+                url = 'equipment-info/' + str(unique_token)
+                return redirect(url)
+            elif x.type == "cylinder":
+                url = 'cylinder_info/' + str(unique_token)
+                return redirect(url)
         else: #go to register a new tag page
             print("error in qr scan, this qr tag needs to be registered.")
             session['QR_unique_token'] = unique_token
@@ -262,10 +249,11 @@ def equipment_info_page(unique_id):
         unit_unique_url = unique_id
         
         #3. Get row in database for specific equipment/unit.
-        data = CRUD.read(Unit, all = False, unique_url_id = unit_unique_url)
-                
-        print(data.manufacturer)
-        
+        tag_data = CRUD.read(Tag, all = False, tag_url = str(unique_id))
+        x = tag_data.unit_id
+        print("x: ", x)
+        data = CRUD.read(Unit, all = False, unit_id = x)
+                        
         tech_id = session.get('tech_id')
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
