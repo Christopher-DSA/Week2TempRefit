@@ -1,6 +1,9 @@
 from flask import make_response, session, Blueprint
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 from models import CRUD, User, User_Detail, Technician, Unit,Technician_Offer
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from functools import wraps
 technician = Blueprint('technician', __name__)
 
@@ -194,12 +197,17 @@ def signup_technician(token,id):
     
 @technician.route('/confirm_technician', methods=['GET', 'POST'])
 def confirm_technician():
+    response = None
     if request.method == 'POST':
         contractor_id = request.form['dt']
         token = request.form['tk']
+        response = request.form['action']
+        if response == 'Accept':
+            return render_template('Login Flow/login.html')
         print("Contractor ID: ", contractor_id)
         print("Token: ", token)
         
+    elif response == 'Accept':
         CRUD.update(
             Technician_Offer,
             "offer_status",
@@ -207,6 +215,50 @@ def confirm_technician():
             token = token
         )
         return render_template('Login Flow/login.html')
-       
+    
+    elif response == 'Decline':
+            email = request.form['email']
+            try:
+                msg = MIMEMultipart()
+                msg['From'] = 'refit_dev@sidneyshapiro.com'
+                msg['To'] = 'refit_dev@sidneyshapiro.com'
+                msg['Subject'] = "Technician has rejected your offer"
+                body = f"Hello, the Technician has rejected your offer."
+                msg.attach(MIMEText(body, 'plain'))
+                    
+                email_text = msg.as_string()
+                #Send an email to the email address typed in the form.
+                smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+                smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+                smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+                smtpObj.quit()  # Quitting the connection
+                print("Email sent successfully!")
+            except Exception as e:
+                print("Oops, something went wrong: ", e)
+                return render_template('Login Flow/login.html')
+            return render_template('Login Flow/login.html')
+    
+@technician.route('/decline_technician', methods=['GET', 'POST'])
+def decline_technician():
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = 'refit_dev@sidneyshapiro.com'
+        msg['To'] = 'refit_dev@sidneyshapiro.com'
+        msg['Subject'] = "Technician has rejected your offer"
+        body = f"Hello, the Technician has rejected your offer."
+        msg.attach(MIMEText(body, 'plain'))
+                    
+        email_text = msg.as_string()
+        #Send an email to the email address typed in the form.
+        smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+        smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+        smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+        smtpObj.quit()  # Quitting the connection
+        print("Email sent successfully!")
+    except Exception as e:
+        print("Oops, something went wrong: ", e)
+        return render_template('Login Flow/login.html')
+    print("Successfully declined offer.")
+    return render_template('Login Flow/login.html')
 
         
