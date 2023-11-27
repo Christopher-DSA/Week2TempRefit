@@ -12,7 +12,18 @@
 </head>
 <body>
     <h1>Welcome to Contractor dashboard! {{user}}</h1>
-    <h2>Select an option:</h2>
+    <h2>These will be on the final Contractor Dashboard</h2>
+    <br>
+    <button onclick="location.href='/equipment common/qr-scan'">Scan QR Tag</button>
+    <button onclick="location.href='/route-needs-to-be-made-still'">Refrigerant Inventory</button>
+    <button onclick="location.href='/technician_details'">Technician Managment</button>    {{technicians}}
+    <button onclick="location.href='/route-needs-to-be-made-still'">Leak/Loss Report</button>    
+    <button onclick="location.href='/route-needs-to-be-made-still'">Activity Logs</button>  
+    <button onclick="location.href='/route-needs-to-be-made-still'">Buy QR Tags</button>
+
+    <br><br>
+    <h2>These will not be on the Final Contractor Dashboard (here for testing purposes)</h2>
+    <br>
     <button onclick="location.href='/add_technician'">Join My Team</button>
     <button onclick="showPurchaseTagsForm()">Purchase Tags</button>
     <button onclick="showReplaceTagsForm()">Replace Tags</button>
