@@ -1,0 +1,40 @@
+<html>
+<h1>Equipment Information</h1>
+Information for scanned equipment/unit.
+
+<table border class="table table-hover table-dark">
+    <head>
+        <tr>
+            <!-- Your Columns HERE -->
+            <th scope="col">Unit_ID</th>
+            <th scope="col">Installation Date</th>
+            <th scope="col">manufacturer</th>
+            <th scope="col">Type of Refrigerant in Unit</th>
+            <th scope="col">Unit Type</th>
+            <th scope="col">Factory Charge in lbs</th>
+            <th scope="col">Technician-ID</th>
+
+        </tr>
+    <head>
+    <body>
+        <!-- Your rows inside the table HERE: -->
+            <tr>
+                <td>{{data.unit_id}}</td>
+                <td>{{data.installation_date}}</td>
+                <td>{{data.manufacturer}}</td>
+                <td>{{data.type_of_refrigerant}}</td>
+                <td>{{data.unit_type}}</td>
+                <td>{{data.factory_charge_amount}}</td>
+                <td>{{tech_id}}</td>
+
+                <td>
+                    <button class="btn btn-outline btn-info" onclick="location.href='/equipment/repair_ODS_Sheet'"> Perform a Repair</button>
+                    <button class="btn btn-outline btn-success" onclick="location.href='/charge-equipment'">Charge Equipment</button>
+                    <button class="btn btn-outline btn-warning">Decommission Equipment (Not connected yet)</button>
+                    <button class="btn btn-outline btn-warning" onclick="location.href='/remove-qrtag'">Remove QR Tag</button>
+                </td>
+
+            </tr>
+    <body>
+</table>     
+</html>

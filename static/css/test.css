@@ -1,0 +1,8 @@
+  .card:hover {
+  /* This will increase the size of the box-shadow, giving a 'lift' effect */
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
+  /* This will scale the card up to 105% of its original size */
+  transform: scale(1.05);
+  /* Transition makes the change smooth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}

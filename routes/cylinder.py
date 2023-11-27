@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,Cylinder,Reclaim_Recovery, Refrigerant, Cylinder_Type
+from models import CRUD,Cylinder,Reclaim_Recovery, Refrigerant, Cylinder_Type, Tag
 from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 import UUID_Generate
@@ -83,7 +83,7 @@ def cylinderform():
     # print('rendering cylinder form')
     return render_template(('cylinder/cylinder.html')) #for testing
 
-
+@cylinder.route('/new_cylinder_new_qr',methods=['GET','POST'])
 
 @cylinder.route("/new_cylinder", methods=["GET", "POST"])
 def formcylinder():
@@ -185,15 +185,26 @@ def formcylinder():
         
         #Step 3. Geneate a unique url token that can be used on the QR Code when they are manufactured.
         #Note in the future this unique url token may directly come from the QR code itself instead of being generated here.
-        unique_cylinder_token = UUID_Generate.CylinderQRGenerator.generate_cylinder_unique_id(PK)
+        
+        unique_cylinder_token = None
+        #either generate a new unique token or use the one that was passed in from the QR code registration page.
+        if session.get('QR_unique_token') != None: #if the user got here from the new QR code registration page.
+            unique_cylinder_token = session.get('QR_unique_token')
+            print("Unique_Cylinder_Token: ", unique_cylinder_token)
+            
+            #new row in tag table
+            CRUD.create(Tag, tag_url = unique_cylinder_token, cylinder_id = PK, type = "cylinder")
+            return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token) #redirect(url_for('cylinder.cylinder'))
+            
+        else:
+            #there was an error, ask user to try scanning again.
+            unique_cylinder_token = UUID_Generate.CylinderQRGenerator.generate_cylinder_unique_id(PK)
+            
         print("Unique_Cylinder_Token: ", unique_cylinder_token)
         CRUD.update(Cylinder, 'unique_url_id', new = unique_cylinder_token, cylinder_id = PK)
         return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token) #redirect(url_for('cylinder.cylinder'))
-
-
-
-
-    return render_template("New Cylinder/new-cylinder.html")
+    else:
+        return render_template("New Cylinder/new-cylinder.html")
 
 
 #Later this will be changed to a dynamic route that will take in the unique cylinder link from the QR code.
@@ -205,9 +216,14 @@ def CylinderInfo(unique_id):
         #1. Getting the cylinder id from the database based on the <unique id>.
         print("unique_id: " + unique_id)
         
+        #Find cylinder id based on tag_url
+        tag_data = CRUD.read(Tag, all = False, tag_url = unique_id)
+        
+        #get cylinder id from tag table
+        cyl_id = tag_data.cylinder_id
         
         #2. Get row in database for specific cylinder.
-        data = CRUD.read(Cylinder, all = False, unique_url_id = unique_id)
+        data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
         
         print(data.refrigerant_id)
         

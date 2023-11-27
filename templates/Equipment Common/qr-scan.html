@@ -86,25 +86,34 @@
             });
         })();
     </script>
-    <link rel="icon" type="image/png" sizes="130x165" href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
-    <link rel="icon" type="image/png" sizes="130x165" href="/assets/img/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/png" sizes="130x165" href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
-    <link rel="icon" type="image/png" sizes="130x165" href="/assets/img/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/png" sizes="130x165" href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
-    <link rel="icon" type="image/png" sizes="130x165" href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
-    <link rel="icon" type="image/png" sizes="348x122" href="/assets/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+    <link rel="icon" type="image/png" sizes="348x122"
+    href="/static/images/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
-    <link rel="stylesheet" href="/assets/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
-    <link rel="stylesheet" href="/assets/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
-    <link rel="stylesheet" href="/assets/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
-    <link rel="stylesheet" href="/assets/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
-    <link rel="stylesheet" href="/assets/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+    <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+    <link rel = "stylesheet" href = "/static/fonts/pxiEyp8kv8JHgFVrJJfecg.woff2?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel = "stylesheet" href = "/static/fonts/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
 </head>
 
 <body>
-    <!-- Start: Navbar -->
-    <section>
+      <!-- Start: Navbar -->
+      <section>
         <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme="dark">
             <div class="container-fluid"><a href="/dashboardtechnician" class="btn btn-primary btn-lg" role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-house-door-fill fs-1">
@@ -130,7 +139,8 @@
                 </div>
             </div>
         </nav>
-    </section><!-- End: Navbar -->
+    </section>
+    <!-- End: Navbar -->
     <!-- Start: QR Scan -->
     <section>
         <div class="row justify-content-center mt-5">
@@ -158,7 +168,7 @@
         <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
       <a/>
        
-          <p class="text-center">Align the code with the box.</p>
+          <p class="text-center">Click QR-Code Sample Image Above to Begin Scanning.</p>
 
       <canvas hidden="" id="qr-canvas"></canvas>
 
@@ -193,6 +203,17 @@ qrcode.callback = res => {
     qrResult.hidden = false;
     canvasElement.hidden = true;
     btnScanQR.hidden = false;
+
+
+    //Is it a valid uuid/unique token?
+
+    if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(res)) {
+        // The string matches the UUID format
+        console.log("UUID Found: ", res);
+        window.location.href = '/choose-qr-type?unique_token=' + encodeURIComponent(res);
+    } else {
+        console.log("QR Code does not contain a URL or a UUID: ", res);
+    }
   }
 };
 
