@@ -1,7 +1,7 @@
 from flask import make_response, session, Blueprint
 from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag
 from functools import wraps
 import UUID_Generate
 technician = Blueprint('technician', __name__)
@@ -73,7 +73,10 @@ def dashboardtechnician():
     user_first_name=CRUD.read(User_Detail,user_id=user_current).first_name
     return render_template("technician/dashboardtechnician.html", user=user_current,user_first_name = user_first_name)
 
-#?
+
+@technician.route("/equipment_create_new_qr", methods=['GET', 'POST'])
+
+
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
 def equipment_create():
     print("inside equipment_create")
@@ -168,6 +171,26 @@ def successful_add():
 ##def recovery():
 
    ## return render_template('equipment/recovery.html')
+   
+@technician.route('/choose-qr-type', methods = ['GET'])
+def my_choose_qr_type():
+    print("inside choose-qr-type")
+    #Check if qr is already in the system:
+    unique_token = request.args.get('unique_token') #get token from url
+    x = None
+    print("unique_token IN QR TYPE: ", unique_token)   
+    if unique_token != None: #always will have this after a qr scan.
+        x = CRUD.read(Tag, all = False, tag_url = unique_token)
+        if x != None: #qr is registered in the system
+            url = 'cylinder_info/' + str(unique_token)
+            return redirect(url)
+        else: #go to register a new tag page
+            print("error in qr scan, this qr tag needs to be registered.")
+            session['QR_unique_token'] = unique_token
+            return render_template('Equipment Common/choose-qr-type.html')    
+        
+
+    
 
 @technician.route('/New Cylinder/tag-linked')
 def add_qr():
