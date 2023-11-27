@@ -1,6 +1,6 @@
 from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from datetime import datetime , timedelta
-from models import User, Store, CRUD
+from models import User, Store, CRUD, Technician
 from functools import wraps
 import pandas as pd
 import os
@@ -88,7 +88,8 @@ def login():
         db_password = current_user.password
         
         #Session Variables
-        session['user_email'] = entered_email
+        session['user_email'] = entered_email # Store user email in session
+        session['user_id'] = current_user.user_id # Store user ID in session
         print("From Auth.py: ", session['user_email'])
         
         #5. Redirect to the appropriate page based on the user's role.
@@ -96,7 +97,12 @@ def login():
         if (db_password == result):# hashed and verified password securely. Updated from previous basic check.
             session["user_id"] = current_user.user_id  # Store user ID in session
             if current_user.role=='technician':
+                #store tech id in session.
                 session['user_role'] = 'technician'
+                current_user_id=session.get('user_id')
+                current_tech_id = CRUD.read(Technician, user_id=current_user_id).technician_id
+                session['tech_id'] = current_tech_id
+                print(current_tech_id)
                 #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
             elif current_user.role=='admin':

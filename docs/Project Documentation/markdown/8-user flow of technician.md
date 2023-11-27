@@ -22,7 +22,7 @@
 2. User views and updates their account information, such as name, email, and password.
 3. User can modify their account details as needed.
 
-## Technician Dashbaord
+## Technician Dashboard
 1. User is redirected to dashboard displaying 7 buttons
  -a. Add New QR Tag
  -b. Scan QR Tag
