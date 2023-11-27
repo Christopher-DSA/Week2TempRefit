@@ -5,6 +5,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import UUID_Generate
+from datetime import datetime
+
 contractor = Blueprint('contractor', __name__)
 
 # @contractor.route("/contractor/dashboard", methods=['GET', 'POST'])
@@ -136,7 +138,7 @@ def add_technician():
         mname = request.form.get('mname')
         lname = request.form.get('lname')
         email = request.form.get('email')
-        
+        print(f"Email address{email}")
         """Get the contractor id from the session so that the technician 
         add page can capture the it to add the new technician under the contractor 
         who sent the invitaiton"""
@@ -158,6 +160,7 @@ def add_technician():
         print(f"http://127.0.0.1:5000/register_technician/{contractor_id}")
         print("----------------")
         tech_token=UUID_Generate.technicianQRGenerator.generate_technician_unique_id()
+
         try:
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
@@ -165,7 +168,23 @@ def add_technician():
             msg['Subject'] = "You've Been invited to work as a Technician"
             body = f"Hello {fname_upper} you have been invited to work as a Technician for {cname_upper}. If you accept the offer please click the link http://127.0.0.1:5000/register_technician/{tech_token}/{contractor_id} and create an account as a technician."
             msg.attach(MIMEText(body, 'plain'))
-                
+            
+            user_obj = CRUD.read(User,email = email, all = False)
+            print(f"user_id:")
+            print(user_obj)
+            print(f"user_id:{user_obj.user_id}")
+            technician_obj = CRUD.read(Technician, user_id = user_obj.user_id, all=False)
+
+
+            CRUD.create(
+            Technician_Offer,
+                contractor_id=int(contractor_id),
+                technician_id=int(technician_obj.technician_id),
+                offer_status="Sent",
+                email_time_sent =datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                token = tech_token
+            )
+
             email_text = msg.as_string()
             #Send an email to the email address typed in the form.
             smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection

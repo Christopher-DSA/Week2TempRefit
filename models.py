@@ -275,8 +275,10 @@ class Technician_Offer(Base):
     technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
     offer_status = Column(String)
     email_time_sent = Column(String)
+    token = Column(String)
 
     contractor = relationship('Contractor', backref='Technician_Offer')
+    technician = relationship('Technician', backref='Technician_Offer')
     technician = relationship('Technician', backref='Technician_Offer')
 
     def __repr__(self):

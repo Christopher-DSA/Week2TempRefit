@@ -184,7 +184,6 @@ def maintenance_history():
 
 
 @technician.route('/register_technician/<token>/<int:id>', methods=['GET', 'POST'])
-@technician_required
 def signup_technician(token,id):
     if request.method == 'GET':
             contractor_id = id
@@ -194,7 +193,6 @@ def signup_technician(token,id):
     return render_template('beta/register_technician.html',dt=contractor_id,tk=token)
     
 @technician.route('/confirm_technician', methods=['GET', 'POST'])
-@technician_required
 def confirm_technician():
     if request.method == 'POST':
         contractor_id = request.form['dt']
@@ -204,10 +202,11 @@ def confirm_technician():
         
         CRUD.update(
             Technician_Offer,
-            token = token,
-            offer_status="Engaged"
+            "offer_status",
+            new = "Engaged", 
+            token = token
         )
-        return render_template('beta/register_technician.html', dt=contractor_id, tk=token)
+        return render_template('Login Flow/login.html')
        
 
         
