@@ -1,6 +1,6 @@
 from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from datetime import datetime , timedelta
-from models import User, Store, CRUD, Technician
+from models import User, Store, CRUD, Technician, User_Detail
 from functools import wraps
 import pandas as pd
 import os
@@ -130,18 +130,11 @@ def logout():
     session.pop('user_id', None)  # Remove user ID from session
     return redirect(url_for('auth.login'))
 
-
-
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
     print("In forgot_password()")
     if request.method == "POST":
         print("POST request for forgot_password()")
-
-        
-
-
-        
         current_user_email = request.form.get('Email') # assuming username is the same as email
         # find user id for reset password token
         #CRUD.read(User, email=current_user_email)
@@ -172,17 +165,12 @@ def forgot_password():
         except Exception as e:
             print("Oops, something went wrong: ", e)
 
-        
+    
         print(email)
         flash("If your email is registered with us, you'll receive a password reset link shortly.")
-
-        session['user_email'] = current_user_email
-       
-        
+        session['user_email'] = current_user_email        
         #return render_template('Login Flow/reset.html')
         return render_template("Login Flow/forgot.html")
-
-           
     elif request.method == "GET":
         return render_template("Login Flow/forgot.html")
     
@@ -197,7 +185,6 @@ def forgot_password():
 # headers = {
 #     'Authorization': 'Bearer <token>',
 # }
-
 def reset_password():
     print('1234')
     if request.method == "POST" :
@@ -225,62 +212,78 @@ def reset_password():
 
             return redirect(url_for('auth.login'))
        
-
-        
-        
-
-
-
-
-        
-
-
-
-
-
-
 @auth.route("/home", methods=["GET"])
 
 def home():
     user=session.get('user_id')
     return render_template("auth/home.html",user=user)
 
+
+@auth.route("/create-account-setup", methods=["GET", "POST"])
+def acount_setup():
+    print("In account_setup()")
+    if request.method == 'POST':
+        print("In Post for account setup")
+        current_user_id = session.get('user_id')
+        current_user_email = session.get('user_email')
+        #get variables from form
+        first_name = request.form['First Name']
+        Last_name = request.form['Last Name']
+        ODS_License = request.form['License']
+        Company_name = request.form['Company Name']
+        Company_branch_number = request.form['Branch Number']
+        ODS_sheet_recipent_email = request.form['Recipient Email']
+        Company_address = request.form['Company Address']
+        Apartment_number = request.form['Suite Number']
+        City = request.form['Company City']
+        Company_province = request.form['Company Province']
+        Postal_code = request.form['Postal Code']
+        #Drop down menu for role, will add later
+        selected_role = request.form['Selected_role']
+        
+        #???? ods_license=ODS_License <- this goes in technician table, company_name=Company_name, company_branch_number=Company_branch_number ods_sheet_recipent_email=ODS_sheet_recipent_email
+        CRUD.create(User_Detail, False, first_name=first_name, last_name=Last_name, address = Company_address, city=City, province=Company_province, postal_code=Postal_code)
+        #Updates to tables.
+        CRUD.update(User, 'role', new = selected_role, email = current_user_email)
+        CRUD.update(User, 'ods_', new = selected_role, email = current_user_email)
+        #if they are a technician, create a technician entry in the technician table.
+        if selected_role == 'technician':
+            CRUD.create(Technician, False, user_id = current_user_id, ods_license_number=ODS_License)
+        
 @auth.route("/create", methods=["GET", "POST"])
 def register():
     print("test")
-    if request.method == 'POST':
+    if request.method == 'POST': #if user completes this form and decides to not continue, the next time they login they will taken directly to the account_setup page.
         print("In Post")      
         #1. Get the data from the form.
-        user_email = request.form['Email']
+        my_user_email = request.form['Email']
         password_1 = request.form['Password1']
         password_confirmation_2 = request.form['Password2']
         added_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        #1.5 Check if the passwords match.
+        #2 Check if the passwords match.
         if password_1 != password_confirmation_2:
             print("Passwords do not match")
         
-        #2.Hashed version of the password for the database instead of plain text.
+        #3.Hashed version of the password for the database instead of plain text.
         message = {'password': password_1}
         result = generate_hash(message, secret_key)
         
-        #3. Send the data to the database.
-        #is_email_already_in_use = CRUD.read(User, email=user_email)
-        is_email_already_in_use = False
-        # print(is_email_already_in_use)
-        # if is_email_already_in_use == None:
-        #     #USER DOES NOT EXIST IN DATABASE
-        #     pass
-        # else:
-        #     CRUD.create(User, False, email=user_email, password=result, role='not_selected', added_date=added_date, is_email_verified=False)
-        
-        #print(user_email,password_1,password_confirmation_2,added_date)
-        
-        #4. Move on to verify email page
-        #return render_template('/Login Flow/verify.html')
-        
-        #5. Move on to the select role page (Technician, Admin, Contractor, Wholesaler)
-        return render_template('/Account Setup/setup.html')
+        #4. Send the data to the database.
+        is_email_already_in_use = CRUD.read(User, email=my_user_email)
+        if is_email_already_in_use != None:
+            #USER EMAIL ALREADY IN DATABASE
+            print("User email already in database")
+            return redirect('/')
+        else:
+            x = CRUD.create(User, False, email=my_user_email, password=result, role='not_selected', added_date=added_date, is_email_verified=False, has_ods_license=False)
+            my_user_id = x.user_id
+            session['user_id'] = my_user_id
+            session['user_email'] = my_user_email
+            #5. Move on to the select role page (Technician, Admin, Contractor, Wholesaler)
+            return render_template('/Account Setup/setup.html')
+                
+
     
     elif request.method == 'GET':
         print("In Get")
