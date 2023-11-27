@@ -310,4 +310,4 @@ def buy_qr_page():
 ##def recovery():
    ## return render_template('equipment/recovery.html')
 
-        
+    
