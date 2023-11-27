@@ -9,15 +9,11 @@ from routes.organization import organization
 from routes.technician import technician
 from routes.wholesaler import wholesaler
 from routes.contractor import contractor
-
-#from routes.cylinder import cylinder
-from routes.auth import auth # may need to move down
 from routes.cylinder import cylinder
 from routes.auth import auth
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager 
-
+from flask_jwt_extended import JWTManager #New package, you will need to pip install flask-jwt-extended.
 
 app = Flask(__name__)
 

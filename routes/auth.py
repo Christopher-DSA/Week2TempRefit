@@ -1,5 +1,5 @@
 from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from datetime import datetime
+from datetime import datetime , timedelta
 from models import User, Store, CRUD
 from functools import wraps
 import pandas as pd
@@ -15,7 +15,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # FLASK_JWT imports for secure reset password tokens
 # from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
-from flask_jwt_extended import  jwt_required, get_jwt_identity,create_access_token
+from flask_jwt_extended import  jwt_required, get_jwt_identity,create_access_token,decode_token
+
 
 #Load enviroment variables
 load_dotenv()
@@ -124,6 +125,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
+
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
     print("In forgot_password()")
@@ -135,16 +137,23 @@ def forgot_password():
 
         
         current_user_email = request.form.get('Email') # assuming username is the same as email
+        # find user id for reset password token
+        #CRUD.read(User, email=current_user_email)
+        # token will expire after 24 hours
+        #expires = datetime.timedelta(hours=24)
         # generate reset   password token
-        access_token = create_access_token(identity=current_user_email)
-
+        access_token = create_access_token(identity=current_user_email) #,expires_delta=
+        # add access token to user's records 
+        #CRUD.update(User,'jwt_token',new='access_token',name='current_user_email')
+        # Embed the token in the reset password link
+        reset_password_link = url_for('auth.reset_password', token=access_token, _external=True, param_method='GET',)
         try:
 
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
             msg['To'] = 'refit_dev@sidneyshapiro.com'
             msg['Subject'] = 'Forgot Password Test Email'
-            body = f'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.JWT token: {access_token}'
+            body = f'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.JWT token:{reset_password_link}'
             msg.attach(MIMEText(body, 'plain'))
                 
             email_text = msg.as_string()
@@ -173,7 +182,16 @@ def forgot_password():
     
 
 @auth.route("/reset_password", methods=["GET", "POST"])
-@jwt_required()
+#@jwt_required()
+#def protected():
+    # Access the identity of the current user with get_jwt_identity
+    #current_user = get_jwt_identity()
+    #return jsonify(logged_in_as=current_user), 200
+# requests.get(reset_password_link, headers=headers)
+# headers = {
+#     'Authorization': 'Bearer <token>',
+# }
+
 def reset_password():
     print('1234')
     if request.method == "POST" :
