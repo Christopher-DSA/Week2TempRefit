@@ -143,16 +143,16 @@ def forgot_password():
         # generate reset   password token
         access_token = create_access_token(identity=current_user_email) #,expires_delta=
         # add access token to user's records 
-        #CRUD.update(User,'jwt_token',new='access_token',name='current_user_email')
+        CRUD.update(User,'jwt_token',new=access_token,email=current_user_email)
         # Embed the token in the reset password link
-        reset_password_link = url_for('auth.reset_password', token=access_token, _external=True, param_method='GET',)
+        my_link= "http://172.16.224.205:5000/reset_password/{access_token}".format(access_token=access_token)
         try:
 
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
             msg['To'] = 'refit_dev@sidneyshapiro.com'
             msg['Subject'] = 'Forgot Password Test Email'
-            body = f'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.JWT token:{reset_password_link}'
+            body = f'This is a test email for the forgot password feature. If you are receiving this email, it means that the forgot password feature is working.JWT token:{my_link}'
             msg.attach(MIMEText(body, 'plain'))
                 
             email_text = msg.as_string()
@@ -175,8 +175,9 @@ def forgot_password():
         return render_template("Login Flow/forgot.html")
     
 
-@auth.route("/reset_password", methods=["GET", "POST"])
+@auth.route("/reset_password/<access_token>.<access_token2>.<access_token3>", methods=["GET", "POST"])
 #@jwt_required()
+
 #def protected():
     # Access the identity of the current user with get_jwt_identity
     #current_user = get_jwt_identity()
@@ -187,11 +188,26 @@ def forgot_password():
 # }
 def reset_password():
     print('1234')
-    if request.method == "POST" :
+    if request.method == "GET" :
+        full_token = access_token + '.' + access_token2 + '.' + access_token3
+        print(full_token)
+           
+        
+        x =CRUD.read(User,'jwt_token',jwt_token=full_token)
+        if x == None:
+            return render_template("Account Setup/create.html")
+        else:
+            session['user_token'] = full_token
+            print("found token", access_token)
+       
         print('post method')
+
+    
+        return render_template("Login Flow/reset.html")
+
         # get submitted form data
-        password1 = request.form['Password1']
-        password2 = request.form['Password2']
+        # password1 = request.form['Password1']
+        # password2 = request.form['Password2']
         # check if passwords match
         if password1 == password2:
             print('pass matches')
@@ -212,6 +228,20 @@ def reset_password():
 
             return redirect(url_for('auth.login'))
        
+
+        
+        
+
+
+
+
+        
+
+
+
+
+
+
 @auth.route("/home", methods=["GET"])
 
 def home():
