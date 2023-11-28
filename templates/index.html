@@ -5,93 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>REFit</title>
-    <script>
-        (function() {
 
-            // JavaScript snippet handling Dark/Light mode switching
-
-            const getStoredTheme = () => localStorage.getItem('theme');
-            const setStoredTheme = theme => localStorage.setItem('theme', theme);
-            const forcedTheme = document.documentElement.getAttribute('data-bss-forced-theme');
-
-            const getPreferredTheme = () => {
-
-                if (forcedTheme) return forcedTheme;
-
-                const storedTheme = getStoredTheme();
-                if (storedTheme) {
-                    return storedTheme;
-                }
-
-                const pageTheme = document.documentElement.getAttribute('data-bs-theme');
-
-                if (pageTheme) {
-                    return pageTheme;
-                }
-
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-
-            const setTheme = theme => {
-                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.setAttribute('data-bs-theme', 'dark');
-                } else {
-                    document.documentElement.setAttribute('data-bs-theme', theme);
-                }
-            }
-
-            setTheme(getPreferredTheme());
-
-            const showActiveTheme = (theme, focus = false) => {
-                const themeSwitchers = [].slice.call(document.querySelectorAll('.theme-switcher'));
-
-                if (!themeSwitchers.length) return;
-
-                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-                    element.classList.remove('active');
-                    element.setAttribute('aria-pressed', 'false');
-                });
-
-                for (const themeSwitcher of themeSwitchers) {
-
-                    const btnToActivate = themeSwitcher.querySelector('[data-bs-theme-value="' + theme + '"]');
-
-                    if (btnToActivate) {
-                        btnToActivate.classList.add('active');
-                        btnToActivate.setAttribute('aria-pressed', 'true');
-                    }
-                }
-            }
-
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                const storedTheme = getStoredTheme();
-                if (storedTheme !== 'light' && storedTheme !== 'dark') {
-                    setTheme(getPreferredTheme());
-                }
-            });
-
-            window.addEventListener('DOMContentLoaded', () => {
-                showActiveTheme(getPreferredTheme());
-
-                document.querySelectorAll('[data-bs-theme-value]')
-                    .forEach(toggle => {
-                        toggle.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            const theme = toggle.getAttribute('data-bs-theme-value');
-                            setStoredTheme(theme);
-                            setTheme(theme);
-                            showActiveTheme(theme);
-                        })
-                    })
-            });
-        })();
-    </script>
     <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
     <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-dark.png" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
-    <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-dark.png" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
-    <link rel="icon" type="image/png" sizes="130x165" href="./static/images/favicon-light.png">
     <link rel="icon" type="image/png" sizes="348x122" href="../static/images/refit-logo-light.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="manifest" href="./manifest.json">
@@ -100,11 +16,12 @@
     <link rel="stylesheet" href="../static/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="../static/css/QR-Scanner.css">
     <link rel="stylesheet" href="../static/css/styles.css">
+    <script type="text/javascript" src="../static/js/script.js"></script>
 </head>
 
 <body>
-    <!-- Start: Navbar -->
     <section>
+        <!-- Start: Navbar -->
         <nav class="navbar navbar-expand-md bg-primary" data-bs-theme="dark">
             <div class="container d-flex justify-content-between p-0 pe-2 pt-4">
                 <button class="btn btn-primary btn-lg" type="button">
@@ -134,6 +51,7 @@
 
             </div>
         </nav>
+        <!-- End: Navbar -->
 
         
 
@@ -444,180 +362,19 @@
         </div>
           <!-- End: Mobile offcanvas menu -->
           
-        </section>
-    <!-- End: Navbar -->
+    </section>
     
     <main class="container pt-3 pb-3">
 
-      
-      
-      <section class="tab-content">
-        <div class="tab-pane fade show active" id="signUpTab" role="tabpanel">
-          <div class="d-flex flex-column flex-sm-row rounded shadow bg-light">
-            <div
-              class="rounded"
-              style="
-                flex: 1 0 40%;
-                background-image: url('../static/images/hvac-technician.jpg');
-                background-size: cover;
-                position: relative;
-              "
-            >
-              <div
-                class="d-flex flex-column pb-3 pt-5 rounded gap-4 align-items-center"
-                style="background: rgba(0, 153, 255, 0.5); width: 100%; height: 100%"
-              >
-                <h1 class="text-light">Welcome Back!</h1>
-                <ul class="nav nav-tabs">
-                  <button
-                    type="button"
-                    id="goToSignIn"
-                    class="btn btn-outline-light btn-lg active"
-                  >
-                    Sign In
-                  </button>
-                </ul>
-              </div>
-            </div>
-      
-            <div
-              class="d-flex flex-column align-items-center p-3 gap-3"
-              style="flex: 1 0 60%"
-            >
-              <h1 class="text-secondary">Create Account</h1>
-              <form class="d-flex flex-column gap-3">
-                <div class="form-floating mb3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="signUpNameInput"
-                    placeholder="Richard"
-                  />
-                  <label for="signUpNameInput">Name</label>
-                </div>
-                <div class="form-floating mb3">
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="signUpemailInput"
-                    placeholder="name@example.com"
-                  />
-                  <label for="signUpemailInput">Email Address</label>
-                </div>
-                <div class="form-floating mb3">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signUpPasswordInput"
-                    placeholder="password"
-                  />
-                  <label for="signUpPasswordInput">Password</label>
-                </div>
-                <div>
-                  <button type="button" class="btn btn-lg btn-secondary">
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      
-        <div class="tab-pane fade" id="signInTab" role="tabpanel">
-          <div
-            class="d-flex flex-column flex-sm-row rounded shadow justify-content-center bg-light"
-          >
-            <div
-              class="d-flex flex-column align-items-center p-3 gap-3"
-              style="flex: 1 0 60%"
-            >
-              <h1 class="text-secondary">Sign in to Refit!</h1>
-              <form class="d-flex flex-column gap-3">
-                <div class="form-floating mb3">
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="signInEmailInput"
-                    placeholder="name@example.com"
-                  />
-                  <label for="signInEmailInput">Email Address</label>
-                </div>
-                <div class="form-floating mb3">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signInPasswordInput"
-                    placeholder="password"
-                  />
-                  <label for="signInPasswordInput">Password</label>
-                </div>
-                <div>
-                  <button type="button" class="btn btn-lg btn-secondary">
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-      
-            <div
-              class="rounded"
-              style="
-                flex: 1 0 40%;
-                background-image: url('../static/images/hvac-technician2.jpg');
-                background-size: cover;
-                position: relative;
-              "
-            >
-              <div
-                class="d-flex flex-column pt-5 p-3 rounded gap-4 align-items-center"
-                style="background: rgba(0, 153, 255, 0.5); width: 100%; height: 100%"
-              >
-                <h1 class="text-light">New Here?</h1>
-                <button
-                  type="button"
-                  id="goToSignUp"
-                  class="btn btn-outline-light btn-lg active"
-                >
-                  Sign Up
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      
-          <!-- Start: Script for signup/signin toggle -->
-          <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              var signInButton = document.getElementById('goToSignIn');
-              var signUpButton = document.getElementById('goToSignUp');
-          
-              signInButton.addEventListener('click', function() {
-                // Hide the signUpTab content and remove the active class from signUpButton
-                document.getElementById('signUpTab').classList.remove('show', 'active');
-                // signUpButton.classList.remove('active');
-          
-                // Show the signInTab content and add the active class to signInButton
-                var signInTabContent = document.getElementById('signInTab');
-                signInTabContent.classList.add('show', 'active');
-                // signInButton.classList.add('active');
-              });
-          
-              signUpButton.addEventListener('click', function() {
-                // Hide the signInTab content and remove the active class from signInButton
-                document.getElementById('signInTab').classList.remove('show', 'active');
-                // signInButton.classList.remove('active');
-          
-                // Show the signUpTab content and add the active class to signUpButton
-                var signUpTabContent = document.getElementById('signUpTab');
-                signUpTabContent.classList.add('show', 'active');
-                // signUpButton.classList.add('active');
-              });
-            });
-          </script>
-          <!-- End: Script for signup/signin toggle -->
 
+      
+      <!-- Start: Universal Modal  -->
+      <div id="universalModal" class="modal">
+        <div class="modal-content">
+          <div id="modalDynamicContent"></div>
+        </div>
+      </div>
+      <!-- End: Universal Modal  -->
     </main>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
