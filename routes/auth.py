@@ -1,6 +1,6 @@
 from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from datetime import datetime , timedelta
-from models import User, Store, CRUD, Technician, User_Detail
+from models import User, Store, CRUD, Technician, User_Detail, Contractor
 from functools import wraps
 import pandas as pd
 import os
@@ -241,7 +241,7 @@ def home():
     return render_template("auth/home.html",user=user)
 
 
-#START CREATION OF ACCOUNT ROUTE FOR ALL ROLES (Technician, Admin, Contractor, Wholesaler)
+#START CREATION OF ACCOUNT ROUTE FOR ALL ROLES.
 @auth.route("/create", methods=["GET", "POST"])
 def register():
     session.clear()
@@ -317,7 +317,7 @@ def account_setup():
         if selected_role == 'technician':
             CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License)
         elif selected_role == 'contractor':
-            pass
+            CRUD.create(Contractor, False, user_id = current_user_id, Company_name = Company_name, status = 'active', name = first_name, branchID = Company_branch_number)
         elif selected_role == 'wholesaler':
             pass
         elif selected_role == 'admin':
@@ -328,7 +328,7 @@ def account_setup():
     
         CRUD.update(User, 'role', new = selected_role, email = current_user_email)
         #Send them back to login page:
-        flash("Account created successfully!")
+        flash("Account created successfully! " + str(selected_role))
         return render_template('Login Flow/login.html')
     elif request.method == 'GET':
         print("In Get for account setup")

@@ -31,6 +31,7 @@ def technician_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+#Renders the technician dashboard
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required
