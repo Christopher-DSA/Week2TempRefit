@@ -5,6 +5,19 @@
         <div class="d-flex justify-content-center mt-3">
           <h2 style="color: #111a66;">Login to REFit</h2>
         </div>
+         <!-- Start: Flash Messages -->
+        <div id="flash-messages" class="text-center">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div id="flash-messages" class="text-center">
+              {% for message in messages %}
+                <div class="alert alert-warning" role="alert">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        </div>
+        <!-- End: Flash Messages -->
         <div class="row justify-content-center mt-4">
           <div>
             <form class="px-4" action="/" method="post">
