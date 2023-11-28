@@ -1,7 +1,7 @@
 <section>
   <div class="row justify-content-center mt-5">
     <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
-      <form class="px-4">
+      <form class="px-4" method="post" action="/create-account-setup">
         <!-- Start: Form Header -->
         <div class="row mb-3">
           <div class="col">
@@ -56,6 +56,15 @@
                     </div>
                   </div><!-- End: Role Selection -->
                 </div>
+                <label for="cars">Choose a role:</label>
+
+                <select name="Selected_role" id="role_select">
+                  <option value="technician">Technician</option>
+                  <option value="contractor">Contractor[not setup yet]</option>
+                  <option value="wholesaler">Wholesaler[not setup yet]</option>
+                  <option value="organization">Organization[not setup yet]</option>
+                </select>
+
                 <div class="tab-pane" role="tabpanel" id="tab-2">
                   <!-- Start: Form Input -->
                   <div class="row">
@@ -67,6 +76,7 @@
                       <!-- Start: Last Name -->
                       <div class="mb-4"><label class="form-label">LastName*</label><input class="form-control"
                           type="text" required="" name="Last Name"></div><!-- End: Last Name -->
+                      <br><h4>Only for Technician</h4>
                       <!-- Start: License -->
                       <div class="mb-4"><label class="form-label">ODS License*</label><input class="form-control"
                           type="text" required="" name="License"></div><!-- End: License -->
@@ -78,7 +88,7 @@
                   <div class="row">
                     <div class="col">
                       <p>Fields with an asterisk (*) are required.</p>
-                      <h4>Company Details</h4><!-- Start: Company Name -->
+                      <h4>Company Details (Only for Contractor)</h4><!-- Start: Company Name -->
                       <div class="mb-4"><label class="form-label">Company Name</label><input class="form-control"
                           type="text" name="Company Name"></div><!-- End: Company Name -->
                       <!-- Start: Branch Number -->
@@ -117,7 +127,7 @@
         <!-- Start: Form Submit -->
         <div class="row d-flex justify-content-center">
           <div class="col d-flex flex-row align-items-center gap-4"><button class="btn btn-outline-primary btn-lg w-100"
-              type="button">Back</button><input class="btn btn-lg btn-primary w-100" type="submit" name="Next"
+              type="button">Back</button><input class="btn btn-lg btn-primary w-100" type="submit" name="Submit"
               value="Next"></div>
         </div><!-- End: Form Submit -->
       </form>
