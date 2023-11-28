@@ -69,7 +69,7 @@ def formtechnician():
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required
-def dashboardtechnician():
+def dashboardtechnician_two():
     # Render the dashboard
     print("Rendering dashboard")
     user_current=session.get('user_id')
