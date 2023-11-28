@@ -1,12 +1,14 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD, User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer
+from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer
 from functools import wraps
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import UUID_Generate
-from datetime import datetime
+import datetime
 
+
+# Blueprint Configuration
 contractor = Blueprint('contractor', __name__)
 
 # @contractor.route("/contractor/dashboard", methods=['GET', 'POST'])
@@ -144,10 +146,14 @@ def add_technician():
         who sent the invitaiton"""
         contractor_user_id =session.get('user_id')
         contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+        user_data = CRUD.read(User,email=email, all = False)
+        user_id = user_data.user_id
+        technician_data = CRUD.read(Technician,user_id=user_id, all = False)
+        tech_id = technician_data.technician_id
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
-
+        sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
         print("----------------")
@@ -158,9 +164,13 @@ def add_technician():
         print(fname_upper)
         print(cname_upper)
         print(f"http://127.0.0.1:5000/register_technician/{contractor_id}")
+        print(user_id)
+        print('technician_id: ', tech_id)
+        print(sent_time)
+        
         print("----------------")
         tech_token=UUID_Generate.technicianQRGenerator.generate_technician_unique_id()
-
+        
         try:
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
@@ -192,6 +202,10 @@ def add_technician():
             smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
             smtpObj.quit()  # Quitting the connection
             print("Email sent successfully!")
+
+            # Sending data to Technician_offer table
+            tech_offer = CRUD.create(Technician_Offer,contractor_id=contractor_id,technician_id=tech_id,offer_status='pending',email_time_sent=sent_time,token=str(tech_token))
+            tech_tbl = CRUD.update(Technician,technician_id=tech_id,attr='user_status', new='Pending')
         except Exception as e:
             print("Oops, something went wrong: ", e)
             return render_template('contractor/dashboardcontractor.html')
