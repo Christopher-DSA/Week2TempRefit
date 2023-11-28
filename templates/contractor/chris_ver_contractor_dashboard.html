@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Technician Dashboard</title>
+    <title>Contractor Dashboard</title>
     </script>
     <link rel="icon" type="image/png" sizes="130x165"
         href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
@@ -26,7 +26,22 @@
     <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
     <link rel="stylesheet" href="/static/css/test.css">
 
-    
+    <style>
+        .square-card {
+        position: relative;
+        width: 100%; /* This makes sure that the width is 100% of the parent */
+        padding-bottom: 100%; /* This makes the height the same as the width */
+        overflow: hidden;
+        }
+
+        .square-card-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        }
+    </style>
 </head>
 
 
@@ -73,7 +88,7 @@
                 <!-- ... Card 1 content ... -->
                 <div class="card h-100 border btn p-0"
                 style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
-                <div class="card-body d-flex flex-md-column flex-row align-items-center" onclick="window.location.href='/equipment common/qr-scan';">
+                <div class="card-body d-flex flex-md-column  flex-row align-items-center" onclick="window.location.href='/equipment common/qr-scan';">
                     <button class="btn mb-4 mb-md-0 p-0" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
                             class="bi bi-qr-code-scan" viewBox="0 0 16 16">

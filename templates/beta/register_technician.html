@@ -22,14 +22,16 @@
 
     <p>Are you sure you want to work with this contractor?</p>
 
-  
-    <!-- Hidden input fields for dt and tk -->
-    <input type="hidden" name="dt" value="{{dt}}">
-    <input type="hidden" name="tk" value="{{tk}}">
-    <!-- Accept button -->
-    <input type="submit" value="Accept" name="action" onclick="location.href='/accept_technician'">
-    <!-- Decline button -->
-    <input type="submit" value="Decline" name="action" onclick="location.href='/decline_technician'">
-  
+    <form method="post" action="/confirm_technician">
+        
+        <!-- Hidden input fields for dt and tk -->
+        <input type="hidden" name="dt" value="{{dt}}">
+        <input type="hidden" name="tk" value="{{tk}}">
+        <!-- Accept button -->
+        <input type="submit" value="Accept" name="action" onclick="location.href='/accept_technician'">
+        <!-- Decline button -->
+        <input type="submit" value="Decline" name="action" onclick="location.href='/decline_technician'">
+    </form>
+
 </body>
 </html>

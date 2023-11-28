@@ -35,7 +35,7 @@ auth = Blueprint('auth', __name__)
 # app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 # jwt = JWTManager(app)
 
-
+#This is just an example function. Not Working.
 def email():
     # This is your message.
     message_text = "Hello there!"
@@ -57,6 +57,7 @@ def email():
     s.quit()
     
 
+#LOGIN PAGE ROUTE
 @auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -124,12 +125,16 @@ def login():
         return render_template('Login Flow/login.html')
     else:
         print('Error in login()')
-    
+
+#LOGOUT ROUTE
 @auth.route('/logout')
 def logout():
-    session.pop('user_id', None)  # Remove user ID from session
+    #Clear Session Variables
+    session.clear()
+    #Send user to login page
     return redirect(url_for('auth.login'))
 
+#FORGOT PASSWORD ROUTE
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
     print("In forgot_password()")
@@ -174,7 +179,7 @@ def forgot_password():
     elif request.method == "GET":
         return render_template("Login Flow/forgot.html")
     
-
+#RESET PASSWORD ROUTE WITH JWT TOKEN
 @auth.route("/reset_password/<access_token>.<access_token2>.<access_token3>", methods=["GET", "POST"])
 #@jwt_required()
 
@@ -186,7 +191,7 @@ def forgot_password():
 # headers = {
 #     'Authorization': 'Bearer <token>',
 # }
-def reset_password():
+def reset_password(access_token,access_token2,access_token3):
     print('1234')
     if request.method == "GET" :
         full_token = access_token + '.' + access_token2 + '.' + access_token3
@@ -229,59 +234,17 @@ def reset_password():
             return redirect(url_for('auth.login'))
        
 
-        
-        
-
-
-
-
-        
-
-
-
-
-
-
+#HOME PAGE ROUTE (This doesn't need to be here. It's just an example.)
 @auth.route("/home", methods=["GET"])
-
 def home():
     user=session.get('user_id')
     return render_template("auth/home.html",user=user)
 
 
-@auth.route("/create-account-setup", methods=["GET", "POST"])
-def acount_setup():
-    print("In account_setup()")
-    if request.method == 'POST':
-        print("In Post for account setup")
-        current_user_id = session.get('user_id')
-        current_user_email = session.get('user_email')
-        #get variables from form
-        first_name = request.form['First Name']
-        Last_name = request.form['Last Name']
-        ODS_License = request.form['License']
-        Company_name = request.form['Company Name']
-        Company_branch_number = request.form['Branch Number']
-        ODS_sheet_recipent_email = request.form['Recipient Email']
-        Company_address = request.form['Company Address']
-        Apartment_number = request.form['Suite Number']
-        City = request.form['Company City']
-        Company_province = request.form['Company Province']
-        Postal_code = request.form['Postal Code']
-        #Drop down menu for role, will add later
-        selected_role = request.form['Selected_role']
-        
-        #???? ods_license=ODS_License <- this goes in technician table, company_name=Company_name, company_branch_number=Company_branch_number ods_sheet_recipent_email=ODS_sheet_recipent_email
-        CRUD.create(User_Detail, False, first_name=first_name, last_name=Last_name, address = Company_address, city=City, province=Company_province, postal_code=Postal_code)
-        #Updates to tables.
-        CRUD.update(User, 'role', new = selected_role, email = current_user_email)
-        CRUD.update(User, 'ods_', new = selected_role, email = current_user_email)
-        #if they are a technician, create a technician entry in the technician table.
-        if selected_role == 'technician':
-            CRUD.create(Technician, False, user_id = current_user_id, ods_license_number=ODS_License)
-        
+#START CREATION OF ACCOUNT ROUTE FOR ALL ROLES (Technician, Admin, Contractor, Wholesaler)
 @auth.route("/create", methods=["GET", "POST"])
 def register():
+    session.clear()
     print("test")
     if request.method == 'POST': #if user completes this form and decides to not continue, the next time they login they will taken directly to the account_setup page.
         print("In Post")      
@@ -306,6 +269,7 @@ def register():
             print("User email already in database")
             return redirect('/')
         else:
+            #Create a new user in the database.
             x = CRUD.create(User, False, email=my_user_email, password=result, role='not_selected', added_date=added_date, is_email_verified=False, has_ods_license=False)
             my_user_id = x.user_id
             session['user_id'] = my_user_id
@@ -321,7 +285,58 @@ def register():
         #Call the send email function.
         #email() Uncomment this function when you want to send an email. You must have a local SMTP server running. Port 1025.
         
+#CREATE ACCOUNT SETUP ROUTE, ROLE SPECIFIC ACCOUNT SETUP (Technician, Admin, Contractor, Wholesaler)
+@auth.route("/create-account-setup", methods=["GET", "POST"])
+def account_setup():
+    print("In account_setup()")
+    #At this point, the user has already created an account and is now setting up their account. They have a row in the database.
+    if request.method == 'POST':
+        print("In Post for account setup")
+        current_user_id = session.get('user_id')
+        current_user_email = session.get('user_email')
+        #get variables from form
+        first_name = request.form['First Name']
+        Last_name = request.form['Last Name']
+        ODS_License = request.form['License']
+        Company_name = request.form['Company Name']
+        Company_branch_number = request.form['Branch Number']
+        ODS_sheet_recipent_email = request.form['Recipient Email']
+        Company_address = request.form['Company Address']
+        Apartment_number = request.form['Suite Number']
+        City = request.form['Company City']
+        Company_province = request.form['Company Province']
+        Postal_code = request.form['Postal Code']
+        #Drop down menu for role, will add later
+        selected_role = request.form['Selected_role']
+        
+        #Always do these two things.
+        CRUD.update(User, 'role', new = selected_role, email = current_user_email)
+        CRUD.create(User_Detail, False, first_name=first_name, last_name=Last_name, user_id = current_user_id)
 
+        print("Selected role: ", selected_role)
+        if selected_role == 'technician':
+            CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License)
+        elif selected_role == 'contractor':
+            pass
+        elif selected_role == 'wholesaler':
+            pass
+        elif selected_role == 'admin':
+            pass
+        else:
+            print("Error, no role selected")
+            #???? ods_license=ODS_License <- this goes in technician table, company_name=Company_name, company_branch_number=Company_branch_number ods_sheet_recipent_email=ODS_sheet_recipent_email
+    
+        CRUD.update(User, 'role', new = selected_role, email = current_user_email)
+        #Send them back to login page:
+        flash("Account created successfully!")
+        return render_template('Login Flow/login.html')
+    elif request.method == 'GET':
+        print("In Get for account setup")
+        return render_template('Account Setup/setup.html')
+        
+
+
+#ROLE ROUTE? NOT SURE WHAT THIS IS.
 @auth.route('/role', methods=['POST'])
 def handle_role():
     data = request.get_json()  # This will get the JSON data sent by the fetch call
@@ -330,30 +345,21 @@ def handle_role():
     # You can add additional logic here based on the role_name if needed
     return jsonify({'message': 'Successfully received the role name!'}), 200
 
+#UPLOAD FILES ROUTE
 @auth.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
-        
         file = request.files['file']
-        
-        
         if file and file.filename.endswith('.csv'):
             filename = os.path.join('/Users/sapnilsharma/sofvie', file.filename)
             file.save(filename)
-
             data = pd.read_csv(filename)
             for _, row in data.iterrows():
-                
-                
                 entry = CRUD.create(Store,
-                    
                     address=row['address'], 
-                    
                 )
-                
             flash('Data successfully stored in the database', 'success')
             return redirect(url_for('auth.upload'))
-
     return render_template('auth/csv.html')
 
 
