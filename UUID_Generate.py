@@ -14,6 +14,10 @@ class EquipmentQRGenerator:
     def generate_equipment_unique_id(cls, unit_id):
         my_equipment_id = str(unit_id)
         return my_equipment_id + "E-" + str(uuid.uuid4())
+class technicianQRGenerator:
+    @classmethod
+    def generate_technician_unique_id(cls):
+        return str(uuid.uuid4())
     
     if __name__ == '__main__':
         my_equipment_id = str(1)

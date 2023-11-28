@@ -1,8 +1,14 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD, User,User_Detail,Contractor,Technician
+from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer
 from functools import wraps
-# from auth import email
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import UUID_Generate
+import datetime
 
+
+# Blueprint Configuration
 contractor = Blueprint('contractor', __name__)
 
 # @contractor.route("/contractor/dashboard", methods=['GET', 'POST'])
@@ -84,7 +90,7 @@ def handle_qr_code():
 
 @contractor.route('/technician_details', methods=['GET', 'POST'])
 def technician_managment():
-# nithin
+
         if request.method == 'GET':
             contractor_user_id =session.get('user_id')
             contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
@@ -124,17 +130,113 @@ def technician_managment():
     
 @contractor.route('/add_technician', methods=['GET', 'POST'])
 def add_technician():
+    # if request.method == 'GET':
+    #     contractor_user_id =session.get('user_id')
+    #     contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+    #     contractor_id = contractor_data.contractor_id
+    #     return render_template('contractor/add_technician.html',contractor=contractor_id)
     if request.method == 'POST':
         fname = request.form.get('fname')
         mname = request.form.get('mname')
         lname = request.form.get('lname')
         email = request.form.get('email')
+        
+        """Get the contractor id from the session so that the technician 
+        add page can capture the it to add the new technician under the contractor 
+        who sent the invitaiton"""
+        contractor_user_id =session.get('user_id')
+        contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+        user_data = CRUD.read(User,email=email, all = False)
+        user_id = user_data.user_id
+        technician_data = CRUD.read(Technician,user_id=user_id, all = False)
+        tech_id = technician_data.technician_id
+        contractor_id = contractor_data.contractor_id
+        contractor_name = contractor_data.name
 
+        sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        fname_upper = fname.upper()
+        cname_upper = contractor_name.upper()
         print("----------------")
         print(fname)
         print(mname)
         print(lname)
         print(email)
+        print(fname_upper)
+        print(cname_upper)
+        print(f"http://127.0.0.1:5000/register_technician/{contractor_id}")
+        print(user_id)
+        print('technician_id: ', tech_id)
+        print(sent_time)
+        
         print("----------------")
+        tech_token=UUID_Generate.technicianQRGenerator.generate_technician_unique_id()
+        
+        try:
+            msg = MIMEMultipart()
+            msg['From'] = 'refit_dev@sidneyshapiro.com'
+            msg['To'] = 'refit_dev@sidneyshapiro.com'
+            msg['Subject'] = "You've Been invited to work as a Technician"
+            body = f"Hello {fname_upper} you have been invited to work as a Technician for {cname_upper}. If you accept the offer please click the link http://127.0.0.1:5000/register_technician/{tech_token}/{contractor_id} and create an account as a technician."
+            msg.attach(MIMEText(body, 'plain'))
+                
+            email_text = msg.as_string()
+            #Send an email to the email address typed in the form.
+            smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+            smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+            smtpObj.quit()  # Quitting the connection
+            print("Email sent successfully!")
 
+            # Sending data to Technician_offer table
+            tech_offer = CRUD.create(Technician_Offer,contractor_id=contractor_id,technician_id=tech_id,offer_status='pending',email_time_sent=sent_time,token=str(tech_token))
+            tech_tbl = CRUD.update(Technician,technician_id=tech_id,attr='user_status', new='Pending')
+        except Exception as e:
+            print("Oops, something went wrong: ", e)
+            return render_template('contractor/dashboardcontractor.html')
+        return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
+
+@contractor.route('/register_technician/<token>/<int:id>', methods=['GET', 'POST'])
+def signup_technician(token,id):
+    if request.method == 'GET':
+        contractor_id = id
+        token = token
+        print("Contractor ID: ", contractor_id)
+        print("Token: ", token)
+        return render_template('beta/register_technician.html',dt=contractor_id,tk=token)
+
+@contractor.route('/inventory', methods=['GET', 'POST'])
+def inventory():
+    if request.method == 'GET':
+            contractor_user_id =session.get('user_id')
+            contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+            contractor_id = contractor_data.contractor_id
+            # technician_data = CRUD.read(Technician,contractor_id=contractor_id, all = True)
+            temp_data=[84,108]
+            dt=[]
+            for i in temp_data:
+                cylinder_data = CRUD.read(Cylinder,all = True,technician_id=i)
+                # print(cylinder_data[0].cylinder_id)
+                for cy in cylinder_data:
+                    c_techId = cy.technician_id
+                    c_id = cy.cylinder_id
+                    c_size = cy.cylinder_size
+                    c_tareWeight = cy.cylinder_tare_weight
+                    c_addedDate = cy.added_date
+                    c_referigentId = cy.refrigerant_id
+                    c_purchasedDate = cy.purchase_date
+                    c_supplier = cy.supplier
+
+                    cylinder= {
+                        "technician_id": c_techId,
+                        "id": c_id,
+                        "size": c_size,
+                        "tareWeight": c_tareWeight,
+                        "addedDate": c_addedDate,
+                        "refrigerantId": c_referigentId,
+                        "purchasedDate": c_purchasedDate,
+                        "supplier": c_supplier
+                        }
+                    dt.append(cylinder)
+            print(dt)
+    return render_template('contractor/inventory.html',dt=dt)
