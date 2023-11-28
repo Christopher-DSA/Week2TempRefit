@@ -147,11 +147,13 @@ def add_technician():
         contractor_user_id =session.get('user_id')
         contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
         user_data = CRUD.read(User,email=email, all = False)
-        technician_id = user_data.user_id
+        user_id = user_data.user_id
+        technician_data = CRUD.read(Technician,user_id=user_id, all = False)
+        tech_id = technician_data.technician_id
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
-        sent_time=str(datetime.datetime.now())
+        sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
         print("----------------")
@@ -162,11 +164,13 @@ def add_technician():
         print(fname_upper)
         print(cname_upper)
         print(f"http://127.0.0.1:5000/register_technician/{contractor_id}")
-        print('technician_id: ', technician_id)
+        print(user_id)
+        print('technician_id: ', tech_id)
         print(sent_time)
         
         print("----------------")
         tech_token=UUID_Generate.technicianQRGenerator.generate_technician_unique_id()
+        
         try:
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
@@ -184,12 +188,10 @@ def add_technician():
             print("Email sent successfully!")
 
             # Sending data to Technician_offer table
-            tech_offer = CRUD.create(Technician_Offer,contractor_id=contractor_id,technician_id=108,offer_status='pending',email_time_sent=sent_time)
-
+            tech_offer = CRUD.create(Technician_Offer,contractor_id=contractor_id,technician_id=tech_id,offer_status='pending',email_time_sent=sent_time,token=str(tech_token))
+            tech_tbl = CRUD.update(Technician,technician_id=tech_id,attr='user_status', new='Pending')
         except Exception as e:
             print("Oops, something went wrong: ", e)
-        
-        
             return render_template('contractor/dashboardcontractor.html')
         return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
