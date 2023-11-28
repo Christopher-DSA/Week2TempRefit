@@ -282,6 +282,7 @@ class Technician_Offer(Base):
 
     contractor = relationship('Contractor', backref='Technician_Offer')
     technician = relationship('Technician', backref='Technician_Offer')
+    technician = relationship('Technician', backref='Technician_Offer')
 
     def __repr__(self):
         return 'Technician Offer Model'
