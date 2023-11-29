@@ -7,7 +7,6 @@ from email.mime.text import MIMEText
 import UUID_Generate
 import datetime
 
-
 # Blueprint Configuration
 contractor = Blueprint('contractor', __name__)
 
@@ -154,6 +153,7 @@ def add_technician():
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
+        #sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
@@ -186,15 +186,6 @@ def add_technician():
             print(f"user_id:{user_obj.user_id}")
             technician_obj = CRUD.read(Technician, user_id = user_obj.user_id, all=False)
 
-
-            CRUD.create(
-            Technician_Offer,
-                contractor_id=int(contractor_id),
-                technician_id=int(technician_obj.technician_id),
-                offer_status="Sent",
-                email_time_sent =datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                token = tech_token
-            )
 
             email_text = msg.as_string()
             #Send an email to the email address typed in the form.
