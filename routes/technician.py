@@ -76,9 +76,10 @@ def dashboardtechnician_two():
     user_current=session.get('user_id')
     return render_template("technician/dashboardtechnician.html", user=user_current)
 
-    
+
+#Register new equipment QR tag
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
-def equipment_create():
+def equipment_create_QR():
     print("inside equipment_create")
     if request.method == 'POST':
         print("inside post")
@@ -175,9 +176,21 @@ def remove_qr():
 def charge():
     return render_template('equipment/charge-equipment.html')
 
-@technician.route('/equipment/repair_ODS_Sheet')
-def repair_ODS_Sheet():
-    return render_template('equipment/repair_ODS_Sheet.html')
+#REPAIR MAINTENANCE LOG FOR EQUIPMENT.
+@technician.route('/equipment/repair_ODS_Sheet', methods = ['GET', 'POST'])
+def repair_ODS_Sheet_New():
+    if request.method == 'GET':
+        #Get data about unit to pass on to placeholder fields on the next page.
+        current_tag_url = session.get('unique_equipment_token')
+        tag_data = CRUD.read(Tag, all = False, tag_url = str(current_tag_url))
+        x = tag_data.unit_id
+        print("x: ", x)
+        data = CRUD.read(Unit, all = False, unit_id = x)
+        my_dict = {
+            'type_of_refrigerant' : data.type_of_refrigerant,
+            'factory_charge_amount' : data.factory_charge_amount
+        }
+        return render_template('equipment/repair_ODS_Sheet.html', data = my_dict)
 
 @technician.route('/equipment common/qr-scan')
 def qr_scan():
@@ -233,6 +246,7 @@ def select_history_type_tech_cylinder():
 def ODS_history():
 
     if request.method == 'GET':
+        
         return render_template('equipment/ODS-history.html')
     else:
         print('error')
@@ -287,7 +301,12 @@ def equipment_info_page(unique_id):
         x = tag_data.unit_id
         print("x: ", x)
         data = CRUD.read(Unit, all = False, unit_id = x)
-                        
+        
+        #remove previous, if any, unique_equipment_token from session.
+        session.pop('unique_equipment_token', None)
+        #save tag url to session.
+        session['unique_equipment_token'] = str(unique_id)
+        
         tech_id = session.get('tech_id')
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)

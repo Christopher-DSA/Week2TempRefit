@@ -7,26 +7,26 @@
     <title>Setup Account</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/png" sizes="130x165"
-        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+        href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="icon" type="image/png" sizes="130x165"
-        href="/assets/img/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+        href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/png" sizes="130x165"
-        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+        href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="icon" type="image/png" sizes="130x165"
-        href="/assets/img/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+        href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/png" sizes="130x165"
-        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+        href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="icon" type="image/png" sizes="130x165"
-        href="/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+        href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="icon" type="image/png" sizes="348x122"
-        href="/assets/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+        href="/static/images/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
-    <link rel="stylesheet" href="/assets/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
-    <link rel="stylesheet" href="/assets/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
-    <link rel="stylesheet" href="/assets/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
-    <link rel="stylesheet" href="/assets/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
-    <link rel="stylesheet" href="/assets/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+    <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
 </head>
 
 <body>
@@ -80,7 +80,7 @@
                                             <div class="py-3">
                                                 <p>Refrigerant Type</p>
                                                 <div class="mb-5"><input class="form-control" type="text" disabled
-                                                        placeholder="Refrigerant Placeholder"></div>
+                                                        placeholder="{{data.type_of_refrigerant}}"></div>
                                                 <p>Factory Refrigerant Weight</p>
                                                 <div class="row mb-4">
                                                     <div class="col dropdown">
@@ -103,7 +103,7 @@
                                                     <div class="col mb-3">
                                                         <div class="input-group">
                                                             <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
+                                                                style="border-radius: 5px;" placeholder="{{data.factory_charge_amount}}" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text text-center"
                                                                     style="text-align:center; border: none;">oz</span>

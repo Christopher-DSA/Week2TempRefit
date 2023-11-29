@@ -201,7 +201,7 @@ def formcylinder():
             unique_cylinder_token = UUID_Generate.CylinderQRGenerator.generate_cylinder_unique_id(PK)
             
         print("Unique_Cylinder_Token: ", unique_cylinder_token)
-        CRUD.update(Cylinder, 'unique_url_id', new = unique_cylinder_token, cylinder_id = PK)
+        #CRUD.update(Cylinder, 'unique_url_id', new = unique_cylinder_token, cylinder_id = PK)
         return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token) #redirect(url_for('cylinder.cylinder'))
     else:
         return render_template("New Cylinder/new-cylinder.html")
