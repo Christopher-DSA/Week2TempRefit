@@ -372,6 +372,23 @@ def upload():
     return render_template('auth/csv.html')
 
 
+#Use this route if you have a page that needs to go back to a role specific dashboard.
+@auth.route('/back-by-role', methods=['GET'])
+def back_by_role():
+    if request.method == 'GET':
+        current_user_role = session.get('user_role')
+        if current_user_role == 'technician':
+            return redirect(url_for('technician.dashboardtechnician'))
+        elif current_user_role == 'admin':
+            print('admin pressed back button and should be redirected to admin dashboard')
+        elif current_user_role == 'contractor':
+            return redirect(url_for('contractor.dashboardcontractor'))
+        elif current_user_role == 'wholesaler':
+            print('wholesaler pressed back button and should be redirected to wholesaler dashboard')
+        else:
+            print("Error, no role selected")
+            return redirect(url_for('auth.login'))
+    
 
 #############Only Account Settings Related Routes Below This Line#####################
 
