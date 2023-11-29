@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Template</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Technician ID</th>
+                <th>Cylinder ID</th>
+                <th>Cylinder Size</th>
+                <th>Cylinder Tare_Weight</th>
+                <th>Cylinder Added Date</th>
+                <th>Cylinder Refrigerant ID</th>
+                <th>Cylinder Purchase Date</th>
+                <th>Cylinder Supplier</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in dt %}
+                <tr>
+                    <td>{{ i['technician_id'] }}</td>
+                    <td>{{ i['id'] }}</td>
+                    <td>{{ i['size'] }}</td>
+                    <td>{{ i['tare_weight'] }}</td>
+                    <td>{{ i['added_date'] }}</td>
+                    <td>{{ i['refrigerant_id'] }}</td>
+                    <td>{{ i['purchase_date'] }}</td>
+                    <td>{{ i['supplier'] }}</td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>

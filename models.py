@@ -51,6 +51,7 @@ class User_Detail(Base):
     postal_code = Column(String)
     telephone = Column(String)
     user_id=Column(Integer,ForeignKey('User.user_id'), nullable= True)
+    suite_number=Column(String)
     
     user = relationship('User', backref='User_Detail')
 
@@ -145,6 +146,7 @@ class Tag(Base):
     type = Column(String)
     cylinder_id = Column(Integer, ForeignKey('Cylinder.cylinder_id'), nullable= True)
     wholesaler_id = Column(Integer, ForeignKey('Wholesaler.wholesaler_id'), nullable= True)
+    unit_id = Column(String)
 
     cylinder = relationship('Cylinder', backref='Tag')
     invoice  = relationship('Invoice', backref='Tag')
@@ -234,6 +236,8 @@ class Unit(Base):
     factory_charge_amount = Column(Integer)
     unit_type = Column(String)
     store_id = Column(Integer,ForeignKey('Store.store_id'), nullable= True)
+    unique_url_id = Column(String)
+    serial_number = Column(String)
     
 
     technician = relationship('Technician', backref='Unit')
@@ -275,8 +279,10 @@ class Technician_Offer(Base):
     technician_id = Column(Integer, ForeignKey('Technician.technician_id'), nullable= True)
     offer_status = Column(String)
     email_time_sent = Column(String)
+    token = Column(String)
 
     contractor = relationship('Contractor', backref='Technician_Offer')
+    technician = relationship('Technician', backref='Technician_Offer')
     technician = relationship('Technician', backref='Technician_Offer')
 
     def __repr__(self):
