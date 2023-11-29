@@ -118,7 +118,7 @@ def technician_managment():
                 "contactor_status":contactor_status,
                 "firstname":tech_firstname,
                 "lastname":tech_lastname
-                                        }
+                }
                 technician_list.append(technician_obj)
         
     
@@ -203,6 +203,22 @@ def add_technician():
         return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
 
+@contractor.route('/delete/technician', methods=['POST'])
+def delete_technician():
+       if request.method == 'POST':
+            technician_id = request.form['technician_id']
+            print("technician_id")
+            print(technician_id)
+
+           
+            #CRUD.update(
+                 
+                # Technician_Offer,
+               # "offer_status",
+               # new = "deleted", 
+               #  #technician_id = XXX
+          #  )
+          # return render_template('contractor/dashboardcontractor.html')
 
 
 @contractor.route('/inventory', methods=['GET', 'POST'])

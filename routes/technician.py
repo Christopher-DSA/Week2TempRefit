@@ -353,6 +353,7 @@ def confirm_technician():
     return render_template('Login Flow/login.html')
 
    
+
            
 @technician.route('/equipment-info/<unique_id>', methods = ['GET', 'POST'])
 def equipment_info_page(unique_id):
