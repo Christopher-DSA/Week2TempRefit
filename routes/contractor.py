@@ -5,7 +5,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import UUID_Generate
-from datetime import datetime
+import datetime
 
 # Blueprint Configuration
 contractor = Blueprint('contractor', __name__)
@@ -152,7 +152,8 @@ def add_technician():
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
-        sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        #sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
         print("----------------")
