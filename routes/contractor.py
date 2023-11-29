@@ -13,6 +13,8 @@ contractor = Blueprint('contractor', __name__)
 # @contractor.route("/contractor/dashboard", methods=['GET', 'POST'])
 # def dashboard():
 #     return render_template('contractor/dashboard.html')
+
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -39,6 +41,8 @@ def contractor_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
+# register contractor.
 @contractor.route("/formcontractor", methods=["GET", "POST"])
 def formcontractor():
     if request.method == 'POST':
@@ -109,6 +113,7 @@ def technician_managment():
                 user_detail_data = CRUD.read(User_Detail,user_id = tech_user_id )
                 tech_firstname = user_detail_data.first_name
                 tech_lastname = user_detail_data.last_name
+                tech_name = tech_firstname + " " + tech_lastname
                 technician_obj = {
                 "ods_licence_no": ods_licence_no,
                 "date_begin": date_begin,
@@ -116,9 +121,15 @@ def technician_managment():
                 "user_status":user_status,
                 "tech_user_id":tech_user_id,
                 "contactor_status":contactor_status,
+<<<<<<< HEAD
                 "firstname":tech_firstname,
                 "lastname":tech_lastname
                 }
+=======
+                "name":tech_name,
+                # "lastname":tech_lastname
+                                        }
+>>>>>>> 678bdf57d795b06333d7f07d2c1282014205d85a
                 technician_list.append(technician_obj)
         
     

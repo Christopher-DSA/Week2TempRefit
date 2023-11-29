@@ -1,7 +1,7 @@
 from flask import make_response, session, Blueprint
 from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag,Technician_Offer,Contractor
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer
 from functools import wraps
 import UUID_Generate
 from datetime import datetime
@@ -35,6 +35,7 @@ def technician_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+#Renders the technician dashboard
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required
@@ -70,18 +71,19 @@ def formtechnician():
     else:
         return render_template("technician/formtechnician.html")
     
+@technician.route("/dashboardtechnician")
+@login_required
+@technician_required
+def dashboardtechnician_two():
+    # Render the dashboard
+    print("Rendering dashboard")
+    user_current=session.get('user_id')
+    return render_template("technician/dashboardtechnician.html", user=user_current)
 
 
-
-
-
-
-
-
-
-    
+#Register new equipment QR tag
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
-def equipment_create():
+def equipment_create_QR():
     print("inside equipment_create")
     if request.method == 'POST':
         print("inside post")
@@ -178,9 +180,21 @@ def remove_qr():
 def charge():
     return render_template('equipment/charge-equipment.html')
 
-@technician.route('/equipment/repair_ODS_Sheet')
-def repair_ODS_Sheet():
-    return render_template('equipment/repair_ODS_Sheet.html')
+#REPAIR MAINTENANCE LOG FOR EQUIPMENT.
+@technician.route('/equipment/repair_ODS_Sheet', methods = ['GET', 'POST'])
+def repair_ODS_Sheet_New():
+    if request.method == 'GET':
+        #Get data about unit to pass on to placeholder fields on the next page.
+        current_tag_url = session.get('unique_equipment_token')
+        tag_data = CRUD.read(Tag, all = False, tag_url = str(current_tag_url))
+        x = tag_data.unit_id
+        print("x: ", x)
+        data = CRUD.read(Unit, all = False, unit_id = x)
+        my_dict = {
+            'type_of_refrigerant' : data.type_of_refrigerant,
+            'factory_charge_amount' : data.factory_charge_amount
+        }
+        return render_template('equipment/repair_ODS_Sheet.html', data = my_dict)
 
 @technician.route('/equipment common/qr-scan')
 def qr_scan():
@@ -236,6 +250,7 @@ def select_history_type_tech_cylinder():
 def ODS_history():
 
     if request.method == 'GET':
+        
         return render_template('equipment/ODS-history.html')
     else:
         print('error')
@@ -369,7 +384,12 @@ def equipment_info_page(unique_id):
         x = tag_data.unit_id
         print("x: ", x)
         data = CRUD.read(Unit, all = False, unit_id = x)
-                        
+        
+        #remove previous, if any, unique_equipment_token from session.
+        session.pop('unique_equipment_token', None)
+        #save tag url to session.
+        session['unique_equipment_token'] = str(unique_id)
+        
         tech_id = session.get('tech_id')
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)

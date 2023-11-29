@@ -41,7 +41,7 @@ app.register_blueprint(cylinder)
 
 
 db = SQLAlchemy(app)
-    
+        
 @app.route("/", methods=['GET', 'POST'])
 def login():
     return render_template('auth/login.html')
@@ -49,6 +49,6 @@ def login():
 
 if __name__ == '__main__':
     
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',debug=True)
 
 
