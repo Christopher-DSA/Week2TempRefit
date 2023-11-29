@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body style="font-family: 'Inter', sans-serif">
+    <table style="width: 100%; max-width: fit-content; margin: auto">
+      <tbody>
+        <!-- Email Header -->
+        <tr>
+          <td
+            style="
+              text-align: center;
+              vertical-align: middle;
+              color: #ffffff;
+              background: #111a66;
+              padding-top: 1.5rem;
+            "
+            colspan="3"
+          >
+            <img src="/static/images/refit_logo.png" style="width: 15rem" />
+            <p style="text-transform: uppercase">refrigerant management</p>
+          </td>
+        </tr>
+
+        <!-- Email Content -->
+        <tr>
+          <!-- Spacer -->
+          <td style="width: 10%"></td>
+          <!-- Main Content Section -->
+          <td style="padding: 2.5rem 1.5rem">
+            <h1
+              style="
+                font-family: 'Poppins', sans-serif;
+                color: #111a66;
+                margin-bottom: 1.5rem;
+              "
+            >
+              Hello, <br />
+              [User's Name]
+            </h1>
+            <p>
+              We received a request to reset your password. If you did not make
+              this request, please ignore this email.
+            </p>
+            <p>To reset your password, click the following link:</p>
+            <button
+              type="button"
+              name="reset"
+              onclick="alert('Password Reset!')"
+              style="
+                margin: 1.5rem 0;
+                padding: 0.75rem 1rem;
+                color: #ffffff;
+                background-color: #111a66;
+                border: none;
+                border-radius: 0.5rem;
+              "
+            >
+              Reset Your Password
+            </button>
+            <p>This link will expire in [expiration time].</p>
+            <p>
+              If you have any issues or did not request this change, please
+              contact our support team at
+              <a href="#" style="text-decoration: none; color: #54b1f5"
+                >[Support Email]</a
+              >.
+            </p>
+            <p>Thank you!</p>
+          </td>
+          <!-- Spacer -->
+          <td style="width: 10%"></td>
+        </tr>
+
+        <!-- Email Footer -->
+        <tr>
+          <td
+            style="
+              text-align: center;
+              vertical-align: middle;
+              color: #ffffff;
+              background: #111a66;
+              height: 5rem;
+            "
+            colspan="3"
+          >
+            <p>www.refit.com</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
