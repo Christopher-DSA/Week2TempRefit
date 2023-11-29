@@ -1,61 +1,121 @@
-<div class="row justify-content-center login-container mt-5">
-  <div class="col-md-6 col-lg-4">
-    <div class="card mt-3">
-      <div class="card-body">
-        <div class="d-flex justify-content-center mt-3">
-          <h2 style="color: #111a66;">Login to REFit</h2>
-        </div>
-         <!-- Start: Flash Messages -->
-        <div id="flash-messages" class="text-center">
-          {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div id="flash-messages" class="text-center">
-              {% for message in messages %}
-                <div class="alert alert-warning" role="alert">{{ message }}</div>
-              {% endfor %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create</title>
+  <link rel="icon" type="image/png" sizes="130x165"
+  href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="348x122"
+    href="/static/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
+  <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+  <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+  <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+  <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+  <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+  <link rel="stylesheet" href="/static/css/test.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme="">
+    <div class="container-fluid"><a href="https://refitcanada.ca/" class="btn btn-primary btn-lg" role="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-house-door-fill fs-1">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"></path>
+        </svg>
+    </a><!-- Start: Logo --><svg width="126" height="44" viewBox="0 0 126 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M40.9725 30.9919V43.9755H44.0501H47.1277V39.1067V34.2378H48.0911C49.551 34.2378 50.7129 35.6823 54.4313 42.1203L55.3988 43.7952L59.241 43.8976L63.0833 44L62.2172 42.6353C58.3999 36.62 57.014 34.6028 55.9035 33.4466L54.6239 32.1143L55.536 31.8864C56.0378 31.7609 57.0179 31.0619 57.7142 30.3334C61.6046 26.2609 59.875 19.7425 54.5497 18.4067C53.6764 18.1878 50.2646 18.0085 46.9673 18.0085H40.9725V30.9919ZM65.2311 30.9919V43.9755H73.0156H80.8001V41.4509V38.9263H76.0932H71.3863V36.2214V33.5165H75.5501H79.7139V30.9919V28.4674H75.5501H71.3863V25.7625V23.0576H75.9121H80.438V20.5331V18.0085H72.8346H65.2311V30.9919ZM84.7828 30.9919V43.9755H88.0414H91.3001V39.1067V34.2378H95.4639H99.6277V31.5329V28.828H95.4639H91.3001V25.9428V23.0576H95.8259H100.352V20.5331V18.0085H92.5673H84.7828V30.9919ZM52.0435 23.5838C52.7578 24.0498 52.9208 24.4595 52.9208 25.7874C52.9208 28.185 51.8038 29.1887 49.1353 29.1887H47.1277V25.8923V22.596L49.1469 22.8037C50.2577 22.9177 51.5612 23.269 52.0435 23.5838Z" fill="white"/>
+        <path d="M22.0247 2.58985C21.7231 2.25661 21.3642 1.53747 21.2277 0.991796L20.979 0L23.2814 0.00540998C24.5475 0.00865586 25.7782 0.134523 26.0168 0.285277C26.2587 0.438554 26.5784 1.97494 26.741 3.76703C27.1157 7.90156 27.8308 8.33398 27.9981 4.52765C28.1038 2.12606 28.0426 1.80182 27.4843 1.80255C27.0494 1.80291 26.8507 1.52015 26.8507 0.901633C26.8507 0.0324585 26.935 0 29.2041 0C31.4732 0 31.5576 0.0324585 31.5576 0.901633C31.5576 1.58796 31.3628 1.81012 30.7429 1.83176C30.295 1.84727 30.1321 1.94212 30.3808 2.04202C30.6299 2.14228 30.8334 2.61618 30.8334 3.09549C30.8334 3.77676 30.6423 3.96719 29.9583 3.96719C29.0604 3.96719 28.6397 4.52223 28.934 5.31964C29.0256 5.56741 29.4141 5.77045 29.7975 5.77045C30.1868 5.77045 30.6321 6.12894 30.8063 6.58193L31.1177 7.39339L31.3197 6.49176C31.4312 5.99586 31.5804 4.58931 31.6513 3.36634C31.8255 0.368227 32.1959 0 35.0414 0C37.1092 0 37.3507 0.0753769 37.3507 0.721307C37.3507 1.11803 37.0183 1.77369 36.612 2.17835C36.0555 2.73267 35.843 3.49076 35.7507 5.24931C35.6327 7.49762 35.667 7.60762 36.6761 8.20126C37.2526 8.54063 38.1291 9.42712 38.6237 10.1719C39.4977 11.4872 39.5231 11.709 39.5231 17.9966V24.4678L38.1653 23.1128C37.4187 22.3674 36.5342 21.6594 36.2 21.5393C35.2387 21.1942 35.5414 16.2283 36.5871 15.1868C37.7482 14.0301 37.5208 13.7048 35.553 13.7048C33.3791 13.7048 33.0058 14.2 33.0058 17.0838C33.0058 19.793 32.5337 20.9179 31.3968 20.9179C30.7972 20.9179 30.5557 20.7578 30.6777 20.4411C30.7827 20.1692 30.4667 19.7854 29.9424 19.5474C29.0926 19.1615 29.0231 19.1976 29.0231 20.0238C29.0231 20.7253 28.8373 20.9179 28.1603 20.9179C27.1439 20.9179 26.863 20.1652 26.8557 17.425C26.8528 16.3964 26.6917 15.1388 26.4977 14.6299C26.183 13.8062 25.9448 13.7048 24.3252 13.7048C22.9823 13.7048 22.5058 13.8412 22.5058 14.2245C22.5058 14.5105 22.6854 14.8546 22.9048 14.9898C23.6684 15.4601 24.3882 17.6918 23.9472 18.2213C23.6561 18.5708 23.6511 18.9112 23.9291 19.4284C24.5657 20.6139 24.381 21.0582 22.9027 21.8989C21.315 22.8019 19.9714 25.1321 19.9714 26.9826V28.131H9.98586H0L0.119483 23.5326C0.225569 19.4432 0.329121 18.8077 1.0576 17.7903C1.50838 17.1613 2.33716 16.4436 2.90017 16.1955C3.89007 15.7591 3.92048 15.6664 3.82453 13.3846C3.76009 11.8464 3.54466 10.8932 3.20648 10.6465C2.92081 10.4384 2.57141 9.74305 2.42984 9.10145L2.17241 7.93437H4.51029C5.94155 7.93437 6.99191 8.10929 7.21893 8.38519C7.42278 8.63332 7.69578 9.97207 7.82503 11.3606C8.13207 14.6573 8.32252 15.5081 8.7541 15.5081C8.95686 15.5081 9.10929 14.2685 9.10929 12.6229C9.10929 10.2988 9.00357 9.73764 8.56619 9.73764C8.22838 9.73764 8.02309 9.39718 8.02309 8.83601C8.02309 7.96683 8.10745 7.93437 10.3765 7.93437C12.6456 7.93437 12.73 7.96683 12.73 8.83601C12.73 9.34489 12.5207 9.73764 12.2495 9.73764C11.9218 9.73764 11.8197 10.0813 11.9287 10.8196C12.0602 11.7126 11.962 11.9016 11.3672 11.9016C10.2969 11.9016 9.62198 12.8364 10.1955 13.5245C10.4435 13.822 10.9522 14.0655 11.3259 14.0655C11.7643 14.0655 12.0058 14.3215 12.0058 14.7868C12.0058 15.1835 12.146 15.5081 12.3176 15.5081C12.6561 15.5081 13.0837 12.5987 13.0888 10.2606C13.0906 9.45742 13.2876 8.60519 13.5265 8.36716C13.7742 8.12047 14.9607 7.93437 16.2873 7.93437H18.6136L18.3862 9.06755C18.2609 9.69112 17.9065 10.3847 17.5984 10.609C17.2189 10.8852 16.9955 11.7854 16.9061 13.399C16.7826 15.6275 16.8304 15.8064 17.6487 16.1778C18.5122 16.5699 18.5231 16.5515 18.5267 14.6891C18.5314 12.1782 19.8396 9.37915 21.4805 8.36896C22.6811 7.62998 22.7108 7.55388 22.6427 5.40331C22.5993 4.02453 22.3672 2.9689 22.0247 2.58985Z" fill="#54B1F5"/>
+        <path d="M0.441724 39.1976C0.230638 38.6393 0.057569 36.1641 0.057569 33.6976V29.2129H10.0145H19.9714V31.0162V32.8194H29.7472H39.5231V34.0817V35.344H29.7472H19.9714V37.7009C19.9714 40.3856 19.4149 41.5296 17.7812 42.2036C17.1342 42.4705 16.7127 42.912 16.7127 43.322C16.7127 43.9593 16.3351 43.9997 10.3765 43.9997C4.28183 43.9997 4.04033 43.9723 4.04033 43.2784C4.04033 42.8817 3.82779 42.5571 3.56819 42.5571C2.90053 42.5571 0.899379 40.4065 0.441724 39.1976Z" fill="#54B1F5"/>
+        <path d="M103.552 23.4208V20.3553V17.2897H106.81H110.069V20.3553V23.4208H106.81H103.552Z" fill="#54B1F5"/>
+        <path d="M115.862 21.8415C115.862 18.8506 115.675 19.045 119.664 17.8895C120.659 17.601 121.596 17.3478 121.746 17.3273C121.895 17.3067 122.017 18.9127 122.017 20.8963V24.5027H124.009H126V26.847V29.1912H123.979H121.958L122.078 33.7131C122.213 38.7857 122.355 39.0684 124.642 38.7976L126 38.6367V40.9583C126 43.7111 125.892 43.7915 122.198 43.7952C120.213 43.797 119.389 43.6264 118.397 43.0068C116.21 41.6417 116.058 41.1447 115.922 34.8715L115.798 29.1912H114.382H112.966V26.847V24.5027H114.414H115.862V21.8415Z" fill="#54B1F5"/>
+        <path d="M103.914 43.6174V34.7813V25.9453H106.991H110.069V34.7813V43.6174H106.991H103.914Z" fill="#54B1F5"/>
+        </svg>
+        
+        <!-- End: Logo -->
+        <div class="d-flex flex-row justify-content-center align-items-center">
+            <div class="theme-switcher dropdown"><a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#">                <svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M0 18.8889C0 18.5942 0.119724 18.3116 0.332833 18.1032C0.545943 17.8948 0.834981 17.7778 1.13636 17.7778H23.8636C24.165 17.7778 24.4541 17.8948 24.6672 18.1032C24.8803 18.3116 25 18.5942 25 18.8889C25 19.1836 24.8803 19.4662 24.6672 19.6746C24.4541 19.8829 24.165 20 23.8636 20H1.13636C0.834981 20 0.545943 19.8829 0.332833 19.6746C0.119724 19.4662 0 19.1836 0 18.8889ZM0 10C0 9.70531 0.119724 9.4227 0.332833 9.21433C0.545943 9.00595 0.834981 8.88889 1.13636 8.88889H23.8636C24.165 8.88889 24.4541 9.00595 24.6672 9.21433C24.8803 9.4227 25 9.70531 25 10C25 10.2947 24.8803 10.5773 24.6672 10.7857C24.4541 10.994 24.165 11.1111 23.8636 11.1111H1.13636C0.834981 11.1111 0.545943 10.994 0.332833 10.7857C0.119724 10.5773 0 10.2947 0 10ZM0 1.11111C0 0.816426 0.119724 0.533811 0.332833 0.325437C0.545943 0.117063 0.834981 0 1.13636 0H23.8636C24.165 0 24.4541 0.117063 24.6672 0.325437C24.8803 0.533811 25 0.816426 25 1.11111C25 1.4058 24.8803 1.68841 24.6672 1.89679C24.4541 2.10516 24.165 2.22222 23.8636 2.22222H1.13636C0.834981 2.22222 0.545943 2.10516 0.332833 1.89679C0.119724 1.68841 0 1.4058 0 1.11111Z" fill="white"/>
+          </svg> 
+                <div class="dropdown-menu"><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="light"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-sun-fill opacity-50 me-2">
+                            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
+                        </svg>Light</a><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="dark"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-moon-stars-fill opacity-50 me-2">
+                            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path>
+                            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path>
+                        </svg>Dark</a><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="auto"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-circle-half opacity-50 me-2">
+                            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+                        </svg>Auto</a></div>
             </div>
-          {% endif %}
-        {% endwith %}
-        </div>
-        <!-- End: Flash Messages -->
-        <div class="row justify-content-center mt-4">
-          <div>
-            <form class="px-4" action="/" method="post">
-              <div class="row mb-5">
-                <div class="col">
-                  <!-- Start: Email -->
-                  <div class="mb-4">
-                    <label class="form-label">Email<span class="text-danger fw-bold">*</span></label>
-                    <input class="form-control" type="email" required name="Email">
-                  </div>
-                  <!-- End: Email -->
-
-                  <!-- Start: Password -->
-                  <div>
-                    <label class="form-label">Password<span class="text-danger fw-bold">*</span></label>
-                    <input class="form-control mb-3" type="password" required name="Password">
-                  </div>
-                  <!-- End: Password -->
-                  <a href="/forgot_password">Forgot
-                    Password?</a>
-                </div>
+    </div>
+</nav>
+  <div class="row justify-content-center login-container mt-5">
+    <div class="col-md-6 col-lg-4">
+      <div class="card mt-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-center mt-3">
+            <h2 style="color: #111a66;">Login to REFit</h2>
+          </div>
+          <!-- Start: Flash Messages -->
+          <div id="flash-messages" class="text-center">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <div id="flash-messages" class="text-center">
+                {% for message in messages %}
+                  <div class="alert alert-warning" role="alert">{{ message }}</div>
+                {% endfor %}
               </div>
+            {% endif %}
+          {% endwith %}
+          </div>
+          <!-- End: Flash Messages -->
+          <div class="row justify-content-center mt-4">
+            <div>
+              <form class="px-4" action="/" method="post">
+                <div class="row mb-5">
+                  <div class="col">
+                    <!-- Start: Email -->
+                    <div class="mb-4">
+                      <label class="form-label">Email<span class="text-danger fw-bold">*</span></label>
+                      <input class="form-control" type="email" required name="Email">
+                    </div>
+                    <!-- End: Email -->
 
-              <!-- Start: Form Submit -->
-
-              <div class="row mb-6">
-                <div class="col d-flex flex-column align-items-center">
-                  <button class="btn btn-lg btn-primary w-100 mb-3" type="submit" value="Log In"
-                    name="Log In">Login</button>
-                  <span>Don't have an account?</span>
-                  <a class="text-center" href="/create">Sign Up</a>
+                    <!-- Start: Password -->
+                    <div>
+                      <label class="form-label">Password<span class="text-danger fw-bold">*</span></label>
+                      <input class="form-control mb-3" type="password" required name="Password">
+                    </div>
+                    <!-- End: Password -->
+                    <a href="/forgot_password">Forgot
+                      Password?</a>
+                  </div>
                 </div>
-              </div>
-            </form>
-            <!-- End: Login Form -->
+
+                <!-- Start: Form Submit -->
+
+                <div class="row mb-6">
+                  <div class="col d-flex flex-column align-items-center">
+                    <button class="btn btn-lg btn-primary w-100 mb-3" type="submit" value="Log In"
+                      name="Log In">Login</button>
+                    <span>Don't have an account?</span>
+                    <a class="text-center" href="/create">Sign Up</a>
+                  </div>
+                </div>
+              </form>
+              <!-- End: Login Form -->
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>

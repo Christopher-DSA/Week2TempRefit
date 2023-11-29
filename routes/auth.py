@@ -1,6 +1,6 @@
 from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from datetime import datetime , timedelta
-from models import User, Store, CRUD, Technician, User_Detail
+from models import User, Store, CRUD, Technician, User_Detail, Contractor
 from functools import wraps
 import pandas as pd
 import os
@@ -66,6 +66,7 @@ def login():
         #1. Get the data from the form.
         entered_email = request.form["Email"]
         password = request.form["Password"]
+    
         
         #Reminds user that they need to fill out all fields.
         if not entered_email or not password:
@@ -92,6 +93,14 @@ def login():
         session['user_email'] = entered_email # Store user email in session
         session['user_id'] = current_user.user_id # Store user ID in session
         print("From Auth.py: ", session['user_email'])
+        
+        details = CRUD.read(User_Detail, user_id=session.get('user_id'))
+        
+        session['user_first_name'] = details.first_name
+        session['user_last_name'] = details.last_name
+        
+        print("From Auth.py: ", session['user_first_name'])
+        print("From Auth.py: ", session['user_last_name'])
         
         #5. Redirect to the appropriate page based on the user's role.
         print("About to enter if statement for password check")
@@ -241,7 +250,7 @@ def home():
     return render_template("auth/home.html",user=user)
 
 
-#START CREATION OF ACCOUNT ROUTE FOR ALL ROLES (Technician, Admin, Contractor, Wholesaler)
+#START CREATION OF ACCOUNT ROUTE FOR ALL ROLES.
 @auth.route("/create", methods=["GET", "POST"])
 def register():
     session.clear()
@@ -317,7 +326,7 @@ def account_setup():
         if selected_role == 'technician':
             CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License)
         elif selected_role == 'contractor':
-            pass
+            CRUD.create(Contractor, False, user_id = current_user_id, companyName = Company_name, status = 'active', name = first_name, branchId = Company_branch_number)
         elif selected_role == 'wholesaler':
             pass
         elif selected_role == 'admin':
@@ -328,7 +337,7 @@ def account_setup():
     
         CRUD.update(User, 'role', new = selected_role, email = current_user_email)
         #Send them back to login page:
-        flash("Account created successfully!")
+        flash("Account created successfully! " + str(selected_role))
         return render_template('Login Flow/login.html')
     elif request.method == 'GET':
         print("In Get for account setup")
@@ -361,6 +370,110 @@ def upload():
             flash('Data successfully stored in the database', 'success')
             return redirect(url_for('auth.upload'))
     return render_template('auth/csv.html')
+
+
+#Use this route if you have a page that needs to go back to a role specific dashboard.
+@auth.route('/back-by-role', methods=['GET'])
+def back_by_role():
+    if request.method == 'GET':
+        current_user_role = session.get('user_role')
+        if current_user_role == 'technician':
+            return redirect(url_for('technician.dashboardtechnician'))
+        elif current_user_role == 'admin':
+            print('admin pressed back button and should be redirected to admin dashboard')
+        elif current_user_role == 'contractor':
+            return redirect(url_for('contractor.dashboardcontractor'))
+        elif current_user_role == 'wholesaler':
+            print('wholesaler pressed back button and should be redirected to wholesaler dashboard')
+        else:
+            print("Error, no role selected")
+            return redirect(url_for('auth.login'))
+    
+
+#############Only Account Settings Related Routes Below This Line#####################
+
+#Settings Page
+@auth.route('/settings', methods=['GET', 'POST'])
+def settings_page():
+    if request.method == 'GET':
+        return render_template('admin/settings.html')
+    elif request.method == 'POST':
+        return render_template('admin/settings.html')
+    
+    
+#Edit Profile Page
+@auth.route('/edit-profile', methods=['GET', 'POST'])
+def profile_edit_page():
+    if request.method == 'GET':
+        first_name = session.get('user_first_name')
+        last_name = session.get('user_last_name')
+        return render_template('admin/edit-profile.html',first_name=first_name,last_name=last_name)
+    elif request.method == 'POST': #User has submitted the form to edit their profile.
+        #Get the data from the form.
+        # Initialize an empty dictionary to store the filled fields
+        filled_fields = {}
+
+        # List of all possible fields
+        all_fields = ['first_name', 'last_name', 'telephone', 'ods_licence_number', 'street_address', 'suite_number', 'province', 'postal_code']
+
+        current_user_id = session.get('user_id')
+        # Check each field and add it to the dictionary if it's filled
+        for field in all_fields:
+            if request.form.get(field):
+                filled_fields[field] = request.form.get(field)
+        
+        # Loop through each filled field and update it
+        for field, value in filled_fields.items():
+            if field == 'ods_licence_number':
+                # Update the Technician table for ODS-certification
+                CRUD.update(Technician, field, new=value, user_id=current_user_id)
+            elif field == 'first_name':
+                session['user_first_name']= filled_fields['first_name']
+                CRUD.update(User_Detail, field, new=value, user_id=current_user_id)
+            elif field == 'last_name':
+                session['user_last_name'] = filled_fields['last_name']
+                CRUD.update(User_Detail, field, new=value, user_id=current_user_id)
+            else:
+                # Update the User_Detail table for all other fields
+                CRUD.update(User_Detail, field, new=value, user_id=current_user_id)
+                
+        return redirect('/edit-profile')
+    
+    
+#Edit Acccount Settings Page
+@auth.route('/account-settings', methods=['GET', 'POST'])
+def account_settings_page():
+    if request.method == 'GET':
+        first_name = session.get('user_first_name')
+        last_name = session.get('user_last_name')
+        return render_template('admin/account.html',first_name=first_name,last_name=last_name)
+    elif request.method == 'POST':
+        return render_template('admin/account.html')
+    
+#Edit Acccount Settings Page
+@auth.route('/membership', methods=['GET', 'POST'])
+def membership_settings_page():
+    if request.method == 'GET':
+        return render_template('admin/membership.html')
+    elif request.method == 'POST':
+        return render_template('admin/membership.html')
+    
+#Privacy Policy Page
+@auth.route('/privacy-policy', methods=['GET', 'POST'])
+def privacy_policy_page():
+    if request.method == 'GET':
+        return render_template('admin/private-policy.html')
+    elif request.method == 'POST':
+        return render_template('admin/private-policy.html')
+    
+#Contact Page
+@auth.route('/contact_us', methods=['GET', 'POST'])
+def contact_us_page():
+    if request.method == 'GET':
+        return render_template('admin/contact-us.html')
+    elif request.method == 'POST':
+        return render_template('admin/contact-us.html')
+        
 
 
 

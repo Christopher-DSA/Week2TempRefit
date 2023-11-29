@@ -13,6 +13,8 @@ contractor = Blueprint('contractor', __name__)
 # @contractor.route("/contractor/dashboard", methods=['GET', 'POST'])
 # def dashboard():
 #     return render_template('contractor/dashboard.html')
+
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -39,6 +41,8 @@ def contractor_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
+# register contractor.
 @contractor.route("/formcontractor", methods=["GET", "POST"])
 def formcontractor():
     if request.method == 'POST':
