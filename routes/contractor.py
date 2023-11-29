@@ -208,67 +208,57 @@ def add_technician():
         return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
 
-# @contractor.route('/technician_details', methods=['GET', 'POST'])
-# def delete_technician():
+    # @contractor.route('/delete/technician', methods=['POST'])
+    # def delete_technician():
+    #    if request.method == 'POST':
+    #         user_id = request.form.get('technician_id')
+    #         technician_data = CRUD.read(Technician,user_id=user_id,all=False)
+    #         technician_id = technician_data.technician_id
 
-#     if request.method == 'POST':
-#         technician_id = request.form.get('technician_id')  # Get the technician_id from the form
-#         action_button = request.form.get('action-buttons')  # Get the action button from the form
+    #     # Update Technician_Offer Table      
+    #         CRUD.update(
+    #             Technician_Offer,
+    #             technician_id=technician_id,
+    #             attr= "offer_status",
+    #             new = "independent"
+    #             )
+            
+    #         CRUD.update(
+    #             Technician_Offer,
+    #             technician_id=technician_id,
+    #             contractor_id = None
+    #             )
+            
+    #         # Update Technician Table
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             attr="date_end",
+    #             new=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    #         )
 
-#         if action_button == 'Delete':
-#             print("Delete button pressed")
-#             print("Technician ID: ", technician_id) 
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             contractor_id = None
+    #             )
             
-#         # Update Technician_Offer Table      
-#             CRUD.update(
-#                 Technician_Offer,
-#                 technician_id=technician_id,
-#                 attr= "offer_status",
-#                 new = "independent"
-#                 #token = token
-#                 )
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             attr="contractor_status",
+    #             new="Inactive"
+    #         )
             
-#             CRUD.update(
-#                 Technician_Offer,
-#                 technician_id=technician_id,
-#                 contractor_id = None
-#                 #token = token
-#                 )
-            
-#             # Update Technician Table
-#             CRUD.update(
-#                 Technician,
-#                 technician_id=technician_id,
-#                 attr="date_end",
-#                 new=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-#             )
-
-#             CRUD.update(
-#                 Technician,
-#                 technician_id=technician_id,
-#                 contractor_id = None
-#                 #token = token
-#                 )
-            
-#             CRUD.update(
-#                 Technician,
-#                 technician_id=technician_id,
-#                 attr="contractor_status",
-#                 new="Independent"
-#             )
-            
-#             CRUD.update(
-#                 Technician,
-#                 technician_id=technician_id,
-#                 attr="user_status",
-#                 new="Inactive"
-#             )
-
-#         elif action_button == 'Cancle':
-#             print("Cancle button pressed")
-#             return redirect(url_for(Contractor/technician_details.html))
-
-#     return render_template(Contractor/technician_details.html)
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             attr="user_status",
+    #             new="Independent"
+    #         )
+        
+    #         return render_template('contractor/technician_details.html')
+    # return render_template('contractor/technician_details.html')
 
 @contractor.route('/inventory', methods=['GET', 'POST'])
 def inventory():
