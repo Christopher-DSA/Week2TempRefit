@@ -51,25 +51,76 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const nameCells = document.querySelectorAll('.user-name');
-            const actionButtons = document.querySelector('.action-buttons');
+    document.addEventListener('DOMContentLoaded', function () {
+    const nameCells = document.querySelectorAll('.user-name');
+    const actionButtons = document.querySelector('.action-buttons');
 
-            nameCells.forEach(cell => {
-                cell.addEventListener('click', function () {
-                    actionButtons.style.display = 'block';
-                });
-            });
+    nameCells.forEach(cell => {
+        cell.addEventListener('click', function () {
+            actionButtons.style.display = 'block';
+        });
+    });
 
-            document.addEventListener('click', function (event) {
-                const target = event.target;
+    document.addEventListener('click', function (event) {
+        const target = event.target;
 
-                // Check if the click is outside the table and action buttons
-                if (!target.closest('table') && !target.closest('.action-buttons')) {
-                    actionButtons.style.display = 'none';
-                }
+        // Check if the click is outside the table and action buttons
+        if (!target.closest('table') && !target.closest('.action-buttons')) {
+            actionButtons.style.display = 'none';
+        }
+
+        // Check if the click is on the delete button
+        if (target.id === 'deleteBtn') {
+            const row = target.closest('tr'); // Find the closest row to the clicked delete button
+            const userName = row.querySelector('.user-name').textContent; // Get the user name from the row
+
+            flashUserName(userName);
+        }
+    });
+
+    function flashUserName(userName) {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = `Deleting user: ${userName}`;
+        messageDiv.classList.add('flash-message');
+
+        document.body.appendChild(messageDiv);
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
+    }
+});
+
+    </script>
+    <!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nameCells = document.querySelectorAll('.user-name');
+        const actionButtons = document.querySelector('.action-buttons');
+    
+        nameCells.forEach(cell => {
+            cell.addEventListener('click', function () {
+                actionButtons.style.display = 'block';
             });
         });
-    </script>
+    
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+    
+            // Check if the click is outside the table and action buttons
+            if (!target.closest('table') && !target.closest('.action-buttons')) {
+                actionButtons.style.display = 'none';
+            }
+    
+            // Check if the click is on the delete button
+            if (target.id === 'deleteBtn') {
+                const row = target.closest('tr'); // Find the closest row to the clicked delete button
+                const userName = row.querySelector('.user-name').textContent; // Get the user name from the row
+    
+                // Here, you can perform actions like sending the 'userName' to the backend for deletion from the database
+                // Example AJAX request to delete the user with this 'userName'
+                // replace 'deleteUser' function and URL with your backend endpoint
+                deleteUser(userName);
+            }
+        });
+    </script> -->
 </body>
 </html>
