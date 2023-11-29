@@ -1,42 +1,84 @@
-<div class="container">
-  <div class="col d-flex justify-content-center">
-    <!-- Profile Icon -->
-    <div class="d-flex flex-column justify-content-center">
-      <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="4em" fill="currentColor" class="bi bi-person-circle"
-        viewBox="0 0 16 16">
-        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-        <path fill-rule="evenodd"
-          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-      </svg>
-      <h6 class="d-flex justify-content-center">Name</h6>
+<head>
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="348x122"
+    href="/static/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
+  <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+  <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+  <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+  <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+  <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+  <link rel="stylesheet" href="/static/css/test.css">
+
+  <style>
+    .transparent-placeholder::placeholder {
+      opacity: 0.5; /* Adjust the opacity as you like */
+      /* You can add other styles here if you want */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="col d-flex justify-content-center">
+      <!-- Profile Icon -->
+      <div class="d-flex flex-column justify-content-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="4em" fill="currentColor" class="bi bi-person-circle"
+          viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+          <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </svg>
+
+      </div>
     </div>
+    <!-- name of user that displays on the top of the page -->
+    <h6 class="d-flex justify-content-center">{{first_name}} {{last_name}}</h6>
+
+    <!-- Form  Start -->
+    <form class="px-2 col-lg-6 offset-lg-3" method="post" action="/edit-profile">
+      <label for="firstName" class="form-label" style="color: gray;">First Name</label>
+      <input type="text" class="form-control mb-3" name ="first_name">
+
+      <label for="lastName" class="form-label" style="color: gray;">Last Name</label>
+      <input type="text" class="form-control mb-3" name="last_name">
+
+      <label for="number" class="form-label" style="color: gray;">Phone</label>
+      <input type="number" class="form-control mb-3 transparent-placeholder" name="telephone" placeholder="123-456-7890">
+
+      <label for="ODS-certification" class="form-label" style="color: gray;">ODS Certification</label>
+      <input type="text" class="form-control mb-3" name="ods_licence_number">
+
+      <label for="address" class="form-label" style="color: gray;">Street Address</label>
+      <input type="text" class="form-control mb-3" name="address">
+
+      <label for="apartment" class="form-label" style="color: gray;">Apartment, Suite, etc.</label>
+      <input type="text" class="form-control mb-3" name="suite_number">
+
+      <label for="province/state" class="form-label" style="color: gray;">Province/State</label>
+      <input type="text" class="form-control mb-3" name="province">
+
+      <label for="postalCode" class="form-label" style="color: gray;">Postal Code</label>
+      <input type="text" class="form-control mb-5 transparent-placeholder" name="postal_code" placeholder="A1A 1A1">
+
+      <div class="d-flex flex-column justify-content-center">
+        <button class="btn btn-primary btn-lg" type="submit">Update Profile</button>
+      </div>
+    </form>
+
   </div>
-
-  <!-- Form  Start -->
-  <form class="px-2 col-lg-6 offset-lg-3">
-    <label for="firstName" class="form-label" style="color: gray;">First Name</label>
-    <input type="text" class="form-control mb-3">
-
-    <label for="lastName" class="form-label" style="color: gray;">Last Name</label>
-    <input type="text" class="form-control mb-3">
-
-    <label for="number" class="form-label" style="color: gray;">Phone</label>
-    <input type="number" class="form-control mb-3">
-
-    <label for="ODS-certification" class="form-label" style="color: gray;">ODS Certification</label>
-    <input type="text" class="form-control mb-3">
-
-    <label for="address" class="form-label" style="color: gray;">Street Address</label>
-    <input type="text" class="form-control mb-3">
-
-    <label for="apartment" class="form-label" style="color: gray;">Apartment, Suite, etc.</label>
-    <input type="text" class="form-control mb-3">
-
-    <label for="province/state" class="form-label" style="color: gray;">Province/State</label>
-    <input type="text" class="form-control mb-3">
-
-    <label for="postalCode" class="form-label" style="color: gray;">Postal Code</label>
-    <input type="text" class="form-control mb-5">
-  </form>
-
-</div>
+    <!-- ... additional scripts ... -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
