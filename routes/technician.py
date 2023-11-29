@@ -1,7 +1,7 @@
 from flask import make_response, session, Blueprint
 from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer
 from functools import wraps
 import UUID_Generate
 technician = Blueprint('technician', __name__)
@@ -10,7 +10,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
-            return redirect(url_for('auth.login'))
+            return render_template('auth/login.html')
         return f(*args, **kwargs)
     return decorated_function
 
@@ -19,6 +19,9 @@ def technician_required(f):
     def decorated_function(*args, **kwargs):
         # Assuming the user_id in the session is the email of the user.
         current_user_id = session.get('user_id')
+
+        
+
         current_user = CRUD.read(User,user_id=current_user_id)
         
         if not current_user or current_user.role != 'technician':
@@ -28,6 +31,7 @@ def technician_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+#Renders the technician dashboard
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required
@@ -62,6 +66,16 @@ def formtechnician():
         return redirect(url_for('technician.dashboardtechnician'))
     else:
         return render_template("technician/formtechnician.html")
+    
+@technician.route("/dashboardtechnician")
+@login_required
+@technician_required
+def dashboardtechnician_two():
+    # Render the dashboard
+    print("Rendering dashboard")
+    user_current=session.get('user_id')
+    return render_template("technician/dashboardtechnician.html", user=user_current)
+
     
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
 def equipment_create():
@@ -232,7 +246,33 @@ def maintenance_history():
     else:
         print('error')
         return render_template('equipment/maintenance_history.html')
+
+
+@technician.route('/register_technician/<token>/<int:id>', methods=['GET', 'POST'])
+def signup_technician(token,id):
+    if request.method == 'GET':
+            contractor_id = id
+            token = token
+            print("Contractor ID: ", contractor_id)
+            print("Token: ", token)
+    return render_template('beta/register_technician.html',dt=contractor_id,tk=token)
     
+@technician.route('/confirm_technician', methods=['GET', 'POST'])
+def confirm_technician():
+    if request.method == 'POST':
+        contractor_id = request.form['dt']
+        token = request.form['tk']
+        print("Contractor ID: ", contractor_id)
+        print("Token: ", token)
+        
+        CRUD.update(
+            Technician_Offer,
+            "offer_status",
+            new = "Engaged", 
+            token = token
+        )
+        return render_template('Login Flow/login.html')
+           
 @technician.route('/equipment-info/<unique_id>', methods = ['GET', 'POST'])
 def equipment_info_page(unique_id):
     if request.method == 'GET':
@@ -271,4 +311,4 @@ def buy_qr_page():
 ##def recovery():
    ## return render_template('equipment/recovery.html')
 
-        
+    

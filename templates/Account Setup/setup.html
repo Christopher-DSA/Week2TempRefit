@@ -1,136 +1,243 @@
-<section>
-  <div class="row justify-content-center mt-5">
-    <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
-      <form class="px-4" method="post" action="/create-account-setup">
-        <!-- Start: Form Header -->
-        <div class="row mb-3">
-          <div class="col">
-            <h2>Account Set Up</h2>
-          </div>
-        </div><!-- End: Form Header -->
-        <!-- Start: Form Tabs -->
-        <div class="row mb-5">
-          <div class="col">
-            <div>
-              <ul class="nav nav-tabs d-flex justify-content-center mb-4 border-0 gap-5" role="tablist">
-                <li class="nav-item" role="presentation"><a class="nav-link active custom-tab border-0" role="tab"
-                    data-bs-toggle="tab" href="#tab-1">1</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link custom-tab border-0" role="tab"
-                    data-bs-toggle="tab" href="#tab-2">2</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link custom-tab border-0" role="tab"
-                    data-bs-toggle="tab" href="#tab-3">3</a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" role="tabpanel" id="tab-1">
-                  <h4 class="mb-3">Select your role</h4><!-- Start: Role Selection -->
-                  <div class="row">
-                    <div class="col gap-3">
-                      <div class="row mb-3">
-                        <div class="col d-flex justify-content-between gap-3">
-                          <div class="card shadow w-100">
-                            <div class="card-body d-flex flex-column align-items-center p-2"
-                              onclick="sendRole(event,'technician')"><img class="mb-2 w-100"
-                                src="../static/images/technician.png"><span>Technician</span></div>
-                          </div>
-                          <div class="card shadow w-100">
-                            <div class="card-body d-flex flex-column align-items-center p-2"
-                              onclick="sendRole(event,'contractor')"><img class="mb-2 w-100"
-                                src="../static/images/contractor.png"><span>Contractor</span></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col d-flex justify-content-between gap-3">
-                          <div class="card shadow w-100">
-                            <div class="card-body d-flex flex-column align-items-center p-2"
-                              onclick="sendRole(event,'organization')"><img class="mb-2 w-100"
-                                src="../static/images/organization.png"><span>Organization</span></div>
-                          </div>
-                          <div class="card shadow w-100">
-                            <div class="card-body d-flex flex-column align-items-center p-2"
-                              onclick="sendRole(event,'wholesaler')"><img class="mb-2 w-100"
-                                src="../static/images/wholesaler.png"><span>Wholesaler</span></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div><!-- End: Role Selection -->
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Setup Account Refit</title>
+
+  <link rel="icon" type="image/png" sizes="130x165"
+  href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="348x122"
+    href="/static/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
+  <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+  <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+  <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+  <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+  <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+  <link rel="stylesheet" href="/static/css/test.css">
+</head>
+</head>
+<body>
+      <!-- Start: Navbar -->
+      <section>
+        <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme="dark" style="padding-top: 2.5rem; padding-bottom: 1rem;">
+            <div class="container-fluid"><a href="/" class="btn btn-primary btn-lg" role="button">
+                <svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.6116 1.26314C10.6757 1.327 10.7265 1.40287 10.7611 1.48639C10.7958 1.56991 10.8136 1.65946 10.8136 1.74989C10.8136 1.84032 10.7958 1.92986 10.7611 2.01338C10.7265 2.09691 10.6757 2.17277 10.6116 2.23664L2.84701 9.99989L10.6116 17.7631C10.7407 17.8922 10.8133 18.0673 10.8133 18.2499C10.8133 18.4325 10.7407 18.6075 10.6116 18.7366C10.4825 18.8657 10.3075 18.9383 10.1249 18.9383C9.94232 18.9383 9.76723 18.8657 9.63814 18.7366L1.38814 10.4866C1.32411 10.4228 1.27331 10.3469 1.23866 10.2634C1.204 10.1799 1.18616 10.0903 1.18616 9.99989C1.18616 9.90946 1.204 9.81992 1.23866 9.73639C1.27331 9.65287 1.32411 9.577 1.38814 9.51314L9.63814 1.26314C9.702 1.19911 9.77787 1.14832 9.86139 1.11366C9.94492 1.079 10.0345 1.06116 10.1249 1.06116C10.2153 1.06116 10.3049 1.079 10.3884 1.11366C10.4719 1.14832 10.5478 1.19911 10.6116 1.26314V1.26314Z" fill="white" stroke="white"/>
+                    </svg>
+                    
+            </a><!-- Start: Logo --><img src="/static/images/refit_logo.png"><!-- End: Logo -->
+                <div class="d-flex flex-row justify-content-center align-items-center">
+                    <div class="theme-switcher dropdown"><a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#"> 
+                        <div class="dropdown-menu"><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="light"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-sun-fill opacity-50 me-2">
+                                    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
+                                </svg>Light</a><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="dark"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-moon-stars-fill opacity-50 me-2">
+                                    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path>
+                                    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path>
+                                </svg>Dark</a><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="auto"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-circle-half opacity-50 me-2">
+                                    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+                                </svg>Auto</a></div>
+                    </div><button class="btn btn-primary btn-lg" type="button"><svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 18.8889C0 18.5942 0.119724 18.3116 0.332833 18.1032C0.545943 17.8948 0.834981 17.7778 1.13636 17.7778H23.8636C24.165 17.7778 24.4541 17.8948 24.6672 18.1032C24.8803 18.3116 25 18.5942 25 18.8889C25 19.1836 24.8803 19.4662 24.6672 19.6746C24.4541 19.8829 24.165 20 23.8636 20H1.13636C0.834981 20 0.545943 19.8829 0.332833 19.6746C0.119724 19.4662 0 19.1836 0 18.8889ZM0 10C0 9.70531 0.119724 9.4227 0.332833 9.21433C0.545943 9.00595 0.834981 8.88889 1.13636 8.88889H23.8636C24.165 8.88889 24.4541 9.00595 24.6672 9.21433C24.8803 9.4227 25 9.70531 25 10C25 10.2947 24.8803 10.5773 24.6672 10.7857C24.4541 10.9941 24.165 11.1111 23.8636 11.1111H1.13636C0.834981 11.1111 0.545943 10.9941 0.332833 10.7857C0.119724 10.5773 0 10.2947 0 10ZM0 1.11111C0 0.816426 0.119724 0.533811 0.332833 0.325437C0.545943 0.117063 0.834981 0 1.13636 0H23.8636C24.165 0 24.4541 0.117063 24.6672 0.325437C24.8803 0.533811 25 0.816426 25 1.11111C25 1.4058 24.8803 1.68841 24.6672 1.89679C24.4541 2.10516 24.165 2.22222 23.8636 2.22222H1.13636C0.834981 2.22222 0.545943 2.10516 0.332833 1.89679C0.119724 1.68841 0 1.4058 0 1.11111Z" fill="white"/>
+                        </svg>
+                        </button>
                 </div>
-                <label for="cars">Choose a role:</label>
-
-                <select name="Selected_role" id="role_select">
-                  <option value="technician">Technician</option>
-                  <option value="contractor">Contractor[not setup yet]</option>
-                  <option value="wholesaler">Wholesaler[not setup yet]</option>
-                  <option value="organization">Organization[not setup yet]</option>
-                </select>
-
-                <div class="tab-pane" role="tabpanel" id="tab-2">
-                  <!-- Start: Form Input -->
-                  <div class="row">
-                    <div class="col">
-                      <p>Fields with an asterisk (*) are required.</p>
-                      <h4>Identification</h4><!-- Start: First Name -->
-                      <div class="mb-4"><label class="form-label">First Name*</label><input class="form-control"
-                          type="text" required="" name="First Name"></div><!-- End: First Name -->
-                      <!-- Start: Last Name -->
-                      <div class="mb-4"><label class="form-label">LastName*</label><input class="form-control"
-                          type="text" required="" name="Last Name"></div><!-- End: Last Name -->
+            </div>
+        </nav>
+    </section>
+    <!-- End: Navbar -->
+  <section>
+    <div class="row justify-content-center mt-5">
+      <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4"><!-- End: Form Tabs -->
+        <form class="px-4" method="post" action="/create-account-setup" id="the-form">
+          <!-- Start: Form Header -->
+          <div class="row mb-3">
+            <div class="col">
+              <h2>Refit Account Set Up</h2>
+            </div>
+          </div><!-- End: Form Header -->
+          <!-- Start: Form Tabs -->
+          <div class="row mb-5">
+            <div class="col">
+              <div>
+                <!-- <ul class="nav nav-tabs d-flex justify-content-center mb-4 border-0 gap-5" role="tablist">
+                  <li class="nav-item" role="presentation"><a class="nav-link active custom-tab border-0" role="tab"
+                      data-bs-toggle="tab" href="#tab-1">1</a></li>
+                  <li class="nav-item" role="presentation"><a class="nav-link custom-tab border-0" role="tab"
+                      data-bs-toggle="tab" href="#tab-2">2</a></li>
+                  <li class="nav-item" role="presentation"><a class="nav-link custom-tab border-0" role="tab"
+                      data-bs-toggle="tab" href="#tab-3">3</a></li>
+                </ul> -->
+                <div class="tab-content">
+                  <div class="tab-pane active" role="tabpanel" id="tab-1">
+                    <h4 class="mb-3">Select your role from dropdown menu:</h4>
+                    <label for="role-select">Choose a role:</label>
+                    <select name="Selected_role" id="role_select" required form="the-form" selected="" onchange="toggleFieldsBasedOnRole()">
+                      <option value="">Select your role</option>
+                      <option value="technician">Technician</option>
+                      <option value="contractor">Contractor[not setup yet]</option>
+                      <option value="wholesaler">Wholesaler[not setup yet]</option>
+                      <option value="organization">Organization[not setup yet]</option>
+                    </select>
+                    <!-- <div class="row"> -->
+                      <!-- <div class="col gap-3">
+                        <div class="row mb-3">
+                          <div class="col d-flex justify-content-between gap-3">
+                            <div class="card shadow w-100">
+                              <div class="card-body d-flex flex-column align-items-center p-2"
+                                onclick="sendRole(event,'technician')"><img class="mb-2 w-100"
+                                  src="../static/images/technician.png"><span>Technician</span></div>
+                            </div>
+                            <div class="card shadow w-100">
+                              <div class="card-body d-flex flex-column align-items-center p-2"
+                                onclick="sendRole(event,'contractor')"><img class="mb-2 w-100"
+                                  src="../static/images/contractor.png"><span>Contractor</span></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col d-flex justify-content-between gap-3">
+                            <div class="card shadow w-100">
+                              <div class="card-body d-flex flex-column align-items-center p-2"
+                                onclick="sendRole(event,'organization')"><img class="mb-2 w-100"
+                                  src="../static/images/organization.png"><span>Organization</span></div>
+                            </div>
+                            <div class="card shadow w-100">
+                              <div class="card-body d-flex flex-column align-items-center p-2"
+                                onclick="sendRole(event,'wholesaler')"><img class="mb-2 w-100"
+                                  src="../static/images/wholesaler.png"><span>Wholesaler</span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>End: Role Selection -->
+                  </div>
+                  <br>
+                  <p>Fields with an asterisk (*) are required.</p>
+                  <div class="tab-pane" role="tabpanel" id="tab-5"></div>
+                    <div id="technician-fields" class="role-fields d-none">
+                      <div class="tab-pane" role="tabpanel" id="tab-2">
+                        <!-- Start: Form Input -->
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-4"><label class="form-label">First Name*</label><input class="form-control"
+                                type="text" required name="First Name"></div><!-- End: First Name -->
+                            <!-- Start: Last Name -->
+                            <div class="mb-4"><label class="form-label">LastName*</label><input class="form-control"
+                                type="text" name="Last Name"></div><!-- End: Last Name -->
+                          </div>
+                        </div><!-- End: Form Input -->
+                      </div>
                       <br><h4>Only for Technician</h4>
                       <!-- Start: License -->
                       <div class="mb-4"><label class="form-label">ODS License*</label><input class="form-control"
-                          type="text" required="" name="License"></div><!-- End: License -->
+                          type="text" required="" name="License">
+                      </div>
+                      <!-- End: License -->
                     </div>
-                  </div><!-- End: Form Input -->
-                </div>
-                <div class="tab-pane" role="tabpanel" id="tab-3">
-                  <!-- Start: Form Input -->
-                  <div class="row">
-                    <div class="col">
-                      <p>Fields with an asterisk (*) are required.</p>
-                      <h4>Company Details (Only for Contractor)</h4><!-- Start: Company Name -->
-                      <div class="mb-4"><label class="form-label">Company Name</label><input class="form-control"
-                          type="text" name="Company Name"></div><!-- End: Company Name -->
-                      <!-- Start: Branch Number -->
-                      <div class="mb-4"><label class="form-label">Company Branch Number</label><input
-                          class="form-control" type="text" name="Branch Number"></div><!-- End: Branch Number -->
-                      <!-- Start: Phone Number -->
-                      <div class="mb-4"><label class="form-label">Company Phone Number</label><input
-                          class="form-control" type="tel" name="Phone Number"></div><!-- End: Phone Number -->
-                      <!-- Start: ODS Email -->
-                      <div class="mb-4"><label class="form-label">ODS Sheet Recipient Email</label><input
-                          class="form-control" type="email" name="Recipient Email"></div><!-- End: ODS Email -->
-                      <!-- Start: Company Address -->
-                      <div class="mb-4"><label class="form-label">Company Address</label><input class="form-control"
-                          type="text" name="Company Address"></div><!-- End: Company Address -->
-                      <!-- Start: Suite -->
-                      <div class="mb-4"><label class="form-label">Apartment, Suite, etc.</label><input
-                          class="form-control" type="text" name="Suite Number"></div><!-- End: Suite -->
-                      <!-- Start: Company City -->
-                      <div class="mb-4"><label class="form-label">City</label><input class="form-control" type="text"
-                          name="Company City"></div><!-- End: Company City -->
-                      <!-- Start: Company Province -->
-                      <div class="mb-4"><label class="form-label">Province</label><input class="form-control"
-                          type="text" name="Company Province"></div><!-- End: Company Province -->
-                      <!-- Start: Company Postal -->
-                      <div class="mb-4"><label class="form-label">Postal Code</label><input class="form-control"
-                          type="text" name="Postal Code" pattern="^[ABCEGHJKLMNPRSTVXY]\d[A-Z] \d[A-Z]\d$"
-                          title="Please enter a valid Canadian postal code in the format A1A 1A1"></div>
-                      <!-- End: Company Postal -->
-                    </div>
-                  </div><!-- End: Form Input -->
+                  </div>
+                  <div class="tab-pane" role="tabpanel" id="tab-3">
+                    <!-- Start: Form Input -->
+                    <div id="contractor-fields" class="role-fields d-none">
+                    <div class="row">
+                      <div class="col">
+                        <br><h4>Company Details (Only for Contractor)</h4><!-- Start: Company Name -->
+                        <div class="tab-pane" role="tabpanel" id="tab-2">
+                          <!-- Start: Form Input -->
+                          <div class="row">
+                            <div class="col">
+                              <div class="mb-4"><label class="form-label">First Name*</label><input class="form-control"
+                                  type="text" required="" name="First Name"></div><!-- End: First Name -->
+                              <!-- Start: Last Name -->
+                              <div class="mb-4"><label class="form-label">Last Name*</label><input class="form-control"
+                                  type="text" required="" name="Last Name"></div><!-- End: Last Name -->
+                            </div>
+                          </div><!-- End: Form Input -->
+                        </div>
+                        <div class="mb-4"><label class="form-label">Company Name</label><input class="form-control"
+                            type="text" name="Company Name" required=""></div><!-- End: Company Name -->
+                        <!-- Start: Branch Number -->
+                        <div class="mb-4"><label class="form-label">Company Branch Number</label><input
+                            class="form-control" type="text" name="Branch Number" required=""></div><!-- End: Branch Number -->
+                        <!-- Start: Phone Number -->
+                        <div class="mb-4"><label class="form-label">Company Phone Number</label><input
+                            class="form-control" type="tel" name="Phone Number" required=""></div><!-- End: Phone Number -->
+                        <!-- Start: ODS Email -->
+                        <div class="mb-4"><label class="form-label">ODS Sheet Recipient Email</label><input
+                            class="form-control" type="email" name="Recipient Email" required=""></div><!-- End: ODS Email -->
+                        <!-- Start: Company Address -->
+                        <div class="mb-4"><label class="form-label">Company Address</label><input class="form-control"
+                            type="text" name="Company Address" required=""></div><!-- End: Company Address -->
+                        <!-- Start: Suite -->
+                        <div class="mb-4"><label class="form-label">Apartment, Suite, etc.</label><input
+                            class="form-control" type="text" name="Suite Number"></div><!-- End: Suite -->
+                        <!-- Start: Company City -->
+                        <div class="mb-4"><label class="form-label">City</label><input class="form-control" type="text"
+                            name="Company City" required=""></div><!-- End: Company City -->
+                        <!-- Start: Company Province -->
+                        <div class="mb-4"><label class="form-label">Province</label><input class="form-control"
+                            type="text" name="Company Province" required=""></div><!-- End: Company Province -->
+                        <!-- Start: Company Postal -->
+                        <div class="mb-4"><label class="form-label">Postal Code</label><input class="form-control"
+                            type="text" required="" name="Postal Code" pattern="^[ABCEGHJKLMNPRSTVXY]\d[A-Z] \d[A-Z]\d$"
+                            title="Please enter a valid Canadian postal code in the format A1A 1A1"></div>
+                        <!-- End: Company Postal -->
+                      </div>
+                    </div><!-- End: Form Input -->
+                  </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div><!-- End: Form Tabs -->
-        <!-- Start: Form Submit -->
-        <div class="row d-flex justify-content-center">
-          <div class="col d-flex flex-row align-items-center gap-4"><button class="btn btn-outline-primary btn-lg w-100"
-              type="button">Back</button><input class="btn btn-lg btn-primary w-100" type="submit" name="Submit"
-              value="Next"></div>
-        </div><!-- End: Form Submit -->
-      </form>
+            <!-- Start: Form Submit -->
+            <br>
+            <div class="row d-flex justify-content-center">
+              <div class="col d-flex flex-row align-items-center gap-4"><button class="btn btn-outline-primary btn-lg w-100"
+                  type="button">Back</button><input class="btn btn-lg btn-primary w-100" type="submit" name="Submit"
+                  value="Submit Form"></div>
+            </div><!-- End: Form Submit -->
+        </form>
+      </div>
     </div>
-  </div>
-</section><!-- End: Setup Tabs -->
+  </section><!-- End: Setup Tabs -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script>
+    function toggleFieldsBasedOnRole() {
+        // Hide all role fields and make them not required
+        document.querySelectorAll('.role-fields').forEach(function(field) {
+            field.classList.add('d-none');
+            field.querySelectorAll('input, select').forEach(function(input) {
+                input.required = false; // This will remove the 'required' attribute
+            });
+        });
+
+        // Get the selected role and corresponding fields
+        var selectedRole = document.getElementById('role_select').value;
+        var fieldsToShow = document.getElementById(selectedRole + '-fields');
+
+        // Show the fields for the selected role and make them required
+        if (fieldsToShow) {
+            fieldsToShow.classList.remove('d-none');
+            fieldsToShow.querySelectorAll('input, select').forEach(function(input) {
+                input.required = true; // This will add the 'required' attribute
+            });
+        }
+    }
+
+    // Call this function initially to set up the form based on the default selected role
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleFieldsBasedOnRole();
+    });
+  </script>
+</body>

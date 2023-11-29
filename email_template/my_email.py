@@ -5,10 +5,11 @@ try:
     msg = MIMEMultipart()
     msg['From'] = 'refit_dev@sidneyshapiro.com'
     msg['To'] = 'refit_dev@sidneyshapiro.com'
-    msg['Subject'] = 'Email Confirmation Successful ! '
+    
+    msg['Subject'] = 'Email Confirmation Successful !'
     
     # Read the HTML content from your file
-    with open("email_template/my_templates/test_template.html", "r") as file:
+    with open("email_template/my_templates/welcome_template.html", "r") as file:
         html = file.read()
 
     # Attach the HTML content

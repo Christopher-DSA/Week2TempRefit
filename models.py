@@ -51,6 +51,7 @@ class User_Detail(Base):
     postal_code = Column(String)
     telephone = Column(String)
     user_id=Column(Integer,ForeignKey('User.user_id'), nullable= True)
+    suite_number=Column(String)
     
     user = relationship('User', backref='User_Detail')
 
@@ -281,6 +282,7 @@ class Technician_Offer(Base):
     token = Column(String)
 
     contractor = relationship('Contractor', backref='Technician_Offer')
+    technician = relationship('Technician', backref='Technician_Offer')
     technician = relationship('Technician', backref='Technician_Offer')
 
     def __repr__(self):
