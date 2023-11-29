@@ -125,20 +125,20 @@
                   </div>
                   <br>
                   <p>Fields with an asterisk (*) are required.</p>
-                  <div class="tab-pane" role="tabpanel" id="tab-2">
-                    <!-- Start: Form Input -->
-                    <div class="row">
-                      <div class="col">
-                        <div class="mb-4"><label class="form-label">First Name*</label><input class="form-control"
-                            type="text" required="" name="First Name"></div><!-- End: First Name -->
-                        <!-- Start: Last Name -->
-                        <div class="mb-4"><label class="form-label">LastName*</label><input class="form-control"
-                            type="text" required="" name="Last Name"></div><!-- End: Last Name -->
-                      </div>
-                    </div><!-- End: Form Input -->
-                  </div>
                   <div class="tab-pane" role="tabpanel" id="tab-5"></div>
                     <div id="technician-fields" class="role-fields d-none">
+                      <div class="tab-pane" role="tabpanel" id="tab-2">
+                        <!-- Start: Form Input -->
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-4"><label class="form-label">First Name*</label><input class="form-control"
+                                type="text" required name="First Name"></div><!-- End: First Name -->
+                            <!-- Start: Last Name -->
+                            <div class="mb-4"><label class="form-label">LastName*</label><input class="form-control"
+                                type="text" name="Last Name"></div><!-- End: Last Name -->
+                          </div>
+                        </div><!-- End: Form Input -->
+                      </div>
                       <br><h4>Only for Technician</h4>
                       <!-- Start: License -->
                       <div class="mb-4"><label class="form-label">ODS License*</label><input class="form-control"
@@ -153,32 +153,44 @@
                     <div class="row">
                       <div class="col">
                         <br><h4>Company Details (Only for Contractor)</h4><!-- Start: Company Name -->
+                        <div class="tab-pane" role="tabpanel" id="tab-2">
+                          <!-- Start: Form Input -->
+                          <div class="row">
+                            <div class="col">
+                              <div class="mb-4"><label class="form-label">First Name*</label><input class="form-control"
+                                  type="text" required="" name="First Name"></div><!-- End: First Name -->
+                              <!-- Start: Last Name -->
+                              <div class="mb-4"><label class="form-label">Last Name*</label><input class="form-control"
+                                  type="text" required="" name="Last Name"></div><!-- End: Last Name -->
+                            </div>
+                          </div><!-- End: Form Input -->
+                        </div>
                         <div class="mb-4"><label class="form-label">Company Name</label><input class="form-control"
-                            type="text" name="Company Name"></div><!-- End: Company Name -->
+                            type="text" name="Company Name" required=""></div><!-- End: Company Name -->
                         <!-- Start: Branch Number -->
                         <div class="mb-4"><label class="form-label">Company Branch Number</label><input
-                            class="form-control" type="text" name="Branch Number"></div><!-- End: Branch Number -->
+                            class="form-control" type="text" name="Branch Number" required=""></div><!-- End: Branch Number -->
                         <!-- Start: Phone Number -->
                         <div class="mb-4"><label class="form-label">Company Phone Number</label><input
-                            class="form-control" type="tel" name="Phone Number"></div><!-- End: Phone Number -->
+                            class="form-control" type="tel" name="Phone Number" required=""></div><!-- End: Phone Number -->
                         <!-- Start: ODS Email -->
                         <div class="mb-4"><label class="form-label">ODS Sheet Recipient Email</label><input
-                            class="form-control" type="email" name="Recipient Email"></div><!-- End: ODS Email -->
+                            class="form-control" type="email" name="Recipient Email" required=""></div><!-- End: ODS Email -->
                         <!-- Start: Company Address -->
                         <div class="mb-4"><label class="form-label">Company Address</label><input class="form-control"
-                            type="text" name="Company Address"></div><!-- End: Company Address -->
+                            type="text" name="Company Address" required=""></div><!-- End: Company Address -->
                         <!-- Start: Suite -->
                         <div class="mb-4"><label class="form-label">Apartment, Suite, etc.</label><input
                             class="form-control" type="text" name="Suite Number"></div><!-- End: Suite -->
                         <!-- Start: Company City -->
                         <div class="mb-4"><label class="form-label">City</label><input class="form-control" type="text"
-                            name="Company City"></div><!-- End: Company City -->
+                            name="Company City" required=""></div><!-- End: Company City -->
                         <!-- Start: Company Province -->
                         <div class="mb-4"><label class="form-label">Province</label><input class="form-control"
-                            type="text" name="Company Province"></div><!-- End: Company Province -->
+                            type="text" name="Company Province" required=""></div><!-- End: Company Province -->
                         <!-- Start: Company Postal -->
                         <div class="mb-4"><label class="form-label">Postal Code</label><input class="form-control"
-                            type="text" name="Postal Code" pattern="^[ABCEGHJKLMNPRSTVXY]\d[A-Z] \d[A-Z]\d$"
+                            type="text" required="" name="Postal Code" pattern="^[ABCEGHJKLMNPRSTVXY]\d[A-Z] \d[A-Z]\d$"
                             title="Please enter a valid Canadian postal code in the format A1A 1A1"></div>
                         <!-- End: Company Postal -->
                       </div>
@@ -202,23 +214,30 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script>
     function toggleFieldsBasedOnRole() {
-      console.log('Toggle function called'); // For debugging purposes
-      // Hide all role fields
-      document.querySelectorAll('.role-fields').forEach(function(field) {
-        field.classList.add('d-none');
-      });
+        // Hide all role fields and make them not required
+        document.querySelectorAll('.role-fields').forEach(function(field) {
+            field.classList.add('d-none');
+            field.querySelectorAll('input, select').forEach(function(input) {
+                input.required = false; // This will remove the 'required' attribute
+            });
+        });
 
-      // Get the selected role and corresponding fields
-      var selectedRole = document.getElementById('role_select').value;
-      var fieldsToShow = document.getElementById(selectedRole + '-fields');
+        // Get the selected role and corresponding fields
+        var selectedRole = document.getElementById('role_select').value;
+        var fieldsToShow = document.getElementById(selectedRole + '-fields');
 
-      console.log('Selected role: ' + selectedRole); // For debugging purposes
-
-      // Show the fields for the selected role
-      if(fieldsToShow) {
-        console.log('Fields to show: ' + fieldsToShow); // For debugging purposes
-        fieldsToShow.classList.remove('d-none');
-      }
+        // Show the fields for the selected role and make them required
+        if (fieldsToShow) {
+            fieldsToShow.classList.remove('d-none');
+            fieldsToShow.querySelectorAll('input, select').forEach(function(input) {
+                input.required = true; // This will add the 'required' attribute
+            });
+        }
     }
+
+    // Call this function initially to set up the form based on the default selected role
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleFieldsBasedOnRole();
+    });
   </script>
 </body>

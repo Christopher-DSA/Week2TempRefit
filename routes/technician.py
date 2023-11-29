@@ -1,7 +1,7 @@
 from flask import make_response, session, Blueprint
 from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer
 from functools import wraps
 import UUID_Generate
 technician = Blueprint('technician', __name__)
@@ -31,6 +31,7 @@ def technician_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+#Renders the technician dashboard
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required
