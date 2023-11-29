@@ -317,7 +317,7 @@ def account_setup():
         if selected_role == 'technician':
             CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License)
         elif selected_role == 'contractor':
-            CRUD.create(Contractor, False, user_id = current_user_id, Company_name = Company_name, status = 'active', name = first_name, branchID = Company_branch_number)
+            CRUD.create(Contractor, False, user_id = current_user_id, companyName = Company_name, status = 'active', name = first_name, branchId = Company_branch_number)
         elif selected_role == 'wholesaler':
             pass
         elif selected_role == 'admin':
