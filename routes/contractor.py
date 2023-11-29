@@ -7,6 +7,7 @@ from email.mime.text import MIMEText
 import UUID_Generate
 import datetime
 
+
 # Blueprint Configuration
 contractor = Blueprint('contractor', __name__)
 
@@ -121,15 +122,9 @@ def technician_managment():
                 "user_status":user_status,
                 "tech_user_id":tech_user_id,
                 "contactor_status":contactor_status,
-<<<<<<< HEAD
-                "firstname":tech_firstname,
-                "lastname":tech_lastname
-                }
-=======
                 "name":tech_name,
                 # "lastname":tech_lastname
                                         }
->>>>>>> 678bdf57d795b06333d7f07d2c1282014205d85a
                 technician_list.append(technician_obj)
         
     
@@ -163,7 +158,6 @@ def add_technician():
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
-        #sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
@@ -197,6 +191,15 @@ def add_technician():
             technician_obj = CRUD.read(Technician, user_id = user_obj.user_id, all=False)
 
 
+            CRUD.create(
+            Technician_Offer,
+                contractor_id=int(contractor_id),
+                technician_id=int(technician_obj.technician_id),
+                offer_status="Sent",
+                email_time_sent =datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                token = tech_token
+            )
+
             email_text = msg.as_string()
             #Send an email to the email address typed in the form.
             smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
@@ -214,22 +217,6 @@ def add_technician():
         return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
 
-@contractor.route('/delete/technician', methods=['POST'])
-def delete_technician():
-       if request.method == 'POST':
-            technician_id = request.form['technician_id']
-            print("technician_id")
-            print(technician_id)
-
-           
-            #CRUD.update(
-                 
-                # Technician_Offer,
-               # "offer_status",
-               # new = "deleted", 
-               #  #technician_id = XXX
-          #  )
-          # return render_template('contractor/dashboardcontractor.html')
 
 
 @contractor.route('/inventory', methods=['GET', 'POST'])
