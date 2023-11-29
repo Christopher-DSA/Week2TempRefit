@@ -1,9 +1,13 @@
 from flask import make_response, session, Blueprint
 from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag,Technician_Offer,Contractor
 from functools import wraps
 import UUID_Generate
+from datetime import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 technician = Blueprint('technician', __name__)
 
 def login_required(f):
@@ -66,14 +70,14 @@ def formtechnician():
     else:
         return render_template("technician/formtechnician.html")
     
-@technician.route("/dashboardtechnician")
-@login_required
-@technician_required
-def dashboardtechnician():
-    # Render the dashboard
-    print("Rendering dashboard")
-    user_current=session.get('user_id')
-    return render_template("technician/dashboardtechnician.html", user=user_current)
+
+
+
+
+
+
+
+
 
     
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
@@ -270,7 +274,85 @@ def confirm_technician():
             new = "Engaged", 
             token = token
         )
-        return render_template('Login Flow/login.html')
+
+        tech_obj = CRUD.read(
+            Technician_Offer,
+            token = token
+        )
+
+        technician_id = tech_obj.technician_id
+
+        CRUD.update(
+            Technician,
+            technician_id=technician_id,
+            attr="date_begin",
+            new=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        CRUD.update(Technician,
+                    technician_id = technician_id,
+                    attr = "user_status",
+                    new = "Active")
+        CRUD.update(Technician,
+                    technician_id = technician_id,
+                    attr = "contractor_status",
+                    new = "Engaged")
+        contractor = CRUD.read(
+            Contractor,
+            contractor_id = contractor_id,
+        )
+
+        contractor_user_detail_obj = CRUD.read(
+            User_Detail,
+            user_id = contractor.user_id
+        )
+
+        contractor_user_obj = CRUD.read(
+            User,
+            user_id = contractor.user_id
+        )
+
+        contractor_name = contractor_user_detail_obj.first_name
+        contractor_email = contractor_user_obj.email
+
+        technician_obj = CRUD.read(
+            Technician,
+            technician_id = technician_id,
+        )
+        print(f"technicain_id:{technician_id}")
+
+        technician_user_detail_obj = CRUD.read(
+            User_Detail,
+            user_id = technician_obj.user_id
+        )
+
+        technician_name = technician_user_detail_obj.first_name
+        
+        try:
+            msg = MIMEMultipart()
+            msg['From'] = 'refit_dev@sidneyshapiro.com'
+            msg['To'] = 'refit_dev@sidneyshapiro.com'
+            msg['Subject'] = "Technician Added Sucessfully"
+            body = f"Hello {contractor_name} technician {technician_name} has accepted your offer."
+            msg.attach(MIMEText(body, 'plain'))
+            
+            user_obj = CRUD.read(User,email = contractor_email, all = False)
+            print(f"user_id:")
+            print(user_obj)
+            print(f"user_id:{user_obj.user_id}")
+            technician_obj = CRUD.read(Technician, user_id = user_obj.user_id, all=False)
+
+            email_text = msg.as_string()
+            print(f"Message is {email_text}")
+            #Send an email to the email address typed in the form.
+            smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+            smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+            smtpObj.quit()  # Quitting the connection
+            print("Email sent successfully!")
+        except Exception as e:
+            print("Oops, something went wrong: ", e)
+    return render_template('Login Flow/login.html')
+
+   
            
 @technician.route('/equipment-info/<unique_id>', methods = ['GET', 'POST'])
 def equipment_info_page(unique_id):
