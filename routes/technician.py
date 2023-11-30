@@ -71,6 +71,7 @@ def formtechnician():
     else:
         return render_template("technician/formtechnician.html")
     
+
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required

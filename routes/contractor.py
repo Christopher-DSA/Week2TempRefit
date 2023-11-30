@@ -200,7 +200,57 @@ def add_technician():
         return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
 
+    # @contractor.route('/delete/technician', methods=['POST'])
+    # def delete_technician():
+    #    if request.method == 'POST':
+    #         user_id = request.form.get('technician_id')
+    #         technician_data = CRUD.read(Technician,user_id=user_id,all=False)
+    #         technician_id = technician_data.technician_id
 
+    #     # Update Technician_Offer Table      
+    #         CRUD.update(
+    #             Technician_Offer,
+    #             technician_id=technician_id,
+    #             attr= "offer_status",
+    #             new = "independent"
+    #             )
+            
+    #         CRUD.update(
+    #             Technician_Offer,
+    #             technician_id=technician_id,
+    #             contractor_id = None
+    #             )
+            
+    #         # Update Technician Table
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             attr="date_end",
+    #             new=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    #         )
+
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             contractor_id = None
+    #             )
+            
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             attr="contractor_status",
+    #             new="Inactive"
+    #         )
+            
+    #         CRUD.update(
+    #             Technician,
+    #             technician_id=technician_id,
+    #             attr="user_status",
+    #             new="Independent"
+    #         )
+        
+    #         return render_template('contractor/technician_details.html')
+    # return render_template('contractor/technician_details.html')
 
 @contractor.route('/inventory', methods=['GET', 'POST'])
 def inventory():
