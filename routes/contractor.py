@@ -5,7 +5,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import UUID_Generate
-import datetime
+from datetime import datetime
 
 
 # Blueprint Configuration
@@ -99,10 +99,10 @@ def technician_managment():
             contractor_user_id =session.get('user_id')
             contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
             contractor_id = contractor_data.contractor_id
-            technician_data = CRUD.read(Technician,contractor_id=contractor_id, all = True)
+            technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
             print("----------")
-            print(technician_data[0].user_id)
-            print(technician_data[1].user_id)
+            # print(technician_data[0].user_id)
+            # print(technician_data[1].user_id)
             technician_list = []
             for item in technician_data:
                 ods_licence_no = item.ods_licence_number
@@ -142,8 +142,8 @@ def add_technician():
     #     return render_template('contractor/add_technician.html',contractor=contractor_id)
     if request.method == 'POST':
         fname = request.form.get('fname')
-        mname = request.form.get('mname')
-        lname = request.form.get('lname')
+        # mname = request.form.get('mname')
+        # lname = request.form.get('lname')
         email = request.form.get('email')
         print(f"Email address{email}")
         """Get the contractor id from the session so that the technician 
@@ -158,24 +158,24 @@ def add_technician():
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
-        sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
         print("----------------")
         print(fname)
-        print(mname)
-        print(lname)
+        # print(mname)
+        # print(lname)
         print(email)
         print(fname_upper)
         print(cname_upper)
-        print(f"http://127.0.0.1:5000/register_technician/{contractor_id}")
+        
         print(user_id)
         print('technician_id: ', tech_id)
         print(sent_time)
         
         print("----------------")
         tech_token=UUID_Generate.technicianQRGenerator.generate_technician_unique_id()
-        
+        print(f"http://127.0.0.1:5000/register_technician/{tech_token}/{contractor_id}")
         try:
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
@@ -183,23 +183,6 @@ def add_technician():
             msg['Subject'] = "You've Been invited to work as a Technician"
             body = f"Hello {fname_upper} you have been invited to work as a Technician for {cname_upper}. If you accept the offer please click the link http://127.0.0.1:5000/register_technician/{tech_token}/{contractor_id} and create an account as a technician."
             msg.attach(MIMEText(body, 'plain'))
-            
-            user_obj = CRUD.read(User,email = email, all = False)
-            print(f"user_id:")
-            print(user_obj)
-            print(f"user_id:{user_obj.user_id}")
-            technician_obj = CRUD.read(Technician, user_id = user_obj.user_id, all=False)
-
-
-            CRUD.create(
-            Technician_Offer,
-                contractor_id=int(contractor_id),
-                technician_id=int(technician_obj.technician_id),
-                offer_status="Sent",
-                email_time_sent =datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                token = tech_token
-            )
-
             email_text = msg.as_string()
             #Send an email to the email address typed in the form.
             smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
@@ -254,3 +237,60 @@ def inventory():
                     dt.append(cylinder)
             print(dt)
     return render_template('contractor/inventory.html',dt=dt)
+
+@contractor.route('/delete/technician', methods=['POST'])
+def delete_technician():
+    if request.method == 'POST':
+        user_id = request.form.get('technician_id')
+        technician_data = CRUD.read(Technician,user_id=user_id,all=False)
+        technician_id = technician_data.technician_id
+        print(f'techncian_id: {technician_id}')
+        print(f'user_id: {user_id}')
+
+        # Update Technician_Offer Table      
+
+        CRUD.update(
+            Technician_Offer,
+            attr="offer_status",
+            new="Removed",
+            technician_id=technician_id
+        )
+
+        # CRUD.update(
+        #     Technician_Offer,
+        #     technician_id=technician_id,
+        #     attr="contractor_id",
+        #     new=0
+        # )
+        # CRUD.update(
+        #     Technician,
+        #     technician_id=technician_id,
+        #     attr="contractor_id",           
+        #     new = 0
+        #     )
+        # Update Technician Table
+        CRUD.update(
+            Technician,
+            technician_id=technician_id,
+            attr="date_end",
+            new=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        )
+
+             
+        CRUD.update(
+            Technician,
+            technician_id=technician_id,
+            attr="contractor_status",
+            new="Removed"
+        )
+        
+        CRUD.update(
+            Technician,
+            technician_id=technician_id,
+            attr="user_status",
+            new="Independent"
+        )
+    
+        flash('Technician deleted successfully!', 'success')
+        return redirect(url_for('contractor.technician_managment'))
+    return render_template('contractor/technician_details.html')
