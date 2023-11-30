@@ -447,6 +447,7 @@ def send_contractor_email(contractor_name, technician_name, contractor_email, of
         print("Email sent successfully!")
     except Exception as e:
         print("Oops, something went wrong: ", e)
+
            
 @technician.route('/equipment-info/<unique_id>', methods = ['GET', 'POST'])
 def equipment_info_page(unique_id):
