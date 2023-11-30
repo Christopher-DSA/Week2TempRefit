@@ -11,14 +11,27 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Contractor dashboard! {{user}}</h1>
-    <h2>Select an option:</h2>
+    <h1>Welcome to the Contractor dashboard! User_ID: {{user}}</h1>
+    <h2>These will be on the final Contractor Dashboard</h2>
+    <br>
+    <button onclick="location.href='/equipment common/qr-scan'">Scan QR Tag [READY4QA]</button>
+    <button onclick="location.href='/route-needs-to-be-made-still'">Refrigerant Inventory [To-Do]</button>
+    <button onclick="location.href='/technician_details'">Technician Management [In-Progress]</button>
+    <button onclick="location.href='/route-needs-to-be-made-still'">Leak/Loss Report [To-Do]</button>    
+    <button onclick="location.href='/route-needs-to-be-made-still'">Activity Logs [To-Do]</button>  
+    <button onclick="location.href='/buy-qr'">Buy QR Tags [To-Do]</button>
+
+    <br><br>
+    <h2>These will not be on the Final Contractor Dashboard (here for testing purposes)</h2>
+    <br>
     <button onclick="location.href='/add_technician'">Join My Team</button>
     <button onclick="showPurchaseTagsForm()">Purchase Tags</button>
     <button onclick="showReplaceTagsForm()">Replace Tags</button>
     <button onclick="showDeleteTechnicianForm()">Delete Technician Account</button>
     <button id="startButton">Reclaim/Recover</button>
-    <button onclick="location.href='/technician_details'">Technician Managment</button>    {{technicians}}
+    <button onclick="location.href='/technician_details'">Technician Managment</button>
+    <button onclick="location.href='/inventory'">Inventory Managment</button>
+
     <p id="scanResult"></p>
 
     <!-- Join My Team Form -->
