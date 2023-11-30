@@ -99,10 +99,10 @@ def technician_managment():
             contractor_user_id =session.get('user_id')
             contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
             contractor_id = contractor_data.contractor_id
-            technician_data = CRUD.read(Technician,contractor_id=contractor_id, all = True)
+            technician_data = CRUD.read(Technician,contractor_id=contractor_id,user_status="Active", all = True)
             print("----------")
-            print(technician_data[0].user_id)
-            print(technician_data[1].user_id)
+            # print(technician_data[0].user_id)
+            # print(technician_data[1].user_id)
             technician_list = []
             for item in technician_data:
                 ods_licence_no = item.ods_licence_number
@@ -254,3 +254,60 @@ def inventory():
                     dt.append(cylinder)
             print(dt)
     return render_template('contractor/inventory.html',dt=dt)
+
+@contractor.route('/delete/technician', methods=['POST'])
+def delete_technician():
+    if request.method == 'POST':
+        user_id = request.form.get('technician_id')
+        technician_data = CRUD.read(Technician,user_id=user_id,all=False)
+        technician_id = technician_data.technician_id
+        print(f'techncian_id: {technician_id}')
+        print(f'user_id: {user_id}')
+
+        # Update Technician_Offer Table      
+
+        CRUD.update(
+            Technician_Offer,
+            attr="offer_status",
+            new="Removed",
+            technician_id=technician_id
+        )
+
+        # CRUD.update(
+        #     Technician_Offer,
+        #     technician_id=technician_id,
+        #     attr="contractor_id",
+        #     new=0
+        # )
+        # CRUD.update(
+        #     Technician,
+        #     technician_id=technician_id,
+        #     attr="contractor_id",           
+        #     new = 0
+        #     )
+        # Update Technician Table
+        CRUD.update(
+            Technician,
+            technician_id=technician_id,
+            attr="date_end",
+            new=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        )
+
+             
+        CRUD.update(
+            Technician,
+            technician_id=technician_id,
+            attr="contractor_status",
+            new="Removed"
+        )
+        
+        CRUD.update(
+            Technician,
+            technician_id=technician_id,
+            attr="user_status",
+            new="Independent"
+        )
+    
+        flash('Technician deleted successfully!', 'success')
+        return redirect(url_for('contractor.technician_managment'))
+    return render_template('contractor/technician_details.html')
