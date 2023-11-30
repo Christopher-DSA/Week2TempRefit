@@ -247,15 +247,14 @@ def CylinderInfo(unique_id):
 @cylinder.route("/technician_history", methods=["GET", "POST"])
 def tech_history_history():
     if request.method == 'GET':
-        print("inside get for /technician-history")
+        print("inside get for /technician_history")
         current_tech_id = session.get('tech_id')
         
-        x = CRUD.read(Cylinder, all = True, technician_id = 84)
+        cylinders = CRUD.read(Cylinder, all = True, technician_id = current_tech_id)
                 
-        counter = 0
-        for i in x:
-            print(x[counter].cylinder_id)
-            print("Weight:", x[counter].current_refrigerant_weight)
-            counter += 1
+        #counter = 0
+        for cylinder in cylinders:
+            print(f"Cylinder ID: {cylinder.cylinder_id}")
+            print(f"Weight: {cylinder.current_refrigerant_weight}")
         
-        return render_template("technician/technician_history.html")
+        return render_template("technician/technician_history.html",  cylinders_list=cylinders)
