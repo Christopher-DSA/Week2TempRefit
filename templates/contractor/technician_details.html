@@ -52,6 +52,21 @@
                             <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
                             <button type="submit">Delete</button>
                         </form>
+                        <br>
+                        <form >
+                            <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                            <button type="submit">Archive</button>
+                        </form>
+                        <br>
+                        <form method="post" action="/equipment/ODS-history">
+                            <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                            <button type="submit">View ODS</button>
+                        </form>
+                        <br>
+                        <form method="post" action="/equipment/maintenance_history">
+                            <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                            <button type="submit">Maintanance History</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
