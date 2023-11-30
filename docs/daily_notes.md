@@ -332,3 +332,6 @@ SDS-924-Nithin: Completed task 2 without pushing data to db
 
 # November 22
 SDS-924-Nithin: Inventory managment for Contractor is complete. now the new html page pulls data of cylinder from db for all thechnicians working for the contractor
+
+# Nov 29 
+Yael : fixed timeout error on forgot password page . next step is succesfully rerouting to submit form ( right now receive "Method Not Allowed") / decoding token and submitting new form in same route ( if possible)
