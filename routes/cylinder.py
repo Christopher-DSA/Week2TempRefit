@@ -241,3 +241,21 @@ def CylinderInfo(unique_id):
         }
         
         return render_template("beta/cylinder_info.html", data=data, name = name_data)
+    
+    
+#Technician History Cylinders
+@cylinder.route("/technician_history", methods=["GET", "POST"])
+def tech_history_history():
+    if request.method == 'GET':
+        print("inside get for /technician-history")
+        current_tech_id = session.get('tech_id')
+        
+        x = CRUD.read(Cylinder, all = True, technician_id = 84)
+                
+        counter = 0
+        for i in x:
+            print(x[counter].cylinder_id)
+            print("Weight:", x[counter].current_refrigerant_weight)
+            counter += 1
+        
+        return render_template("technician/technician_history.html")
