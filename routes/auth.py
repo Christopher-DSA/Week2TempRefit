@@ -192,85 +192,96 @@ def forgot_password():
     elif request.method == "GET":
         return render_template("Login Flow/forgot.html")
     
+# route for validating token and redirecting to submit form 
+@auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
+@jwt_required(optional=True) 
+def redirect_to_reset_password(access_token): # access_token
+    print("in redirect , decoded token")
+    if request.method == "GET":
+        token= decode_token(access_token)
+        print(token)
 
-# auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
+        return redirect(url_for("/submit_reset_pass/<access_token>"))
+    
+
+# route for submitting password form 
+@auth.route("/submit_reset_pass/<access_token>", methods=["POST, GET"])
+def reset_password(access_token):
+    if request.method == "POST":
+        print("request POST")
+        password1 = request.form['Password1']
+        password2= request.form['Password2']
+        print("got both password1 and password2")
+        if password1 == password2:
+            print('pass matches')
+        	# Pull user email from session
+            current_user_email = session.get('user_email')
+        
+            # Hash password
+            message = {'password': password1}
+            hashed_password = generate_hash(message, secret_key)
+            print(hashed_password)
+            # update the password in the database
+            CRUD.update(User,'password',new= hashed_password, email=current_user_email)
+            # delete the jwt token now that new pass   has been created
+            CRUD.delete(User,'jwt_token', email=current_user_email)
+            		
+
+            		
+            
+        return redirect(url_for('auth.login'))
+    else:
+        return flash("Passwords do not match. PLease try again.")
+    return render_template("Login Flow/reset.html")
+        
+   
+
+    
+
 # @auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
 # @jwt_required(optional=True)
 # def reset_password(access_token):
-
+    
 #     if request.method == "POST":
+#         # adding the following line because it redirects to non existent route reset_password/ when user submits
+#         #redirect(url_for('auth.reset_password', access_token=access_token))
 
-#         decoded_token= decode_token(access_token)
-#         print(decoded_token)
-        
-#         print("request POST")
+#         print("entered reset pass function")
+#         # This block will be executed when the form is submitted
 #         password1 = request.form['Password1']
-#         password2= request.form['Password2']
+#         password2 = request.form['Password2']
 #         print("got both password1 and password2")
+
+#         # Check if passwords match
 #         if password1 == password2:
 #             print('pass matches')
-#         	# Pull user email from session
+#             # Pull user email from session
 #             current_user_email = session.get('user_email')
-        
+
 #             # Hash password
 #             message = {'password': password1}
-#             hashed_password = generate_hash(message, secret_key)
-#             print(hashed_password)
-#             # update the password in the database
-#             CRUD.update(User,'password',new= hashed_password, email=current_user_email)
-#             # delete the jwt token now that new pass   has been created
-#             CRUD.delete(User,'jwt_token', email=current_user_email)
-            		
+#             hashed_pass = generate_hash(message, secret_key)
+#             print(hashed_pass)
 
-            		
+#             # Update password in the database
+#             CRUD.update(User, 'password', new=hashed_pass, email=current_user_email)
 
-    #return redirect(url_for('auth.login'))
-    
+#             # Delete the jwt token in the database now that the new password has been set.
+#             CRUD.delete(User, 'jwt_token', email=current_user_email)
 
-@auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
-@jwt_required(optional=True)
-def reset_password(access_token):
-    
-    if request.method == "POST":
-        # adding the following line because it redirects to non existent route reset_password/ when user submits
-        #redirect(url_for('auth.reset_password', access_token=access_token))
+#             return redirect(url_for('auth.login'))
+#         else:
+#             print('passwords do not match')
+#             return redirect(url_for('auth.login'))
+#     else:
+#         # This block will be executed when the page is initially loaded
+#         decoded_token = decode_token(access_token)
+#         print("entered reset_password()")
+#         print(decoded_token)
 
-        print("entered reset pass function")
-        # This block will be executed when the form is submitted
-        password1 = request.form['Password1']
-        password2 = request.form['Password2']
-        print("got both password1 and password2")
-
-        # Check if passwords match
-        if password1 == password2:
-            print('pass matches')
-            # Pull user email from session
-            current_user_email = session.get('user_email')
-
-            # Hash password
-            message = {'password': password1}
-            hashed_pass = generate_hash(message, secret_key)
-            print(hashed_pass)
-
-            # Update password in the database
-            CRUD.update(User, 'password', new=hashed_pass, email=current_user_email)
-
-            # Delete the jwt token in the database now that the new password has been set.
-            CRUD.delete(User, 'jwt_token', email=current_user_email)
-
-            return redirect(url_for('auth.login'))
-        else:
-            print('passwords do not match')
-            return redirect(url_for('auth.login'))
-    else:
-        # This block will be executed when the page is initially loaded
-        decoded_token = decode_token(access_token)
-        print("entered reset_password()")
-        print(decoded_token)
-
-        user = get_jwt_identity()
-        print(user)
-        return render_template("Login Flow/reset.html")
+#         user = get_jwt_identity()
+#         print(user)
+#         return render_template("Login Flow/reset.html")
     
 
 
@@ -296,8 +307,8 @@ def reset_password(access_token):
 
 
  
- # create a separete route and see html reset # ignore this comment
-#@auth.route("/reset_password", methods=["POST"])
+ # create a separete route and see html reset 
+# @auth.route("/reset_password", methods=["POST"])
 # def reset_password():
 #     password1 = request.form['Password1']
 #     password2 = request.form['Password2']
@@ -336,16 +347,16 @@ def reset_password(access_token):
 #     'Authorization': 'Bearer <token>',
 # }
 
-def reset_password(access_token,access_token2,access_token3):
+# def reset_password(access_token,access_token2,access_token3):
 
 
  
    
 
-    print('1234')
-    if request.method == "GET" :
-        full_token = access_token + '.' + access_token2 + '.' + access_token3
-        print(full_token)
+#     print('1234')
+#     if request.method == "GET" :
+#         full_token = access_token + '.' + access_token2 + '.' + access_token3
+#         print(full_token)
            
         
     #     x =CRUD.read(User,'jwt_token',jwt_token=full_token)
@@ -363,25 +374,25 @@ def reset_password(access_token,access_token2,access_token3):
         # get submitted form data
         # password1 = request.form['Password1']
         # password2 = request.form['Password2']
-        # check if passwords match
-        if password1 == password2:
-            print('pass matches')
-            # pull user email from session
-            current_user_email = session['user_email']
+        # # check if passwords match
+        # if password1 == password2:
+        #     print('pass matches')
+        #     # pull user email from session
+        #     current_user_email = session['user_email']
 
-        # hash password
-        message ={'password' :password1}
+        # # hash password
+        # message ={'password' :password1}
     
-        hashed_pass =  generate_hash(message,secret_key)
-        print(hashed_pass)
-        # update password in database
-        CRUD.update(User,'password',new=hashed_pass,email=current_user_email)
-        return redirect(url_for('auth.login'))
+        # hashed_pass =  generate_hash(message,secret_key)
+        # print(hashed_pass)
+        # # update password in database
+        # CRUD.update(User,'password',new=hashed_pass,email=current_user_email)
+        # return redirect(url_for('auth.login'))
 
-        else:
-            print('passwords do not match')
+        # else:
+        #     print('passwords do not match')
 
-            return redirect(url_for('auth.login'))
+        #     return redirect(url_for('auth.login'))
        
 
 #HOME PAGE ROUTE (This doesn't need to be here. It's just an example.)
