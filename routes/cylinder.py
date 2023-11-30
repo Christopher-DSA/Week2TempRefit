@@ -201,7 +201,7 @@ def formcylinder():
             unique_cylinder_token = UUID_Generate.CylinderQRGenerator.generate_cylinder_unique_id(PK)
             
         print("Unique_Cylinder_Token: ", unique_cylinder_token)
-        CRUD.update(Cylinder, 'unique_url_id', new = unique_cylinder_token, cylinder_id = PK)
+        #CRUD.update(Cylinder, 'unique_url_id', new = unique_cylinder_token, cylinder_id = PK)
         return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token) #redirect(url_for('cylinder.cylinder'))
     else:
         return render_template("New Cylinder/new-cylinder.html")
@@ -241,3 +241,21 @@ def CylinderInfo(unique_id):
         }
         
         return render_template("beta/cylinder_info.html", data=data, name = name_data)
+    
+    
+#Technician History Cylinders
+@cylinder.route("/technician_history", methods=["GET", "POST"])
+def tech_history_history():
+    if request.method == 'GET':
+        print("inside get for /technician-history")
+        current_tech_id = session.get('tech_id')
+        
+        x = CRUD.read(Cylinder, all = True, technician_id = 84)
+                
+        counter = 0
+        for i in x:
+            print(x[counter].cylinder_id)
+            print("Weight:", x[counter].current_refrigerant_weight)
+            counter += 1
+        
+        return render_template("technician/technician_history.html")
