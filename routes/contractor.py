@@ -99,7 +99,7 @@ def technician_managment():
             contractor_user_id =session.get('user_id')
             contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
             contractor_id = contractor_data.contractor_id
-            technician_data = CRUD.read(Technician,contractor_id=contractor_id,user_status="Active", all = True)
+            technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
             print("----------")
             # print(technician_data[0].user_id)
             # print(technician_data[1].user_id)
