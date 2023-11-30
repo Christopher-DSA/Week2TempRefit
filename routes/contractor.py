@@ -205,13 +205,16 @@ def add_technician():
 @contractor.route('/inventory', methods=['GET', 'POST'])
 def inventory():
     if request.method == 'GET':
+            dt=[]
+            tech_ids = []
             contractor_user_id =session.get('user_id')
             contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
             contractor_id = contractor_data.contractor_id
-            # technician_data = CRUD.read(Technician,contractor_id=contractor_id, all = True)
-            temp_data=[84,108]
-            dt=[]
-            for i in temp_data:
+            technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
+            for i in technician_data:
+                tech_ids.append(i.technician_id)
+            
+            for i in tech_ids:
                 cylinder_data = CRUD.read(Cylinder,all = True,technician_id=i)
                 # print(cylinder_data[0].cylinder_id)
                 for cy in cylinder_data:
@@ -221,6 +224,8 @@ def inventory():
                     c_tareWeight = cy.cylinder_tare_weight
                     c_addedDate = cy.added_date
                     c_referigentId = cy.refrigerant_id
+                    data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId)
+                    c_refrigerant_name=data_refrigerant.refrigerant_name 
                     c_purchasedDate = cy.purchase_date
                     c_supplier = cy.supplier
 
@@ -231,6 +236,7 @@ def inventory():
                         "tareWeight": c_tareWeight,
                         "addedDate": c_addedDate,
                         "refrigerantId": c_referigentId,
+                        "refrigerant_name":c_refrigerant_name,
                         "purchasedDate": c_purchasedDate,
                         "supplier": c_supplier
                         }
