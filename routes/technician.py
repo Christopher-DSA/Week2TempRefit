@@ -1,7 +1,7 @@
 from flask import make_response, session, Blueprint
 from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer, Contractor
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor
 from functools import wraps
 import UUID_Generate
 from datetime import datetime
@@ -276,6 +276,8 @@ def signup_technician(token,id):
             print("Token: ", token)
     return render_template('beta/register_technician.html',dt=contractor_id,tk=token)
     
+
+
 @technician.route('/confirm_technician', methods=['GET', 'POST'])
 def confirm_technician():
     response = None
@@ -321,8 +323,8 @@ def confirm_technician():
             )
 
             contractor_user_detail_obj = CRUD.read(
-                User_Detail,
-                user_id = contractor.user_id
+                Contractor,
+                contractor_id = contractor_id
             )
 
             contractor_user_obj = CRUD.read(
@@ -330,7 +332,7 @@ def confirm_technician():
                 user_id = contractor.user_id
             )
 
-            contractor_name = contractor_user_detail_obj.first_name
+            contractor_name = contractor_user_detail_obj.name
             contractor_email = contractor_user_obj.email
 
             technician_obj = CRUD.read(
@@ -385,8 +387,8 @@ def confirm_technician():
             )
 
             contractor_user_detail_obj = CRUD.read(
-                User_Detail,
-                user_id=contractor.user_id
+                Contractor,
+                contractor_id = contractor_id
             )
 
             contractor_user_obj = CRUD.read(
@@ -394,7 +396,7 @@ def confirm_technician():
                 user_id=contractor.user_id
             )
 
-            contractor_name = contractor_user_detail_obj.first_name
+            contractor_name = contractor_user_detail_obj.name
             contractor_email = contractor_user_obj.email
 
             technician_obj = CRUD.read(
@@ -446,7 +448,6 @@ def send_contractor_email(contractor_name, technician_name, contractor_email, of
         print("Email sent successfully!")
     except Exception as e:
         print("Oops, something went wrong: ", e)
-
            
 @technician.route('/equipment-info/<unique_id>', methods = ['GET', 'POST'])
 def equipment_info_page(unique_id):
