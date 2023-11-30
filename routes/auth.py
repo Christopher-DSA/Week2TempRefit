@@ -201,12 +201,12 @@ def redirect_to_reset_password(access_token): # access_token
         token= decode_token(access_token)
         print(token)
 
-        return redirect(url_for("/submit_reset_pass/<access_token>"))
-    
+        return redirect(url_for("auth.submit_reset_pass"))
+    return render_template("Login Flow/reset.html")
 
 # route for submitting password form 
-@auth.route("/submit_reset_pass/<access_token>", methods=["POST, GET"])
-def reset_password(access_token):
+@auth.route("/submit_reset_pass", methods=["POST", "GET"])
+def reset_password():
     if request.method == "POST":
         print("request POST")
         password1 = request.form['Password1']
@@ -229,9 +229,9 @@ def reset_password(access_token):
 
             		
             
-        return redirect(url_for('auth.login'))
-    else:
-        return flash("Passwords do not match. PLease try again.")
+            return redirect(url_for('auth.login'))
+        else:
+            return flash("Passwords do not match. PLease try again.")
     return render_template("Login Flow/reset.html")
         
    
