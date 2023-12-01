@@ -16,7 +16,6 @@ from email.mime.text import MIMEText
 # FLASK_JWT imports for secure reset password tokens
 # from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
 from flask_jwt_extended import  jwt_required, get_jwt_identity,create_access_token,decode_token
-import requests
 
 #Load enviroment variables
 load_dotenv()
