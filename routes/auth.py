@@ -203,7 +203,7 @@ def redirect_to_reset_password(access_token): # access_token
         return redirect(url_for("auth.submit_reset_pass"))
     return render_template("Login Flow/reset.html")
 
-# route for submitting password form 
+# Route for submitting password form 
 @auth.route("/submit_reset_pass", methods=["POST", "GET"])
 def reset_password():
     if request.method == "POST":
