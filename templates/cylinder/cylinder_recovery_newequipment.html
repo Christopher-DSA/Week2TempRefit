@@ -1,43 +1,81 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recovery Form</title>
+  <link rel="icon" type="image/png" sizes="130x165"
+  href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-dark.png?h=1078ffc38902e5af3330798c0cfeab0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="130x165"
+    href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="icon" type="image/png" sizes="348x122"
+    href="/static/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
+  <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+  <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+  <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+  <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+  <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+  <link rel="stylesheet" href="/static/css/test.css">
+
+  <style>
+    .light-grey-background {
+        background-color: rgb(203, 203, 203); /* This is your light grey color */
+    }
+  </style>
+</head>
+
+<body>
 <section>
     <div class="d-flex justify-content-center mt-5">
       <div class="d-flex justify-content-center align-items-center">
         <div class="px-4">
-          <h1>Cylinder Recovery Form</h1>
+          <h1>Refrigerant Recovery Form</h1>
           <form id="cylinderRecoveryForm" onsubmit="submitForm(event)">
             <h2>Auto Populated Information</h2>
-            <label for="cylinderTagId" class="form-label">Cylinder Tag ID:</label>
-            <input type="text" id="cylinderTagId" name="cylinderTagId" value="CYL001" class="form-control mb-3"
+            <label for="cylinderTagId" class="form-label">Cylinder Tag ID (Will come from QR Tag):</label>
+            <input type="text" id="cylinderTagId" name="cylinderTagId" value="CYL001" class="form-control mb-3 light-grey-background"
               readonly>
 
-            <label for="refrigerantId" class="form-label">Refrigerant ID:</label>
-            <input type="text" id="refrigerantId" name="refrigerantId" value="REF001" class="form-control mb-3"
+            <label for="refrigerantId" class="form-label">Refrigerant ID [Refrigerant Name] (Might not be necessary, can put the name of the refrigerant here, which will be from the database.):</label>
+            <input type="text" id="refrigerantId" name="refrigerantId" value="REF001" class="form-control mb-3 light-grey-background"
               readonly>
 
-            <label for="technicianId" class="form-label">Technician ID:</label>
-            <input type="text" id="technicianId" name="technicianId" value="TECH001" class="form-control mb-3" readonly>
+            <label for="technicianId" class="form-label">Technician ID, Will come from the session variable 'tech_id' session.get('tech_id'):</label>
+            <input type="text" id="technicianId" name="technicianId" value="TECH001" class="form-control mb-3 light-grey-background" readonly>
 
-            <label for="cylinderType" class="form-label">Cylinder Type:</label>
-            <input type="text" id="cylinderType" name="cylinderType" value="TypeX" class="form-control mb-3">
+            <label for="cylinderType" class="form-label">Cylinder Type (Comes from QR Tag, eg. Recovery Cylinder, DOT Cylinder, Disposable Cylinder):</label>
+            <input type="text" id="cylinderType" name="cylinderType" value="TypeX" class="form-control mb-3 light-grey-background">
 
-            <label for="cylinderSize" class="form-label">Cylinder Size (lbs):</label>
-            <input type="number" id="cylinderSize" name="cylinderSize" value="50" class="form-control mb-3" readonly>
+            <label for="cylinderSize" class="form-label">Cylinder Size (lbs) (Based on what the manufacture puts on the label, refer to google doc tasks list for more information.):</label>
+            <input type="number" id="cylinderSize" name="cylinderSize" value="50" class="form-control mb-3 light-grey-background" readonly>
 
-            <label for="createDate" class="form-label">Create Date:</label>
+            <label for="createDate" class="form-label">Create Date (Should auto populate with the current date.):</label>
             <input type="date" id="createDate" name="createDate" value="" class="form-control mb-3" required>
 
-            <label for="currentRefrigerantWeight" class="form-label">Current Refrigerant Weight (lbs):</label>
+            <label for="currentRefrigerantWeight" class="form-label">Current Refrigerant Weight (lbs) (Will come from the QR-Tag):</label>
             <input type="number" id="currentRefrigerantWeight" name="currentRefrigerantWeight" value="25"
-              class="form-control mb-3" readonly>
+              class="form-control mb-3 light-grey-background" readonly>
 
-            <label for="refrigerantWeightAfterService" class="form-label">Refrigerant Weight After Service
-              (lbs):</label>
-            <input type="number" id="refrigerantWeightAfterService" name="refrigerantWeightAfterService" value=""
-              class="form-control" readonly>
             <br>
-            <label for="refrigerantWeightReclaimed" class="form-label">Refrigerant Weight Reclaimed (lbs):</label>
+            <h1>User Input</h1>
+            <label for="refrigerantWeightReclaimed" class="form-label">Refrigerant Weight Reclaimed (lbs) [This is the only field the user should have to fill out. All other data including the date should be auto-populated] User should be able to select with they want to enter it in Oz or lbs:</label>
             <input type="number" id="refrigerantWeightReclaimed" name="refrigerantWeightReclaimed" value=""
               class="form-control" required>
-
+            <br>
+            <h2>Updated Refrigerant Weight based on removed refrigerant from cylinder</h2>
+            <label for="refrigerantWeightAfterService" class="form-label">Refrigerant Weight After Service 
+              (lbs):</label>
+            <input type="number" id="refrigerantWeightAfterService" name="refrigerantWeightAfterService" value=""
+              class="form-control light-grey-background" readonly>
+        
             <div class="col">
               <div class="d-grid gap-4 mx-auto mt-3 mb-5">
                 <button type="submit" class="btn btn-primary btn-lg">Submit</button>
@@ -49,7 +87,8 @@
       </div>
     </div>
   </section>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
   <script>
     document.getElementById('createDate').value = new Date().toISOString().split('T')[0];
 
