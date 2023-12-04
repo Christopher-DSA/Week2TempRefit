@@ -370,17 +370,18 @@ def refrigerant_type(refrigerant):
                     c_id = cy.cylinder_id
                     c_addedDate = cy.added_date
                     c_referigentId = cy.refrigerant_id
-                    data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId,refrigerant_name=ref_name,all=False)
+                    data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId)
                     c_refrigerant_name=data_refrigerant.refrigerant_name
                     c_supplier = cy.supplier
 
-                    cylinder= {
-                        "technician_id": c_techId,
-                        "id": c_id,
-                        "addedDate": c_addedDate,
-                        "refrigerantId": c_referigentId,
-                        "refrigerant_name":c_refrigerant_name,
-                        "supplier": c_supplier
-                        }
-                    dt.append(cylinder)
+                    if c_refrigerant_name == ref_name:
+                        cylinder= {
+                            "technician_id": c_techId,
+                            "id": c_id,
+                            "addedDate": c_addedDate,
+                            "refrigerantId": c_referigentId,
+                            "refrigerant_name":c_refrigerant_name,
+                            "supplier": c_supplier
+                            }
+                        dt.append(cylinder)
     return render_template('contractor/refregerant_inventory.html',dt=dt)
