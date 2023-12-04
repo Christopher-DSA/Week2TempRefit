@@ -6,7 +6,7 @@ try:
     msg['From'] = 'refit_dev@sidneyshapiro.com'
     msg['To'] = 'refit_dev@sidneyshapiro.com'
     
-    msg['Subject'] = 'Email Confirmation Successful !'
+    msg['Subject'] = 'Welcome!'
     
     # Read the HTML content from your file
     with open("email_template/my_templates/welcome_template.html", "r") as file:
