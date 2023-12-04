@@ -1,9 +1,13 @@
 from flask import make_response, session, Blueprint
 from flask import session
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor
 from functools import wraps
 import UUID_Generate
+from datetime import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 technician = Blueprint('technician', __name__)
 
 def login_required(f):
@@ -67,6 +71,7 @@ def formtechnician():
     else:
         return render_template("technician/formtechnician.html")
     
+
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required
@@ -76,9 +81,10 @@ def dashboardtechnician_two():
     user_current=session.get('user_id')
     return render_template("technician/dashboardtechnician.html", user=user_current)
 
-    
+
+#Register new equipment QR tag
 @technician.route('/equipment/equipment_create', methods = ['GET', 'POST'])
-def equipment_create():
+def equipment_create_QR():
     print("inside equipment_create")
     if request.method == 'POST':
         print("inside post")
@@ -175,9 +181,21 @@ def remove_qr():
 def charge():
     return render_template('equipment/charge-equipment.html')
 
-@technician.route('/equipment/repair_ODS_Sheet')
-def repair_ODS_Sheet():
-    return render_template('equipment/repair_ODS_Sheet.html')
+#REPAIR MAINTENANCE LOG FOR EQUIPMENT.
+@technician.route('/equipment/repair_ODS_Sheet', methods = ['GET', 'POST'])
+def repair_ODS_Sheet_New():
+    if request.method == 'GET':
+        #Get data about unit to pass on to placeholder fields on the next page.
+        current_tag_url = session.get('unique_equipment_token')
+        tag_data = CRUD.read(Tag, all = False, tag_url = str(current_tag_url))
+        x = tag_data.unit_id
+        print("x: ", x)
+        data = CRUD.read(Unit, all = False, unit_id = x)
+        my_dict = {
+            'type_of_refrigerant' : data.type_of_refrigerant,
+            'factory_charge_amount' : data.factory_charge_amount
+        }
+        return render_template('equipment/repair_ODS_Sheet.html', data = my_dict)
 
 @technician.route('/equipment common/qr-scan')
 def qr_scan():
@@ -233,6 +251,7 @@ def select_history_type_tech_cylinder():
 def ODS_history():
 
     if request.method == 'GET':
+        
         return render_template('equipment/ODS-history.html')
     else:
         print('error')
@@ -257,21 +276,179 @@ def signup_technician(token,id):
             print("Token: ", token)
     return render_template('beta/register_technician.html',dt=contractor_id,tk=token)
     
+
+
 @technician.route('/confirm_technician', methods=['GET', 'POST'])
 def confirm_technician():
+    response = None
+
     if request.method == 'POST':
         contractor_id = request.form['dt']
+        response = request.form['action']
         token = request.form['tk']
         print("Contractor ID: ", contractor_id)
         print("Token: ", token)
         
-        CRUD.update(
+        if response == 'Accept':
+            CRUD.update(
+                Technician_Offer,
+                "offer_status",
+                new = "Engaged", 
+                token = token
+            )
+
+            tech_obj = CRUD.read(
+                Technician_Offer,
+                token = token
+            )
+
+            technician_id = tech_obj.technician_id
+
+            CRUD.update(
+                Technician,
+                technician_id=technician_id,
+                attr="date_begin",
+                new=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            CRUD.update(Technician,
+                        technician_id = technician_id,
+                        attr = "user_status",
+                        new = "Active")
+            CRUD.update(Technician,
+                        technician_id = technician_id,
+                        attr = "contractor_status",
+                        new = "Engaged")
+            contractor = CRUD.read(
+                Contractor,
+                contractor_id = contractor_id,
+            )
+
+            contractor_user_detail_obj = CRUD.read(
+                Contractor,
+                contractor_id = contractor_id
+            )
+
+            contractor_user_obj = CRUD.read(
+                User,
+                user_id = contractor.user_id
+            )
+
+            contractor_name = contractor_user_detail_obj.name
+            contractor_email = contractor_user_obj.email
+
+            technician_obj = CRUD.read(
+                Technician,
+                technician_id = technician_id,
+            )
+            print(f"technicain_id:{technician_id}")
+
+            technician_user_detail_obj = CRUD.read(
+                User_Detail,
+                user_id = technician_obj.user_id
+            )
+
+            technician_name = technician_user_detail_obj.first_name
+            print("begin)")
+            print("offer status: ", tech_obj.offer_status)
+            send_contractor_email(contractor_name, technician_name, contractor_email, 'Engaged')
+            print("end")
+
+        elif response == 'Decline':
+
+            tech_obj = CRUD.read(
             Technician_Offer,
-            "offer_status",
-            new = "Engaged", 
-            token = token
+            token=token
         )
-        return render_template('Login Flow/login.html')
+
+            technician_id = tech_obj.technician_id
+
+            CRUD.update(Technician,
+                        technician_id=technician_id,
+                        attr="user_status",
+                        new="Inactive")
+            CRUD.update(
+                Technician_Offer,
+                "offer_status",
+                new = "Rejected", 
+                token = token
+            )
+            CRUD.update(Technician,
+                        technician_id=technician_id,
+                        attr="date_end",
+                        new=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+            CRUD.update(Technician,
+                        technician_id=technician_id,
+                        attr="contractor_status",
+                        new="Rejected")
+
+            contractor = CRUD.read(
+                Contractor,
+                contractor_id=contractor_id,
+            )
+
+            contractor_user_detail_obj = CRUD.read(
+                Contractor,
+                contractor_id = contractor_id
+            )
+
+            contractor_user_obj = CRUD.read(
+                User,
+                user_id=contractor.user_id
+            )
+
+            contractor_name = contractor_user_detail_obj.name
+            contractor_email = contractor_user_obj.email
+
+            technician_obj = CRUD.read(
+                Technician,
+                technician_id=technician_id,
+            )
+            print(f"technician_id:{technician_id}")
+
+            technician_user_detail_obj = CRUD.read(
+                User_Detail,
+                user_id=technician_obj.user_id
+            )
+
+            technician_name = technician_user_detail_obj.first_name
+            print("offer status: ", tech_obj.offer_status)
+        
+            send_contractor_email(contractor_name, technician_name, contractor_email, "Rejected")
+
+            return render_template('Login Flow/login.html')
+    return render_template('Login Flow/login.html')
+
+
+def send_contractor_email(contractor_name, technician_name, contractor_email, offer_status):
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = 'refit_dev@sidneyshapiro.com'
+        msg['To'] = 'refit_dev@sidneyshapiro.com'
+        
+
+        if offer_status == "Engaged":
+            msg['Subject'] = "Technician Added Successfully"
+            body = f"Hello {contractor_name} technician {technician_name} has accepted your offer."
+        elif offer_status == "Rejected":
+            msg['Subject'] = f"Technician has rejected your offer."
+            body = f"Hello {contractor_name} technician {technician_name} has rejected your offer."
+
+        msg.attach(MIMEText(body, 'plain'))
+
+        user_obj = CRUD.read(User, email=contractor_email, all=False)
+        technician_obj = CRUD.read(Technician, user_id=user_obj.user_id, all=False)
+
+        email_text = msg.as_string()
+
+        smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)
+        smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')
+        smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+        smtpObj.quit()
+
+        print("Email sent successfully!")
+    except Exception as e:
+        print("Oops, something went wrong: ", e)
+
            
 @technician.route('/equipment-info/<unique_id>', methods = ['GET', 'POST'])
 def equipment_info_page(unique_id):
@@ -287,7 +464,12 @@ def equipment_info_page(unique_id):
         x = tag_data.unit_id
         print("x: ", x)
         data = CRUD.read(Unit, all = False, unit_id = x)
-                        
+        
+        #remove previous, if any, unique_equipment_token from session.
+        session.pop('unique_equipment_token', None)
+        #save tag url to session.
+        session['unique_equipment_token'] = str(unique_id)
+        
         tech_id = session.get('tech_id')
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
