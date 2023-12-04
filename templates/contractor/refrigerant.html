@@ -33,13 +33,17 @@
             <tr>
                 <th>Refrigerant</th>
                 <th>Quantity</th>
+                <!-- <th>Logs</th> -->
             </tr>
         </thead>
         <tbody>
             {% for refrigerant, count in unique_refrigerants_dict.items() %}
-            <tr>
-                <td>{{ refrigerant }}</td>
-                <td>{{ count }}</td>
+            <tr onclick="location.href='/reftype/{{refrigerant}}'">
+                 <!-- <td><a onclick="location.href='/inventory'">{{refrigerant}}</a></td>
+                <td><a href='/inventory'>{{count}}</a></td>  -->
+                <td>{{refrigerant}}</td>
+                <td>{{count}}</td>
+                <!-- <td><button type="button" onclick="location.href='/inventory'">{{refrigerant}}</button></td> -->
             </tr>
             {% endfor %}
         </tbody>
