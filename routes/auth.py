@@ -142,6 +142,16 @@ def logout():
     #Send user to login page
     return redirect(url_for('auth.login'))
 
+
+##NEW DASHBOARD ROUTE
+@auth.route('/new-dashboard', methods=['GET', 'POST'])
+def new_dashboard():
+    if request.method == 'GET':
+        first_name = session.get('user_first_name')
+        return render_template('technician/new-dashboard.html', user_first_name=first_name)
+    elif request.method == 'POST':
+        return render_template('technician/new-dashboard.html')
+
 #FORGOT PASSWORD ROUTE
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
@@ -203,7 +213,7 @@ def redirect_to_reset_password(access_token): # access_token
         return redirect(url_for("auth.submit_reset_pass"))
     return render_template("Login Flow/reset.html")
 
-# route for submitting password form 
+# Route for submitting password form 
 @auth.route("/submit_reset_pass", methods=["POST", "GET"])
 def reset_password():
     if request.method == "POST":

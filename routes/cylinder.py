@@ -244,7 +244,7 @@ def CylinderInfo(unique_id):
     
     
 #Technician History Cylinders
-@cylinder.route("/technician_history", methods=["GET", "POST"])
+@cylinder.route("/technician_cylinder_history", methods=["GET", "POST"])
 def tech_history_history():
     if request.method == 'GET':
         print("inside get for /technician_history")
@@ -257,4 +257,4 @@ def tech_history_history():
             print(f"Cylinder ID: {cylinder.cylinder_id}")
             print(f"Weight: {cylinder.current_refrigerant_weight}")
         
-        return render_template("technician/technician_history.html",  cylinders_list=cylinders)
+        return render_template("technician/technician_cylinder_history.html",  cylinders_list=cylinders)

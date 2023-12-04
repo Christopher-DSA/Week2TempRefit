@@ -219,7 +219,7 @@ def equipment_page():
 ##################################################
 #Make a selection between unit and cylinder
 @technician.route('/choose-equipment-history-type', methods = ['GET', 'POST'])
-def choose_equipment_type():
+def choose_equipment_history_type():
         if request.method == 'GET':
             return render_template('technician/select-history-type.html')
         else:
