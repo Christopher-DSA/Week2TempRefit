@@ -14,6 +14,7 @@ from routes.auth import auth
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager #New package, you will need to pip install flask-jwt-extended.
+from datetime import timedelta
 
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ app.config["REMEMBER_COOKIE_HTTPONLY"] = True
 
 #Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
 jwt = JWTManager(app)
 
 
