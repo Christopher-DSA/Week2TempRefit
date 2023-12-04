@@ -258,3 +258,8 @@ def tech_history_history():
             print(f"Weight: {cylinder.current_refrigerant_weight}")
         
         return render_template("technician/technician_cylinder_history.html",  cylinders_list=cylinders)
+    
+    @cylinder.route("/refrigerant_recovery", methods=["GET", "POST"])
+    def recover_refrigerant():
+        if request.method == 'GET':
+            return render_template("cylinder/cylinder_recovery_newequipment.html")
