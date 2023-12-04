@@ -30,9 +30,7 @@ secret_key = os.getenv('HASH_SECRET')
 auth = Blueprint('auth', __name__)
 
 
-#Setup the Flask-JWT-Extended extension
-# app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
-# jwt = JWTManager(app)
+
 
 #This is just an example function. Not Working.
 def email():
@@ -157,21 +155,25 @@ def new_dashboard():
 def forgot_password():
     print("In forgot_password()")
     if request.method == "POST":
-        print("POST request for forgot_password()")
-        current_user_email = request.form.get('Email') # assuming username is the same as email
-        print(current_user_email)
-        # find user id for reset password token
-        #CRUD.read(User, email=current_user_email)
-        # token will expire after 24 hours
-        #expires = datetime.timedelta(hours=24)
-        # generate reset   password token
-        access_token = create_access_token(identity=current_user_email) #,expires_delta=
-        print(access_token)
-        # add access token to user's records 
-        
-        CRUD.update(User,'jwt_token',new=access_token,email=current_user_email)
-        # Embed the token in the reset password link
-        #my_link= "http://172.16.224.205:5000/reset_password/{access_token}".format(access_token=access_token)
+        try:
+            print("POST request for forgot_password()")
+            current_user_email = request.form.get('Email') # assuming username is the same as email
+            print(current_user_email)
+            # find user id for reset password token
+            #CRUD.read(User, email=current_user_email)
+            # token will expire after 24 hours
+            #expires = datetime.timedelta(hours=24)
+            # generate reset   password token
+            access_token = create_access_token(identity=current_user_email) #,expires_delta=
+            print(access_token)
+            # add access token to user's records 
+
+            CRUD.update(User,'jwt_token',new=access_token,email=current_user_email)
+            # Embed the token in the reset password link
+            #my_link= "http://172.16.224.205:5000/reset_password/{access_token}".format(access_token=access_token)
+
+        except Exception as e:
+             print("Error updating user record:", e)
         url_form = url_for('auth.reset_password', access_token=access_token, _external=True)
         try:
 
@@ -202,6 +204,7 @@ def forgot_password():
         return render_template("Login Flow/forgot.html")
     
 # route for validating token and redirecting to submit form 
+
 @auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
 @jwt_required(optional=True) 
 def redirect_to_reset_password(access_token): # access_token
@@ -243,47 +246,62 @@ def reset_password():
             return flash("Passwords do not match. PLease try again.")
     return render_template("Login Flow/reset.html")
         
+# @auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
+# @jwt_required(optional=True) 
+# def redirect_to_reset_password(access_token): # access_token
+#     print("in redirect , decoded token")
+#     if request.method == "GET":
+#         token= decode_token(access_token)
+#         print(token)
+
+#     return redirect(url_for("auth.submit_reset_pass"))
+#     # return render_template("Login Flow/reset.html")
+
+# # route for submitting password form 
+# @auth.route("/submit_reset_pass", methods=["POST", "GET"])
+# def submit_reset_pass():
+#     if request.method == "POST":
+#         print("request POST")
+#         password1 = request.form['Password1']
+#         password2= request.form['Password2']
+#         print("got both password1 and password2")
+#         if password1 == password2:
+#             print('pass matches')
+#         	# Pull user email from session
+#             current_user_email = session.get('user_email')
+        
+#             # Hash password
+#             message = {'password': password1}
+#             hashed_password = generate_hash(message, secret_key)
+#             print(hashed_password)
+#             # update the password in the database
+#             CRUD.update(User,'password',new= hashed_password, email=current_user_email)
+#             # delete the jwt token now that new pass   has been created
+#             CRUD.delete(User,'jwt_token', email=current_user_email)
+            		
+
+            		
+            
+#             return redirect(url_for('auth.login'))
+        
+#         else:
+#             return flash("Passwords do not match. PLease try again.")
+#     return render_template("Login Flow/reset.html")
+        
    
 
     
 
-# @auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
-# @jwt_required(optional=True)
-# def reset_password(access_token):
-    
-#     if request.method == "POST":
-#         # adding the following line because it redirects to non existent route reset_password/ when user submits
-#         #redirect(url_for('auth.reset_password', access_token=access_token))
+@auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
+#@jwt_required(optional=True)
+def reset_password(access_token):
+    decoded_token=decode_token(access_token)
+    print(decoded_token)
 
-#         print("entered reset pass function")
-#         # This block will be executed when the form is submitted
-#         password1 = request.form['Password1']
-#         password2 = request.form['Password2']
-#         print("got both password1 and password2")
+            
+        
+#     if request.method == "GET":
 
-#         # Check if passwords match
-#         if password1 == password2:
-#             print('pass matches')
-#             # Pull user email from session
-#             current_user_email = session.get('user_email')
-
-#             # Hash password
-#             message = {'password': password1}
-#             hashed_pass = generate_hash(message, secret_key)
-#             print(hashed_pass)
-
-#             # Update password in the database
-#             CRUD.update(User, 'password', new=hashed_pass, email=current_user_email)
-
-#             # Delete the jwt token in the database now that the new password has been set.
-#             CRUD.delete(User, 'jwt_token', email=current_user_email)
-
-#             return redirect(url_for('auth.login'))
-#         else:
-#             print('passwords do not match')
-#             return redirect(url_for('auth.login'))
-#     else:
-#         # This block will be executed when the page is initially loaded
 #         decoded_token = decode_token(access_token)
 #         print("entered reset_password()")
 #         print(decoded_token)
@@ -291,6 +309,68 @@ def reset_password():
 #         user = get_jwt_identity()
 #         print(user)
 #         return render_template("Login Flow/reset.html")
+    
+    
+    #if request.method == "POST":
+        
+
+    try:   
+        # tok= requests.args.get(access_token)     
+        # print("tok=",tok)
+        decoded_token = decode_token(access_token)
+        print("entered reset_password()")
+        print(decoded_token)
+        session['decoded_token'] = decoded_token
+        
+    #if access_token matches database jwt , redirect to reset password function
+
+    # user = get_jwt_identity()
+    # print(user)
+
+        print("entered reset pass function")
+    except Exception as e:
+        print("error")
+    return redirect('/success')
+@auth.route('/success', methods=['POST', 'GET']) 
+def save_new_pass():
+
+    if request.method == "POST":
+    # This block will be executed when the form is submitted
+        password1 = request.form['Password1']
+        print( "got pass1")
+        password2 = request.form['Password2']
+    # adding the following line because it redirects to non existent route reset_password/ when user submits
+    #redirect(url_for('auth.reset_password', access_token=access_token)) return render_template("Login Flow/reset.html")
+        print("got both password1 and password2")
+
+    # Check if passwords match
+        if password1 == password2:
+            print('pass matches')
+            current_user_email = session.get('decoded_token', {}).get('sub')
+        # Pull user email from session
+        #current_user_email = session.get('user_email')
+        # Hash password
+            message = {'password': password1}
+            hashed_pass = generate_hash(message, secret_key)
+            print(hashed_pass)
+        # Update password in the database
+            CRUD.update(User, 'password', new=hashed_pass, email=current_user_email)
+        
+            return redirect(url_for('auth.login'))
+    return render_template("Login Flow/reset.html")
+    # else:
+    #     print('passwords do not match')
+    #     return redirect(url_for('auth.reset_password', access_token=access_token))
+    # return render_template("Login Flow/reset.html")
+    # # else:
+    #     # This block will be executed when the page is initially loaded
+    #     decoded_token = decode_token(access_token)
+    #     print("entered reset_password()")
+    #     print(decoded_token)
+
+    #     user = get_jwt_identity()
+    #     print(user)
+     
     
 
 
