@@ -218,7 +218,7 @@ def redirect_to_reset_password(access_token): # access_token
 
 # Route for submitting password form 
 @auth.route("/submit_reset_pass", methods=["POST", "GET"])
-def reset_password():
+def reset_password_new():
     if request.method == "POST":
         print("request POST")
         password1 = request.form['Password1']
