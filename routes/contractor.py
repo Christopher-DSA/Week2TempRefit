@@ -141,9 +141,6 @@ def add_technician():
     #     contractor_id = contractor_data.contractor_id
     #     return render_template('contractor/add_technician.html',contractor=contractor_id)
     if request.method == 'POST':
-        fname = request.form.get('fname')
-        # mname = request.form.get('mname')
-        # lname = request.form.get('lname')
         email = request.form.get('email')
         print(f"Email address{email}")
         """Get the contractor id from the session so that the technician 
@@ -153,16 +150,17 @@ def add_technician():
         contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
         user_data = CRUD.read(User,email=email, all = False)
         user_id = user_data.user_id
+        details = CRUD.read(User_Detail,user_id=user_data.user_id, all = False)
         technician_data = CRUD.read(Technician,user_id=user_id, all = False)
         tech_id = technician_data.technician_id
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
         sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        fname = details.first_name
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
         print("----------------")
-        print(fname)
         # print(mname)
         # print(lname)
         print(email)

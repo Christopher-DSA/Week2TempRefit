@@ -4,6 +4,7 @@ from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 import UUID_Generate
 import pandas as pd
+from datetime import datetime
 
 cylinder = Blueprint('cylinder', __name__)
 
@@ -258,3 +259,57 @@ def tech_history_history():
             print(f"Weight: {cylinder.current_refrigerant_weight}")
         
         return render_template("technician/technician_cylinder_history.html",  cylinders_list=cylinders)
+
+# @cylinder.route('/datacapture',methods=['POST'])
+# def capturedata():
+#     data=request.json
+#     cylinder_id = data.get('cylinder_id')
+#     return redirect(url_for('test1', data=data))
+   
+# # @cylinder.route("/refrigerant_recovery", methods=["GET", "POST"])
+# # def recover_refrigerant():
+    
+# #     if request.method == 'GET':
+# #         data = request.json
+# #         return render_template("cylinder/cylinder_recovery_newequipment.html", data = data)
+# @cylinder.route("/refrigerant_recovery", methods=["GET"])
+
+# def test1(i):
+#     # if request.method == 'GET':
+#     # cylinder_id = request.args.get('cylinder_id')
+#     print(f"Cylinder id is {i}")
+#     return render_template("cylinder/cylinder_recovery_newequipment.html", data = i)
+
+@cylinder.route("/refrigerant_recovery/<int:id>", methods=["GET"])
+def recover_refrigerant(id):
+    if request.method == 'GET':
+        print(f"Cylinder id is {id}")
+
+        tag_data = CRUD.read(Tag, all = False, cylinder_id = id)
+        tag_num = tag_data.tag_number
+
+        cyl_data = CRUD.read(Cylinder, all = False, cylinder_id = id)
+        refrigerant_id = cyl_data.refrigerant_id
+        technician_id = cyl_data.technician_id
+        cylinder_size = cyl_data.cylinder_size
+        type_id = cyl_data.cylinder_type_id
+        weight = cyl_data.current_refrigerant_weight
+
+        refrigerant = CRUD.read(Refrigerant, all = False, refrigerant_id = refrigerant_id)
+        refrigerant = refrigerant.refrigerant_name
+
+        type_data = CRUD.read(Cylinder_Type, all = False, cylinder_type_id = type_id)
+        cylinder_type = type_data.type_name
+
+        current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        dt={
+            "tag": tag_num,
+            "name": refrigerant,
+            "tech_id": technician_id,
+            "size": cylinder_size,
+            "date": current_date,
+            "type": cylinder_type,
+            "weight": weight
+        }
+        return render_template("cylinder/cylinder_recovery_newequipment.html",dt=dt)

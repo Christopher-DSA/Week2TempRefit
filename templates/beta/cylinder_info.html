@@ -28,13 +28,46 @@ Information for Scanned Cylinder
 
 
                 <td>
-                    
-                    <button class="btn btn-outline btn-info" onclick="location.href='/recovery/recovery-ods-sheet'">Recover Refrigerant</button>
+                    <!-- <button id="recoveryButton" class="btn btn-outline btn-info" >Recover Refrigerant</button> -->
+                    <button class="btn btn-outline btn-info" onclick="location.href='/refrigerant_recovery/{{data.cylinder_id}}'" >Recover Refrigerant</button>
                     <button class="btn btn-outline btn-success" onclick="location.href='/charge-equipment'">Charge Equipment</button>
                     <button class="btn btn-outline btn-warning" onclick="location.href='/remove-qrtag'">Remove QR Tag</button>
                 </td>
 
             </tr>
     <body>
-</table>     
+</table>
+<!-- <script>
+    document.getElementById("recoveryButton").addEventListener("click", function() {
+        var url =window.location.pathname;
+        var tag = url.substring(url.lastIndexOf('/') + 1);
+    var dataToSend = {
+        cylinder_id: "{{data.cylinder_id}}",
+        cylinder_size: "{{data.cylinder_size}}",
+        cylinder_type: "{{name.cylinder_type}}",
+        refrigerant_name: "{{name.refrigerant_name}}",
+        supplier: "{{data.supplier}}",
+        current_refrigerant_weight: "{{data.current_refrigerant_weight}}",
+        tag:tag
+    };
+
+    fetch('/datacapture', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .then(response => {
+        // Handle the response from the Flask backend if needed
+        console.log("Data sent successfully");
+        window.location.href = '/refrigerant_recovery'
+    })
+    .catch(error => {
+        // Handle errors if the request fails
+        console.error('Error:', error);
+    });
+});
+</script>     -->
+
 </html>
