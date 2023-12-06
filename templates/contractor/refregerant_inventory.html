@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Template</title>
+    <title>Refrigerant Inventory</title>
     <style>
         table {
             border-collapse: collapse;
@@ -25,26 +25,28 @@
 </head>
 
 <body>
-    
-
-    <h1>Unique Refrigerants and Counts</h1>
     <table>
         <thead>
             <tr>
-                <th>Refrigerant</th>
-                <th>Quantity</th>
-                <!-- <th>Logs</th> -->
+                <th>Technician ID</th>
+                <th>Cylinder ID</th>
+                <th>Cylinder Added Date</th>
+                <th>Refrigerant Name</th>
+                <th>Cylinder Supplier</th>
+                
+                
             </tr>
         </thead>
         <tbody>
-            {% for refrigerant, count in unique_refrigerants_dict.items() %}
-            <tr onclick="location.href='/reftype/{{refrigerant}}'">
-                 <!-- <td><a onclick="location.href='/inventory'">{{refrigerant}}</a></td>
-                <td><a href='/inventory'>{{count}}</a></td>  -->
-                <td>{{refrigerant}}</td>
-                <td>{{count}}</td>
-                <!-- <td><button type="button" onclick="location.href='/inventory'">{{refrigerant}}</button></td> -->
-            </tr>
+            {% for i in dt %}
+                <tr>
+                    <td>{{ i['technician_id'] }}</td>
+                    <td>{{ i['id'] }}</td>
+                    <td>{{ i['added_date'] }}</td>
+                    <td>{{ i['refrigerant_name'] }}</td>
+                    <td>{{ i['supplier'] }}</td>
+                    
+                </tr>
             {% endfor %}
         </tbody>
     </table>
