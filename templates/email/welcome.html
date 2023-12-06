@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Email Reset</title>
+    <title>Welcome to REFit!</title>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
     <link
@@ -48,17 +48,33 @@
                 margin-bottom: 1.5rem;
               "
             >
-              Hello, <br />
-              [User's Name]
+              Welcome to REFit!
             </h1>
+            <p>Dear {Name},</p>
+
             <p>
-              We received a request to reset your password. If you did not make
-              this request, please ignore this email.
+              We are thrilled to welcome you to our community. Thank you for
+              joining us!
             </p>
-            <p>To reset your password, click the following link:</p>
+
+            <p>
+              If you have any questions or need assistance, don't hesitate to
+              reach out to our support team.
+            </p>
+
+            <a href="#" style="text-decoration: none; color: #54b1f5"
+              >{Support Email Address}</a
+            >
+
+            <p>Once again, welcome aboard!</p>
+
+            <p>
+              Best regards, <br />
+              The REFit Team
+            </p>
             <button
-              name="reset"
-              onclick="alert('Password Reset!')"
+              name="submit"
+              onclick="alert('Logged In')"
               style="
                 margin: 1.5rem 0;
                 padding: 0.75rem 1rem;
@@ -70,17 +86,20 @@
               "
               type="button"
             >
-              Reset Your Password
+              Login
             </button>
-            <p>This link will expire in [expiration time].</p>
+            <hr style="margin-bottom: 1.5rem" />
             <p>
-              If you have any issues or did not request this change, please
-              contact our support team at
+              This email was intended for
               <a href="#" style="text-decoration: none; color: #54b1f5"
-                >[Support Email]</a
-              >.
+                >{email address}</a
+              >
+              as a REFit user. You can unsubscribe from this list {here}.
             </p>
-            <p>Thank you!</p>
+            <p>
+              Copyright info, <br />
+              Address,
+            </p>
           </td>
           <!-- Spacer -->
           <td style="width: 10%"></td>

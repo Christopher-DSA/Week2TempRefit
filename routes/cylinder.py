@@ -219,9 +219,12 @@ def CylinderInfo(unique_id):
         
         #Find cylinder id based on tag_url
         tag_data = CRUD.read(Tag, all = False, tag_url = unique_id)
+
+        
         
         #get cylinder id from tag table
         cyl_id = tag_data.cylinder_id
+        
         
         #2. Get row in database for specific cylinder.
         data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
@@ -241,6 +244,13 @@ def CylinderInfo(unique_id):
             "cylinder_type": cylinder_type_lookup.type_name
         }
         
+        session['cyl_id']=cyl_id
+        session['tag']=unique_id
+        session['gas_name']=refrigerant_table_lookup.refrigerant_name
+        session['size']=data.cylinder_size
+        session['weight']=data.current_refrigerant_weight
+        session['type']=cylinder_type_lookup.type_name
+        
         return render_template("beta/cylinder_info.html", data=data, name = name_data)
     
     
@@ -259,6 +269,7 @@ def tech_history_history():
             print(f"Weight: {cylinder.current_refrigerant_weight}")
         
         return render_template("technician/technician_cylinder_history.html",  cylinders_list=cylinders)
+<<<<<<< HEAD
     
 @cylinder.route("/refrigerant_recovery", methods=["GET", "POST"])
 def recover_refrigerant():
@@ -307,6 +318,25 @@ def recover_refrigerant(id):
         type_data = CRUD.read(Cylinder_Type, all = False, cylinder_type_id = type_id)
         cylinder_type = type_data.type_name
 
+=======
+
+
+@cylinder.route("/refrigerant_recovery", methods=["GET"])
+def recover_refrigerant():
+    if request.method == 'GET':
+        cly_id = session.get('cyl_id')
+        refrigerant = session.get('gas_name')
+        cylinder_size = session.get('size')
+        weight = session.get('weight')
+        cylinder_type =session.get('type')
+
+        tag_data = CRUD.read(Tag, all = False, cylinder_id = cly_id)
+        tag_num = tag_data.tag_number
+
+        cyl_data = CRUD.read(Cylinder, all = False, cylinder_id = cly_id)
+        technician_id = cyl_data.technician_id
+       
+>>>>>>> 801ab341153eb04ec4c007a0832a2c8748070b61
         current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         dt={
@@ -318,4 +348,116 @@ def recover_refrigerant(id):
             "type": cylinder_type,
             "weight": weight
         }
+<<<<<<< HEAD
         return render_template("cylinder/cylinder_recovery_newequipment.html",dt=dt)
+=======
+        print(dt)
+        return render_template("cylinder/cylinder_recovery_newequipment.html",dt=dt)
+    
+@cylinder.route('/recover_ref', methods= ['POST'])
+def recover_ref():
+    cylinderTagId = request.form.get('cylinderTagId')
+    refrigerantId = request.form.get('refrigerantId')
+    technicianId = request.form.get('technicianId')
+    cylinderType = request.form.get('cylinderType')
+    cylinderSize = request.form.get('cylinderSize')
+    createDate = request.form.get('createDate')
+    currentRefrigerantWeight = request.form.get('currentRefrigerantWeight')
+    refrigerantWeightReclaimed = request.form.get('refrigerantWeightReclaimed')
+    refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
+
+    tag_data = CRUD.read(Tag, all = False, tag_number = cylinderTagId)
+    cyl_id = tag_data.cylinder_id
+
+    cyl_data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
+    ref_id = cyl_data.refrigerant_id
+
+    print("------------------------------")
+    print(f"cylinder id is {cyl_id}")
+    print(f"cylindeTagId is {cylinderTagId}")
+    print(f"refrigerantId is {refrigerantId}")
+    print(f"technicianId is {technicianId}")
+    print(f"cylinderType is {cylinderType}")
+    print(f"cylinderSize is {cylinderSize}")
+    print(f"createDate is {createDate}")
+    print(f"currentRefrigerantWeight is {currentRefrigerantWeight}")
+    print(f"refrigerantWeightReclaimed is {refrigerantWeightReclaimed}")
+    print(f"refrigerantWeightAfterService is {refrigerantWeightAfterService}")
+    print("------------------------------")
+
+    reclaim_data = CRUD.read(Reclaim_Recovery, all = False, cylinder_id = cyl_id)
+
+    if reclaim_data is None:
+        CRUD.create(
+        Reclaim_Recovery,
+            
+        gas_type = refrigerantId,
+        quantity_before_in_lbs = float(currentRefrigerantWeight),
+        quantity_after_in_lbs = float(refrigerantWeightAfterService),
+        notes = "testing",
+        date = createDate,
+        status = "testing",   
+        refrigerant_id = ref_id,
+        cylinder_id = cyl_id,  
+        )
+    else:
+        CRUD.update(
+        Reclaim_Recovery,
+        cylinder_id = cyl_id,
+        attr= "quantity_before_in_lbs", 
+        new = currentRefrigerantWeight
+
+        )
+        CRUD.update(
+        Reclaim_Recovery,
+        cylinder_id = cyl_id,
+        attr= "quantity_after_in_lbs", 
+        new = refrigerantWeightAfterService
+
+        )
+        CRUD.update(
+        Reclaim_Recovery,
+        cylinder_id = cyl_id,
+        attr= "date", 
+        new = createDate
+
+        )
+        # CRUD.update(
+        # Reclaim_Recovery,
+        # cylinder_id = cyl_id,
+        # attr= "gas_type", 
+        # new = refrigerantId
+
+        # )
+        # CRUD.update(
+        # Reclaim_Recovery,
+        # cylinder_id = cyl_id,
+        # attr= "refrigerant_id", 
+        # new = ref_id
+
+        # )
+        CRUD.update(
+        Reclaim_Recovery,
+        cylinder_id = cyl_id,
+        attr= "notes", 
+        new = "testing"
+
+        )
+        CRUD.update(
+        Reclaim_Recovery,
+        cylinder_id = cyl_id,
+        attr= "status", 
+        new = "testing"
+
+        )
+
+    CRUD.update(
+        Cylinder,
+        cylinder_id = cyl_id,
+        attr= "current_refrigerant_weight", 
+        new = refrigerantWeightAfterService
+
+        )
+    
+    return redirect(url_for('technician.dashboardtechnician'))
+>>>>>>> 801ab341153eb04ec4c007a0832a2c8748070b61

@@ -38,29 +38,35 @@
       <div class="d-flex justify-content-center align-items-center">
         <div class="px-4">
           <h1>Refrigerant Recovery Form</h1>
-          <form id="cylinderRecoveryForm" onsubmit="submitForm(event)">
+          <form id="cylinderRecoveryForm" method="post" action="/recover_ref">
             <h2>Auto Populated Information</h2>
             <label for="cylinderTagId" class="form-label">Cylinder Tag ID (Will come from QR Tag):</label>
+            <input type="text" id="cylinderTagId" name="cylinderTagId" value="{{dt.tag}}" class="form-control mb-3 light-grey-background"
             <input type="text" id="cylinderTagId" name="cylinderTagId" value="{{dt.tag}}" class="form-control mb-3 light-grey-background"
               readonly>
 
             <label for="refrigerantId" class="form-label">Refrigerant ID [Refrigerant Name] (Might not be necessary, can put the name of the refrigerant here, which will be from the database.):</label>
             <input type="text" id="refrigerantId" name="refrigerantId" value="{{dt.name}}" class="form-control mb-3 light-grey-background"
+            <input type="text" id="refrigerantId" name="refrigerantId" value="{{dt.name}}" class="form-control mb-3 light-grey-background"
               readonly>
 
             <label for="technicianId" class="form-label">Technician ID, Will come from the session variable 'tech_id' session.get('tech_id'):</label>
             <input type="text" id="technicianId" name="technicianId" value="{{dt.tech_id}}" class="form-control mb-3 light-grey-background" readonly>
+            <input type="text" id="technicianId" name="technicianId" value="{{dt.tech_id}}" class="form-control mb-3 light-grey-background" readonly>
 
             <label for="cylinderType" class="form-label">Cylinder Type (Comes from QR Tag, eg. Recovery Cylinder, DOT Cylinder, Disposable Cylinder):</label>
             <input type="text" id="cylinderType" name="cylinderType" value="{{dt.type}}" class="form-control mb-3 light-grey-background">
+            <input type="text" id="cylinderType" name="cylinderType" value="{{dt.type}}" class="form-control mb-3 light-grey-background">
 
             <label for="cylinderSize" class="form-label">Cylinder Size (lbs) (Based on what the manufacture puts on the label, refer to google doc tasks list for more information.):</label>
-            <input type="number" id="cylinderSize" name="{{dt.size}}" value="50" class="form-control mb-3 light-grey-background" readonly>
+            <input type="number" id="cylinderSize" name="cylinderSize" value="{{dt.size}}" class="form-control mb-3 light-grey-background" readonly>
 
             <label for="createDate" class="form-label">Create Date (Should auto populate with the current date.):</label>
             <input type="date" id="createDate" name="createDate" value="{{dt.date}}" class="form-control mb-3" required>
+            <input type="date" id="createDate" name="createDate" value="{{dt.date}}" class="form-control mb-3" required>
 
             <label for="currentRefrigerantWeight" class="form-label">Current Refrigerant Weight (lbs) (Will come from the QR-Tag):</label>
+            <input type="number" id="currentRefrigerantWeight" name="currentRefrigerantWeight" value="{{dt.weight}}"
             <input type="number" id="currentRefrigerantWeight" name="currentRefrigerantWeight" value="{{dt.weight}}"
               class="form-control mb-3 light-grey-background" readonly>
 
