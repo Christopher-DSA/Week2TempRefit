@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Email Reset</title>
+    <title>Verify Your Email</title>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
     <link
@@ -48,17 +48,16 @@
                 margin-bottom: 1.5rem;
               "
             >
-              Hello, <br />
-              [User's Name]
+              Verify Your Email
             </h1>
+
             <p>
-              We received a request to reset your password. If you did not make
-              this request, please ignore this email.
+              In order to start using your account, please confirm your email
+              address through a verification link.
             </p>
-            <p>To reset your password, click the following link:</p>
             <button
-              name="reset"
-              onclick="alert('Password Reset!')"
+              name="submit"
+              onclick="alert('Verification Email Sent!')"
               style="
                 margin: 1.5rem 0;
                 padding: 0.75rem 1rem;
@@ -70,17 +69,14 @@
               "
               type="button"
             >
-              Reset Your Password
+              Send Verification
             </button>
-            <p>This link will expire in [expiration time].</p>
-            <p>
-              If you have any issues or did not request this change, please
-              contact our support team at
-              <a href="#" style="text-decoration: none; color: #54b1f5"
-                >[Support Email]</a
-              >.
-            </p>
-            <p>Thank you!</p>
+            <a
+              href="#"
+              style="text-decoration: none; color: #54b1f5; display: block"
+            >
+              Didn't get an email? Send it again.</a
+            >
           </td>
           <!-- Spacer -->
           <td style="width: 10%"></td>
