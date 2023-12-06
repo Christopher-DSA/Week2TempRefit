@@ -312,4 +312,58 @@ def recover_refrigerant(id):
             "type": cylinder_type,
             "weight": weight
         }
+        # print(dt)
         return render_template("cylinder/cylinder_recovery_newequipment.html",dt=dt)
+    
+@cylinder.route('/recover_ref', methods= ['POST'])
+def recover_ref():
+    cylinderTagId = request.form.get('cylinderTagId')
+    refrigerantId = request.form.get('refrigerantId')
+    technicianId = request.form.get('technicianId')
+    cylinderType = request.form.get('cylinderType')
+    cylinderSize = request.form.get('cylinderSize')
+    createDate = request.form.get('createDate')
+    currentRefrigerantWeight = request.form.get('currentRefrigerantWeight')
+    refrigerantWeightReclaimed = request.form.get('refrigerantWeightReclaimed')
+    refrigerantWeightAfterService = request.form.get('refrigerantWeightAfterService')
+
+    tag_data = CRUD.read(Tag, all = False, tag_number = cylinderTagId)
+    cyl_id = tag_data.cylinder_id
+
+    cyl_data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
+    ref_id = cyl_data.refrigerant_id
+
+    print("------------------------------")
+    print(f"cylinder id is {cyl_id}")
+    print(f"cylindeTagId is {cylinderTagId}")
+    print(f"refrigerantId is {refrigerantId}")
+    print(f"technicianId is {technicianId}")
+    print(f"cylinderType is {cylinderType}")
+    print(f"cylinderSize is {cylinderSize}")
+    print(f"createDate is {createDate}")
+    print(f"currentRefrigerantWeight is {currentRefrigerantWeight}")
+    print(f"refrigerantWeightReclaimed is {refrigerantWeightReclaimed}")
+    print(f"refrigerantWeightAfterService is {refrigerantWeightAfterService}")
+    print("------------------------------")
+
+    CRUD.create(
+        Reclaim_Recovery,
+            
+        gas_type = refrigerantId,
+        quantity_before_in_lbs = float(currentRefrigerantWeight),
+        quantity_after_in_lbs = float(refrigerantWeightAfterService),
+        notes = "testing",
+        date = createDate,
+        status = "testing",   
+        refrigerant_id = ref_id,
+        cylinder_id = cyl_id,  
+    )
+    CRUD.update(
+        Cylinder,
+        cylinder_id = cyl_id,
+        attr= "current_refrigerant_weight", 
+        new = refrigerantWeightAfterService
+
+        )
+    
+    return redirect(url_for('technician.dashboardtechnician'))
