@@ -10,14 +10,18 @@
             border-collapse: collapse;
             width: 100%;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         tr:hover {
             background-color: #f5f5f5;
         }
@@ -25,7 +29,7 @@
 </head>
 
 <body>
- 
+
     <table>
         <thead>
             <tr>
@@ -38,19 +42,15 @@
             {% for user in technicians %}
                 <tr>
                     <td class="user-name">{{ user['name'] }}</td>
-                    <!-- <td>{{user['tech_user_id']}}</td> -->
                     <td>{{ user['ods_licence_no'] }}</td>
-                
+
                     <td>
-                        <!-- <form action="/delete_technician/{{ user['tech_user_id'] }}" method="post">
-                            <button type="submit">Delete</button>
-                        </form> -->
-                        <form method="post" action="/delete/technician">
+                        <form method="post" action="/delete/technician" onsubmit="return confirmDelete();">
                             <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
                             <button type="submit">Delete</button>
                         </form>
                         <br>
-                        <form >
+                        <form>
                             <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
                             <button type="submit">Archive</button>
                         </form>
@@ -69,16 +69,26 @@
             {% endfor %}
         </tbody>
     </table>
-     <!-- Display flashed messages -->
-     {% with messages = get_flashed_messages(with_categories=true) %}
-     {% if messages %}
-         <ul>
-             {% for category, message in messages %}
-                 <li class="{{ category }}">{{ message }}</li>
-             {% endfor %}
-         </ul>
-     {% endif %}
- {% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete?");
+    }
+</script>
+
+</body>
+
+</html>
+
     <!-- <div class="action-buttons">
         <button id="archiveBtn" name="archiveBtn">Archive</button>
         <button id="deleteBtn" name="deleteBtn">Delete</button>
