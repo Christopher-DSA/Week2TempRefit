@@ -1,5 +1,5 @@
 from flask import make_response, session, Blueprint
-from flask import session
+from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor
 from functools import wraps
@@ -493,4 +493,7 @@ def buy_qr_page():
 ##def recovery():
    ## return render_template('equipment/recovery.html')
 
+@technician.route('/RefrigerantTypeLookupData.csv')
+def serve_csv():
+     return send_file('RefrigerantTypeLookupData.csv', mimetype='text/csv', as_attachment=True, download_name='RefrigerantTypeLookupData.csv')
     
