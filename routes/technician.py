@@ -10,6 +10,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 technician = Blueprint('technician', __name__)
 
+from pint import UnitRegistry
+
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -176,10 +179,6 @@ def add_qr():
 @technician.route('/remove-qrtag')
 def remove_qr():
     return render_template('Equipment Common/qr-remove.html')
-
-@technician.route('/charge-equipment')
-def charge():
-    return render_template('equipment/charge-equipment.html')
 
 #REPAIR MAINTENANCE LOG FOR EQUIPMENT.
 @technician.route('/equipment/repair_ODS_Sheet', methods = ['GET', 'POST'])
@@ -465,6 +464,8 @@ def equipment_info_page(unique_id):
         print("x: ", x)
         data = CRUD.read(Unit, all = False, unit_id = x)
         
+        session['new_unit_id'] = x
+        
         #remove previous, if any, unique_equipment_token from session.
         session.pop('unique_equipment_token', None)
         #save tag url to session.
@@ -493,4 +494,45 @@ def buy_qr_page():
 ##def recovery():
    ## return render_template('equipment/recovery.html')
 
-    
+
+
+
+@technician.route('/charge-equipment', methods=['GET', 'POST'])
+def charge_equipment_view():
+    if request.method == 'GET':
+        print("Inside Get for charge_equipment")
+        # Get the unique equipment token from the session
+        unique_token = session.get('unique_equipment_token')
+        
+        
+        unit_id = session.get('new_unit_id')        
+        print("Unit ID: ", unit_id)
+
+        # Fetch data from the Unit table based on the unit_id
+        unit_data = CRUD.read(Unit, all=False, unit_id=unit_id)
+
+        tech_id = session.get('tech_id')
+        type_of_refrigerant = unit_data.type_of_refrigerant 
+        factory_charge_amount = unit_data.factory_charge_amount
+
+        print("Test Test: ", type_of_refrigerant)
+        print("Test Test: ", factory_charge_amount)
+        # Render the HTML template with the retrieved data
+
+
+      #### converting to pounds and ounces
+
+        ureg = UnitRegistry()
+        factory_charge_amount = 1000
+        ounces = factory_charge_amount* ureg.ounces
+        pounds = ounces.to(ureg.pounds)
+
+        print (pounds)
+        print (ounces)
+
+
+        return render_template('equipment/charge-equipment.html', type_of_refrigerant=type_of_refrigerant,  factory_charge_amount= factory_charge_amount, pounds = pounds , ounces = ounces, tech_id=tech_id)
+    elif request.method == "POST":
+        print("Inside Post for charge_equipment")
+        
+
