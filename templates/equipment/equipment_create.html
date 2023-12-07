@@ -17,6 +17,36 @@
 
     // Call the function when the window loads
     window.onload = setCurrentDate;
+
+
+    ///////////////////////////////////////////////////////////////////////////
+
+        // Fetch the CSV file
+fetch('/RefrigerantTypeLookupData.csv')
+  .then(response => response.text())
+  .then(csvData => {
+    // Parse CSV data
+    const rows = csvData.split('\n').slice(1); // Remove header row
+    const dropdown = document.getElementById('refrigerantType');
+
+    // Populate dropdown with values from CSV
+    rows.forEach(row => {
+      const [id, name] = row.split(',');
+      const option = document.createElement('option');
+      option.value = id;
+      option.textContent = name;
+      dropdown.appendChild(option);
+    });
+  })
+  .catch(error => console.log('Error fetching the CSV file:', error));
+
+  function updateRefrigerantIdAndTotalCharge() {
+    // Get the selected value from the dropdown
+    const selectedValue = document.getElementById('refrigerantType').value;
+    console.log('Selected value:', selectedValue);
+}
+
+    ///////////////////////////////////////////////////////////////////////////
 </script>
 <body>
     <h1>Equipment Create (NEW, do not edit this page please. In testing.)</h1>
@@ -40,15 +70,26 @@
 
         <!-- <label for="organizationId">Store ID:</label>
         <input type="text" id="organizationId" name="organizationId"> -->
-
-        <label for="refrigerantType">Refrigerant Type:</label>
+        
+        <!-------------------------old code-------------------------------------------------->
+        <!-- <label for="refrigerantType">Refrigerant Type:</label>
         <select id="refrigerantType" name="refrigerantType" onchange="updateRefrigerantIdAndTotalCharge()" required>
             <option value="" selected disabled>Select refrigerant type</option>
             <option value="R134a">R134a</option>
             <option value="R410a">R410a</option>
             
+        </select> -->
+        <!--------------------------------------------------------------------------->
+     
+
+        <!----------------------------my code----------------------------------------------->
+        <label for="refrigerantType">Refrigerant Type:</label>
+        <select id="refrigerantType" name="refrigerantType" onchange="updateRefrigerantIdAndTotalCharge()" required>
+          <option value="" selected disabled>Select refrigerant type</option>
         </select>
 
+        <!--------------------------------------------------------------------------->
+       
         <!-- <label for="refrigerantId">Refrigerant ID (no need for this):</label>
         <input type="text" id="refrigerantId" name="refrigerantId" readonly> -->
 
