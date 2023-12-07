@@ -5,7 +5,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import UUID_Generate
-from datetime import datetime
+import datetime
 
 
 # Blueprint Configuration
@@ -245,8 +245,10 @@ def inventory():
 def delete_technician():
     if request.method == 'POST':
         user_id = request.form.get('technician_id')
-        technician_data = CRUD.read(Technician,user_id=user_id,all=False)
-        technician_id = technician_data.technician_id
+        technician_data = CRUD.read(Technician, user_id=user_id, all=False)
+
+        if technician_data:
+            technician_id = technician_data.technician_id
         print(f'techncian_id: {technician_id}')
         print(f'user_id: {user_id}')
 
@@ -295,7 +297,12 @@ def delete_technician():
         )
     
         flash('Technician deleted successfully!', 'success')
+
+    else:
+        flash('Technician not found!', 'error')
+
         return redirect(url_for('contractor.technician_managment'))
+
     return render_template('contractor/technician_details.html')
 
 

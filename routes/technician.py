@@ -1,72 +1,90 @@
+# Import necessary modules from flask
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor
 from functools import wraps
+
+# Import other necessary modules
 import UUID_Generate
 from datetime import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from flask import send_from_directory ,send_file
+
+# Define a blueprint for 'technician'
 technician = Blueprint('technician', __name__)
 
+# Define a decorator for routes that require a user to be logged in
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        # Check if 'user_id' is in session
         if 'user_id' not in session:
+            # If not, redirect to login page
             return render_template('auth/login.html')
+        # If 'user_id' is in session, proceed to the requested route
         return f(*args, **kwargs)
     return decorated_function
 
+# Define a decorator for routes that require a user to be a technician
 def technician_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        # Assuming the user_id in the session is the email of the user.
+        # Get the current user's id from the session
         current_user_id = session.get('user_id')
 
-        
-
+        # Fetch the current user's details from the database
         current_user = CRUD.read(User,user_id=current_user_id)
         
+        # Check if the current user exists and if their role is 'technician'
         if not current_user or current_user.role != 'technician':
-            # Either user doesn't exist, or the user is not an admin.
+            # If not, return an 'Unauthorized' response
             return "Unauthorized", 403
 
+        # If the user exists and their role is 'technician', proceed to the requested route
         return f(*args, **kwargs)
     return decorated_function
 
-#Renders the technician dashboard
+# Renders the technician dashboard
 @technician.route("/dashboardtechnician")
 @login_required
 @technician_required
 def dashboardtechnician():
-    # Render the dashboard
-    print("Rendering dashboard")
-    user_current=session.get('user_id')
-    user_first_name=CRUD.read(User_Detail,user_id=user_current).first_name
-    return render_template("technician/dashboardtechnician.html", user=user_current,user_first_name = user_first_name)
+    current_user_id = session.get('user_id')
+    user_detail = CRUD.read(User_Detail, user_id=current_user_id)
+
+    # Check if user detail exists
+    if not user_detail:
+        return "User detail not found", 404
+
+    user_first_name = user_detail.first_name
+    return render_template("technician/dashboardtechnician.html", user=current_user_id, user_first_name=user_first_name)
 
 @technician.route("/formtechnician", methods=["GET", "POST"])
 def formtechnician():
     if request.method == 'POST':
         # Get data from form
-        firstName = request.form.get('firstName')
-        lastName = request.form.get('lastName')
-        companyName = request.form.get('companyName')
-        # dob = request.form.get('dob')
-        odsLicenseNumber = request.form.get('odsLicenseNumber')
-        # gender = request.form.get('gender')
-        addressLine = request.form.get('addressLine')
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastName')
+        company_name = request.form.get('companyName')
+        ods_license_number = request.form.get('odsLicenseNumber')
+        address_line = request.form.get('addressLine')
         province = request.form.get('province')
         city = request.form.get('city')
-        postalCode = request.form.get('postalCode')
-        phoneNumber = request.form.get('phoneNumber')
+        postal_code = request.form.get('postalCode')
+        phone_number = request.form.get('phoneNumber')
 
-        print("Technician data successfully retrieved.")
-        # validate the data and pass data to database
+        # Validate the data and pass data to database
+        try:
+            new_detail = CRUD.create(User_Detail, user_id=session.get('user_id'), first_name=first_name, last_name=last_name, address=address_line, province=province, city=city, postal_code=postal_code, telephone=phone_number)
+            new_technician_detail = CRUD.create(Technician, ODS_licence_number=ods_license_number, user_id=session.get('user_id'))
+        except Exception as e:
+            # Log the error and return an error response
+            print(f"Error creating user detail or technician detail: {e}")
+            return "Error processing form", 500
 
-        new_detail=CRUD.create(User_Detail,user_id=session.get('user_id'),first_name=firstName,last_name=lastName, address=addressLine, province=province, city=city,postal_code=postalCode,telephone=phoneNumber)
-        new_technician_detail=CRUD.create(Technician, ODS_licence_number=odsLicenseNumber,user_id=session.get('user_id'))
         return redirect(url_for('technician.dashboardtechnician'))
     else:
         return render_template("technician/formtechnician.html")

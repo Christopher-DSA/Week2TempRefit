@@ -337,4 +337,7 @@ SDS-924-Nithin: Inventory managment for Contractor is complete. now the new html
 Yael : fixed timeout error on forgot password page . next step is succesfully rerouting to submit form ( right now receive "Method Not Allowed") / decoding token and submitting new form in same route ( if possible)
 
 # December 1
-Yael :SDS 850  reset password feature is now fully functional; jwt is deleted after new pass is created and token expires after 24 hours. 
+Yael :SDS 850  reset password feature is now fully functional; token expires after 24 hours. 
+
+# December 6
+Yael :SDS 850 email now sent to user instead of refit_dev@sidney...
