@@ -491,6 +491,19 @@ class Maintenance(Base):
     def __repr__(self):
         return 'Maintenance Model'
     
+class User_Support(Base):
+
+    __tablename__ = "User_Support"
+
+    user_id = Column(Integer)
+    message= Column(String)
+    date_received= Column(String)
+    date_ticket_closed = Column(String, nullable= True)
+    ticket_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    
+    def __repr__(self):
+        return 'User Support Model'
+    
 class Maintenance_Detail(Base):
 
     __tablename__ = "Maintenance_Detail"
