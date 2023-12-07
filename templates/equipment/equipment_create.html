@@ -22,7 +22,7 @@
     ///////////////////////////////////////////////////////////////////////////
 
         // Fetch the CSV file
-fetch('/RefrigerantTypeLookupData.csv')
+fetch('/refrigerantTypeLookupData')
   .then(response => response.text())
   .then(csvData => {
     // Parse CSV data
@@ -85,7 +85,9 @@ fetch('/RefrigerantTypeLookupData.csv')
         <!----------------------------my code----------------------------------------------->
         <label for="refrigerantType">Refrigerant Type:</label>
         <select id="refrigerantType" name="refrigerantType" onchange="updateRefrigerantIdAndTotalCharge()" required>
-          <option value="" selected disabled>Select refrigerant type</option>
+            <datalist id="refrigerantTypes">
+            <option value="" selected disabled>Select refrigerant type</option>
+            </datalist>
         </select>
 
         <!--------------------------------------------------------------------------->
