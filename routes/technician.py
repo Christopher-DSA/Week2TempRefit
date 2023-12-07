@@ -14,6 +14,7 @@ from datetime import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from flask import send_from_directory ,send_file
 
 # Define a blueprint for 'technician'
 technician = Blueprint('technician', __name__)
@@ -512,5 +513,7 @@ def buy_qr_page():
 ##@technician.route('/equipment/recovery')
 ##def recovery():
    ## return render_template('equipment/recovery.html')
-
+@technician.route('/refrigerantTypeLookupData')
+def serve_csv():
+     return send_file('RefrigerantTypeLookupData.csv', mimetype='text/csv', as_attachment=True, download_name='RefrigerantTypeLookupData.csv')
     
