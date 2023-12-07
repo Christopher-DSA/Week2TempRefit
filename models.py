@@ -524,11 +524,14 @@ class Cylinder_History(Base):
 
     __tablename__ = "Cylinder_History"
 
-    cyl_hist_id = Column(Integer)
+    cyl_hist_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
     cylinder_id = Column(Integer)
     date_qr_scanned = Column(String)
-    technician_id = Column(int)
-    user_id = Column(int)
+    technician_id = Column(Integer)
+    user_id = Column(Integer)
+    
+    def __repr__(self):
+        return 'Cylinder History Model'
     
 # Class CRUD with all important features to work with the Database.
 class CRUD:
