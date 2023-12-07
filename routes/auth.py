@@ -255,16 +255,14 @@ def forgot_password():
 def reset_password(access_token):
     decoded_token=decode_token(access_token)
     print(decoded_token)
-    #if decoded_token['']
-
-            
-        
+    #issued_at = decoded_token['iat'] 
+    # if datetime.datetime(Now-issued_at)> 1 day 
+    # flash "Password reset link expired "
+    #----------------------------------------------------------------        
 #     if request.method == "GET":
-
 #         decoded_token = decode_token(access_token)
 #         print("entered reset_password()")
 #         print(decoded_token)
-
 #         user = get_jwt_identity()
 #         print(user)
 #         return render_template("Login Flow/reset.html")
@@ -272,7 +270,6 @@ def reset_password(access_token):
     
     #if request.method == "POST":
         
-
     try:   
         # tok= requests.args.get(access_token)     
         # print("tok=",tok)
