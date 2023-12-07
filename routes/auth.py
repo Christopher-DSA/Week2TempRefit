@@ -1,6 +1,6 @@
 from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
 from datetime import datetime , timedelta
-from models import User, Store, CRUD, Technician, User_Detail, Contractor
+from models import User, Store, CRUD, Technician, User_Detail, Contractor, User_Support
 from functools import wraps
 import pandas as pd
 import os
@@ -712,7 +712,20 @@ def privacy_policy_page():
 def contact_us_page():
     if request.method == 'GET':
         return render_template('admin/contact-us.html')
+    # if post then that means the user has submitted the form for support.
     elif request.method == 'POST':
+        # get user_id
+        user = session.get('user_id')
+        # get the current date
+
+        # get the user details from the user id
+        user_email = CRUD.read(User, user_id=user).email
+        # maybe add logic to check if the user email is verified or not
+
+        # Create a new support ticket in the database.
+        CRUD.create(User_Support, user_id = user, message = request.form.get('message'), date_received = datetime.today(), date_ticket_closed = None)
+
+        
         return render_template('admin/contact-us.html')
         
 
