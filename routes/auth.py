@@ -16,7 +16,6 @@ from email.mime.text import MIMEText
 # FLASK_JWT imports for secure reset password tokens
 # from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
 from flask_jwt_extended import  jwt_required, get_jwt_identity,create_access_token,decode_token
-import requests
 
 #Load enviroment variables
 load_dotenv()
@@ -141,6 +140,16 @@ def logout():
     #Send user to login page
     return redirect(url_for('auth.login'))
 
+
+##NEW DASHBOARD ROUTE
+@auth.route('/new-dashboard', methods=['GET', 'POST'])
+def new_dashboard():
+    if request.method == 'GET':
+        first_name = session.get('user_first_name')
+        return render_template('technician/new-dashboard.html', user_first_name=first_name)
+    elif request.method == 'POST':
+        return render_template('technician/new-dashboard.html')
+
 #FORGOT PASSWORD ROUTE
 @auth.route("/forgot_password", methods=["GET","POST"])
 def forgot_password():
@@ -194,9 +203,52 @@ def forgot_password():
     elif request.method == "GET":
         return render_template("Login Flow/forgot.html")
     
+# route for validating token and redirecting to submit form 
+# @auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
+# @jwt_required(optional=True) 
+# def redirect_to_reset_password(access_token): # access_token
+#     print("in redirect , decoded token")
+#     if request.method == "GET":
+#         token= decode_token(access_token)
+#         print(token)
 
+#     return redirect(url_for("auth.submit_reset_pass"))
+#     # return render_template("Login Flow/reset.html")
+
+# # route for submitting password form 
+# @auth.route("/submit_reset_pass", methods=["POST", "GET"])
+# def submit_reset_pass():
+#     if request.method == "POST":
+#         print("request POST")
+#         password1 = request.form['Password1']
+#         password2= request.form['Password2']
+#         print("got both password1 and password2")
+#         if password1 == password2:
+#             print('pass matches')
+#         	# Pull user email from session
+#             current_user_email = session.get('user_email')
+        
+#             # Hash password
+#             message = {'password': password1}
+#             hashed_password = generate_hash(message, secret_key)
+#             print(hashed_password)
+#             # update the password in the database
+#             CRUD.update(User,'password',new= hashed_password, email=current_user_email)
+#             # delete the jwt token now that new pass   has been created
+#             CRUD.delete(User,'jwt_token', email=current_user_email)
+            		
+
+            		
+            
+#             return redirect(url_for('auth.login'))
+        
+#         else:
+#             return flash("Passwords do not match. PLease try again.")
+#     return render_template("Login Flow/reset.html")
+        
    
 
+    
 
 @auth.route("/reset_password/<access_token>", methods=["GET", "POST"])
 @jwt_required(optional=True)

@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer
+from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant
 from functools import wraps
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -141,9 +141,6 @@ def add_technician():
     #     contractor_id = contractor_data.contractor_id
     #     return render_template('contractor/add_technician.html',contractor=contractor_id)
     if request.method == 'POST':
-        fname = request.form.get('fname')
-        # mname = request.form.get('mname')
-        # lname = request.form.get('lname')
         email = request.form.get('email')
         print(f"Email address{email}")
         """Get the contractor id from the session so that the technician 
@@ -153,16 +150,17 @@ def add_technician():
         contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
         user_data = CRUD.read(User,email=email, all = False)
         user_id = user_data.user_id
+        details = CRUD.read(User_Detail,user_id=user_data.user_id, all = False)
         technician_data = CRUD.read(Technician,user_id=user_id, all = False)
         tech_id = technician_data.technician_id
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
         sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        fname = details.first_name
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
         print("----------------")
-        print(fname)
         # print(mname)
         # print(lname)
         print(email)
@@ -200,68 +198,20 @@ def add_technician():
         return render_template('contractor/dashboardcontractor.html')
     return render_template('contractor/add_technician.html')
 
-    # @contractor.route('/delete/technician', methods=['POST'])
-    # def delete_technician():
-    #    if request.method == 'POST':
-    #         user_id = request.form.get('technician_id')
-    #         technician_data = CRUD.read(Technician,user_id=user_id,all=False)
-    #         technician_id = technician_data.technician_id
-
-    #     # Update Technician_Offer Table      
-    #         CRUD.update(
-    #             Technician_Offer,
-    #             technician_id=technician_id,
-    #             attr= "offer_status",
-    #             new = "independent"
-    #             )
-            
-    #         CRUD.update(
-    #             Technician_Offer,
-    #             technician_id=technician_id,
-    #             contractor_id = None
-    #             )
-            
-    #         # Update Technician Table
-    #         CRUD.update(
-    #             Technician,
-    #             technician_id=technician_id,
-    #             attr="date_end",
-    #             new=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    #         )
-
-    #         CRUD.update(
-    #             Technician,
-    #             technician_id=technician_id,
-    #             contractor_id = None
-    #             )
-            
-    #         CRUD.update(
-    #             Technician,
-    #             technician_id=technician_id,
-    #             attr="contractor_status",
-    #             new="Inactive"
-    #         )
-            
-    #         CRUD.update(
-    #             Technician,
-    #             technician_id=technician_id,
-    #             attr="user_status",
-    #             new="Independent"
-    #         )
-        
-    #         return render_template('contractor/technician_details.html')
-    # return render_template('contractor/technician_details.html')
-
+    
 @contractor.route('/inventory', methods=['GET', 'POST'])
 def inventory():
     if request.method == 'GET':
+            dt=[]
+            tech_ids = []
             contractor_user_id =session.get('user_id')
             contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
             contractor_id = contractor_data.contractor_id
-            # technician_data = CRUD.read(Technician,contractor_id=contractor_id, all = True)
-            temp_data=[84,108]
-            dt=[]
-            for i in temp_data:
+            technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
+            for i in technician_data:
+                tech_ids.append(i.technician_id)
+            
+            for i in tech_ids:
                 cylinder_data = CRUD.read(Cylinder,all = True,technician_id=i)
                 # print(cylinder_data[0].cylinder_id)
                 for cy in cylinder_data:
@@ -271,6 +221,8 @@ def inventory():
                     c_tareWeight = cy.cylinder_tare_weight
                     c_addedDate = cy.added_date
                     c_referigentId = cy.refrigerant_id
+                    data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId)
+                    c_refrigerant_name=data_refrigerant.refrigerant_name 
                     c_purchasedDate = cy.purchase_date
                     c_supplier = cy.supplier
 
@@ -281,11 +233,12 @@ def inventory():
                         "tareWeight": c_tareWeight,
                         "addedDate": c_addedDate,
                         "refrigerantId": c_referigentId,
+                        "refrigerant_name":c_refrigerant_name,
                         "purchasedDate": c_purchasedDate,
                         "supplier": c_supplier
                         }
                     dt.append(cylinder)
-            print(dt)
+            # print(dt)
     return render_template('contractor/inventory.html',dt=dt)
 
 @contractor.route('/delete/technician', methods=['POST'])
@@ -344,3 +297,89 @@ def delete_technician():
         flash('Technician deleted successfully!', 'success')
         return redirect(url_for('contractor.technician_managment'))
     return render_template('contractor/technician_details.html')
+
+
+@contractor.route('/refrigerant', methods=['POST','GET'])
+def inventory_Refrigerant():
+        if request.method == 'GET':
+            contractor_user_id =session.get('user_id')
+            contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+            contractor_id = contractor_data.contractor_id
+            technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
+            print("----------")
+            print(contractor_id)
+            tech_ids = []
+            dt=[]
+            ref_name={}
+
+            for i in technician_data:
+                tech_ids.append(i.technician_id)
+            
+            for i in tech_ids:
+                cylinder_data = CRUD.read(Cylinder,all = True,technician_id=i)
+                for cy in cylinder_data:
+                    c_techId = cy.technician_id
+                    c_id = cy.cylinder_id
+                    c_size = cy.cylinder_size
+                    c_tareWeight = cy.cylinder_tare_weight
+                    c_addedDate = cy.added_date
+                    c_referigentId = cy.refrigerant_id
+                    data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId)
+                    c_refrigerant_name=data_refrigerant.refrigerant_name   
+                    c_purchasedDate = cy.purchase_date
+                    c_supplier = cy.supplier
+                    ref_name[c_refrigerant_name] = ref_name.get(c_refrigerant_name, 0) + 1
+
+                    cylinder= {
+                        "technician_id": c_techId,
+                        "id": c_id,
+                        "size": c_size,
+                        # "tareWeight": c_tareWeight,
+                        # "addedDate": c_addedDate,
+                        "refrigerantId": c_referigentId,
+                        "refrigerant_name":c_refrigerant_name,
+                        # "purchasedDate": c_purchasedDate,
+                        "supplier": c_supplier
+                        }
+                    dt.append(cylinder)
+            # print(dt)
+            print(f"unique refrigerants:{ref_name} ")
+            return render_template('contractor/refrigerant.html',dt=dt,unique_refrigerants_dict=ref_name)
+
+@contractor.route('/reftype/<refrigerant>', methods=['POST','GET'])
+def refrigerant_type(refrigerant):
+    if request.method == 'GET':
+            ref_name = str(refrigerant)
+            print(ref_name)
+            dt=[]
+            tech_ids = []
+            contractor_user_id =session.get('user_id')
+            contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
+            contractor_id = contractor_data.contractor_id
+            technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
+            for i in technician_data:
+                tech_ids.append(i.technician_id)
+            
+            for i in tech_ids:
+                cylinder_data = CRUD.read(Cylinder,all = True,technician_id=i)
+                
+                for cy in cylinder_data:
+                    c_techId = cy.technician_id
+                    c_id = cy.cylinder_id
+                    c_addedDate = cy.added_date
+                    c_referigentId = cy.refrigerant_id
+                    data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId)
+                    c_refrigerant_name=data_refrigerant.refrigerant_name
+                    c_supplier = cy.supplier
+
+                    if c_refrigerant_name == ref_name:
+                        cylinder= {
+                            "technician_id": c_techId,
+                            "id": c_id,
+                            "addedDate": c_addedDate,
+                            "refrigerantId": c_referigentId,
+                            "refrigerant_name":c_refrigerant_name,
+                            "supplier": c_supplier
+                            }
+                        dt.append(cylinder)
+    return render_template('contractor/refregerant_inventory.html',dt=dt)
