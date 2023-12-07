@@ -6,6 +6,9 @@ import UUID_Generate
 import pandas as pd
 from datetime import datetime
 
+
+
+
 cylinder = Blueprint('cylinder', __name__)
 
 def login_required(f):
@@ -261,14 +264,23 @@ def tech_history_history():
         print("inside get for /technician_history")
         current_tech_id = session.get('tech_id')
         
-        cylinders = CRUD.read(Cylinder, all = True, technician_id = current_tech_id)
-                
-        #counter = 0
+        cylinders = CRUD.read(
+            Cylinder,
+            all=True,
+            technician_id=current_tech_id,)
+       
+
+# Now, cylinders will contain tuples (Cylinder object, refrigerant_name)
+
         for cylinder in cylinders:
             print(f"Cylinder ID: {cylinder.cylinder_id}")
             print(f"Weight: {cylinder.current_refrigerant_weight}")
+           ## print(f"Refrigerant Name: {refrigerant_name}")
+            
         
         return render_template("technician/technician_cylinder_history.html",  cylinders_list=cylinders)
+
+
 
 
 @cylinder.route("/refrigerant_recovery", methods=["GET"])
