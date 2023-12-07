@@ -506,6 +506,17 @@ class Maintenance_Detail(Base):
     def __repr__(self):
         return 'Maintenance Detail Model'
     
+    
+class Cylinder_History(Base):
+
+    __tablename__ = "Cylinder_History"
+
+    cyl_hist_id = Column(Integer)
+    cylinder_id = Column(Integer)
+    date_qr_scanned = Column(String)
+    technician_id = Column(int)
+    user_id = Column(int)
+    
 # Class CRUD with all important features to work with the Database.
 class CRUD:
 
