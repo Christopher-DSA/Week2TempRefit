@@ -1,10 +1,10 @@
-from flask import make_response, session, Blueprint
+from flask import make_response, session, Blueprint, request
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from functools import wraps
 
 #flask.cli does not have a get_version function so we will comment this out for now. Not sure how this got here.
 #from flask.cli import get_version
-from models import User, Store, CRUD
+from models import User, Store, CRUD, User_Support
 
 
 admin = Blueprint('admin', __name__)
@@ -54,3 +54,14 @@ def user_page():
 #     return render_template('admin/dashboard.html')
 
 #test comment
+
+@admin.route("/admin/support_tickets", methods=['GET'])
+def support_tickets():
+    tickets = CRUD.read(User_Support, all = True)
+    
+    # for each ticket get the email of the user
+    # emails = []
+    # for ticket in tickets:
+    #     email = CRUD.read(User, user_id = ticket.user_id).email
+    #     emails.append(email)
+    return render_template('admin/support_tickets.html', tickets = tickets)

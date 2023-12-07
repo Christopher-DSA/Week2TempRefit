@@ -1,0 +1,37 @@
+<h1>Support Tickets</h1>
+{{tickets}}
+{{email}}
+
+<table border class="table table-hover table-dark">
+    <thead>
+        
+        <tr>
+            <!-- Your Columns HERE -->
+            <th scope="col">Ticket ID</th>
+            <th scope="col">User ID</th>
+            <th scope="col">User Email</th>
+            <th scope="col">Message</th>
+            <th scope="col">Date Received</th>
+            <th scope="col">Date Closed</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Your rows inside the table HERE: -->
+        {% for ticket in tickets%}
+            <tr>
+                <td>{{ticket.ticket_id}}</td>
+                <td>{{ticket.user_id}}</td>
+                <td>{{ticket.user_email}}</td>
+                <td>{{ticket.message}}</td>
+                <td>{{ticket.date_received}}</td>
+                <td>{{ticket.date_ticket_closed}}</td>
+            </tr>
+
+        {%endfor%}
+    </tbody>
+</table>
+
+<div class="d-flex flex-column justify-content-center">
+    <button class="btn btn-primary btn-lg" type="button" onclick="location.href='/admin'"> Back</button>
+</div>
