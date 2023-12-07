@@ -37,7 +37,7 @@
                     <!-- Start: Form Header -->
                     <div class="row mb-5">
                         <div class="col">
-                            <h2>Equipment Charge Page. (In development) {{type_of_refrigerant}}</h2>
+                            <h2>Equipment Charge Page. {{type_of_refrigerant}}</h2>
                         </div>
                     </div><!-- End: Form Header -->
                     <div class="tab-content">
@@ -52,14 +52,14 @@
                                 <div class="col gap-3">
                                     <div class="py-3">
                                         <div class="py-3">
-                                            <p>Repair Date [Should Auto-populate with the current date]<span class="text-danger">*</span></p>
+                                            <p>Repair Date <span class="text-danger">*</span></p>
                                             <div class="mb-3">
                                                 <input class="form-control" type="date" id="repairDateInput" required="">
                                             </div>
                                         </div>
                                    
                                     <div class="pb-3">
-                                        <p>Job Number (Optional, this is contractor specific.)</p>
+                                        <p>Job Number </p>
                                         <div class="mb-3"><input class="form-control" type="text"></div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                     <div class="mb-5">
                                         <input class="form-control" type="text" disabled placeholder= "{{ type_of_refrigerant }}">
                                     </div>
-                                    <p>Factory Refrigerant Weight (Auto-Populated from the database based on the Equipment-QR Tag that was scanned.</p>
+                                    <p>Factory Refrigerant Weight </p>
                                     <div class="row mb-4">
                                         <div class="col dropdown">
                                             <button class="btn w-100 btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -102,7 +102,7 @@
 
                             
 
-                                    <p>Additional Refrigerant Weight (The only field the User is required to fill out themselves.)</p>
+                                    <p>Additional Refrigerant Weight</p>
                                     <div class="row mb-4">
                                         <div class="col dropdown">
                                             <button class="btn w-100 btn-outline-secondary dropdown-toggle"
@@ -134,7 +134,7 @@
                                     
                                     </div>
 
-                                    <p>Total Refrigerant Weight (Auto Populated based on Factory refrigerant weight + additional refrigerant weight.)</p>
+                                    <p>Total Refrigerant Weight</p>
                                     <div class="row">
                                         <div class="col dropdown">
                                             <button class="btn w-100 btn-outline-secondary dropdown-toggle"
