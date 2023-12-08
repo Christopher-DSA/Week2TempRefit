@@ -64,7 +64,7 @@ def dashboardtechnician():
         return "User detail not found", 404
 
     user_first_name = user_detail.first_name
-    return render_template("technician/dashboardtechnician.html", user=current_user_id, user_first_name=user_first_name)
+    return render_template("technician/new-dashboard.html", user=current_user_id, user_first_name=user_first_name)
 
 @technician.route("/formtechnician", methods=["GET", "POST"])
 def formtechnician():
