@@ -529,6 +529,9 @@ class Cylinder_History(Base):
     date_qr_scanned = Column(String)
     technician_id = Column(Integer)
     user_id = Column(Integer)
+    refrigerant_id = Column(Integer)
+    refrigerant_weight = Column(Numeric)
+    refrigerant_name = Column(Text)
     
     def __repr__(self):
         return 'Cylinder History Model'

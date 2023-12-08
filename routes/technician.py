@@ -2,7 +2,7 @@
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History
 from functools import wraps
 
 # Import other necessary modules
@@ -482,6 +482,11 @@ def equipment_info_page(unique_id):
         x = tag_data.unit_id
         print("x: ", x)
         data = CRUD.read(Unit, all = False, unit_id = x)
+        cylinder_id = tag_data.cylinder_id
+
+    
+
+        current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         session['new_unit_id'] = x
         
@@ -491,6 +496,9 @@ def equipment_info_page(unique_id):
         session['unique_equipment_token'] = str(unique_id)
         
         tech_id = session.get('tech_id')
+
+       
+        
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
 

@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Technician History</title>
-  <h2>This page will contain history, similar to a browsers search history.</h2>
+  <h2></h2>
 
  
 
   <br><br>
-  <h2>TO-DO LIST: 1. Recent QR Cylinder Tag Scans will be logged here, 2. Recently Registered QR Tags will be logged here.</h2>
+  <h2></h2>
 
   <style>
     body {
@@ -60,8 +60,9 @@
       {% for cylinder in cylinders_list %}
           <li>
               <p><strong>Cylinder ID:</strong> {{ cylinder.cylinder_id }}</p>
-              <p><strong>Refrigerant Weight:</strong> {{ cylinder.current_refrigerant_weight }}</p>
-              <p><strong>Refrigerant Type:</strong> {{ refrigerant_name }}</p>
+              <p><strong>Refrigerant Weight:</strong> {{cylinder.refrigerant_weight}} </p>
+              <p><strong>Refrigerant Type:</strong> {{cylinder.refrigerant_name}} </p>
+              <p><strong>Date Scanned:</strong> {{cylinder.date_qr_scanned}}</p>
 
                <!-- Add more details as needed -->
           </li>
