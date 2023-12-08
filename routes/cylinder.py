@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,Cylinder,Reclaim_Recovery, Refrigerant, Cylinder_Type, Tag
+from models import CRUD,Cylinder,Reclaim_Recovery, Refrigerant, Cylinder_Type, Tag, Cylinder_History
 from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 import UUID_Generate
@@ -222,8 +222,7 @@ def CylinderInfo(unique_id):
         
         #Find cylinder id based on tag_url
         tag_data = CRUD.read(Tag, all = False, tag_url = unique_id)
-
-        
+        tech_id = session.get('tech_id')
         
         #get cylinder id from tag table
         cyl_id = tag_data.cylinder_id
@@ -253,36 +252,25 @@ def CylinderInfo(unique_id):
         session['size']=data.cylinder_size
         session['weight']=data.current_refrigerant_weight
         session['type']=cylinder_type_lookup.type_name
+
+
+        current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        history_entry = Cylinder_History(
+        date_qr_scanned=current_scan_date,
+        cylinder_id= cyl_id, 
+        technician_id=tech_id,
+        refrigerant_id = cylinder_refrigerant_id,
+        refrigerant_name = refrigerant_table_lookup.refrigerant_name,
+        refrigerant_weight = data.current_refrigerant_weight
+        )
+        CRUD.create(Cylinder_History, date_qr_scanned=current_scan_date, cylinder_id=cyl_id, technician_id=tech_id, refrigerant_id = cylinder_refrigerant_id, refrigerant_name = refrigerant_table_lookup.refrigerant_name, refrigerant_weight = data.current_refrigerant_weight )
         
         return render_template("beta/cylinder_info.html", data=data, name = name_data)
     
+
+
     
-#Technician History Cylinders
-@cylinder.route("/technician_cylinder_history", methods=["GET", "POST"])
-def tech_history_history():
-    if request.method == 'GET':
-        print("inside get for /technician_history")
-        current_tech_id = session.get('tech_id')
-        
-        cylinders = CRUD.read(
-            Cylinder,
-            all=True,
-            technician_id=current_tech_id,)
-       
-
-# Now, cylinders will contain tuples (Cylinder object, refrigerant_name)
-
-        for cylinder in cylinders:
-            print(f"Cylinder ID: {cylinder.cylinder_id}")
-            print(f"Weight: {cylinder.current_refrigerant_weight}")
-           ## print(f"Refrigerant Name: {refrigerant_name}")
-            
-        
-        return render_template("technician/technician_cylinder_history.html",  cylinders_list=cylinders)
-
-
-
-
 @cylinder.route("/refrigerant_recovery", methods=["GET"])
 def recover_refrigerant():
     if request.method == 'GET':
@@ -418,3 +406,25 @@ def recover_ref():
         )
     
     return redirect(url_for('technician.dashboardtechnician'))
+
+
+
+@cylinder.route("/technician_cylinder_history", methods=["GET", "POST"])
+def cylinder_hist():
+    if request.method == "GET":
+        print("inside get for /technician_history")
+        current_tech_id = session.get('tech_id')
+        cylinder_hist = CRUD.read(Cylinder_History, all=True, technician_id=current_tech_id)
+        
+       
+
+        for cylinder in cylinder_hist:
+            print(f"Cylinder ID: {cylinder.cylinder_id}")
+            print(f"Refrigerant Weight: {cylinder.refrigerant_weight}")
+            print(f"Refrigerant Type: {cylinder.refrigerant_name}")
+            print(f"Last Scanned: {cylinder.date_qr_scanned}")
+            
+
+        return render_template("technician/technician_cylinder_history.html", cylinders_list=cylinder_hist)
+
+    return "Invalid request method"
