@@ -565,3 +565,10 @@ def charge_equipment_view():
 def serve_csv():
      return send_file('RefrigerantTypeLookupData.csv', mimetype='text/csv', as_attachment=True, download_name='RefrigerantTypeLookupData.csv')
     
+
+#ODP Tag Form on Equipment Scan
+@technician.route('/ODP-Tag', methods=['GET', 'POST'])
+def ODP_Show():
+    if request.method == 'GET':
+        return render_template('equipment/ODP_Tag.html')
+    
