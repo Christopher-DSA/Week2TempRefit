@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ODP Tag</title>
+</head>
+<body>
+    <h1>ODP Tag</h1>
+    <form id="recoveryForm" onsubmit="submitForm(event)">
+
+        <!-- Company -->
+        <div class = "CompanyDetailsSection">
+            <label for="modelNumber">Company Name:</label>
+            <input type="text" id="modelNumber" name="CompanyName" required>
+
+            <label for="serialNumber">Phone Number:</label>
+            <input type="text" id="serialNumber" name="PhoneNumber" required>
+        </div>
+
+        <!-- Tech -->
+        <div class = "TechnicianDetailsSection">
+            <h1>Technician Detail</h1>
+
+            <label for="technicianName">Technician Name:</label>
+            <input type="text" id="technicianName" name="TechnicianName" required>
+            <br><br>
+            
+            <label for="certificateNumber">Certificate Number:</label>
+            <input type="text" id="certificateNumber" name="CertificateNumber" required>
+
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="text" id="expiryDate" name="ExpiryDate" required>
+            
+            <label for="jobNumber">Job Number:</label>
+            <input type="text" id="jobNumber" name="JobNumber">
+        </div>
+
+        <br/><br/>
+
+        <!-- Repair -->
+        <div class = "repairDetailsSection">
+            <h2>Repair Details</h2>
+            <label for="testResults">Test Results*:</label><br>
+
+            <input type="checkbox" id="leakDetected" name="testResults" value="leakDetected">
+            <label for="leakDetected">Leak detected, Do not add refrigerant until repair</label><br>
+
+            <input type="checkbox" id="leakRepair" name="testResults" value="leakRepair">
+            <label for="leakRepair">Leak Repaired</label><br>
+
+            
+            <input type="checkbox" id="leakNotRepaired" name="testResults" value="leakNotRepaired">
+            <label for="leakNotRepaired">Leak Not Repaired</label><br>
+
+            <input type="checkbox" id="noLeakDetected" name="testResults" value="noLeakDetected">
+            <label for="noLeakDetected">No Leak Detected</label><br>
+        </div>
+
+        
+        <!-- <input type="checkbox" id="noLongerContainsRef" name="testResults" value="noLongerContainsRef">
+        <label for="noLongerContainsRef">No Longer Contains Refrigerant</label><br>
+
+
+        <input type="checkbox" id="repairedDischarge" name="testResults" value="repairedDischarge">
+        <label for="repairedDischarge">Repaired Discharge</label><br>
+
+        <input type="checkbox" id="lineOnCompressor" name="testResults" value="lineOnCompressor">
+        <label for="lineOnCompressor">Line on Compressor</label><br>
+
+        <input type="checkbox" id="vacuumTestPerformed" name="testResults" value="vacuumTestPerformed">
+        <label for="vacuumTestPerformed">Vacuum Test Performed</label><br> -->
+
+
+
+
+        <br>
+        <label for="dateIssued">Date Issued*:</label>
+        <input type="date" id="dateIssued" name="DateIssued">
+        <br><br>
+
+        <h2>Oil</h2>
+
+        <label for="compressorOilRemoved">Compressor Oil Removed:</label><br>
+        <input type="radio" id="compressorOilYes" name="compressorOilRemoved" value="Yes">
+        <label for="compressorOilYes">Yes</label><br>
+        <input type="radio" id="compressorOilNo" name="compressorOilRemoved" value="No">
+        <label for="compressorOilNo">No</label><br>
+
+        <input type="checkbox" id="otherCheckbox" name="testResults" value="other">
+        <label for="otherCheckbox">Other</label><br>
+
+        <div id="otherDetailsSection" style="display: none;">
+            <label for="otherDetails">Other Details:</label>
+            <textarea id="otherDetails" name="otherDetails" rows="4" cols="50"></textarea>
+        </div>
+
+        <h2>Refrigerant:</h2>
+
+        <label for="jobNumber">Refrigerant Type:</label>
+        <input type="text" id="odsSheetNumber" name="Refrigerant">
+        <br/><br/>
+        <label for="reclaimGas">Reclaim Gas:</label><br>
+        <input type="radio" id="reclaimYes" name="reclaimGas" value="Yes">
+        <label for="reclaimYes">Yes</label><br>
+        <input type="radio" id="reclaimNo" name="reclaimGas" value="No">
+        <label for="reclaimNo">No</label><br>
+
+        <div id="recoveryCylinderSection" style="display: none;">
+            <label for="recoveryCylinder">Recovery Cylinder:</label><br>
+            <input type="radio" id="recoveryCylinder1" name="recoveryCylinder" value="Cylinder1">
+            <label for="recoveryCylinder1">Cylinder 1</label><br>
+            <input type="radio" id="recoveryCylinder2" name="recoveryCylinder" value="Cylinder2">
+            <label for="recoveryCylinder2">Cylinder 2</label><br>
+            
+        </div>
+
+
+        <label for="jobNumber">Model:</label>
+        <input type="text" id="odsSheetNumber" name="Model">
+
+        <label for="serialNumber">Serial Number:</label>
+        <input type="text" id="serial-number" name="serialNumber">
+        <br/><br/>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function calculateTotalCharge() {
+            const factoryCharge = parseFloat(document.getElementById('factoryChargeAmount').value) || 0;
+            const additionalAmount = parseFloat(document.getElementById('additionalAmount').value) || 0;
+            const totalCharge = factoryCharge + additionalAmount;
+            document.getElementById('totalCharge').value = totalCharge.toFixed(2);
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const jobNumber = prompt("Enter Job Number:");
+            if (jobNumber) {
+                
+                alert("Form submitted successfully!");
+            } else {
+                alert("Please enter a valid Job Number.");
+            }
+        }
+
+        document.getElementById('otherCheckbox').addEventListener('change', function() {
+            const otherDetailsSection = document.getElementById('otherDetailsSection');
+            if (this.checked) {
+                otherDetailsSection.style.display = 'block';
+            } else {
+                otherDetailsSection.style.display = 'none';
+            }
+        });
+
+        document.getElementById('reclaimYes').addEventListener('change', function() {
+            const recoveryCylinderSection = document.getElementById('recoveryCylinderSection');
+            if (this.value === "Yes") {
+                console.log("Yes");
+                recoveryCylinderSection.style.display = 'block';
+            }
+        });
+
+
+        document.getElementById('reclaimNo').addEventListener('change', function() {
+            const recoveryCylinderSection = document.getElementById('recoveryCylinderSection');
+            if (this.value === "No") {
+                console.log("No");
+                recoveryCylinderSection.style.display = 'none';
+            }
+        });       
+    </script>
+</body>
+</html>
+
