@@ -16,7 +16,7 @@ from flask import send_from_directory ,send_file
 # Define a blueprint for 'technician'
 technician = Blueprint('technician', __name__)
 
-from pint import UnitRegistry
+#from pint import UnitRegistry
 
 
 
