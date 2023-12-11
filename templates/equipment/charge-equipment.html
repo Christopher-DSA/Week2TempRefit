@@ -23,6 +23,11 @@
   <link rel="stylesheet" href="../../static/css/styles.css">
 </head>
 
+
+
+
+
+
 <body>
     <!-- Start: Form -->
     <section>
@@ -32,7 +37,7 @@
                     <!-- Start: Form Header -->
                     <div class="row mb-5">
                         <div class="col">
-                            <h2>Equipment Charge Page. (In development)</h2>
+                            <h2>Equipment Charge Page. {{type_of_refrigerant}}</h2>
                         </div>
                     </div><!-- End: Form Header -->
                     <div class="tab-content">
@@ -46,51 +51,58 @@
                             <div class="row">
                                 <div class="col gap-3">
                                     <div class="py-3">
-                                        <p>Repair Date [Should Auto-populate with the current date]<span class="text-danger">*</span></p>
-                                        <div class="mb-3"><input class="form-control" type="date"
-                                                required=""></div>
-                                    </div>
+                                        <div class="py-3">
+                                            <p>Repair Date <span class="text-danger">*</span></p>
+                                            <div class="mb-3">
+                                                <input class="form-control" type="date" id="repairDateInput" required="">
+                                            </div>
+                                        </div>
+                                   
                                     <div class="pb-3">
-                                        <p>Job Number (Optional, this is contractor specific.)</p>
+                                        <p>Job Number </p>
                                         <div class="mb-3"><input class="form-control" type="text"></div>
                                     </div>
                                 </div>
                                 <h4 class="mt-4">Equipment Refrigerant Information</h4>
                                 <div class="py-3">
-                                    <p>Refrigerant Type (Auto-Populated from the database based on the Equipment-QR tag that was scanned.)</p>
-                                    <div class="mb-5"><input class="form-control" type="text" disabled
-                                            placeholder="Refrigerant Placeholder"></div>
-                                    <p>Factory Refrigerant Weight (Auto-Populated from the database based on the Equipment-QR Tag that was scanned.</p>
+                                    <p> Refrigerant Type</p>
+                                    <div class="mb-5">
+                                        <input class="form-control" type="text" disabled placeholder= "{{ type_of_refrigerant }}">
+                                    </div>
+                                    <p>Factory Refrigerant Weight </p>
                                     <div class="row mb-4">
                                         <div class="col dropdown">
-                                            <button class="btn w-100 btn-outline-secondary dropdown-toggle"
-                                                type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false" disabled>
+                                            <button class="btn w-100 btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
                                                 lb/oz
                                             </button>
                                         </div>
                                         <div class="col mb-3">
                                             <div class="input-group">
-                                                <input type="text" class="form-control"
-                                                    style="border-radius: 5px;" placeholder="0" disabled>
+                                                <!-- Extract whole number part (pounds) -->
+                                                <input type="text" id="refrigerantWeightLb" class="form-control" style="border-radius: 5px;" placeholder="{{ pounds.magnitude | round(0, 'floor') }}" disabled>
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text text-center"
-                                                        style="text-align:center; border: none;">lb</span>
+                                                    <span class="input-group-text text-center" style="text-align:center; border: none;">lb</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col mb-3">
                                             <div class="input-group">
-                                                <input type="text" class="form-control"
-                                                    style="border-radius: 5px;" placeholder="0" disabled>
+                                                <!-- Extract decimal part (ounces) -->
+                                                <input type="text"  id="refrigerantWeightOz" class="form-control" style="border-radius: 5px;" placeholder="{{ (pounds.magnitude % 1 * 16) | round(2) }}" disabled>
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text text-center"
-                                                        style="text-align:center; border: none;">oz</span>
+                                                    <span class="input-group-text text-center" style="text-align:center; border: none;">oz</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <p>Additional Refrigerant Weight (The only field the User is required to fill out themselves.)</p>
+                                    
+                                    
+                                    </div>
+
+                            
+
+                                    <p>Additional Refrigerant Weight</p>
                                     <div class="row mb-4">
                                         <div class="col dropdown">
                                             <button class="btn w-100 btn-outline-secondary dropdown-toggle"
@@ -101,8 +113,8 @@
                                         </div>
                                         <div class="col mb-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control"
-                                                    style="border-radius: 5px;" placeholder="0" disabled>
+                                                <!-- Use the pattern attribute to enforce numeric input -->
+                                                <input type="text" id="additionalWeightLb" class="form-control" style="border-radius: 5px;" placeholder="0" oninput="allowOnlyNumericInput(this)" onblur="calculateTotalWeight()">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text text-center"
                                                         style="text-align:center; border: none;">lb</span>
@@ -111,16 +123,18 @@
                                         </div>
                                         <div class="col">
                                             <div class="input-group">
-                                                <input type="text" class="form-control"
-                                                    style="border-radius: 5px;" placeholder="0" disabled>
+                                                <!-- Use the pattern attribute to enforce numeric input -->
+                                                <input type="text" id="additionalWeightOz" class="form-control" style="border-radius: 5px;" placeholder="0" oninput="allowOnlyNumericInput(this)" onblur="calculateTotalWeight()">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text text-center"
                                                         style="text-align:center; border: none;">oz</span>
                                                 </div>
                                             </div>
                                         </div>
+                                    
                                     </div>
-                                    <p>Total Refrigerant Weight (Auto Populated based on Factory refrigerant weight + additional refrigerant weight.)</p>
+
+                                    <p>Total Refrigerant Weight</p>
                                     <div class="row">
                                         <div class="col dropdown">
                                             <button class="btn w-100 btn-outline-secondary dropdown-toggle"
@@ -131,7 +145,7 @@
                                         </div>
                                         <div class="col">
                                             <div class="input-group">
-                                                <input type="text" class="form-control"
+                                                <input type="text" id="totalWeightLb" class="form-control"
                                                     style="border-radius: 5px;" placeholder="0" disabled>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text text-center"
@@ -141,7 +155,7 @@
                                         </div>
                                         <div class="col">
                                             <div class="input-group">
-                                                <input type="text" class="form-control"
+                                                <input type="text" id="totalWeightOz" class="form-control"
                                                     style="border-radius: 5px;" placeholder="0" disabled>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text text-center"
@@ -152,16 +166,101 @@
                                     </div>
                                 </div>
                             </div><!-- End: Role Selection -->
+                            <div class="mb-3"></div>
+
                     <!-- Start: Form Submit -->
-                    <div class="row">
-                        <div class="col d-flex flex-column align-items-center">
-                            <a class="btn btn-outline-primary btn-lg w-100" role="button">Submit</a>
+                        <div class="row mb-4">
+                            <div class="col d-flex flex-column align-items-center">
+                                <button class="btn btn-outline-primary btn-lg w-100" data-toggle="modal" data-target="#successModal">Submit</button>
+                            </div>
+                        </div><!-- End: Form Submit -->
+
+                        <!-- Success Modal -->
+                        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        The charge equipment sheet is successfully updated.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div><!-- End: Form Submit -->
                 </form>
             </div>
         </div>
     </section><!-- End: Form -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+
+   
+    
+    <script>
+    // Function to get the current date in the 'YYYY-MM-DD' format
+    function getCurrentDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // Set the current date in the Repair Date field when the page is loaded
+    window.onload = function () {
+        document.getElementById('repairDateInput').value = getCurrentDate();
+
+        // Initialize refrigerant weight values (replace these with values from the server)
+        var refrigerantWeightLbFromServer = 62.0;
+        var refrigerantWeightOzFromServer = 8.0;
+
+        // Set the refrigerant weight values in the corresponding fields
+        document.getElementById('refrigerantWeightLb').value = refrigerantWeightLbFromServer;
+        document.getElementById('refrigerantWeightOz').value = refrigerantWeightOzFromServer;
+
+        // Calculate and display total weight on page load
+        calculateTotalWeight();
+    };
+
+    // Function to allow only numeric input
+    function allowOnlyNumericInput(inputElement) {
+        inputElement.value = inputElement.value.replace(/[^0-9.]/g, ''); // Allow decimal point as well
+        // Ensure only one decimal point
+        inputElement.value = inputElement.value.replace(/(\..*)\./g, '$1');
+    }
+
+    function calculateTotalWeight() {
+        // Get values from refrigerant weight section
+        var refrigerantWeightLb = parseFloat(document.getElementById('refrigerantWeightLb').value) || 0;
+        var refrigerantWeightOz = parseFloat(document.getElementById('refrigerantWeightOz').value) || 0;
+
+        // Get values from additional weight section
+        var additionalWeightLb = parseFloat(document.getElementById('additionalWeightLb').value) || 0;
+        var additionalWeightOz = parseFloat(document.getElementById('additionalWeightOz').value) || 0;
+
+        // Calculate total weight
+        var totalWeightLb = refrigerantWeightLb + additionalWeightLb;
+        var totalWeightOz = refrigerantWeightOz + additionalWeightOz;
+
+        // Display total weight in the lb and oz fields
+        document.getElementById('totalWeightLb').value = Math.floor(totalWeightLb);
+        document.getElementById('totalWeightOz').value = (totalWeightLb - Math.floor(totalWeightLb)) * 16 + totalWeightOz;
+    }
+    </script>
+
 </body>
 </html>

@@ -78,8 +78,9 @@ def formcontractor():
 def dashboardcontractor():
     # Render the dashboard
     user_id =session.get('user_id')
+    first_name = session.get('user_first_name')
     technicians_table_lookup = CRUD.read(Technician, all = False, contractor_id = user_id)
-    return render_template("contractor/dashboardcontractor.html",user=user_id,technicians=technicians_table_lookup)
+    return render_template("contractor/chris_ver_contractor_dashboard.html",user=user_id,technicians=technicians_table_lookup,first_name=first_name)
 
 @contractor.route('/handle_qr_code', methods=['POST'])
 @login_required

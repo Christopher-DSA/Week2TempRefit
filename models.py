@@ -491,6 +491,19 @@ class Maintenance(Base):
     def __repr__(self):
         return 'Maintenance Model'
     
+class User_Support(Base):
+
+    __tablename__ = "User_Support"
+
+    user_id = Column(Integer)
+    message= Column(String)
+    date_received= Column(String)
+    date_ticket_closed = Column(String, nullable= True)
+    ticket_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    
+    def __repr__(self):
+        return 'User Support Model'
+    
 class Maintenance_Detail(Base):
 
     __tablename__ = "Maintenance_Detail"
@@ -505,6 +518,23 @@ class Maintenance_Detail(Base):
 
     def __repr__(self):
         return 'Maintenance Detail Model'
+    
+    
+class Cylinder_History(Base):
+
+    __tablename__ = "Cylinder_History"
+
+    cyl_hist_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    cylinder_id = Column(Integer)
+    date_qr_scanned = Column(String)
+    technician_id = Column(Integer)
+    user_id = Column(Integer)
+    refrigerant_id = Column(Integer)
+    refrigerant_weight = Column(Numeric)
+    refrigerant_name = Column(Text)
+    
+    def __repr__(self):
+        return 'Cylinder History Model'
     
 # Class CRUD with all important features to work with the Database.
 class CRUD:
