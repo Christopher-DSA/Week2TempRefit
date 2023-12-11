@@ -27,7 +27,7 @@
         window.onload = setCurrentDate;
 
         // Fetch the CSV file
-        fetch('/refrigerantTypeLookupData')
+        fetch('/RefrigerantTypeLookupData.csv')
             .then(response => response.text())
             .then(csvData => {
                 // Parse CSV data
