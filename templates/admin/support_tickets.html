@@ -1,7 +1,7 @@
 <h1>Support Tickets</h1>
 {{tickets}}
-{{email}}
 
+<body>
 <table border class="table table-hover table-dark">
     <thead>
         
@@ -9,10 +9,11 @@
             <!-- Your Columns HERE -->
             <th scope="col">Ticket ID</th>
             <th scope="col">User ID</th>
-            <th scope="col">User Email</th>
             <th scope="col">Message</th>
             <th scope="col">Date Received</th>
             <th scope="col">Date Closed</th>
+            <th scope="col">Reply</th>
+            <th scope="col">Close Ticket</th>
 
         </tr>
     </thead>
@@ -22,10 +23,20 @@
             <tr>
                 <td>{{ticket.ticket_id}}</td>
                 <td>{{ticket.user_id}}</td>
-                <td>{{ticket.user_email}}</td>
                 <td>{{ticket.message}}</td>
                 <td>{{ticket.date_received}}</td>
                 <td>{{ticket.date_ticket_closed}}</td>
+                <td>
+                    <form action="/admin/reply" method="post">
+                        <button type="submit" name ="selected_user_id" value="{{ticket.user_id}}">Reply to this ticket</button>
+                        <input type="hidden" name="selected_ticket_id" value="{{ticket.ticket_id}}">
+                    </form>
+                </td>
+                <td>
+                    <form action="/admin/close_ticket" method="post">
+                        <button type="submit" name ="selected_ticket_id" value="{{ticket.ticket_id}}">Close Ticket</button>
+                    </form>
+                </td>
             </tr>
 
         {%endfor%}
@@ -35,3 +46,55 @@
 <div class="d-flex flex-column justify-content-center">
     <button class="btn btn-primary btn-lg" type="button" onclick="location.href='/admin'"> Back</button>
 </div>
+
+</body>
+
+
+<!-- <script>
+    function getRow(button) {
+        // Traverse the DOM to get the row containing the clicked button
+        var row = button.closest('tr');
+
+        // Display cell content from the clicked row
+        var ticket_cell = row.cells[0];
+        var user_cell = row.cells[1];
+        var email_cell = row.cells[2];
+        var message_cell = row.cells[3];
+        var date_received_cell = row.cells[4];
+        var date_closed_cell = row.cells[5];
+
+        // save data value
+        localStorage.setItem("selected_user_id", user_cell.innerHTML);
+
+        // retrieve data value
+        var name = localStorage.getItem("selected_user_id");
+
+        openPopup();
+
+        console.log('Ticket ID ' + ticket_cell.innerHTML);
+        console.log('User ID ' + user_cell.innerHTML);
+        console.log('User Email ' + email_cell.innerHTML);
+        console.log('Message ' + message_cell.innerHTML);
+        console.log('Date Received ' + date_received_cell.innerHTML);
+        console.log('Date Closed ' + date_closed_cell.innerHTML);
+    }
+
+    function openPopup() {
+        document.querySelector('.overlay').style.display = 'block';
+        document.querySelector('.popup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.querySelector('.overlay').style.display = 'none';
+        document.querySelector('.popup').style.display = 'none';
+    }
+
+    function sendEmail() {
+            fetch('/admin/email')
+                .then(response => response.text())
+                .then(data => {
+                    // Display the result in the HTML
+                    document.getElementById('content').innerText = data;
+                });
+        }
+</script> -->
