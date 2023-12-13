@@ -5,15 +5,15 @@
 </head>
 <body>
     <h1>ODP Tag</h1>
-    <form id="recoveryForm" onsubmit="submitForm(event)">
+    <form id="recoveryForm" method="post" action="/ODP-Tag">
 
         <!-- Company -->
         <div class = "CompanyDetailsSection">
             <label for="modelNumber">Company Name:</label>
-            <input type="text" id="modelNumber" name="CompanyName" required>
+            <input type="text" id="modelNumber" name="CompanyName" value="Sofvie" required>
 
             <label for="serialNumber">Phone Number:</label>
-            <input type="text" id="serialNumber" name="PhoneNumber" required>
+            <input type="text" id="serialNumber" name="PhoneNumber" value ="9895048090"required>
         </div>
 
         <!-- Tech -->
@@ -21,14 +21,14 @@
             <h1>Technician Detail</h1>
 
             <label for="technicianName">Technician Name:</label>
-            <input type="text" id="technicianName" name="TechnicianName" required>
+            <input type="text" id="technicianName" name="TechnicianName" value="Nithin" required>
             <br><br>
             
             <label for="certificateNumber">Certificate Number:</label>
-            <input type="text" id="certificateNumber" name="CertificateNumber" required>
+            <input type="text" id="certificateNumber" name="CertificateNumber" value="Cert#54321" required>
 
             <label for="expiryDate">Expiry Date:</label>
-            <input type="text" id="expiryDate" name="ExpiryDate" required>
+            <input type="text" id="expiryDate" name="ExpiryDate" value="01-01-2023" required>
             
             <label for="jobNumber">Job Number:</label>
             <input type="text" id="jobNumber" name="JobNumber">

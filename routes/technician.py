@@ -2,7 +2,7 @@
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History,ODP
 from functools import wraps
 
 # Import other necessary modules
@@ -571,4 +571,62 @@ def serve_csv():
 def ODP_Show():
     if request.method == 'GET':
         return render_template('equipment/ODP_Tag.html')
+    
+    if request.method == 'POST':
+        company_name = request.form['CompanyName']
+        phone_number = request.form['PhoneNumber']
+        technician_name = request.form['TechnicianName']
+        certificate_number = request.form['CertificateNumber']
+        expiry_date = request.form['ExpiryDate']
+        job_number = request.form['JobNumber']
+        # test_results = request.form.getlist('testResults') 
+        test_results = request.form.get('testResults', '') 
+        date_issued = request.form['DateIssued']
+        compressor_oil_removed = request.form['compressorOilRemoved']
+        other_details = request.form.get('otherDetails', '')  
+        refrigerant_type = request.form['Refrigerant']
+        reclaim_gas = request.form['reclaimGas']
+        recovery_cylinder = request.form.get('recoveryCylinder', '')
+        model = request.form['Model']
+        serial_number = request.form['serialNumber']
+
+        print('---------------------------------')
+        print(f'Company Name: {company_name}')
+        print(f'Phone Number: {phone_number}')
+        print(f'Technician Name: {technician_name}')
+        print(f'Certificate Number: {certificate_number}')
+        print(f'Expiry Date: {expiry_date}')
+        print(f'Job Number: {job_number}')
+        print(f'Test Results: {test_results}')
+        print(f'Date Issued: {date_issued}')
+        print(f'Compressor Oil Removed: {compressor_oil_removed}')
+        print(f'Other Details: {other_details}')
+        print(f'Refrigerant Type: {refrigerant_type}')
+        print(f'Reclaim Gas: {reclaim_gas}')
+        print(f'Recovery Cylinder: {recovery_cylinder}')
+        print(f'Model: {model}')
+        print(f'Serial Number: {serial_number}')
+        print('---------------------------------')
+
+        # database operations
+        try:
+            
+            CRUD.create(ODP,
+                        technician_id=session.get('user_id'),
+                        phone_number =phone_number,
+                        certificateNumber =
+                        certificate_number,
+                        job_Date =date_issued,
+                        jobNumber =job_number,
+                        test_result =test_results,
+                        oil =compressor_oil_removed,
+                        refrigerant_type =refrigerant_type,
+                        serial_number =serial_number,
+                        model_number =model)
+            return render_template('equipment/maintenance_history.html')
+        except Exception as e:
+            # Log the error and return an error response
+            print(f"Error : {e}")
+            return render_template('equipment/maintenance_history.html')
+        
     
