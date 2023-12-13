@@ -2,7 +2,7 @@
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History
 from functools import wraps
 
 # Import other necessary modules
@@ -476,28 +476,39 @@ def equipment_info_page(unique_id):
         
         #2 get unique_id from url
         unit_unique_url = unique_id
-        
+        tech_id = session.get('tech_id')
+
         #3. Get row in database for specific equipment/unit.
         tag_data = CRUD.read(Tag, all = False, tag_url = str(unique_id))
-        x = tag_data.unit_id
-        print("x: ", x)
-        data = CRUD.read(Unit, all = False, unit_id = x)
+        unit_id = tag_data.unit_id
+    
+        data = CRUD.read(Unit, all = False, unit_id = unit_id)
         cylinder_id = tag_data.cylinder_id
+        unit_id = tag_data.unit_id
 
     
 
         current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        session['new_unit_id'] = x
+        session['new_unit_id'] = unit_id
+        session['tag']=unique_id
+        session['tech_id'] = tech_id
+
+
+        current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        history_entry = Equipment_History(
+        date_qr_scanned_eq=current_scan_date, 
+        tech_id=tech_id,
+        unit_id = unit_id)
+    
         
         #remove previous, if any, unique_equipment_token from session.
         session.pop('unique_equipment_token', None)
         #save tag url to session.
         session['unique_equipment_token'] = str(unique_id)
         
-        tech_id = session.get('tech_id')
-
-       
+        CRUD.create(Equipment_History, date_qr_scanned_eq=current_scan_date, tech_id=tech_id, )
         
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
@@ -505,6 +516,9 @@ def equipment_info_page(unique_id):
     else:
         print('error')
         return render_template('equipment-info.html')
+    
+
+
     
 @technician.route('/buy-qr', methods = ['GET', 'POST'])
 def buy_qr_page():
@@ -572,3 +586,21 @@ def ODP_Show():
     if request.method == 'GET':
         return render_template('equipment/ODP_Tag.html')
     
+
+@technician.route("/equipment_logs", methods=["GET", "POST"])
+def equipment_hist():
+    if request.method == "GET":
+        print("inside get for /equipment_history")
+        current_tech_id = session.get('tech_id')
+        equipment_hist = CRUD.read(Equipment_History, all=True, tech_id=current_tech_id)
+        
+       
+
+        for equipment in equipment_hist:
+            print(f"Equipment ID: {equipment.unit_id}")
+            print(f"Last Scanned: {equipment.date_qr_scanned_eq}")
+            
+
+        return render_template("technician/equipment_logs.html", equipment_list=equipment_hist)
+
+    return "Invalid request method"
