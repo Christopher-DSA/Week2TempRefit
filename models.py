@@ -537,6 +537,23 @@ class Cylinder_History(Base):
     def __repr__(self):
         return 'Cylinder History Model'
     
+
+
+class Equipment_History(Base):
+
+    __tablename__ = "Equipment_History"
+
+    equipment_hist_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    date_qr_scanned_eq = Column(String)
+    tech_id = Column(Integer)
+    unit_id = Column(Integer)
+    
+    def __repr__(self):
+        return 'Equipment History Model'
+    
+
+
+
 class ODP(Base):
     __tablename__ = "ODP"
 
@@ -559,6 +576,7 @@ class ODP(Base):
     def __repr__(self):
         return 'ODP Model'
     
+
 
 # Class CRUD with all important features to work with the Database.
 class CRUD:

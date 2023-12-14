@@ -113,21 +113,21 @@
                                         </div>
                                         <div class="col mb-4">
                                             <div class="input-group">
-                                                <!-- Use the pattern attribute to enforce numeric input -->
                                                 <input type="text" id="additionalWeightLb" class="form-control" style="border-radius: 5px;" placeholder="0" oninput="allowOnlyNumericInput(this)" onblur="calculateTotalWeight()">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text text-center"
-                                                        style="text-align:center; border: none;">lb</span>
+                                                    <span class="input-group-text text-center" style="text-align:center; border: none;">
+                                                        <span id="unitLabelLb">lb</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="input-group">
-                                                <!-- Use the pattern attribute to enforce numeric input -->
                                                 <input type="text" id="additionalWeightOz" class="form-control" style="border-radius: 5px;" placeholder="0" oninput="allowOnlyNumericInput(this)" onblur="calculateTotalWeight()">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text text-center"
-                                                        style="text-align:center; border: none;">oz</span>
+                                                    <span class="input-group-text text-center" style="text-align:center; border: none;">
+                                                        <span id="unitLabelOz">oz</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,11 +236,26 @@
         calculateTotalWeight();
     };
 
+    let currentUnit = 'lbs/oz'; // Default unit
+
+    function changeUnit(unit) {
+        currentUnit = unit;
+        document.getElementById('dropdownMenuButton').innerText = unit;
+        document.getElementById('unitLabelLb').innerText = unit.startsWith('kg') ? 'kg' : 'lb';
+        document.getElementById('unitLabelOz').innerText = unit.startsWith('kg') ? 'g' : 'oz';
+
+        calculateTotalWeight();
+    }
+
     // Function to allow only numeric input
     function allowOnlyNumericInput(inputElement) {
         inputElement.value = inputElement.value.replace(/[^0-9.]/g, ''); // Allow decimal point as well
         // Ensure only one decimal point
         inputElement.value = inputElement.value.replace(/(\..*)\./g, '$1');
+
+        // Update the unit labels when the user is typing
+        document.getElementById('unitLabelLb').innerText = currentUnit.startsWith('kg') ? 'kg' : 'lb';
+        document.getElementById('unitLabelOz').innerText = currentUnit.startsWith('kg') ? 'g' : 'oz';
     }
 
     function calculateTotalWeight() {
@@ -251,6 +266,13 @@
         // Get values from additional weight section
         var additionalWeightLb = parseFloat(document.getElementById('additionalWeightLb').value) || 0;
         var additionalWeightOz = parseFloat(document.getElementById('additionalWeightOz').value) || 0;
+
+        // Convert additional weight to pounds if the selected unit is kg and g
+        if (currentUnit === 'kg/g') {
+            additionalWeightLb = additionalWeightLb + additionalWeightOz / 16.0; // Convert oz to lbs
+            additionalWeightLb *= 2.20462; // Convert kg to lbs
+            additionalWeightOz = 0;
+        }
 
         // Calculate total weight
         var totalWeightLb = refrigerantWeightLb + additionalWeightLb;

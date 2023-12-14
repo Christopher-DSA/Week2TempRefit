@@ -2,7 +2,8 @@
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History,ODP
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP
+
 from functools import wraps
 
 # Import other necessary modules
@@ -476,28 +477,39 @@ def equipment_info_page(unique_id):
         
         #2 get unique_id from url
         unit_unique_url = unique_id
-        
+        tech_id = session.get('tech_id')
+
         #3. Get row in database for specific equipment/unit.
         tag_data = CRUD.read(Tag, all = False, tag_url = str(unique_id))
-        x = tag_data.unit_id
-        print("x: ", x)
-        data = CRUD.read(Unit, all = False, unit_id = x)
+        unit_id = tag_data.unit_id
+    
+        data = CRUD.read(Unit, all = False, unit_id = unit_id)
         cylinder_id = tag_data.cylinder_id
+        unit_id = tag_data.unit_id
 
     
 
         current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        session['new_unit_id'] = x
+        session['new_unit_id'] = unit_id
+        session['tag']=unique_id
+        session['tech_id'] = tech_id
+
+
+        current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        history_entry = Equipment_History(
+        date_qr_scanned_eq=current_scan_date, 
+        tech_id=tech_id,
+        unit_id = unit_id)
+    
         
         #remove previous, if any, unique_equipment_token from session.
         session.pop('unique_equipment_token', None)
         #save tag url to session.
         session['unique_equipment_token'] = str(unique_id)
         
-        tech_id = session.get('tech_id')
-
-       
+        CRUD.create(Equipment_History, date_qr_scanned_eq=current_scan_date, tech_id=tech_id, )
         
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
@@ -505,6 +517,9 @@ def equipment_info_page(unique_id):
     else:
         print('error')
         return render_template('equipment-info.html')
+    
+
+
     
 @technician.route('/buy-qr', methods = ['GET', 'POST'])
 def buy_qr_page():
@@ -572,61 +587,23 @@ def ODP_Show():
     if request.method == 'GET':
         return render_template('equipment/ODP_Tag.html')
     
-    if request.method == 'POST':
-        company_name = request.form['CompanyName']
-        phone_number = request.form['PhoneNumber']
-        technician_name = request.form['TechnicianName']
-        certificate_number = request.form['CertificateNumber']
-        expiry_date = request.form['ExpiryDate']
-        job_number = request.form['JobNumber']
-        # test_results = request.form.getlist('testResults') 
-        test_results = request.form.get('testResults', '') 
-        date_issued = request.form['DateIssued']
-        compressor_oil_removed = request.form['compressorOilRemoved']
-        other_details = request.form.get('otherDetails', '')  
-        refrigerant_type = request.form['Refrigerant']
-        reclaim_gas = request.form['reclaimGas']
-        recovery_cylinder = request.form.get('recoveryCylinder', '')
-        model = request.form['Model']
-        serial_number = request.form['serialNumber']
 
-        print('---------------------------------')
-        print(f'Company Name: {company_name}')
-        print(f'Phone Number: {phone_number}')
-        print(f'Technician Name: {technician_name}')
-        print(f'Certificate Number: {certificate_number}')
-        print(f'Expiry Date: {expiry_date}')
-        print(f'Job Number: {job_number}')
-        print(f'Test Results: {test_results}')
-        print(f'Date Issued: {date_issued}')
-        print(f'Compressor Oil Removed: {compressor_oil_removed}')
-        print(f'Other Details: {other_details}')
-        print(f'Refrigerant Type: {refrigerant_type}')
-        print(f'Reclaim Gas: {reclaim_gas}')
-        print(f'Recovery Cylinder: {recovery_cylinder}')
-        print(f'Model: {model}')
-        print(f'Serial Number: {serial_number}')
-        print('---------------------------------')
-
-        # database operations
-        try:
-            
-            CRUD.create(ODP,
-                        technician_id=session.get('user_id'),
-                        phone_number =phone_number,
-                        certificateNumber =
-                        certificate_number,
-                        job_Date =date_issued,
-                        jobNumber =job_number,
-                        test_result =test_results,
-                        oil =compressor_oil_removed,
-                        refrigerant_type =refrigerant_type,
-                        serial_number =serial_number,
-                        model_number =model)
-            return render_template('equipment/maintenance_history.html')
-        except Exception as e:
-            # Log the error and return an error response
-            print(f"Error : {e}")
-            return render_template('equipment/maintenance_history.html')
+@technician.route("/equipment_logs", methods=["GET", "POST"])
+def equipment_hist():
+    if request.method == "GET":
+        print("inside get for /equipment_history")
+        current_tech_id = session.get('tech_id')
+        equipment_hist = CRUD.read(Equipment_History, all=True, tech_id=current_tech_id)
         
-    
+       
+
+        for equipment in equipment_hist:
+            print(f"Equipment ID: {equipment.unit_id}")
+            print(f"Last Scanned: {equipment.date_qr_scanned_eq}")
+            
+
+        return render_template("technician/equipment_logs.html", equipment_list=equipment_hist)
+
+    return "Invalid request method"
+
+
