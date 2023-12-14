@@ -2,7 +2,8 @@
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP
+
 from functools import wraps
 
 # Import other necessary modules
@@ -604,3 +605,5 @@ def equipment_hist():
         return render_template("technician/equipment_logs.html", equipment_list=equipment_hist)
 
     return "Invalid request method"
+
+

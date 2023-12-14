@@ -70,6 +70,7 @@ class Technician(Base):
     date_end = Column(String)
     user_status = Column(String)
     contractor_status = Column(String)
+    license_expiry_date = Column(String)
 
     user = relationship('User', backref='Technician')
     contractor = relationship('Contractor', backref='Technician')
@@ -538,7 +539,6 @@ class Cylinder_History(Base):
     
 
 
-
 class Equipment_History(Base):
 
     __tablename__ = "Equipment_History"
@@ -550,6 +550,31 @@ class Equipment_History(Base):
     
     def __repr__(self):
         return 'Equipment History Model'
+    
+
+
+
+class ODP(Base):
+    __tablename__ = "ODP"
+
+    odp_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    # technician_id=Column(Integer,ForeignKey('Technician.technician_id'), nullable= False)
+    technician_id=Column(Integer)
+    phone_number = Column(Text)
+    certificateNumber = Column(Text)
+    job_Date = Column(Text)
+    jobNumber = Column(Text)
+    oil = Column(Text)
+    refrigerant_type = Column(Text)
+    amount_added = Column(Numeric)
+    amount_reclaimed = Column(Numeric)
+    model_number = Column(Text)
+    serial_number = Column(Text)
+    test_result = Column(Text)
+    new_install = Column(Boolean)
+    
+    def __repr__(self):
+        return 'ODP Model'
     
 
 
