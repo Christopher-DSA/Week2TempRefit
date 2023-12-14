@@ -11,5 +11,10 @@ What: The proposed web application will be developed using the Python based Flas
 Where: The app's codebase will be stored in a Git repository to facilitate version control and collaboration among developers. The app will be deployed to DigitalOcean using a continuous integration and continuous deployment (CI/CD) process, which automates the testing, building, and deployment of the app to ensure that the app is always up-to-date and functional.
 
 Why: REFIT Canada's role is in refrigerant management. The REFiT system is an electronic solution that replaces paper forms traditionally used for logging the type and weight of refrigerants, which is crucial for maintaining accurate records​​. This kind of management is vital for ensuring that ozone-depleting substances are properly controlled and that their use is minimized to protect the ozone layer.
+The project scope entails the creation of a mobile application that integrates with the QR code technology to enhance business operations, scalability, and customer experience.
+
+
+
+
 ## User Account: 
 

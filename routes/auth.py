@@ -159,21 +159,29 @@ def forgot_password():
             print("POST request for forgot_password()")
             current_user_email = request.form.get('Email') # assuming username is the same as email
             print(current_user_email)
-            # find user id for reset password token
-            #CRUD.read(User, email=current_user_email)
-            # token will expire after 24 hours
-            #expires = datetime.timedelta(hours=24)
-            # generate reset   password token
-            access_token = create_access_token(identity=current_user_email) # create token from user's former password / date of reset pass so can decode and see if resetting pass much later
-            print(access_token)
-            # add access token to user's records 
+            # Check if user email exists in database
+            current_user=CRUD.read(User, email=current_user_email)
+            # if user is not found , stay on forgot pass page and do not send email
+            
+            if not current_user:
+                flash("If your email is registered with us, you'll receive a password reset link shortly.")
+                print("User email not found")
+                return render_template("Login Flow/forgot.html")
+            
+                #return redirect(url_for("Login Flow/forgot.html"))  # Redirecting to the login route
+        
+            else:
+                access_token = create_access_token(identity=current_user_email) # create token from user's former password / date of reset pass so can decode and see if resetting pass much later
+                print(access_token)
+                # add access token to user's records 
 
-            CRUD.update(User,'jwt_token',new=access_token,email=current_user_email)
-            # Embed the token in the reset password link
-            #my_link= "http://172.16.224.205:5000/reset_password/{access_token}".format(access_token=access_token)
+                CRUD.update(User,'jwt_token',new=access_token,email=current_user_email)
+                # Embed the token in the reset password link
+                #my_link= "http://172.16.224.205:5000/reset_password/{access_token}".format(access_token=access_token)
+            
 
         except Exception as e:
-             print("Error updating user record:", e)
+            print("Error updating user record:", e)
         url_form = url_for('auth.reset_password', access_token=access_token, _external=True)
         try:
 
