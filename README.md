@@ -8,10 +8,10 @@
 
 - Jared (ICT)
 - Christopher (ICT)
-- Yahel (ICT)
+- Yael (ICT)
 
 ## Project Description
-Refit is an application to track and manage refridgerant gasses
+Refit is an application to track and manage refrigerant gasses
 
 ---
 
