@@ -1,10 +1,16 @@
 from flask import make_response, session, Blueprint, request
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from functools import wraps
+from datetime import datetime
+
+# email imports
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 #flask.cli does not have a get_version function so we will comment this out for now. Not sure how this got here.
 #from flask.cli import get_version
-from models import User, Store, CRUD, User_Support
+from models import User, Store, CRUD, User_Support, User_Detail
 
 
 admin = Blueprint('admin', __name__)
@@ -65,3 +71,71 @@ def support_tickets():
     #     email = CRUD.read(User, user_id = ticket.user_id).email
     #     emails.append(email)
     return render_template('admin/support_tickets.html', tickets = tickets)
+
+@admin.route("/admin/email", methods=['POST'])
+def new_email():
+    if request.method == 'POST':
+        #1. Capture message from text area, get ticket ID and user name from session
+        reply_to_user = request.form['message']
+        ticket_id = session.get('selected_ticket_id')
+        user_name = session.get('user_name')
+        #2. Get the user email and using user id from table
+        selected_user_id = session.get('selected_user_id')
+        email = CRUD.read(User, user_id = selected_user_id, all=False).email
+
+        #3. Send the message to the user using the message and email
+        msg = MIMEMultipart()
+        # From Support
+        msg['From'] = 'refit_dev@sidneyshapiro.com'
+        # To User
+        msg['To'] = email
+        # Subject
+        msg['Subject'] = f'RE: Support Ticket #{ticket_id}'
+
+        # Attach the HTML content
+        msg.attach(MIMEText(reply_to_user, 'html'))
+
+        email_text = msg.as_string()
+        # Send an email to the email address typed in the form.
+        smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+        smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+        smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+        smtpObj.quit()  # Quitting the connection
+        
+        print("Email sent successfully!")
+        return render_template('admin/successful-response.html', email = email, user_name = user_name)
+
+@admin.route("/admin/reply", methods=['POST'])
+def reply_to_ticket_page():
+    if request.method == 'POST':
+        # 1. Retrieve Selected User Id, User Name, and Ticket ID
+        selected_user_id = request.form['selected_user_id']
+        selected_ticket_id = request.form['selected_ticket_id']
+
+        user_first_name = CRUD.read(User_Detail, user_id = selected_user_id, all=False).first_name
+        user_last_name = CRUD.read(User_Detail, user_id = selected_user_id, all=False).last_name
+        user_name = user_first_name + " " + user_last_name
+
+        # 2. Store Selected User Id and ticket ID in Session
+        session['selected_user_id'] = selected_user_id
+        session['selected_ticket_id'] = selected_ticket_id
+        session['user_name'] = user_name
+
+        # 3. Render the Response page.
+        return render_template('admin/response.html', selected_user_id = selected_user_id, selected_ticket_id = selected_ticket_id, user_name = user_name)
+    
+@admin.route("/admin/close_ticket", methods=['POST'])
+def close_ticket():
+    if request.method == 'POST':
+        # 1. get current time and selected Ticket ID
+        selected_ticket_id = request.form['selected_ticket_id']
+        date = datetime.today()
+
+        # 2. update the User Support Model with the current time
+        # CRUD.update(User_Support, attr = 'date_ticket_closed', new = datetime.today(), ticket_id = selected_ticket_id)
+
+        # 3. Send the user an email stating the support ticket has been closed.
+
+        # 4. Render the support_tickets page with the updated ticket closed.
+        tickets = CRUD.read(User_Support, all = True)
+        return render_template('admin/support_tickets.html', tickets = tickets)

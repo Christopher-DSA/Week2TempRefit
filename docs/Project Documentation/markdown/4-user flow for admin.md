@@ -59,3 +59,8 @@ Refit Admins play a crucial role in maintaining the Refit service, ensuring acco
 3. Refit Admin works with the development team to identify and address the root cause of the problems.
 4. Upon resolution, Refit Admin communicates the updates and solutions to the users.
 
+## Respond to Support Tickets
+1. Refit Admin is able to look at a table of all support tickets.
+2. Refit Admin is able to reply to a selected support ticket.
+3. Refit Admin is able to close support tickets that are resolved.
+4. Email is sent to user when replying and closing support tickets.
