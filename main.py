@@ -15,11 +15,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager #New package, you will need to pip install flask-jwt-extended.
 from datetime import timedelta
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = '0f763b886315c9bef99ab685087f8999e193ae0474ab61726f4f198b54bcc83c'  # Change this to a secure random string
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sofvie:gXq!%g^&dm*OuWfK8HhC@refitdb.czvko9baktul.ca-central-1.rds.amazonaws.com:5432/postgres?sslmode=require'  # Update the database URI
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Session configuration
@@ -27,7 +30,7 @@ app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["REMEMBER_COOKIE_HTTPONLY"] = True
 
 #Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
 jwt = JWTManager(app)
 
