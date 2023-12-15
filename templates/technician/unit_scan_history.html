@@ -87,8 +87,11 @@
   <ul class="list-group">
       {% for equipment in equipment_list %}
           <li class="list-group-item">
-              <p><strong>Equipment ID:</strong> {{ equipment.unit_id }}</p>
+              <p><strong>Technician ID:</strong> {{ equipment.tech_id }}</p>
               <p><strong>Date Scanned:</strong> {{ equipment.date_qr_scanned_eq}} </p>
+              <p><strong>Manufactuer:</strong> {{ equipment.manufacturer}} </p>
+              <p><strong>Equipment Type:</strong> {{ equipment.unit_type}} </p>
+              <p><strong>Unit_ID:</strong> {{ equipment.unit_id}} </p>
              
               <!-- Add more details as needed -->
           </li>

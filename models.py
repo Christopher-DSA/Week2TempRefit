@@ -575,7 +575,24 @@ class ODP(Base):
     
     def __repr__(self):
         return 'ODP Model'
-    
+
+class DetailedEquipmentScanView(Base):
+    __tablename__ = 'detailed_equipment_scan_view'
+
+    # Assuming date_qr_scanned_eq is a date and tech_id is an integer
+    date_qr_scanned_eq = Column(Text, primary_key=True)
+    tech_id = Column(Integer, primary_key=True)
+
+    # Define other columns
+    unit_type = Column(String)
+    manufacturer = Column(String)
+    unit_id = Column(Integer)
+
+    def __repr__(self):
+        return f"<DetailedEquipmentScanView(date_qr_scanned_eq={self.date_qr_scanned_eq}, tech_id={self.tech_id})>"
+
+
+
 
 
 # Class CRUD with all important features to work with the Database.
