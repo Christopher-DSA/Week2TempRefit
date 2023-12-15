@@ -1,3 +1,6 @@
+
+# Note : user-flow.md file may be redundant being that there are separate folw files for each role . Is the purpose to provide a general outline for all roles?-yael
+
 **Introduction**
 
 The Refit System is a digital platform designed to streamline and simplify the tracking of refrigerant gases in Canada. It aims to replace the current paper-based tracking system with a cloud-based solution, making it more efficient and automated for end users, including service people, companies, equipment owners, and wholesalers. The system allows for easy management of refrigerant transactions, equipment repairs, and maintenance records, providing a comprehensive solution for compliance with rules and regulations.
@@ -5,7 +8,7 @@ The Refit System is a digital platform designed to streamline and simplify the t
 The Refit System caters to different user roles, including Technician, Contractor ,Organization, store, wholesaler, and Refit Administrators. Each user has specific functionalities and information access based on their role and requirements.
 
 
-# Technician user flow 
+
 
 
 

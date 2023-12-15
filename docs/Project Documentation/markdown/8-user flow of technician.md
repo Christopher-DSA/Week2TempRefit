@@ -1,38 +1,47 @@
 # User Flow for Technician
 
-## Detailed Description from SRS : Create and set up account - Technician FLow
+# Detailed Description from SRS Document:
+
+## Create and set up account - Technician FLow
+
+-----------------------|-------------------------
+Use case name:         |           Create and Set up account
+-----------------------|------------------------
+Scenario:              |          Create an online REFit account.
+-----------------------|---------------------
+Triggering event:      |       A new REFit user wants to set up an account online.
+-----------------------|------------------------ 
+Brief description:     |        User creates a REFIT account online by providing login details ,personal  information, and company details.
+-----------------------|--------------------------
+Actors:                |        Technician, Contractor, Organization, and Wholesaler
+-----------------------|-----------------------
+Related use cases:     |       View ODS History
+-----------------------|------------------------
+Stakeholders:          |Technicians, Contractors, Organization, Wholesaler, Management, and Government
+-----------------------|----------------------------
+Preconditions:         |- The Create and Set up account feature must be available and accessible.
+                       |- An ODS sheet recipient email must be provided by the user.
+                       |- An ODS license number must be provided by Technicians.
+-----------------------|-----------------------------
+Postconditions:        |- REFit account must be created and saved.
+                       |- The generated REFit account is associated with the user’s email account. 
+-----------------------|-----------------------------
+
+## Flow of activities:  
 
 
-Use case name:                 Create and Set up account
-Scenario:                      Create an online REFit account.
-Triggering event:              A new REFit user wants to set up an account online. 
-Brief description:             
-User creates a REFIT account online by providing login details ,personal  information, and company details.
-
-Actors:                        Technician, Contractor, Organization, and Wholesaler
-Related use cases:             View ODS History
-Stakeholders:
-Technicians, Contractors, Organization, Wholesaler, Management, and Government
-Preconditions:
-* The Create and Set up account feature must be available and accessible.
-* An ODS sheet recipient email must be provided by the user.
-* An ODS license number must be provided by Technicians.
-Postconditions:
-* REFit account must be created and saved.
-* The generated REFit account is associated with the user’s email account. 
-## Flow of activities:           
        **ACTOR**                      |     **SYSTEM**                          
 ----------------------------------|-------------------------------------
 1. User goes to REFIT's login page.| 1.1 System displays REFIT's login page:                           
                                                                    
-                                        The Login module contains the following fields:
-                                        Email – This field is a textbox that requires the user to enter the email address.
-                                        Password- This field is a textbox that requires the user to enter the password. The entered password is not shown to the user and is encrypted as an asterisk “*”. 
-                                        “Forgot Password?” text button – This text button, when clicked, sends the user to the Forgot Password screen.
-                                        Submit button – This button, when clicked, validates the entered details. The system shall display a trigger warning text if there are incorrect fields.
-                                        “Sign up” text button – This text button sends the user to the Create Account page.  
+                                   |     The Login module contains the following fields:
+                                   |     Email – This field is a textbox that requires the user to enter the email address.
+                                   |     Password- This field is a textbox that requires the user to enter the password. The entered password is not shown to the user and is encrypted  as an asterisk “*”. 
+                                   |     “Forgot Password?” text button – This text button, when clicked, sends the user to the Forgot Password screen.
+                                   |     Submit button – This button, when clicked, validates the entered details. The system shall display a trigger warning text if there are incorrect fields.
+                                   |     “Sign up” text button – This text button sends the user to the Create Account page.  
 
-                                    1.2 System shows users with the choice to either log in or sign up for a new account.
+                                   | 1.2 System shows users with the choice to either log in or sign up for a new account.
 
 ----------------------------------|------------------------------------------------
 2. User clicks the Sign Up text button. | 2.1 System displays the Create Account page:
@@ -182,6 +191,7 @@ Exception conditions:             |
 ----------------------------------|--------------------------------------
 
 
+### previous version of user flow , general overview
 ## Create a New Account
 
 1. User accesses the account creation page.
