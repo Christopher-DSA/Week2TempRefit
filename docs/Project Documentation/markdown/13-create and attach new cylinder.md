@@ -1,3 +1,74 @@
+***SRS 2.2.5 Add New Cylinder***
+# 2.2.5 Add new cylinder
+
+Use case name:     |        Add new cylinder 
+-------------------|-------------------
+Scenario:          |Adding tag to New Cylinder
+-------------------|-------------------
+Triggering event:  |New cylinders are delivered.
+-------------------|-------------------
+Brief description: |When new cylinders are delivered technicians needs to add tag to them. 
+-------------------|-------------------
+Actors:            | Technicians
+-------------------|-------------------
+Related use cases: | 
+-------------------|-------------------
+Stakeholders:      |Technicians, Contractor, client, government
+-------------------|-------------------
+Preconditions:     |Technicians must be logged in successfully in REFit App.
+                   |Technician should have access to the Technician Dashboard.
+-------------------|-------------------
+Postconditions:    |The QR tag should be linked with the cylinder.
+-------------------|-------------------
+Flow of activities: 
+-------------------|-------------------
+Actor              |System
+-------------------|-------------------
+1. Technician enters username and password and logins successfully.| 1.1 User is signed in Successfully and displays technician Dashboard.
+-------------------------------------------------------------------|-------------------------------------------------------------
+2. User clicks on Scan QR Tags button in Technician Dashboard.     |
+                                                                   |2.1  Only for first use , it asks permission to access phone’s camera and modal is appeared with Deny and Accept as options.
+                                                                   |2.2 User needs to Accept it in order to start scanning. If accepted it will not ask again for permission.
+                                                                   |2.3  If Deny button is clicked, it takes back customer to Technician Dashboard page.
+-------------------------------------------------------------------|--------------------------------------------------------------
+3. User scans the QR tag                                           |
+                                                                   |3.1 The scan is successful and It shows Select Cylinder Type Screen with 3 options:
+                                                                   |New Cylinder
+                                                                   |Recovery Cylinder Clean/Reusable
+                                                                   |Recovery Cylinder Burnout/Recycle
+-------------------------------------------------------------------|------------------------------------------------
+4. Click on New cylinder button                                    |
+                                                                   |4.1 New Cylinder form is displayed.
+                                                                   |
+                                                                   |This form requires following information:
+                                                                   |Create Date:  It should be auto populated with current DateTime.
+                                                                   |Wholesaler: Fill the wholesaler detail
+                                                                   |
+                                                                   |Cylinder information
+                                                                   |Cylinder Tare weight: 
+                                                                   | Choose unit from dropdown
+                                                                   |Put values for lb and oz
+                                                                   |Refrigerant Type: Enter refrigerant type
+                                                                   |Current Refigerant Weight in Cylinder
+-------------------------------------------------------------------|---------------------------------------------------
+5. Fill in all the required details correctly in the new cylinder screen and then click Submit. | 5.1 Cylinder Linked page is displayed on successful submission. 
+                                                                                                |This page has a  confirmation message and an option to Add another tag or Return to Dashboard.
+-------------------------------------------------------------------|-------------------------------------------
+6. User can click on Add another tag if he wants to add another tag and it takes user to QR Scanner page.| 6.1 User can perform same steps to scan again.
+-------------------------------------------------------------------|--------------------------------
+7. Or user can go back to technician Dashboard by clicking on Go to Dashboard button |7.1 Technician Dashboard is displayed
+-------------------------------------------------------------------|--------------------------------
+Exception conditions:                                              |
+                                                                   |The barcode is not clear or broken
+                                                                   |The complete required details are not filled
+                                                                   |Invalid values provided in New cylinder fields
+-------------------------------------------------------------------|-----------------------------------------------------
+
+
+
+
+
+
 ## Cylinder Type Selection Form
 
 The "Cylinder Type Selection Form" is a web form that allows users to choose between two options: "New Cylinder" or "Recovery Cylinder." Upon selection, the form dynamically redirects the user to the corresponding page for the chosen option.
