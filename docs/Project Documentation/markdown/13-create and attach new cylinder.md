@@ -132,6 +132,69 @@ Exception conditions:                                       |
 3. Invalid values provided in New cylinder fields           |
 ------------------------------------------------------------|----------------------------------------
 
+### Note : may need to be moved to 14-cylinder repair and recovery page.md ( based on title , but this file already has the recovery form options so placed it here)-yael
+
+# 2.2.7 Add new recovery cylinder burnout/ recycle
+Use case name:                | Add new recovery cylinder burnout/ recycle
+------------------------------|--------------------------------------------------------
+Scenario:                     |Adding tag to New Recovery Cylinder Burnout/ Recycle
+------------------------------|--------------------------------------------------------
+Triggering event:             |New cylinders are delivered.
+------------------------------|--------------------------------------------------------
+Brief description:            |When new cylinders are delivered technicians needs to add tag to them. 
+------------------------------|--------------------------------------------------------
+Actors:                       |Technicians
+------------------------------|--------------------------------------------------------
+Related use cases:            |
+------------------------------|--------------------------------------------------------
+Stakeholders:                 |Technicians, Contractor, client, government
+------------------------------|-----------------------------------------------
+Preconditions:                |
+                              |Technicians must be logged in successfully in refit App
+                              |Technician should have access to Technician Dashboard
+------------------------------|----------------------------------------------------
+Postconditions:               | The tag should be linked with the cylinder
+------------------------------|-----------------------------------------------
+*Flow of activities:*         |
+------------------------------|----------------------------------------------------
+*ACTOR*                       |     *SYSTEM*
+------------------------------|----------------------------------------------------
+1. Technician enters username and password and logins successfully. |1.1 User is signed in Successfully and displays technician Dashboard.
+------------------------------|----------------------------------------------------
+2. User clicks on Scan QR Tags button in Technician Dashboard.|
+                                                            |2.1 Only for first use , it asks permission to access phone’s camera and modal is appeared with Deny and Accept as options.
+                                                            |2.2 User needs to Accept it in order to start scanning. If accepted it will not ask again for permission.
+                                                            |2.3 If Deny button is clicked, it takes back customer to Technician Dashboard page.
+------------------------------|----------------------------------------------------
+3. User Scans the QR tag successfully                       |
+                                                            |The scan is successful and It shows Select Cylinder Type Screen with 3 options:
+                                                            |New Cylinder
+                                                            |Recovery Cylinder Clean/Reusable
+                                                            |Recovery Cylinder Burnout/Recycle
+------------------------------------------------------------|-----------------------------------------
+4. Click on Recovery Cylinder Burnout/Recycle               | New Recovery cylinder Burnout form is displayed
+------------------------------|----------------------------------------------------
+5. Fill all the required details correctly in the form and then click Submit|
+                                                                            | Cylinder Linked page is displayed on successful submission. 
+                                                                            |This page has confirmation message and option to Add another tag or Return to Dashboard.
+--------------------------------------------------------------------------------------|----------------------------------------------------
+6. User can click on Add another tag if he wants to add another tag and it takes user to QR Scanner page. | User can perform same steps to scan again.
+--------------------------------------------------------------------------------------|----------------------------------------------------
+7. Or user can go back to technician Dashboard by clicking on Go to Dashboard button  |
+                                                                                      |7.1 Technician Dashboard is displayed
+                                                                                      |
+                                                                                      |
+                                                                                      |
+                                                                                      |
+                                                                                      |
+                                                                                      |
+                                                                                      |
+                                                                                      |Exception conditions:
+                                                                                      |1. The barcode is not clear or broken
+                                                                                      |2. The complete required details are not filled
+                                                                                      |3. Invalid values provided in New cylinder fields
+--------------------------------------------------------------------------------------|----------------------------------------------------
+
 
 
 
