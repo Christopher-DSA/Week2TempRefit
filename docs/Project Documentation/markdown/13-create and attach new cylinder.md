@@ -64,6 +64,73 @@ Exception conditions:                                              |
                                                                    |Invalid values provided in New cylinder fields
 -------------------------------------------------------------------|-----------------------------------------------------
 
+***SRS 2.2.6 Add Recovery Cylinder***
+
+# 2.2.6 Add new recovery cylinder clean/ reusable
+Use case name:  |Add new recovery cylinder clean/ reusable
+----------------|-----------------------------------------
+Scenario:       |Adding tag to New Recovery Cylinder
+----------------|-----------------------------------------
+Triggering event: |New cylinders are delivered.
+------------------|------------------------------------
+Brief description:| When new cylinders are delivered technicians needs to add tag to them. 
+------------------|------------------------------------------
+Actors:           |Technicians
+-------------------|----------------------------------------------------
+Related use cases: |
+-------------------|----------------------------------------------------
+Stakeholders:      | Technicians, Contractor, client, government
+-------------------|----------------------------------------------------
+Preconditions:     |
+                   |Technicians must be logged in successfully in refit App
+                   |Technician should have access to Technician Dashboard
+-------------------|----------------------------------------------------
+Postconditions:    |
+                   |The tag should be linked with the cylinder
+-------------------|----------------------------------------------------
+*Flow of activities:*|
+---------------------|----------------------------------------------------
+Actor                |System
+---------------------|----------------------------------------------------
+1. Technician enters username and password and logins successfully.| 1.2 User is signed in Successfully and displays technician Dashboard.
+-------------------------------------------------------------------|----------------------------------------------------
+2. User clicks on Scan QR Tags button in Technician Dashboard.|
+                                                            |2.1 Only for first use , it asks permission to access phone’s camera and modal is appeared with Deny and Accept as options.
+                                                            |2.2 User needs to Accept it in order to start scanning. If accepted it will not ask again for permission.
+                                                            |2.3 If Deny button is clicked, it takes back customer to Technician Dashboard page.
+------------------------------------------------------------|---------------------------------------------------
+3. User scan the QR code                                    |
+                                                            |3.1 The scan is successful and It shows Select Cylinder Type Screen with 3 options:
+                                                            |a. New Cylinder
+                                                            |b. Recovery Cylinder Clean/Reusable
+                                                            |c. Recovery Cylinder Burnout/Recycle
+------------------------------------------------------------|---------------------------------------------
+4. Click on Recovery Cylinder Clean/Reusable                |
+                                                            |4.1 New Cylinder form is displayed
+                                                            |
+                                                            |This form requires following info
+                                                            |Create Date:  It should be auto populated with current DateTime.
+                                                            |WholeSaler: Fill the wholesaler detail
+                                                            |
+                                                            |Cylinder information
+                                                            |Cylinder Tare weight: 
+                                                            |Choose unit from dropdown
+                                                            |Put values for lb and oz
+                                                            |Refrigerant Type: Enter refrigerant type
+                                                            |       III. Current Refigerant Weight in Cylinder
+------------------------------------------------------------|---------------------------------------------------
+5. Fill all the required details correctly in New cylinder screen and then click Submit| 5.1 Cylinder Linked page is displayed on successful submission. 
+                                                                                       |This page has confirmation message and option to Add another tag or Return to Dashboard.
+------------------------------------------------------------|------------------------------------------------
+6. User can click on Add another tag if he wants to add another tag and it takes user to QR Scanner page. | 6.1 User can perform same steps to scan again.
+------------------------------------------------------------|------------------------------------------------
+7. Or user can go back to technician Dashboard by clicking on Go to Dashboard button | 7.1 Technician Dashboard is displayed
+------------------------------------------------------------|--------------------------------------------------------
+Exception conditions:                                       |
+1. The barcode is not clear or broken                       |
+2. The complete required details are not filled             |
+3. Invalid values provided in New cylinder fields           |
+------------------------------------------------------------|----------------------------------------
 
 
 
