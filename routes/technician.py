@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, current_app, url_for, flash,
 from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP
 
 from functools import wraps
+import pint
 
 # Import other necessary modules
 import UUID_Generate
@@ -562,7 +563,7 @@ def charge_equipment_view():
 
       #### converting to pounds and ounces
 
-        ureg = UnitRegistry()
+        ureg = pint.UnitRegistry()
         factory_charge_amount = 1000
         ounces = factory_charge_amount* ureg.ounces
         pounds = ounces.to(ureg.pounds)
@@ -594,15 +595,10 @@ def equipment_hist():
         print("inside get for /equipment_history")
         current_tech_id = session.get('tech_id')
         equipment_hist = CRUD.read(Equipment_History, all=True, tech_id=current_tech_id)
-        
-       
-
         for equipment in equipment_hist:
             print(f"Equipment ID: {equipment.unit_id}")
             print(f"Last Scanned: {equipment.date_qr_scanned_eq}")
-            
-
-        return render_template("technician/equipment_logs.html", equipment_list=equipment_hist)
+        return render_template("technician/unit_scan_history.html", equipment_list=equipment_hist)
 
     return "Invalid request method"
 

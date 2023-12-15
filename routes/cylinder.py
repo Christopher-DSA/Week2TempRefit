@@ -412,7 +412,6 @@ def recover_ref():
 @cylinder.route("/technician_cylinder_history", methods=["GET", "POST"])
 def cylinder_hist():
     if request.method == "GET":
-        print("inside get for /technician_history")
         current_tech_id = session.get('tech_id')
         cylinder_hist = CRUD.read(Cylinder_History, all=True, technician_id=current_tech_id)
         
@@ -425,6 +424,6 @@ def cylinder_hist():
             print(f"Last Scanned: {cylinder.date_qr_scanned}")
             
 
-        return render_template("technician/technician_cylinder_history.html", cylinders_list=cylinder_hist)
+        return render_template("technician/cyl_scan_history.html", cylinders_list=cylinder_hist)
 
     return "Invalid request method"
