@@ -145,19 +145,12 @@ the user has the option to proceed to the Cylinder/ Equipment Dashboard or retur
 --------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------
 9. If the QR code is not found, the user has the option to replace the tag or seek assistance from Customer Support. |
 
-                                                                                                                     |9.1 If the user wants to replace the tag, he can click the Replace Now button.
-                                                                                                                     |
-                                                                                                                     |9.2 Else the user can click the Contact Customer Support button.
-                                                                                                                     |
-                                                                                                                     |
-                                                                                                                     |
-                                                                                                                     |
-                                                                                                                     |
-                                                                                                                     |
+                                                                                                                     |9.1 If the user wants to replace the tag, he can click the Replace Now button.                                                    |
                                                                                                                      |9.1.1 System displays the Replace QR Tag page (Refer to the Replace QR tag activity). 
                                                                                                                      |9.1.2 If the QR tag is successfully replaced, the system sends the user to the Cylinder or Equipment page.
-                                                                                                                     |
-                                                                                                                     |9.2.1 System displays the Contact Customer Support page which is an external solution that handles customer concerns (Refer to the Contact customer support activity).
+9.2.1 System displays the Contact Customer Support page which is  an external solution that handles customer concern.|
+Refer to the( Contact customer support activity).                                                                    |                                                 
+                                                                                                                     |                                                                   |                                                                   |               
                                                                                                                      |
                                                                                                                      |
                                                                                                                      |
