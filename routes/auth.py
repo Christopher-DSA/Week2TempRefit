@@ -317,8 +317,9 @@ def save_new_pass():
             print(hashed_pass)
         # Update password in the database
             CRUD.update(User, 'password', new=hashed_pass, email=current_user_email)
-        
-            return redirect(url_for('auth.login'))
+            # redirect to template with button to go to login page
+            return render_template('Login Flow/success.html')
+            #return redirect(url_for('auth.login'))  
     return render_template("Login Flow/reset.html")
     # else:
     #     print('passwords do not match')
