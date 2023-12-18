@@ -102,7 +102,6 @@ def new_email():
         smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
         smtpObj.quit()  # Quitting the connection
         
-        print("Email sent successfully!")
         return render_template('admin/successful-response.html', email = email, user_name = user_name)
 
 @admin.route("/admin/reply", methods=['POST'])
@@ -132,7 +131,7 @@ def close_ticket():
         date = datetime.today()
 
         # 2. update the User Support Model with the current time
-        # CRUD.update(User_Support, attr = 'date_ticket_closed', new = datetime.today(), ticket_id = selected_ticket_id)
+        CRUD.update(User_Support, ticket_id = selected_ticket_id, attr = 'date_ticket_closed', new = str(datetime.today()))
 
         # 3. Send the user an email stating the support ticket has been closed.
 
