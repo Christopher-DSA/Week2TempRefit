@@ -4,7 +4,7 @@ from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 import UUID_Generate
 import pandas as pd
-from datetime import datetime
+import datetime
 
 
 
@@ -20,6 +20,7 @@ def login_required(f):
     return decorated_function
 
 def convert_to_oz(lb, oz):
+    '''Converts lb and oz to just oz for storage in the database.'''
     lb = float(lb)
     oz = float(oz)
     total_oz = lb * 16 + oz
@@ -251,10 +252,21 @@ def CylinderInfo(unique_id):
         session['gas_name']=refrigerant_table_lookup.refrigerant_name
         session['size']=data.cylinder_size
         session['weight']=data.current_refrigerant_weight
-        session['type']=cylinder_type_lookup.type_name
+        session.update({
+            'cyl_id': cyl_id,
+            'tag': unique_id,
+            'gas_name': refrigerant_table_lookup.refrigerant_name,
+            'size': data.cylinder_size,
+            'weight': data.current_refrigerant_weight,
+            'type': cylinder_type_lookup.type_name,
+            'cylinder_tare_weight': data.cylinder_tare_weight,
+            'tare_weight_before_repair': data.tare_weight_before_repair,
+            'tare_weight_after_repair': data.tare_weight_after_repair,
+        })
 
 
-        current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        current_scan_date = datetime.date.today() 
 
         history_entry = Cylinder_History(
         date_qr_scanned=current_scan_date,
@@ -266,12 +278,21 @@ def CylinderInfo(unique_id):
         )
         CRUD.create(Cylinder_History, date_qr_scanned=current_scan_date, cylinder_id=cyl_id, technician_id=tech_id, refrigerant_id = cylinder_refrigerant_id, refrigerant_name = refrigerant_table_lookup.refrigerant_name, refrigerant_weight = data.current_refrigerant_weight )
         
-        return render_template("beta/cylinder_info.html", data=data, name = name_data)
+        if (name_data["cylinder_type"] == "Charge Cylinder"):
+            print("charge cylinder info page")
+            return render_template("beta/charge_cylinder_info.html", data=data, name = name_data)
+        elif (name_data["cylinder_type"] == "Recovery Cylinder"):
+            print("recovery cylinder info page")
+            return render_template("beta/recovery_cylinder_info.html", data=data, name = name_data)
+        else:
+            print("else")
+            return render_template("beta/cylinder_info.html", data=data, name = name_data)
+
     
 
 
-    
-@cylinder.route("/refrigerant_recovery", methods=["GET"])
+#Refrigerant Recovery Form. Only used for Recovery Type Cylinders.
+@cylinder.route("/refrigerant_recovery", methods=["GET","POST"])
 def recover_refrigerant():
     if request.method == 'GET':
         cly_id = session.get('cyl_id')
@@ -279,14 +300,16 @@ def recover_refrigerant():
         cylinder_size = session.get('size')
         weight = session.get('weight')
         cylinder_type =session.get('type')
+        cylinder_tare_weight = session.get('cylinder_tare_weight')
+        tare_weight_before_repair = session.get('tare_weight_before_repair')
 
         tag_data = CRUD.read(Tag, all = False, cylinder_id = cly_id)
         tag_num = tag_data.tag_number
 
         cyl_data = CRUD.read(Cylinder, all = False, cylinder_id = cly_id)
         technician_id = cyl_data.technician_id
-       
-        current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+               
+        current_date = datetime.date.today()
 
         dt={
             "tag": tag_num,
@@ -295,10 +318,31 @@ def recover_refrigerant():
             "size": cylinder_size,
             "date": current_date,
             "type": cylinder_type,
-            "weight": weight
+            "weight": weight,
+            "cylinder_tare_weight": cylinder_tare_weight,
+            "tare_weight_before_repair": tare_weight_before_repair
         }
         print(dt)
         return render_template("cylinder/cylinder_recovery_newequipment.html",dt=dt)
+    elif request.method == 'POST':
+        #0
+        current_cyl_id = session.get('cyl_id')
+        
+        #1. The New Cylinder tare weight BEFORE service is the tare weight of the cylinder AFTER this current service.
+        CRUD.update(Cylinder, 'tare_weight_before_repair', new = request.form.get('cylinder_weight_after_service'), cylinder_id = current_cyl_id)
+        #2. Calcuate the new refrigerant weight in the cylinder in oz. (The form calculates this in lbs so we will need to convert)
+        calculated_refrigerant = float(request.form.get('refrigerantWeightAfterService'))
+        
+        converted_refrigerant_amount_oz = convert_to_oz(calculated_refrigerant, 0)
+        previous_refrigerant_weight_oz = float(session.get('weight'))
+        
+        #3. Update database "current_refrigerant_weight" with the new total amount of refrigerant in the cylinder.
+        new_total_refrigerant_weight = converted_refrigerant_amount_oz + previous_refrigerant_weight_oz
+        CRUD.update(Cylinder, 'current_refrigerant_weight', new = new_total_refrigerant_weight, cylinder_id = current_cyl_id)
+        
+        #4. Update the tare weight of the cylinder AFT service.
+        
+        return render_template("cylinder/recovery_form_successful.html")
     
 @cylinder.route('/recover_ref', methods= ['POST'])
 def recover_ref():
@@ -412,7 +456,6 @@ def recover_ref():
 @cylinder.route("/technician_cylinder_history", methods=["GET", "POST"])
 def cylinder_hist():
     if request.method == "GET":
-        print("inside get for /technician_history")
         current_tech_id = session.get('tech_id')
         cylinder_hist = CRUD.read(Cylinder_History, all=True, technician_id=current_tech_id)
         
@@ -425,6 +468,6 @@ def cylinder_hist():
             print(f"Last Scanned: {cylinder.date_qr_scanned}")
             
 
-        return render_template("technician/technician_cylinder_history.html", cylinders_list=cylinder_hist)
+        return render_template("technician/cyl_scan_history.html", cylinders_list=cylinder_hist)
 
     return "Invalid request method"

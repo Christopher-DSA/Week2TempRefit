@@ -11,11 +11,7 @@ import datetime
 # Blueprint Configuration
 contractor = Blueprint('contractor', __name__)
 
-# @contractor.route("/contractor/dashboard", methods=['GET', 'POST'])
-# def dashboard():
-#     return render_template('contractor/dashboard.html')
-
-
+# Decorator to check if user is logged in
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -24,6 +20,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+# Decorator to check if user is a contractor
 def contractor_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -42,8 +39,7 @@ def contractor_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
-# register contractor.
+# Route for when user creates an account as a contractor
 @contractor.route("/formcontractor", methods=["GET", "POST"])
 def formcontractor():
     if request.method == 'POST':
@@ -59,16 +55,10 @@ def formcontractor():
         province = request.form.get('province')
         postalCode = request.form.get('postalCode')
         phoneNumber = request.form.get('phoneNumber')
-
         print("Contractor data succssfully retrieved.")
-    #validate the data and pass data to database
-
         new_user=CRUD.create(User_Detail, address=address, city=city,province=province, postal_code=postalCode,telephone=phoneNumber)
-
         new_detail=CRUD.create(Contractor,user_id=session.get('user_id'),name=name,logo='logo', status='active',companyName=companyName,branchId=branchId)
-        
-    #redirect to the appropriate page
-
+        print("Contractor data succssfully added to database.")
         return redirect(url_for('contractor.dashboardcontractor'))
     return render_template("contractor/formcontractor.html")
 
@@ -89,13 +79,11 @@ def handle_qr_code():
     qr_code_text = data['qrCode']
     print("QR Code Text: ", qr_code_text)
     # You can handle the QR code text here as needed
-
     # Return a response
     return jsonify({'message': 'QR code received successfully.'}), 200
 
 @contractor.route('/technician_details', methods=['GET', 'POST'])
 def technician_managment():
-
         if request.method == 'GET':
             contractor_user_id =session.get('user_id')
             contractor_data = CRUD.read(Contractor,user_id=contractor_user_id)
@@ -127,9 +115,6 @@ def technician_managment():
                 # "lastname":tech_lastname
                                         }
                 technician_list.append(technician_obj)
-        
-    
-      
             return render_template('contractor/technician_details.html',technicians=technician_list)
         return render_template('contractor/technician_details.html')
 

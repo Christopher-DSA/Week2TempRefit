@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equipment Info</title>
+    <title>Charge Cylinder Info</title>
     <link rel="icon" type="image/png" sizes="130x165"
         href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -73,10 +73,10 @@
 
     <br>
     <div class="container" id="information" style="margin-top: 20px;">
-        <h2 style="margin-bottom: 15px;">Equipment Information</h2>
-        <h5>Equipment Type: {{data.unit_type}}</h4>
-            <h5>Refrigerant Type: {{data.type_of_refrigerant}} </h4>
-                <h5>Manufacturer: {{data.manufacturer}}</h4>
+        <h2 style="margin-bottom: 15px;">Charge Cylinder Information</h2>
+        <h5>Cylinder Type: {{name.cylinder_type}} </h4>
+            <h5>Refrigerant Type: {{name.refrigerant_name}} </h4>
+                <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight}} oz</h4>
                     <a href="#more-information-table">
                         <h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6>
                     </a>
@@ -84,12 +84,12 @@
     <br>
 
     <div class="container" id="buttons">
-        <div class="row" id="AllRowsHere">
+        <div class="row">
             <!-- Card box 1 -->
             <div class="container">
-                <div class="row d-md-flex" id="Row-1">
+                <div class="row d-md-flex">
                     <!-- Card box 1 -->
-                    <div class="col-md-6 col-12 mb-3" onclick="location.href='/equipment/repair_ODS_Sheet'">
+                    <div class="col-md-6 col-12 mb-3" onclick="location.href='/charge-equipment'">
                         <div class="card card-height-sm h-100 border btn p-0"
                             style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); background-color: #AFD3FF;">
                             <div class="card-body d-flex flex-md-column flex-row align-items-center"
@@ -104,7 +104,7 @@
 
                                 </button>
                                 <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">
-                                    Repair Equipment</p>
+                                    Charge Equipment</p>
                             </div>
                         </div>
                     </div>
@@ -121,6 +121,8 @@
                                             d="M9.375 0C6.8886 0 4.50403 0.987721 2.74587 2.74587C0.987721 4.50403 0 6.8886 0 9.375L0 65.625C0 68.1114 0.987721 70.496 2.74587 72.2541C4.50403 74.0123 6.8886 75 9.375 75H65.625C68.1114 75 70.496 74.0123 72.2541 72.2541C74.0123 70.496 75 68.1114 75 65.625V9.375C75 6.8886 74.0123 4.50403 72.2541 2.74587C70.496 0.987721 68.1114 0 65.625 0L9.375 0ZM25.0969 21.7781C24.6568 21.338 24.0599 21.0908 23.4375 21.0908C22.8151 21.0908 22.2182 21.338 21.7781 21.7781C21.338 22.2182 21.0908 22.8151 21.0908 23.4375C21.0908 24.0599 21.338 24.6568 21.7781 25.0969L34.1859 37.5L21.7781 49.9031C21.5602 50.121 21.3874 50.3797 21.2694 50.6645C21.1515 50.9492 21.0908 51.2543 21.0908 51.5625C21.0908 51.8707 21.1515 52.1758 21.2694 52.4605C21.3874 52.7453 21.5602 53.004 21.7781 53.2219C22.2182 53.662 22.8151 53.9092 23.4375 53.9092C23.7457 53.9092 24.0508 53.8485 24.3355 53.7306C24.6203 53.6126 24.879 53.4398 25.0969 53.2219L37.5 40.8141L49.9031 53.2219C50.121 53.4398 50.3797 53.6126 50.6645 53.7306C50.9492 53.8485 51.2543 53.9092 51.5625 53.9092C51.8707 53.9092 52.1758 53.8485 52.4605 53.7306C52.7453 53.6126 53.004 53.4398 53.2219 53.2219C53.4398 53.004 53.6126 52.7453 53.7306 52.4605C53.8485 52.1758 53.9092 51.8707 53.9092 51.5625C53.9092 51.2543 53.8485 50.9492 53.7306 50.6645C53.6126 50.3797 53.4398 50.121 53.2219 49.9031L40.8141 37.5L53.2219 25.0969C53.4398 24.879 53.6126 24.6203 53.7306 24.3355C53.8485 24.0508 53.9092 23.7457 53.9092 23.4375C53.9092 23.1293 53.8485 22.8242 53.7306 22.5395C53.6126 22.2547 53.4398 21.996 53.2219 21.7781C53.004 21.5602 52.7453 21.3874 52.4605 21.2694C52.1758 21.1515 51.8707 21.0908 51.5625 21.0908C51.2543 21.0908 50.9492 21.1515 50.6645 21.2694C50.3797 21.3874 50.121 21.5602 49.9031 21.7781L37.5 34.1859L25.0969 21.7781Z"
                                             fill="#111A66" />
                                     </svg>
+
+
                                 </button>
                                 <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">Remove QR</p>
                             </div>
@@ -128,12 +130,14 @@
                     </div>
                 </div>
 
-                <div class="row d-md-flex" id = "Row-2">
-                    <!-- Card box 3 -->
+
+
+
+                <div class="row d-md-flex" onclick="location.href='/choose-equipment-history-type'">
                     <div class="col-md-6 col-12 mb-3">
                         <div class="card h-100 border btn p-0"
                             style="height: 300px; border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
-                            <div class="card-body d-flex flex-md-column flex-row align-items-center" onclick="location.href='/choose-equipment-history-type'">
+                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
                                 <button class="btn mb-4 mb-md-0 p-0" type="button">
                                     <!-- SVG for Card 5 -->
                                     <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
@@ -148,28 +152,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Card box 4 -->
-                    <div class="col-md-6 col-12 mb-3">
-                        <div class="card h-100 border btn p-0"
-                            style="height: 300px; border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
-                            <div class="card-body d-flex flex-md-column flex-row align-items-center" onclick="location.href='/ODP-Tag'">
-                                <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <!-- SVG for Card 5 -->
-                                    <svg width="80" height="71" viewBox="0 0 80 71" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M53.8957 1.12519L73.8606 21.6163C82.0465 30.0156 82.0465 43.5179 73.8606 51.9172L56.364 69.8728C54.9112 71.3624 52.5366 71.3783 51.0682 69.9045C49.5997 68.4306 49.5841 66.0218 51.0369 64.5321L68.5179 46.5766C73.8137 41.1408 73.8137 32.4087 68.5179 26.9729L48.5686 6.48173C47.1158 4.99204 47.1314 2.58318 48.5999 1.10934C50.0683 -0.364498 52.4429 -0.34865 53.8957 1.14104V1.12519ZM0 31.2993V7.60692C0 3.40727 3.35872 0 7.49854 0H30.8534C33.5091 0 36.0555 1.0618 37.9301 2.96353L64.175 29.5878C68.0805 33.5497 68.0805 39.968 64.175 43.93L43.3197 65.0867C39.4142 69.0487 33.0873 69.0487 29.1818 65.0867L2.93693 38.4625C1.04667 36.5608 0 33.9934 0 31.2993ZM22.4956 17.7495C22.4956 16.4045 21.9689 15.1146 21.0314 14.1635C20.0939 13.2125 18.8224 12.6782 17.4966 12.6782C16.1708 12.6782 14.8992 13.2125 13.9617 14.1635C13.0242 15.1146 12.4976 16.4045 12.4976 17.7495C12.4976 19.0945 13.0242 20.3844 13.9617 21.3354C14.8992 22.2865 16.1708 22.8208 17.4966 22.8208C18.8224 22.8208 20.0939 22.2865 21.0314 21.3354C21.9689 20.3844 22.4956 19.0945 22.4956 17.7495Z"
-                                            fill="#111A66" />
-                                    </svg>
-
-                                </button>
-                                <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">ODP Tag</p>
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
         </div>
@@ -180,28 +162,24 @@
         <table class="table table-hover table-striped table-bordered">
             <thead class="table-dark">
                 <tr>
-                    <!--Column Names-->
-                    <th scope="col">Unit_ID</th>
-                    <th scope="col">Installation Date</th>
-                    <th scope="col">manufacturer</th>
-                    <th scope="col">Type of Refrigerant</th>
-                    <th scope="col">Unit Type</th>
-                    <th scope="col">Factory Charge</th>
-                    <th scope="col">Technician-ID</th>
-
+                    <th scope="col">Cylinder_ID</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Refrigerant_name</th>
+                    <th scope="col">Supplier</th>
+                    <th scope="col">Latest Measured Cylinder Tare Weight (oz)</th>
+                    <th scope="col">Current_Refrigerant_Weight (OZ)</th>
                 </tr>
+            </thead>
             <tbody>
-
-            <tbody>
-                <!--Row Data-->
                 <tr>
-                    <td>{{data.unit_id}}</td>
-                    <td>{{data.installation_date}}</td>
-                    <td>{{data.manufacturer}}</td>
-                    <td>{{data.type_of_refrigerant}}</td>
-                    <td>{{data.unit_type}}</td>
-                    <td>{{data.factory_charge_amount}}</td>
-                    <td>{{tech_id}}</td>
+                    <td>{{data.cylinder_id}}</td>
+                    <td>{{data.cylinder_size}}lbs</td>
+                    <td>{{name.cylinder_type}}</td>
+                    <td>{{name.refrigerant_name}}</td>
+                    <td>{{data.supplier}}</td>
+                    <td>{{data.cylinder_tare_weight}}</td>
+                    <td>{{data.current_refrigerant_weight}}</td>
                 </tr>
             </tbody>
         </table>
@@ -210,3 +188,35 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 </body>
+<!-- <script>
+    document.getElementById("recoveryButton").addEventListener("click", function() {
+        var url =window.location.pathname;
+        var tag = url.substring(url.lastIndexOf('/') + 1);
+    var dataToSend = {
+        cylinder_id: "{{data.cylinder_id}}",
+        cylinder_size: "{{data.cylinder_size}}",
+        cylinder_type: "{{name.cylinder_type}}",
+        refrigerant_name: "{{name.refrigerant_name}}",
+        supplier: "{{data.supplier}}",
+        current_refrigerant_weight: "{{data.current_refrigerant_weight}}",
+        tag:tag
+    };
+
+    fetch('/datacapture', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .then(response => {
+        // Handle the response from the Flask backend if needed
+        console.log("Data sent successfully");
+        window.location.href = '/refrigerant_recovery'
+    })
+    .catch(error => {
+        // Handle errors if the request fails
+        console.error('Error:', error);
+    });
+});
+</script>     -->
