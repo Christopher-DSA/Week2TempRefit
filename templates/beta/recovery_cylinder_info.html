@@ -1,5 +1,5 @@
 <html>
-<h1>Cylinder Information</h1>
+<h1>Recovery Cylinder Information</h1>
 Information for Scanned Cylinder
 
 <table border class="table table-hover table-dark">
@@ -11,6 +11,7 @@ Information for Scanned Cylinder
             <th scope="col">Type</th>
             <th scope="col">Refrigerant_name</th>
             <th scope="col">Supplier</th>
+            <th scope="col">Latest Measured Cylinder Weight (Lbs)</th>
             <th scope="col">Current_Refrigerant_Weight (OZ)</th>
             <th scope="col">Options</th>
 
@@ -24,13 +25,13 @@ Information for Scanned Cylinder
                 <td>{{name.cylinder_type}}</td>
                 <td>{{name.refrigerant_name}}</td>
                 <td>{{data.supplier}}</td>
+                <td>{{data.cylinder_tare_weight}}</td>
                 <td>{{data.current_refrigerant_weight}}</td>
 
 
                 <td>
                     <!-- <button id="recoveryButton" class="btn btn-outline btn-info" >Recover Refrigerant</button> -->
                     <button class="btn btn-outline btn-info" onclick="location.href='/refrigerant_recovery'" >Recover Refrigerant</button>
-                    <button class="btn btn-outline btn-success" onclick="location.href='/charge-equipment'">Charge Equipment</button>
                     <button class="btn btn-outline btn-warning" onclick="location.href='/remove-qrtag'">Remove QR Tag</button>
                 </td>
 

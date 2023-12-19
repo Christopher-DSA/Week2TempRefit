@@ -376,6 +376,9 @@ class Cylinder(Base):
     condition = Column(String)
     current_refrigerant_weight = Column(Numeric)
     unique_url_id = Column(String)
+    tare_weight_before_repair = Column(Numeric)
+    tare_weight_after_repair = Column(Numeric)
+
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')
     technician = relationship('Technician', backref='Cylinder')

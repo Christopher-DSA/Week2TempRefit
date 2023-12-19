@@ -251,7 +251,18 @@ def CylinderInfo(unique_id):
         session['gas_name']=refrigerant_table_lookup.refrigerant_name
         session['size']=data.cylinder_size
         session['weight']=data.current_refrigerant_weight
-        session['type']=cylinder_type_lookup.type_name
+        session.update({
+            'cyl_id': cyl_id,
+            'tag': unique_id,
+            'gas_name': refrigerant_table_lookup.refrigerant_name,
+            'size': data.cylinder_size,
+            'weight': data.current_refrigerant_weight,
+            'type': cylinder_type_lookup.type_name,
+            'cylinder_tare_weight': data.cylinder_tare_weight,
+            'tare_weight_before_repair': data.tare_weight_before_repair,
+            'tare_weight_after_repair': data.tare_weight_after_repair,
+        })
+
 
 
         current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -266,12 +277,21 @@ def CylinderInfo(unique_id):
         )
         CRUD.create(Cylinder_History, date_qr_scanned=current_scan_date, cylinder_id=cyl_id, technician_id=tech_id, refrigerant_id = cylinder_refrigerant_id, refrigerant_name = refrigerant_table_lookup.refrigerant_name, refrigerant_weight = data.current_refrigerant_weight )
         
-        return render_template("beta/cylinder_info.html", data=data, name = name_data)
+        if (name_data["cylinder_type"] == "Charge Cylinder"):
+            print("charge cylinder info page")
+            return render_template("beta/charge_cylinder_info.html", data=data, name = name_data)
+        elif (name_data["cylinder_type"] == "Recovery Cylinder"):
+            print("recovery cylinder info page")
+            return render_template("beta/recovery_cylinder_info.html", data=data, name = name_data)
+        else:
+            print("else")
+            return render_template("beta/cylinder_info.html", data=data, name = name_data)
+
     
 
 
     
-@cylinder.route("/refrigerant_recovery", methods=["GET"])
+@cylinder.route("/refrigerant_recovery", methods=["GET","POST"])
 def recover_refrigerant():
     if request.method == 'GET':
         cly_id = session.get('cyl_id')
@@ -279,6 +299,8 @@ def recover_refrigerant():
         cylinder_size = session.get('size')
         weight = session.get('weight')
         cylinder_type =session.get('type')
+        cylinder_tare_weight = session.get('cylinder_tare_weight')
+        tare_weight_before_repair = session.get('tare_weight_before_repair')
 
         tag_data = CRUD.read(Tag, all = False, cylinder_id = cly_id)
         tag_num = tag_data.tag_number
@@ -295,10 +317,14 @@ def recover_refrigerant():
             "size": cylinder_size,
             "date": current_date,
             "type": cylinder_type,
-            "weight": weight
+            "weight": weight,
+            "cylinder_tare_weight": cylinder_tare_weight,
+            "tare_weight_before_repair": tare_weight_before_repair
         }
         print(dt)
         return render_template("cylinder/cylinder_recovery_newequipment.html",dt=dt)
+    elif request.method == 'POST':
+        return "Form has been submitted to /refrigerant_recovery route. Not yet implemented. Will send form data to the database."
     
 @cylinder.route('/recover_ref', methods= ['POST'])
 def recover_ref():
