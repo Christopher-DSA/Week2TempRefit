@@ -115,7 +115,7 @@ def login():
             elif current_user.role=='admin':
                 session['user_role'] = 'admin'
                 #An admin has logged in! This is now functional.
-                return redirect(url_for('admin.user_page'))
+                return redirect('/admin')
             elif current_user.role=='contractor':
                 session['user_role'] = 'contractor'                
                 #A contractor has logged in! This is now functional.
