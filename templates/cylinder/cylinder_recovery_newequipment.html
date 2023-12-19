@@ -47,8 +47,8 @@
                 <th>Refrigerant Name</th>
                 <th>Technician ID</th>
                 <th>Cylinder Type</th>
-                <th>Cylinder Weight BEFORE recovery:</th>
-                <th>Current Refrigerant Weight (lbs)</th>
+                <th>Cylinder Weight BEFORE recovery (lbs):</th>
+                <th>Current Refrigerant Weight (oz)</th>
               </tr>
             </thead>
             <tbody>
@@ -72,8 +72,9 @@
       <h1>User Input</h1>
       <label for="createDate" class="form-label">Date:</label> 
       <input type="date" id="createDate" name="createDate" value="{{dt.date}}" class="form-control mb-3" required>
-      <label for="refrigerantWeightReclaimed" class="form-label">Cylinder Weight AFTER service:</label>
-      <input type="number" id="cylinder_weight_after_service" name="refrigerantWeightReclaimed" value=""
+
+      <label for="cylinder_weight_after_service" class="form-label">Cylinder Weight AFTER service:</label>
+      <input type="number" id="cylinder_weight_after_service" name="cylinder_weight_after_service" value=""
         class="form-control" required>
       <div id="error-message-container" style="max-width: 300px; word-wrap: break-word;">
       <span id="error-message" style="color: red;"></span> <!-- Error message span -->
@@ -115,7 +116,7 @@
         const reclaimedWeight = parseFloat(this.value) || 0;
 
         // Validation check
-        if (reclaimedWeight < currentWeight) {
+        if (reclaimedWeight <= currentWeight) {
           document.getElementById('error-message').textContent = "Cylinder weight AFTER refrigerant recovery cannot be less than BEFORE service.";
           document.getElementById('refrigerantWeightAfterService').value = '';
         } else {

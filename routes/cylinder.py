@@ -4,7 +4,7 @@ from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 import UUID_Generate
 import pandas as pd
-from datetime import datetime
+import datetime
 
 
 
@@ -20,6 +20,7 @@ def login_required(f):
     return decorated_function
 
 def convert_to_oz(lb, oz):
+    '''Converts lb and oz to just oz for storage in the database.'''
     lb = float(lb)
     oz = float(oz)
     total_oz = lb * 16 + oz
@@ -265,7 +266,7 @@ def CylinderInfo(unique_id):
 
 
 
-        current_scan_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        current_scan_date = datetime.date.today() 
 
         history_entry = Cylinder_History(
         date_qr_scanned=current_scan_date,
@@ -290,7 +291,7 @@ def CylinderInfo(unique_id):
     
 
 
-    
+#Refrigerant Recovery Form. Only used for Recovery Type Cylinders.
 @cylinder.route("/refrigerant_recovery", methods=["GET","POST"])
 def recover_refrigerant():
     if request.method == 'GET':
@@ -307,8 +308,8 @@ def recover_refrigerant():
 
         cyl_data = CRUD.read(Cylinder, all = False, cylinder_id = cly_id)
         technician_id = cyl_data.technician_id
-       
-        current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+               
+        current_date = datetime.date.today()
 
         dt={
             "tag": tag_num,
@@ -324,7 +325,24 @@ def recover_refrigerant():
         print(dt)
         return render_template("cylinder/cylinder_recovery_newequipment.html",dt=dt)
     elif request.method == 'POST':
-        return "Form has been submitted to /refrigerant_recovery route. Not yet implemented. Will send form data to the database."
+        #0
+        current_cyl_id = session.get('cyl_id')
+        
+        #1. The New Cylinder tare weight BEFORE service is the tare weight of the cylinder AFTER this current service.
+        CRUD.update(Cylinder, 'tare_weight_before_repair', new = request.form.get('cylinder_weight_after_service'), cylinder_id = current_cyl_id)
+        #2. Calcuate the new refrigerant weight in the cylinder in oz. (The form calculates this in lbs so we will need to convert)
+        calculated_refrigerant = float(request.form.get('refrigerantWeightAfterService'))
+        
+        converted_refrigerant_amount_oz = convert_to_oz(calculated_refrigerant, 0)
+        previous_refrigerant_weight_oz = float(session.get('weight'))
+        
+        #3. Update database "current_refrigerant_weight" with the new total amount of refrigerant in the cylinder.
+        new_total_refrigerant_weight = converted_refrigerant_amount_oz + previous_refrigerant_weight_oz
+        CRUD.update(Cylinder, 'current_refrigerant_weight', new = new_total_refrigerant_weight, cylinder_id = current_cyl_id)
+        
+        #4. Update the tare weight of the cylinder AFT service.
+        
+        return render_template("cylinder/recovery_form_successful.html")
     
 @cylinder.route('/recover_ref', methods= ['POST'])
 def recover_ref():
