@@ -7,6 +7,7 @@
     <title>Styled Cylinder Info Recovery Version</title>
     <link rel="icon" type="image/png" sizes="130x165"
         href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
     <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
@@ -16,9 +17,14 @@
     <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
     <link rel="stylesheet" href="/static/css/test.css">
     <style>
-    h1, h2, h3, h4, h5, h6 {
-        color: #111a66;
-    }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #111a66;
+        }
     </style>
 </head>
 
@@ -67,18 +73,20 @@
     </nav>
 
     <br>
-    <div class="container" id = "information" style="margin-top: 20px;">
+    <div class="container" id="information" style="margin-top: 20px;">
         <h2 style="margin-bottom: 15px;">Cylinder Information</h2>
-        <h5>Cylinder Type: {{name.cylinder_type}}	</h4>
-        <h5>Refrigerant Type: {{name.refrigerant_name}}	</h4>
-        <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight}} oz</h4>
-        <a href="#more-information-table"><h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6></a>
+        <h5>Cylinder Type: {{name.cylinder_type}} </h4>
+            <h5>Refrigerant Type: {{name.refrigerant_name}} </h4>
+                <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight}} oz</h4>
+                    <a href="#more-information-table">
+                        <h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6>
+                    </a>
     </div>
     <br>
 
-    <div class="container" id = "buttons">
+    <div class="container" id="buttons">
         <div class="row">
-            <!-- Card box 1 --> 
+            <!-- Card box 1 -->
             <div class="container">
                 <div class="row d-md-flex">
                     <!-- Card box 1 -->
@@ -88,7 +96,8 @@
                             <div class="card-body d-flex flex-md-column flex-row align-items-center"
                                 style="padding: 20px;">
                                 <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <img src="/static/images/snowflake-emoji.png" width="75" height="75" alt="Descriptive Text">
+                                    <img src="/static/images/snowflake-emoji.png" width="75" height="75"
+                                        alt="Descriptive Text">
                                 </button>
                                 <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">
                                     Recover Refrigerant</p>
@@ -102,11 +111,14 @@
                             style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
                             <div class="card-body d-flex flex-md-column flex-row align-items-center">
                                 <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.375 0C6.8886 0 4.50403 0.987721 2.74587 2.74587C0.987721 4.50403 0 6.8886 0 9.375L0 65.625C0 68.1114 0.987721 70.496 2.74587 72.2541C4.50403 74.0123 6.8886 75 9.375 75H65.625C68.1114 75 70.496 74.0123 72.2541 72.2541C74.0123 70.496 75 68.1114 75 65.625V9.375C75 6.8886 74.0123 4.50403 72.2541 2.74587C70.496 0.987721 68.1114 0 65.625 0L9.375 0ZM25.0969 21.7781C24.6568 21.338 24.0599 21.0908 23.4375 21.0908C22.8151 21.0908 22.2182 21.338 21.7781 21.7781C21.338 22.2182 21.0908 22.8151 21.0908 23.4375C21.0908 24.0599 21.338 24.6568 21.7781 25.0969L34.1859 37.5L21.7781 49.9031C21.5602 50.121 21.3874 50.3797 21.2694 50.6645C21.1515 50.9492 21.0908 51.2543 21.0908 51.5625C21.0908 51.8707 21.1515 52.1758 21.2694 52.4605C21.3874 52.7453 21.5602 53.004 21.7781 53.2219C22.2182 53.662 22.8151 53.9092 23.4375 53.9092C23.7457 53.9092 24.0508 53.8485 24.3355 53.7306C24.6203 53.6126 24.879 53.4398 25.0969 53.2219L37.5 40.8141L49.9031 53.2219C50.121 53.4398 50.3797 53.6126 50.6645 53.7306C50.9492 53.8485 51.2543 53.9092 51.5625 53.9092C51.8707 53.9092 52.1758 53.8485 52.4605 53.7306C52.7453 53.6126 53.004 53.4398 53.2219 53.2219C53.4398 53.004 53.6126 52.7453 53.7306 52.4605C53.8485 52.1758 53.9092 51.8707 53.9092 51.5625C53.9092 51.2543 53.8485 50.9492 53.7306 50.6645C53.6126 50.3797 53.4398 50.121 53.2219 49.9031L40.8141 37.5L53.2219 25.0969C53.4398 24.879 53.6126 24.6203 53.7306 24.3355C53.8485 24.0508 53.9092 23.7457 53.9092 23.4375C53.9092 23.1293 53.8485 22.8242 53.7306 22.5395C53.6126 22.2547 53.4398 21.996 53.2219 21.7781C53.004 21.5602 52.7453 21.3874 52.4605 21.2694C52.1758 21.1515 51.8707 21.0908 51.5625 21.0908C51.2543 21.0908 50.9492 21.1515 50.6645 21.2694C50.3797 21.3874 50.121 21.5602 49.9031 21.7781L37.5 34.1859L25.0969 21.7781Z" fill="#111A66"/>
-                                        </svg>
-                                        
-                                        
+                                    <svg width="75" height="75" viewBox="0 0 75 75" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M9.375 0C6.8886 0 4.50403 0.987721 2.74587 2.74587C0.987721 4.50403 0 6.8886 0 9.375L0 65.625C0 68.1114 0.987721 70.496 2.74587 72.2541C4.50403 74.0123 6.8886 75 9.375 75H65.625C68.1114 75 70.496 74.0123 72.2541 72.2541C74.0123 70.496 75 68.1114 75 65.625V9.375C75 6.8886 74.0123 4.50403 72.2541 2.74587C70.496 0.987721 68.1114 0 65.625 0L9.375 0ZM25.0969 21.7781C24.6568 21.338 24.0599 21.0908 23.4375 21.0908C22.8151 21.0908 22.2182 21.338 21.7781 21.7781C21.338 22.2182 21.0908 22.8151 21.0908 23.4375C21.0908 24.0599 21.338 24.6568 21.7781 25.0969L34.1859 37.5L21.7781 49.9031C21.5602 50.121 21.3874 50.3797 21.2694 50.6645C21.1515 50.9492 21.0908 51.2543 21.0908 51.5625C21.0908 51.8707 21.1515 52.1758 21.2694 52.4605C21.3874 52.7453 21.5602 53.004 21.7781 53.2219C22.2182 53.662 22.8151 53.9092 23.4375 53.9092C23.7457 53.9092 24.0508 53.8485 24.3355 53.7306C24.6203 53.6126 24.879 53.4398 25.0969 53.2219L37.5 40.8141L49.9031 53.2219C50.121 53.4398 50.3797 53.6126 50.6645 53.7306C50.9492 53.8485 51.2543 53.9092 51.5625 53.9092C51.8707 53.9092 52.1758 53.8485 52.4605 53.7306C52.7453 53.6126 53.004 53.4398 53.2219 53.2219C53.4398 53.004 53.6126 52.7453 53.7306 52.4605C53.8485 52.1758 53.9092 51.8707 53.9092 51.5625C53.9092 51.2543 53.8485 50.9492 53.7306 50.6645C53.6126 50.3797 53.4398 50.121 53.2219 49.9031L40.8141 37.5L53.2219 25.0969C53.4398 24.879 53.6126 24.6203 53.7306 24.3355C53.8485 24.0508 53.9092 23.7457 53.9092 23.4375C53.9092 23.1293 53.8485 22.8242 53.7306 22.5395C53.6126 22.2547 53.4398 21.996 53.2219 21.7781C53.004 21.5602 52.7453 21.3874 52.4605 21.2694C52.1758 21.1515 51.8707 21.0908 51.5625 21.0908C51.2543 21.0908 50.9492 21.1515 50.6645 21.2694C50.3797 21.3874 50.121 21.5602 49.9031 21.7781L37.5 34.1859L25.0969 21.7781Z"
+                                            fill="#111A66" />
+                                    </svg>
+
+
                                 </button>
                                 <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">Remove QR</p>
                             </div>
@@ -141,35 +153,37 @@
         </div>
     </div>
 
-    <div class="centered-table" id="more-information-table">
+    <div class="container" id="more-information-table">
         <h1 class="text-center my-4">More Information</h1>
-        <table class="table table-hover table-striped table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Cylinder_ID</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Refrigerant_name</th>
-                    <th scope="col">Supplier</th>
-                    <th scope="col">Latest Measured Cylinder Weight (Lbs)</th>
-                    <th scope="col">Current_Refrigerant_Weight (OZ)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{data.cylinder_id}}</td>
-                    <td>{{data.cylinder_size}}lbs</td>
-                    <td>{{name.cylinder_type}}</td>
-                    <td>{{name.refrigerant_name}}</td>
-                    <td>{{data.supplier}}</td>
-                    <td>{{data.cylinder_tare_weight}}</td>
-                    <td>{{data.current_refrigerant_weight}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Cylinder_ID</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Refrigerant_name</th>
+                        <th scope="col">Supplier</th>
+                        <th scope="col">Latest Measured Cylinder Weight (Lbs)</th>
+                        <th scope="col">Current_Refrigerant_Weight (OZ)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{data.cylinder_id}}</td>
+                        <td>{{data.cylinder_size}}lbs</td>
+                        <td>{{name.cylinder_type}}</td>
+                        <td>{{name.refrigerant_name}}</td>
+                        <td>{{data.supplier}}</td>
+                        <td>{{data.cylinder_tare_weight}}</td>
+                        <td>{{data.current_refrigerant_weight}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 </body>
 <!-- <script>
