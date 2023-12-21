@@ -5,6 +5,7 @@ from functools import wraps
 import pandas as pd
 import os
 from dotenv import load_dotenv
+import pytz
  
 #from main import app  
 from utils.tokenize import generate_hash, generate_password
@@ -577,10 +578,11 @@ def contact_us_page():
         user_email = CRUD.read(User, user_id=user).email
         # maybe add logic to check if the user email is verified or not
 
+        # timezone
+        est_zone = pytz.timezone('America/Toronto')
         # Create a new support ticket in the database.
-        CRUD.create(User_Support, user_id = user, message = request.form.get('message'), date_received = datetime.today(), date_ticket_closed = None)
+        CRUD.create(User_Support, user_id = user, message = request.form.get('message'), date_received = datetime.now(est_zone).strftime('%Y-%m-%d %H:%M:%S'), date_ticket_closed = None)
 
-        
         return render_template('admin/contact-us.html')
         
 
