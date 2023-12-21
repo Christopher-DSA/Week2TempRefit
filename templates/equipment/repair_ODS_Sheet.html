@@ -133,7 +133,7 @@
                                                     <div class="col mb-3">
                                                         <div class="input-group">
                                                             <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
+                                                            style="border-radius: 5px;" placeholder="{{data.factory_charge_lbs}}" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text text-center"
                                                                     style="text-align:center; border: none;">lb</span>
@@ -144,7 +144,7 @@
                                                         <div class="input-group">
                                                             <input type="text" class="form-control"
                                                                 style="border-radius: 5px;"
-                                                                placeholder="{{data.factory_charge_amount}}" disabled>
+                                                                placeholder="{{data.factory_charge_oz}}" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text text-center"
                                                                     style="text-align:center; border: none;">oz</span>
@@ -152,38 +152,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <p>Additional Refrigerant Weight</p>
-                                                <div class="row mb-4">
-                                                    <div class="col dropdown">
-                                                        <button class="btn w-100 btn-outline-secondary dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false" disabled>
-                                                            lb/oz
-                                                        </button>
-                                                    </div>
-                                                    <div class="col mb-4">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">lb</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">oz</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p>Total Refrigerant Weight</p>
-                                                <div class="row">
+
+                                                <!-- <p>Total Refrigerant Weight</p> -->
+                                                <!-- <div class="row">
                                                     <div class="col dropdown">
                                                         <button class="btn w-100 btn-outline-secondary dropdown-toggle"
                                                             type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -211,7 +182,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <!--Buttons For Tab 1-->
