@@ -76,7 +76,7 @@
     <section>
         <div class="row justify-content-center mt-5">
             <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
-                <form class="px-4">
+                <form action="/equipment/repair_ODS_Sheet" method="post" class="px-4" id="repair-form">
                     <div class="row mb-3">
                         <h2>Repair ODS Sheet</h2>
                         <span>Control Number: 123123</span>
@@ -133,7 +133,8 @@
                                                     <div class="col mb-3">
                                                         <div class="input-group">
                                                             <input type="text" class="form-control"
-                                                            style="border-radius: 5px;" placeholder="{{data.factory_charge_lbs}}" disabled>
+                                                                style="border-radius: 5px;"
+                                                                placeholder="{{data.factory_charge_lbs}}" disabled>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text text-center"
                                                                     style="text-align:center; border: none;">lb</span>
@@ -313,7 +314,7 @@
                                                     <input class="btn btn-lg btn-primary w-100" type="submit"
                                                         name="Scan Cylinder" value="Scan Cylinder">
                                                     <button class="btn btn-outline-primary btn-lg w-100"
-                                                        type="button">Review ODS Sheet</button>
+                                                        onclick="submitMyForm()">Submit Form</button>
 
                                                 </div>
                                             </div>
@@ -373,6 +374,15 @@
                 psigInput.value = '';  // Clear the input field
             }
         });
+        function submitMyForm() {
+            var form = document.getElementById('repair-form');
+            if (form.checkValidity()) {
+                form.submit();
+            } else {
+                // Optional: Provide feedback to the user that the form is invalid
+                console.log('Form is invalid!');
+            }
+        }
     </script>
 </body>
 
