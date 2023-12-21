@@ -508,6 +508,15 @@ class User_Support(Base):
     def __repr__(self):
         return 'User Support Model'
     
+    def to_dict(self):
+        return {
+            'user_id': self.user_id,
+            'message': self.message,
+            'date_received': self.date_received,
+            'date_ticket_closed': self.date_ticket_closed,
+            'ticket_id': self.ticket_id
+        }
+    
 class Maintenance_Detail(Base):
 
     __tablename__ = "Maintenance_Detail"
