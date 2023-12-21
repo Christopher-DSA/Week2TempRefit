@@ -2,6 +2,7 @@ from flask import make_response, session, Blueprint, request
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
 from functools import wraps
 from datetime import datetime
+import pytz
 
 # email imports
 import smtplib
@@ -63,14 +64,16 @@ def user_page():
 
 @admin.route("/admin/support_tickets", methods=['GET'])
 def support_tickets():
+    # tickets = CRUD.read(User_Support, all = True)
+    return render_template('admin/support_tickets.html')
+
+@admin.route("/admin/support_tickets/data")
+def data():
     tickets = CRUD.read(User_Support, all = True)
+    # total_tickets = tickets.count()
+    # TO DO: IMPLEMENT SERVER SIDE LOADING OF SUPPROT TICKETS
     
-    # for each ticket get the email of the user
-    # emails = []
-    # for ticket in tickets:
-    #     email = CRUD.read(User, user_id = ticket.user_id).email
-    #     emails.append(email)
-    return render_template('admin/support_tickets.html', tickets = tickets)
+    return {'data': [ticket.to_dict() for ticket in tickets]}
 
 @admin.route("/admin/email", methods=['POST'])
 def new_email():
@@ -131,10 +134,12 @@ def close_ticket():
         date = datetime.today()
 
         # 2. update the User Support Model with the current time
-        CRUD.update(User_Support, ticket_id = selected_ticket_id, attr = 'date_ticket_closed', new = str(datetime.today()))
+        est_zone = pytz.timezone('America/Toronto')
+        CRUD.update(User_Support, ticket_id = selected_ticket_id, attr = 'date_ticket_closed', new = str(datetime.now(est_zone).strftime('%Y-%m-%d %H:%M:%S')))
 
         # 3. Send the user an email stating the support ticket has been closed.
 
         # 4. Render the support_tickets page with the updated ticket closed.
         tickets = CRUD.read(User_Support, all = True)
         return render_template('admin/support_tickets.html', tickets = tickets)
+    
