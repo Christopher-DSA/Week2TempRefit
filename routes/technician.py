@@ -215,7 +215,17 @@ def repair_ODS_Sheet_New():
             'type_of_refrigerant' : data.type_of_refrigerant,
             'factory_charge_amount' : data.factory_charge_amount
         }
+        if (float(my_dict['factory_charge_amount']) % 16 == 0):
+            my_dict['factory_charge_lbs'] = float(my_dict['factory_charge_amount']) / 16
+            my_dict['factory_charge_oz'] = 0
+        else:
+            remainder = float(my_dict['factory_charge_amount']) % 16
+            my_dict['factory_charge_lbs'] = (float(my_dict['factory_charge_amount']) - remainder) / 16
+            my_dict['factory_charge_oz'] = remainder
+        print("my_dict: ", my_dict)
         return render_template('equipment/repair_ODS_Sheet.html', data = my_dict)
+    elif request.method == 'POST':
+        return "ayyy"
 
 @technician.route('/equipment common/qr-scan')
 def qr_scan():
