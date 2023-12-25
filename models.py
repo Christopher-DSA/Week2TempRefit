@@ -1,6 +1,6 @@
 # In each table, one forignkey go with one relationship, other relationships should be deleted as they are duplicated from the reference table.
 # From user to company, in the user table, there should be empty, but in the user table, it shpould be a forignkey and a relationship.
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, Numeric, create_engine
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, Numeric, Date, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.sql import func
 import os
@@ -594,7 +594,27 @@ class DetailedEquipmentScanView(Base):
     def __repr__(self):
         return f"<DetailedEquipmentScanView(date_qr_scanned_eq={self.date_qr_scanned_eq}, tech_id={self.tech_id})>"
 
+class Repair_form(Base):
 
+    __tablename__ = "Repair_form"
+
+    repair_form_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    repair_date = Column(Date)
+    refrigerant_type = Column(Text)
+    leak_test_result = Column(Boolean)
+    is_leak_repaired = Column(Boolean)
+    no_longer_contains_refrigerant = Column(Boolean)
+    vacuum_test_performed = Column(Boolean)
+    compressor_oil_removed = Column(Boolean)
+    pressure_test_performed = Column(Boolean)
+    PSIG_result = Column(Numeric)
+    additional_notes = Column(Text)
+    refrigerant_added_total_oz = Column(Numeric)
+    refrigerant_removed_total_oz = Column(Numeric)
+    tech_id = Column(Integer)
+    
+    def __repr__(self):
+        return 'Repair_form Model'
 
 
 

@@ -109,7 +109,7 @@
                                                 <div class="py-3">
                                                     <p>Repair Date<span class="text-danger">*</span></p>
                                                     <div class="mb-3"><input class="form-control" type="date"
-                                                            required="" id="dateField" name="current_date"></div>
+                                                            id="dateField" name="current_date"></div>
                                                 </div>
                                                 <!-- <div class="pb-3">
                                                     <p>Job Number (Optional)</p>
@@ -122,6 +122,7 @@
                                                 <div class="mb-5"><input class="form-control" type="text" disabled
                                                         name="refrigerant_type" id="refrigerant_type_id"
                                                         value="{{data.type_of_refrigerant}}"></div>
+                                                <input type="hidden" name="refrigerant_type_send" value="{{ data.type_of_refrigerant }}">
                                                 <!-- <p>Factory Refrigerant Weight</p>
                                                 <div class="row mb-4">
                                                     <div class="col dropdown">
@@ -205,9 +206,9 @@
                                             <h5 class="mb-3">Leak Test Result<span class="text-danger">*</span></h5>
                                             <!-- Leak Test Result -->
                                             <div class="form-check mx-3">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1"
+                                                <input class="form-check-input" type="radio" name="leakDetectedRadio"
+                                                    id="leakDetectedRadio1">
+                                                <label class="form-check-label" for="leakDetectedRadio1"
                                                     value="leakDetected">
                                                     Leak detected - Do not add refrigerant until repaired
                                                 </label>
@@ -218,17 +219,17 @@
                                                     <div class="col-6">
                                                         <div class="form-check my-3">
                                                             <input class="form-check-input" type="radio"
-                                                                name="radioOption" id="leakRepairedRadioButton"
+                                                                name="repairStatusRadio" id="leakRepairedRadioButton"
                                                                 value="leakRepaired" disabled>
-                                                            <label class="form-check-label" for="radioOption1">
+                                                            <label class="form-check-label" for="repairStatusRadio1">
                                                                 Leak Repaired
                                                             </label>
                                                         </div>
                                                         <div class="form-check my-3">
                                                             <input class="form-check-input" type="radio"
-                                                                name="radioOption" id="leakNotRepairedRadioButton"
+                                                                name="repairStatusRadio" id="leakNotRepairedRadioButton"
                                                                 value="leakNotRepaired" disabled>
-                                                            <label class="form-check-label" for="radioOption2">
+                                                            <label class="form-check-label" for="repairStatusRadio2">
                                                                 Leak Not Repaired
                                                             </label>
                                                         </div>
@@ -236,9 +237,9 @@
                                                 </div>
                                             </div>
                                             <div class="form-check mx-3">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                <input class="form-check-input" type="radio" name="leakDetectedRadio"
                                                     id="noLeakDetected">
-                                                <label class="form-check-label" for="flexRadioDefault1"
+                                                <label class="form-check-label" for="leakDetectedRadio1"
                                                     value="noLeakDetected">
                                                     No leak detected
                                                 </label>
@@ -291,7 +292,7 @@
                                                                 <strong>Added:</strong></label>
                                                             <input type="number" id="refrigerant_added_lbs"
                                                                 name="refrigerant_added_lbs" class="form-control"
-                                                                required>
+                                                                value="0">
                                                         </div>
                                                         <!--OZ Added-->
                                                         <div class="form-group col-md-6">
@@ -299,11 +300,11 @@
                                                                 <strong>Added:</strong></label>
                                                             <input type="number" id="refrigerant_added_oz"
                                                                 name="refrigerant_added_oz" class="form-control"
-                                                                required>
+                                                                value="0">
                                                         </div>
                                                     </div>
-                                                    </div>
-                                                    <div class="container"> 
+                                                </div>
+                                                <div class="container">
                                                     <h5 class="my-3">Removed Refrigerant:</h5>
                                                     <!--LBS Removed-->
                                                     <div class="form-row">
@@ -313,7 +314,7 @@
                                                                 class="form-label">Lbs <strong>Removed:</strong></label>
                                                             <input type="number" id="refrigerant_removed_lbs_id"
                                                                 name="refrigerant_removed_lbs" class="form-control"
-                                                                required>
+                                                                value="0">
                                                         </div>
                                                         <!--OZ Removed-->
                                                         <div class="form-group col-md-6">
@@ -321,7 +322,7 @@
                                                                 <strong>Removed:</strong></label>
                                                             <input type="number" id="refrigerant_removed_oz_id"
                                                                 name="refrigerant_removed_oz" class="form-control"
-                                                                required>
+                                                                value="0">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -362,7 +363,8 @@
                                                         Refrigerant Type
                                                     </li>
                                                     <li id="review_additional_notes"
-                                                        class="list-group-item d-flex justify-content-between align-items-start" style="display: none;">
+                                                        class="list-group-item d-flex justify-content-between align-items-start"
+                                                        style="display: none;">
                                                         Additional Notes: N/A
                                                     </li>
                                                     <li id="review_leak_test_result"
@@ -402,7 +404,6 @@
                                                         name="Scan Cylinder" value="Scan Cylinder">
                                                     <button class="btn btn-outline-primary btn-lg w-100"
                                                         onclick="submitMyForm()">Submit Form</button>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -434,7 +435,7 @@
                 });
             });
             // Event listener for 'Leak detected'
-            document.getElementById('flexRadioDefault1').addEventListener('change', function () {
+            document.getElementById('leakDetectedRadio1').addEventListener('change', function () {
                 if (this.checked) {
                     document.getElementById('leakRepairedRadioButton').disabled = false;
                     document.getElementById('leakNotRepairedRadioButton').disabled = false;
@@ -485,7 +486,7 @@
             function checkNoteStatus() {
                 let noteInput = document.getElementById('additional_notes').value;
                 let noteReviewElement = document.getElementById('review_additional_notes');
-                
+
 
                 if (noteInput != '') {
                     noteReviewElement.textContent = 'Additional Notes: ' + noteInput;
@@ -497,7 +498,7 @@
             }
 
             function checkLeakStatus() {
-                let leakDetected = document.getElementById('flexRadioDefault1').checked;
+                let leakDetected = document.getElementById('leakDetectedRadio1').checked;
                 let noLeakDetected = document.getElementById('noLeakDetected').checked;
                 let leakReviewElement = document.getElementById('review_leak_test_result');
 
@@ -570,7 +571,7 @@
 
                 if (lbsRemoved || ozRemoved) {
                     reviewText += `${lbsRemoved || 0} Lbs ${ozRemoved || 0} Oz`;
-                    reviewRefrigerantRemovedElement.style.setProperty('display', 'block', 'important'); 
+                    reviewRefrigerantRemovedElement.style.setProperty('display', 'block', 'important');
                 } else {
                     reviewText += 'Not specified';
                     reviewRefrigerantRemovedElement.style.setProperty('display', 'none', 'important');
@@ -579,28 +580,29 @@
 
                 document.getElementById('review_refrigerant_removed').textContent = reviewText;
             }
+
+            function submitMyForm() {
+                console.log("Submit Clicked")
+                var form = document.getElementById('repair-form');
+                if (form.checkValidity()) {
+                    form.submit();
+                } else {
+                    // Optional: Provide feedback to the user that the form is invalid
+                    console.log('Form is invalid!');
+                }
+            }
+
+            document.getElementById('pressureTestCheckbox').addEventListener('change', function () {
+                var psigInput = document.getElementById('psigResultInput');
+                if (this.checked) {
+                    psigInput.disabled = false;
+                } else {
+                    psigInput.disabled = true;
+                    psigInput.value = '';  // Clear the input field
+                }
+            });
             //end of DOMContentLoaded
         });
-        document.getElementById('pressureTestCheckbox').addEventListener('change', function () {
-            var psigInput = document.getElementById('psigResultInput');
-            if (this.checked) {
-                psigInput.disabled = false;
-            } else {
-                psigInput.disabled = true;
-                psigInput.value = '';  // Clear the input field
-            }
-        });
-        function submitMyForm() {
-            var form = document.getElementById('repair-form');
-            if (form.checkValidity()) {
-                form.submit();
-            } else {
-                // Optional: Provide feedback to the user that the form is invalid
-                console.log('Form is invalid!');
-            }
-        }
-
-
     </script>
 </body>
 

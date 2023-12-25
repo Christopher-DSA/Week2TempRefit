@@ -2,7 +2,7 @@
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP,DetailedEquipmentScanView
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP,DetailedEquipmentScanView,Repair_form
 from functools import wraps
 import pint
 from datetime import datetime
@@ -231,7 +231,68 @@ def repair_ODS_Sheet_New():
         print("my_dict: ", my_dict)
         return render_template('equipment/repair_ODS_Sheet.html', data = my_dict, date=str(current_scan_date))
     elif request.method == 'POST':
-        return "ayyy"
+        ods_form_names = ['current_date','refrigerant_type_send','leakDetectedRadio','repairStatusRadio','noLongerContainsRefrigerant','vacuumTest','compressorOil','pressureTest','psigResult','refrigerant_added_lbs','refrigerant_added_oz','refrigerant_removed_lbs','refrigerant_removed_oz','additionalNotes']
+        form_data_dictionary = {}
+        for x in ods_form_names:
+            form_data_dictionary[x] = request.form.get(x)
+        
+        # Type Conversions
+        psig_result = form_data_dictionary.get('psigResult')
+        if psig_result is None or psig_result == '':
+            psig_result = 0  # or any default value you prefer
+        else:
+            psig_result = float(psig_result)
+        
+        #Refrigerant Totals in OZ for database storage
+        refrigerant_added_lbs = form_data_dictionary.get('refrigerant_added_lbs')
+        refrigerant_added_oz = form_data_dictionary.get('refrigerant_added_oz')
+        refrigerant_removed_lbs = form_data_dictionary.get('refrigerant_removed_lbs')
+        refrigerant_removed_oz = form_data_dictionary.get('refrigerant_removed_oz')
+        
+        # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces
+        total_refrigerant_added_oz = (float(refrigerant_added_lbs) * 16) + float(refrigerant_added_oz)
+        total_refrigerant_removed_oz = (float(refrigerant_removed_lbs) * 16) + float(refrigerant_removed_oz)
+    
+        # Convert 'on' and '' to True, False, and None for other radio boxes
+        def convert_radio_to_boolean(form_value):
+            if form_value == 'on':
+                return True
+            elif form_value == '':
+                return None
+            else:
+                return False
+        form_data_dictionary['leakDetectedRadio'] = convert_radio_to_boolean(form_data_dictionary.get('leakDetectedRadio'))
+        form_data_dictionary['repairStatusRadio'] = convert_radio_to_boolean(form_data_dictionary.get('repairStatusRadio'))
+        
+        def convert_check_to_boolean(form_value):
+            if form_value == '':
+                return True
+            else:
+                return False
+        form_data_dictionary['vacuumTest'] = convert_check_to_boolean(form_data_dictionary.get('vacuumTest'))
+        form_data_dictionary['compressorOil'] = convert_check_to_boolean(form_data_dictionary.get('compressorOil'))
+        form_data_dictionary['pressureTest'] = convert_check_to_boolean(form_data_dictionary.get('pressureTest'))
+            
+        # Mapping form data to model attributes
+        model_data = {
+            'repair_date': form_data_dictionary.get('current_date'),  # Assuming it's in the correct date format
+            'refrigerant_type': form_data_dictionary.get('refrigerant_type_send'),
+            'leak_test_result': form_data_dictionary.get('leakDetectedRadio'),  # Assuming 'true' or 'false' strings
+            'is_leak_repaired': form_data_dictionary.get('repairStatusRadio'),  # Similar assumption
+            'no_longer_contains_refrigerant': form_data_dictionary.get('noLongerContainsRefrigerant'),
+            'vacuum_test_performed': form_data_dictionary.get('vacuumTest'),
+            'compressor_oil_removed': form_data_dictionary.get('compressorOil'),
+            'pressure_test_performed': form_data_dictionary.get('pressureTest'),
+            'additional_notes': form_data_dictionary.get('additionalNotes'),
+            'PSIG_result': psig_result,
+            'refrigerant_added_total_oz': total_refrigerant_added_oz,
+            'refrigerant_removed_total_oz': total_refrigerant_removed_oz,
+            'tech_id': session.get('tech_id')
+        }
+        
+        CRUD.create(Repair_form, **model_data)
+        print("model_data: ", model_data)
+        return model_data
 
 @technician.route('/equipment common/qr-scan')
 def qr_scan():
@@ -609,5 +670,12 @@ def equipment_hist():
         return render_template("technician/unit_scan_history.html", equipment_list=x)
 
     return "Invalid request method"
+
+@technician.route("/ods_tags", methods=["GET", "POST"])
+def ods_tags():
+    if request.method == "GET":
+        return "you made it to /ods_tags"
+    else:
+        return "Invalid request method (you posted to this route)"
 
 
