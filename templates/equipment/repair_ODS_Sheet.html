@@ -279,6 +279,54 @@
                                                 <input class="form-control" type="text" id="psigResultInput"
                                                     name="psigResult" disabled>
                                             </div>
+
+                                            <div class="my-3">
+
+                                                <div class="container">
+                                                    <h5 class="my-3">Added Refrigerant:</h5>
+                                                    <div class="form-row">
+                                                        <!--LBS Added-->
+                                                        <div class="form-group col-md-6">
+                                                            <label for="refrigerant_added_lbs" class="form-label">Lbs
+                                                                <strong>Added:</strong></label>
+                                                            <input type="number" id="refrigerant_added_lbs"
+                                                                name="refrigerant_added_lbs" class="form-control"
+                                                                required>
+                                                        </div>
+                                                        <!--OZ Added-->
+                                                        <div class="form-group col-md-6">
+                                                            <label for="refrigerant_added_oz" class="form-label">Oz
+                                                                <strong>Added:</strong></label>
+                                                            <input type="number" id="refrigerant_added_oz"
+                                                                name="refrigerant_added_oz" class="form-control"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="container"> 
+                                                    <h5 class="my-3">Removed Refrigerant:</h5>
+                                                    <!--LBS Removed-->
+                                                    <div class="form-row">
+                                                        <!--LBS Removed-->
+                                                        <div class="form-group col-md-6">
+                                                            <label for="refrigerant_removed_lbs_id"
+                                                                class="form-label">Lbs <strong>Removed:</strong></label>
+                                                            <input type="number" id="refrigerant_removed_lbs_id"
+                                                                name="refrigerant_removed_lbs" class="form-control"
+                                                                required>
+                                                        </div>
+                                                        <!--OZ Removed-->
+                                                        <div class="form-group col-md-6">
+                                                            <label for="refrigerant_removed_oz_id" class="form-label">Oz
+                                                                <strong>Removed:</strong></label>
+                                                            <input type="number" id="refrigerant_removed_oz_id"
+                                                                name="refrigerant_removed_oz" class="form-control"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                             <h5 class="my-3">Additional Notes</h5>
                                             <div class="form-group">
                                                 <label class="mb-2" for="additionalNotes">Repair
@@ -305,24 +353,37 @@
                                                 <!--Form Review Section-->
                                                 <h4>Review Form Input Here:</h4>
                                                 <ul class="list-group list-group-flush">
-                                                    <li id="review_repair_date" class="list-group-item d-flex justify-content-between align-items-start">
-                                                      Repair Date:
+                                                    <li id="review_repair_date"
+                                                        class="list-group-item d-flex justify-content-between align-items-start">
+                                                        Repair Date:
                                                     </li>
-                                                    <li id="review_refrigerant_type" class="list-group-item d-flex justify-content-between align-items-start">
-                                                      Refrigerant Type
+                                                    <li id="review_refrigerant_type"
+                                                        class="list-group-item d-flex justify-content-between align-items-start">
+                                                        Refrigerant Type
                                                     </li>
-                                                    <li id="review_additional_notes" class="list-group-item d-flex justify-content-between align-items-start">
-                                                      Additional Notes: N/A
+                                                    <li id="review_additional_notes"
+                                                        class="list-group-item d-flex justify-content-between align-items-start" style="display: none;">
+                                                        Additional Notes: N/A
                                                     </li>
-                                                    <li id="review_leak_test_result" class="list-group-item d-flex justify-content-between align-items-start">
-                                                      Leak Test Result: N/A
+                                                    <li id="review_leak_test_result"
+                                                        class="list-group-item d-flex justify-content-between align-items-start">
+                                                        Leak Test Result: N/A
                                                     </li>
-                                                    <li id="repair_leak_status" class="list-group-item d-flex justify-content-between align-items-start">
-                                                      Leak Repair Status: N/A
+                                                    <li id="repair_leak_status"
+                                                        class="list-group-item d-flex justify-content-between align-items-start">
+                                                        Leak Repair Status: N/A
                                                     </li>
-                                                  </ul>
-                                                  
-                                                
+                                                    <li id="review_refrigerant_added"
+                                                        class="list-group-item d-flex justify-content-between align-items-start">
+                                                        Refrigerant Added: 0
+                                                    </li>
+                                                    <li id="review_refrigerant_removed"
+                                                        class="list-group-item d-flex justify-content-between align-items-start">
+                                                        Refrigerant Removed: 0
+                                                    </li>
+                                                </ul>
+
+
                                                 <h4 style="margin-top: 100px;">Adding Repair Refrigerant</h4>
                                                 <ul class="list-group my-3 mx-2">
                                                     <li class="list-group-item border-0 p-0">1. Scan cylinder QR tag
@@ -399,9 +460,11 @@
 
             document.getElementById('repair-form').addEventListener('input', function () {
                 console.log('Form input changed!');
-                document.getElementById('review_additional_notes').textContent = 'Additional Notes: ' + document.getElementById('additional_notes').value;
                 checkLeakStatus();
                 checkLeakRepairStatus();
+                updateRefrigerantAddedReview();
+                updateRefrigerantRemovedReview();
+                checkNoteStatus();
 
                 // Repeat for other fields
             });
@@ -410,25 +473,48 @@
                 document.getElementById('review_repair_date').textContent = 'Repair Date: ' + document.getElementById('dateField').value;
                 document.getElementById('review_refrigerant_type').textContent = 'Refrigerant Type: ' + document.getElementById('refrigerant_type_id').value;
                 // Repeat for other fields
+                checkNoteStatus();
+                checkLeakStatus();
+                checkLeakRepairStatus();
+                updateRefrigerantAddedReview();
+                updateRefrigerantRemovedReview();
                 console.log('ran function');
             }
             updateReviewSection();
 
+            function checkNoteStatus() {
+                let noteInput = document.getElementById('additional_notes').value;
+                let noteReviewElement = document.getElementById('review_additional_notes');
+                
+
+                if (noteInput != '') {
+                    noteReviewElement.textContent = 'Additional Notes: ' + noteInput;
+                    noteReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+                } else {
+                    console.log("No note input")
+                    noteReviewElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
+                }
+            }
+
             function checkLeakStatus() {
                 let leakDetected = document.getElementById('flexRadioDefault1').checked;
                 let noLeakDetected = document.getElementById('noLeakDetected').checked;
+                let leakReviewElement = document.getElementById('review_leak_test_result');
 
                 if (leakDetected) {
                     console.log("Leak Detected");
-                    document.getElementById('review_leak_test_result').textContent = 'Leak Test Result: True';
                     // Do something if leak is detected
+                    document.getElementById('review_leak_test_result').textContent = 'Leak Test Result: True';
+                    leakReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
                 } else if (noLeakDetected) {
                     console.log("No Leak Detected");
                     // Do something if no leak is detected
                     document.getElementById('review_leak_test_result').textContent = 'Leak Test Result: False';
+                    leakReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
                 } else {
                     console.log("No option selected");
                     // Handle the case where no option is selected
+                    leakReviewElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
                 }
             }
 
@@ -436,20 +522,63 @@
                 let leakRepaired = document.getElementById('leakRepairedRadioButton').checked;
                 let leakNotRepaired = document.getElementById('leakNotRepairedRadioButton').checked;
 
+                let leakRepairReviewElement = document.getElementById('repair_leak_status');
+
+
                 if (leakRepaired) {
                     console.log("Leak Repaired selected");
                     // Do something if leak is repaired
                     document.getElementById('repair_leak_status').textContent = 'Leak Repair Status: Repaired';
+                    leakRepairReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+
                 } else if (leakNotRepaired) {
                     console.log("Leak Not Repaired selected");
                     // Do something if leak is not repaired
                     document.getElementById('repair_leak_status').textContent = 'Leak Repair Status: Not Repaired';
+                    leakRepairReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
                 } else {
                     console.log("No option selected for leak repair status");
                     // Handle the case where no option is selected
+                    leakRepairReviewElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
                 }
             }
 
+            function updateRefrigerantAddedReview() {
+                let reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
+
+                var lbsAdded = document.getElementById('refrigerant_added_lbs').value;
+                var ozAdded = document.getElementById('refrigerant_added_oz').value;
+                var reviewText = 'Refrigerant Added: ';
+
+                if (lbsAdded || ozAdded) {
+                    reviewText += `${lbsAdded || 0} Lbs ${ozAdded || 0} Oz`;
+                    reviewRefrigerantAddedElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+                } else {
+                    reviewText += 'Not specified';
+                    reviewRefrigerantAddedElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
+
+                }
+
+                document.getElementById('review_refrigerant_added').textContent = reviewText;
+            }
+
+            function updateRefrigerantRemovedReview() {
+                var lbsRemoved = document.getElementById('refrigerant_removed_lbs_id').value;
+                var ozRemoved = document.getElementById('refrigerant_removed_oz_id').value;
+                var reviewText = 'Refrigerant Removed: ';
+                let reviewRefrigerantRemovedElement = document.getElementById('review_refrigerant_removed');
+
+                if (lbsRemoved || ozRemoved) {
+                    reviewText += `${lbsRemoved || 0} Lbs ${ozRemoved || 0} Oz`;
+                    reviewRefrigerantRemovedElement.style.setProperty('display', 'block', 'important'); 
+                } else {
+                    reviewText += 'Not specified';
+                    reviewRefrigerantRemovedElement.style.setProperty('display', 'none', 'important');
+
+                }
+
+                document.getElementById('review_refrigerant_removed').textContent = reviewText;
+            }
             //end of DOMContentLoaded
         });
         document.getElementById('pressureTestCheckbox').addEventListener('change', function () {
