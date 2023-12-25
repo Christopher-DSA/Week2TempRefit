@@ -3,9 +3,11 @@ from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP,DetailedEquipmentScanView
-
 from functools import wraps
 import pint
+from datetime import datetime
+
+
 
 # Import other necessary modules
 import UUID_Generate
@@ -206,6 +208,10 @@ def remove_qr():
 def repair_ODS_Sheet_New():
     if request.method == 'GET':
         #Get data about unit to pass on to placeholder fields on the next page.
+        current_scan_date = today_date = datetime.now().strftime("%Y-%m-%d")
+        # Get today's date and format it to "yyyy-mm-dd"
+
+        print("Today's date is:", current_scan_date)
         current_tag_url = session.get('unique_equipment_token')
         tag_data = CRUD.read(Tag, all = False, tag_url = str(current_tag_url))
         x = tag_data.unit_id
@@ -223,7 +229,7 @@ def repair_ODS_Sheet_New():
             my_dict['factory_charge_lbs'] = (float(my_dict['factory_charge_amount']) - remainder) / 16
             my_dict['factory_charge_oz'] = remainder
         print("my_dict: ", my_dict)
-        return render_template('equipment/repair_ODS_Sheet.html', data = my_dict)
+        return render_template('equipment/repair_ODS_Sheet.html', data = my_dict, date=str(current_scan_date))
     elif request.method == 'POST':
         return "ayyy"
 

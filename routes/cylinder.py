@@ -4,7 +4,7 @@ from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 import UUID_Generate
 import pandas as pd
-import datetime
+import datetime as dt
 
 
 
@@ -266,7 +266,8 @@ def CylinderInfo(unique_id):
 
 
 
-        current_scan_date = datetime.date.today() 
+        current_scan_date = dt.date.today()
+        print(current_scan_date)
 
         history_entry = Cylinder_History(
         date_qr_scanned=current_scan_date,
