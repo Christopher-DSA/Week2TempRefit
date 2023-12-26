@@ -671,12 +671,10 @@ def equipment_hist():
 
     return "Invalid request method"
 
-@technician.route("/ods_tags", methods=["GET", "POST"])
-def ods_tags():
+@technician.route("/ods-tags", methods=["GET", "POST"])
+def ods_tags_new():
     if request.method == "GET":
-        tech_id_current = session.get('tech_id')
-        data = CRUD.read(Repair_form, all=True, tech_id=tech_id_current)
-        render_template("beta/digitized_ods_tag.html", data=data)
+        return render_template("beta/digitized_ods_tag.html")
     else:
         return "Invalid request method (you posted to this route)"
 
