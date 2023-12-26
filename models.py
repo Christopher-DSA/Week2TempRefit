@@ -617,6 +617,50 @@ class Repair_form(Base):
     def __repr__(self):
         return 'Repair_form Model'
 
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Date, Text, Boolean, Numeric, ForeignKey
+
+Base = declarative_base()
+
+class RepairFormUnitView(Base):
+    __tablename__ = 'repairformunitview'  # Make sure this matches your view's name
+
+    # Primary key from Repair_form
+    repair_form_id = Column(Integer, primary_key=True)
+
+    # Other columns from Repair_form
+    repair_date = Column(Date)
+    refrigerant_type = Column(Text)
+    leak_test_result = Column(Boolean)
+    is_leak_repaired = Column(Boolean)
+    no_longer_contains_refrigerant = Column(Boolean)
+    vacuum_test_performed = Column(Boolean)
+    compressor_oil_removed = Column(Boolean)
+    pressure_test_performed = Column(Boolean)
+    psig_result = Column(Numeric)
+    additional_notes = Column(Text)
+    refrigerant_added_total_oz = Column(Numeric)
+    refrigerant_removed_total_oz = Column(Numeric)
+    tech_id = Column(Integer)
+
+    # Columns from Unit
+    unit_id = Column(Integer)
+    technician_id = Column(Integer)
+    unit_name = Column(String)
+    tag_id = Column(Integer)
+    other_attribute = Column(String)
+    installation_date = Column(String)  # Assuming String type based on your Unit table
+    last_maintenance_date = Column(String)  # Assuming String type
+    manufacturer = Column(String)
+    model = Column(String)
+    type_of_refrigerant = Column(String)
+    factory_charge_amount = Column(Integer)
+    unit_type = Column(String)
+    store_id = Column(Integer)
+    serial_number = Column(String)
+
+    def __repr__(self):
+        return f"<RepairFormUnitView(repair_form_id={self.repair_form_id}, unit_id={self.unit_id}, ...)>"
 
 
 # Class CRUD with all important features to work with the Database.
