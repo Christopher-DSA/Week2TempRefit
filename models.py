@@ -607,11 +607,12 @@ class Repair_form(Base):
     vacuum_test_performed = Column(Boolean)
     compressor_oil_removed = Column(Boolean)
     pressure_test_performed = Column(Boolean)
-    PSIG_result = Column(Numeric)
+    psig_result = Column(Numeric)
     additional_notes = Column(Text)
     refrigerant_added_total_oz = Column(Numeric)
     refrigerant_removed_total_oz = Column(Numeric)
     tech_id = Column(Integer)
+    unit_id = Column(Integer)
     
     def __repr__(self):
         return 'Repair_form Model'

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="data" border class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Repair Date</th>
+                <th scope="col">Refrigerant Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in data%}
+                <tr>
+                    <td>{{x.repair_date}}</td>
+                    <td>{{x.refrigerant_type}}</td>
+
+                    <!-- <td>
+                        <form action="/admin/reply" method="post">
+                            <button type="submit" name ="selected_user_id" value="{{data.user_id}}">Reply to this data</button>
+                            <input type="hidden" name="selected_data_id" value="{{data.data_id}}">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/admin/close_data" method="post">
+                            <button type="submit" name ="selected_data_id" value="{{data.data_id}}">Close data</button>
+                        </form>
+                    </td> -->
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</body>
+</html>
