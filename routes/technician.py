@@ -671,6 +671,7 @@ def equipment_hist():
 
     return "Invalid request method"
 
+#This is the digitized ods tag.
 @technician.route("/ods-tags", methods=["GET", "POST"])
 def ods_tags_new():
     if request.method == "GET":
@@ -678,6 +679,7 @@ def ods_tags_new():
     else:
         return "Invalid request method (you posted to this route)"
 
+#This is the table with the list of all ods tags a technician has ever filled out.
 @technician.route("/view_all_ods_tags", methods=["GET", "POST"])
 def view_all_ods_tags():
     if request.method == "GET":
