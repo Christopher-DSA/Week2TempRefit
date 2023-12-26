@@ -2,7 +2,7 @@
 from flask import make_response, session, Blueprint
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP,DetailedEquipmentScanView,Repair_form
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History, RepairFormUnitView,ODP,DetailedEquipmentScanView,Repair_form
 from functools import wraps
 import pint
 from datetime import datetime
@@ -684,12 +684,7 @@ def ods_tags():
 def view_all_ods_tags():
     if request.method == "GET":
         tech_id_current = session.get('tech_id')
-        data = CRUD.read(Repair_form, all=True, tech_id=tech_id_current)
-        
-        
-        
-        
-        
+        data = CRUD.read(RepairFormUnitView, all=True, tech_id=tech_id_current)
         
         return render_template("beta/view_all_ods_tags.html", data=data)
     else:
