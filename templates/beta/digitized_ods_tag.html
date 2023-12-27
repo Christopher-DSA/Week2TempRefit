@@ -150,7 +150,7 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-briefcase"></i> Job No:</span>
-                            <span class="info-value"><!-- Job number here --></span>
+                            <span class="info-value"><!-- Job number here -->{{data.job_number}}</span>
                         </div>
                     </div>
                 </div>
@@ -162,22 +162,35 @@
                 <div class="card mb-4">
                     <div class="card-header"><i class="fas fa-snowflake"></i> Refrigerant Info</div>
                     <div class="card-body">
-                        <div class="info-row">
+                        <!-- <div class="info-row">
                             <span class="info-label"><i class="fas fa-oil-can"></i> Oil:</span>
-                            <span class="info-value"><!-- Oil information here --></span>
-                        </div>
+                            <span class="info-value">Oil info here (this is placeholder) </span>
+                        </div> -->
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-snowflake"></i> Refrigerant Type:</span>
                             <span class="info-value">{{data.refrigerant_type}}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-plus-square"></i> Amount Added:</span>
-                            <span class="info-value"><!-- Amount added here -->{{data.refrigerant_added_total_oz}} oz</span>
+                            <span class="info-value"><!-- Amount added here -->{{data.refrigerant_added_total_oz}}
+                                oz</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-recycle"></i> Amount Reclaimed:</span>
-                            <span class="info-value"><!-- Amount reclaimed here -->{{data.refrigerant_removed_total_oz}} oz</span>
+                            <span class="info-value"><!-- Amount reclaimed here -->{{data.refrigerant_removed_total_oz}}
+                                oz</span>
                         </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-wind"></i> Unit Currently Contains Refrigerant?:</span>
+                            <span class="info-value">
+                                {% if data.no_longer_contains_refrigerant ==true%}
+                                No
+                                {%else%}
+                                Yes
+                                {%endif%}
+                            </span>
+                        </div>
+
                     </div>
                 </div>
 
@@ -193,22 +206,53 @@
                             <span class="info-label"><i class="fas fa-serial-number"></i> Serial No:</span>
                             <span class="info-value"><!-- Serial number here -->{{unit_data.serial_number}}</span>
                         </div>
-                        <div class="info-row">  
+                        <div class="info-row">
                             <span class="info-label"><i class="fas fa-clipboard-list"></i> Test Results:</span>
-                            <span class="info-value">{{data.repair_date}}</span>
+                            <span class="info-value">Issue Date: {{data.repair_date}}</span>
+                            <!-- vaccuum_test_performed,compressor_oil_removed,pressure_test_performed. -->
+                            <span class="info-value" style="display: block;">
+                                Vaccuum Test:
+                                {% if data.vaccuum_test_performed == true %}
+                                Yes
+                                {% else %}
+                                No
+                                {% endif %}
+                            </span>
+                            <span class="info-value" style="display: block;">
+                                Pressure Test:
+                                {% if data.pressure_test_performed ==true%}
+                                Yes, PSIG result: {{data.psig_result}}
+                                {%else%}
+                                No
+                                {%endif%}
+                            </span>
+                            <span class="info-value" style="display: block;">
+                                Compressor Oil Removed:
+                                {% if data.compressor_oil_removed ==true%}
+                                Yes
+                                {%else%}
+                                No
+                                {%endif%}
+                            </span>
+
                         </div>
                         <div class="info-row">
                             <div class="info-label"><i class="fas fa-water"></i> Leak Status:</div>
-                            <span class="info-value">{% if data.leak_test_result == 'true' %}
+                            <span class="info-value">
+                                {% if data.leak_test_result == 'true' %}
                                 leak was Detected ❗.
-                            {% else %}
+                                {% else %}
                                 No leak was detected ✅.
-                            {% endif %}{% if data.is_leak_repaired == 'true' %}
+                                {% endif %}{% if data.is_leak_repaired == 'true' %}
                                 Leak repaired. 🛠️
-                            {% else %}
-                                Leak not repaired. ❌
-                            {% endif %}
-                            
+                                {% else %}
+                                Leak was not repaired ❌.
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-tag"></i> Aditional Notes:</span>
+                            <span class="info-value">{{data.additional_notes}}</span>
                         </div>
                     </div>
                 </div>
