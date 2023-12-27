@@ -1,75 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <!-- Add link to an icon library like Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ODS Tag</title>
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+    <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+    <link rel="stylesheet" href="/static/css/test.css">
+
+    <!-- Custom CSS for layout and styling -->
     <style>
-        .info-row {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .info-row:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        .container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: .375rem .75rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-check-label {
+            font-weight: normal;
+        }
+
+        .form-check-input {
+            accent-color: #007bff;
+        }
+
+        .bold {
+            font-weight: 600;
+        }
+
+        .row {
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-row {
+            margin-bottom: 1rem;
         }
 
         .info-label {
             font-weight: 600;
-            color: #007bff;
-            display: flex;
-            align-items: center;
-            font-size: 1.1em;
-        }
-
-        .info-label i {
-            margin-right: 10px;
+            color: #555;
+            display: inline-block;
+            width: 150px;
         }
 
         .info-value {
-            font-size: 1em;
-            color: #333;
-            margin-left: 15px;
-        }
-
-        .page-title {
-            text-align: center;
-            color: #000000;
-            margin-bottom: 30px;
-            /* Adjust as needed */
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.5rem;
-            /* Large, readable font size */
-            font-weight: bold;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-weight: bold !important;
+            display: inline-block;
         }
     </style>
-    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
-    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
-    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
-    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
-
 </head>
 
 <body>
     <!-- Start: Navbar -->
-    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" new-nav
+    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme=""
         style="margin-bottom: 30px;">
         <div class="container-fluid"><a href="/back-by-role" class="btn btn-primary btn-lg" role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
@@ -113,108 +146,69 @@
     </nav>
     <!-- End: Navbar -->
     <div class="container my-4">
-        <h1 class="page-title">Service Details Dashboard</h1>
-        <div class="row">
-            <!-- Left Column -->
-            <div class="col-md-6">
-                <!-- Company and User Information Group -->
-                <div class="card mb-4">
-                    <div class="card-header"><i class="fas fa-info-circle"></i> Company Info</div>
-                    <div class="card-body">
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-building"></i> Company Name:</span>
-                            <span class="info-value">{{company_data.name}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-phone-alt"></i> Phone No:</span>
-                            <span class="info-value">{{user_data.telephone}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-user"></i> Name:</span>
-                            <span class="info-value">{{user_data.first_name}} {{user_data.last_name}}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Technician Information Group -->
-                <div class="card mb-4">
-                    <div class="card-header"><i class="fas fa-tools"></i> Technician Info</div>
-                    <div class="card-body">
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-calendar-alt"></i> Expiry Date:</span>
-                            <span class="info-value">{{tech_data.license_expiry_date}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-id-badge"></i> Certificate No:</span>
-                            <span class="info-value">{{tech_data.ods_licence_number}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-briefcase"></i> Job No:</span>
-                            <span class="info-value"><!-- Job number here --></span>
-                        </div>
-                    </div>
-                </div>
+        <div class="ods-tag">
+            <div class="info-row">
+                <span class="info-label">Company Name:</span>
+                <span class="info-value">{{company_data.name}}</span>
             </div>
-
-            <!-- Right Column -->
-            <div class="col-md-6">
-                <!-- Refrigerant Information Group -->
-                <div class="card mb-4">
-                    <div class="card-header"><i class="fas fa-snowflake"></i> Refrigerant Info</div>
-                    <div class="card-body">
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-oil-can"></i> Oil:</span>
-                            <span class="info-value"><!-- Oil information here --></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-snowflake"></i> Refrigerant Type:</span>
-                            <span class="info-value">{{data.refrigerant_type}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-plus-square"></i> Amount Added:</span>
-                            <span class="info-value"><!-- Amount added here -->{{data.refrigerant_added_total_oz}} oz</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-recycle"></i> Amount Reclaimed:</span>
-                            <span class="info-value"><!-- Amount reclaimed here -->{{data.refrigerant_removed_total_oz}} oz</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional Information Group -->
-                <div class="card mb-4">
-                    <div class="card-header"><i class="fas fa-clipboard-list"></i> Additional Info</div>
-                    <div class="card-body">
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-tag"></i> Model:</span>
-                            <span class="info-value"><!-- Model information here -->{{unit_data.model}}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-serial-number"></i> Serial No:</span>
-                            <span class="info-value"><!-- Serial number here -->{{unit_data.serial_number}}</span>
-                        </div>
-                        <div class="info-row">  
-                            <span class="info-label"><i class="fas fa-clipboard-list"></i> Test Results:</span>
-                            <span class="info-value">{{data.repair_date}}</span>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label"><i class="fas fa-water"></i> Leak Status:</div>
-                            <span class="info-value">{% if data.leak_test_result == 'true' %}
-                                leak was Detected ❗.
-                            {% else %}
-                                No leak was detected ✅.
-                            {% endif %}{% if data.is_leak_repaired == 'true' %}
-                                Leak repaired. 🛠️
-                            {% else %}
-                                Leak not repaired. ❌
-                            {% endif %}
-                            
-                        </div>
-                    </div>
-                </div>
+            <div class="info-row">
+                <span class="info-label">Phone No:</span>
+                <span class="info-value">{{user_data.telephone}}</span>
             </div>
+            <div class="info-row">
+                <span class="info-label">Name:</span>
+                <span class="info-value">{{user_data.first_name}} {{user_data.last_name}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Expiry Date:</span>
+                <span class="info-value">{{tech_data.license_expiry_date}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Certificate No:</span>
+                <span class="info-value">{{tech_data.ods_licence_number}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Job No.:</span>
+                <span class="info-value"><!-- Job number here --></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Oil:</span>
+                <span class="info-value"><!-- Oil information here --></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Refrigerant Type:</span>
+                <span class="info-value">{{data.refrigerant_type}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Amount Added:</span>
+                <span class="info-value"><!-- Amount added here --></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Amount Reclaimed:</span>
+                <span class="info-value"><!-- Amount reclaimed here --></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Model:</span>
+                <span class="info-value"><!-- Model information here --></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Serial No.:</span>
+                <span class="info-value"><!-- Serial number here --></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Test Results:</span>
+                <span class="info-value">{{data.repair_date}}</span>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Leak Detected:</div>
+                <span class="info-value">{{data.leak_test_result}}</span>
+            </div>
+            <!-- Add more rows as needed -->
         </div>
+
     </div>
+
+    <!-- Bootstrap JS and other scripts here -->
     <!-- Make sure to link the Bootstrap JS bundle here -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8"
@@ -222,3 +216,5 @@
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 </body>
+
+</html>

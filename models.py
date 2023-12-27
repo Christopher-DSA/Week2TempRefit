@@ -613,6 +613,7 @@ class Repair_form(Base):
     refrigerant_removed_total_oz = Column(Numeric)
     tech_id = Column(Integer)
     unit_id = Column(Integer)
+    job_number = Column(Text)
     
     def __repr__(self):
         return 'Repair_form Model'

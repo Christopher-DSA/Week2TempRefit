@@ -686,9 +686,10 @@ def ods_tags_new():
         data = CRUD.read(Repair_form, all=False, repair_form_id=selected_repair_form_id)
         tech_data = CRUD.read(Technician, all=False, technician_id=current_tech_id)
         user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
-        company_data = CRUD.read(Contractor, all=False, contractor_id=tech_data.contractor_id)   
+        company_data = CRUD.read(Contractor, all=False, contractor_id=tech_data.contractor_id)
+        unit_data = CRUD.read(Unit, all=False, unit_id=data.unit_id)
         
-        return render_template("beta/digitized_ods_tag.html", data=data, tech_data=tech_data, user_data=user_detail_data, company_data=company_data)
+        return render_template("beta/digitized_ods_tag.html", data=data, tech_data=tech_data, user_data=user_detail_data, company_data=company_data, unit_data=unit_data)
         
 #This is the table with the list of all ods tags a technician has ever filled out.
 @technician.route("/view_all_ods_tags", methods=["GET", "POST"])
