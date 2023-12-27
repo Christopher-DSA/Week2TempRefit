@@ -94,7 +94,7 @@
     </nav>
     <!-- End: Navbar -->
 
-    <h1>All ODS Tags: </h1>
+    <h1>All ODS Tags History: </h1>
 
 
     <table id="data" class="table table-hover">
@@ -103,6 +103,7 @@
                 <th scope="col">Repair Date</th>
                 <th scope="col">Refrigerant Type</th>
                 <th scope="col">Unit Type</th>
+                <th scope="col">Model</th>
                 <th scope="col">View Tag</th>
             </tr>
         </thead>
@@ -112,6 +113,7 @@
                 <td>{{x.repair_date}}</td>
                 <td>{{x.refrigerant_type}}</td>
                 <td>{{x.unit_type}}</td>
+                <td>{{x.model}}</td>
                 <td>
                     <form action="/ods-tags" method="post">
                         <button type="submit" name ="selected_ods_tag" value="{{x.repair_form_id}}">View this tag</button>
@@ -143,6 +145,7 @@
     $(document).ready(function () {
         $('#data').DataTable({
             columns: [
+                { searchable: true },
                 { searchable: true },
                 { searchable: true },
                 { searchable: true },

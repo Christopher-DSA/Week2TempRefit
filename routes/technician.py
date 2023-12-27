@@ -272,6 +272,7 @@ def repair_ODS_Sheet_New():
         form_data_dictionary['vacuumTest'] = convert_check_to_boolean(form_data_dictionary.get('vacuumTest'))
         form_data_dictionary['compressorOil'] = convert_check_to_boolean(form_data_dictionary.get('compressorOil'))
         form_data_dictionary['pressureTest'] = convert_check_to_boolean(form_data_dictionary.get('pressureTest'))
+        form_data_dictionary['noLongerContainsRefrigerant'] = convert_check_to_boolean(form_data_dictionary.get('noLongerContainsRefrigerant'))
             
         # Mapping form data to model attributes
         model_data = {
@@ -284,15 +285,41 @@ def repair_ODS_Sheet_New():
             'compressor_oil_removed': form_data_dictionary.get('compressorOil'),
             'pressure_test_performed': form_data_dictionary.get('pressureTest'),
             'additional_notes': form_data_dictionary.get('additionalNotes'),
-            'PSIG_result': psig_result,
+            'psig_result': psig_result,
             'refrigerant_added_total_oz': total_refrigerant_added_oz,
             'refrigerant_removed_total_oz': total_refrigerant_removed_oz,
-            'tech_id': session.get('tech_id')
+            'tech_id': session.get('tech_id'),
+            'unit_id': session.get('unit_id') 
         }
+        
+        # send email to contractor
+        try:
+            msg = MIMEMultipart()
+            msg['From'] = 'refit_dev@sidneyshapiro.com'
+            msg['To'] = 'refit_dev@sidneyshapiro.com'
+            msg['Subject'] = "New ODS Tag Submitted"
+            
+            # Read your HTML content from a file
+            with open('templates/email/contractor-copy-of-ods-tag-email.html', 'r', encoding='utf-8') as file:
+                html = file.read()
+
+            # Attach the HTML part to the email
+            part = MIMEText(html, "html")
+            msg.attach(part)
+            
+            email_text = msg.as_string()
+            #Send an email to the email address typed in the form.
+            smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+            smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+            smtpObj.quit()  # Quitting the connection
+            print("Email sent successfully!")
+        except Exception as e:
+            print("Oops, something went wrong: ", e)
         
         CRUD.create(Repair_form, **model_data)
         print("model_data: ", model_data)
-        return model_data
+        return redirect('/back-by-role')
 
 @technician.route('/equipment common/qr-scan')
 def qr_scan():
@@ -574,6 +601,7 @@ def equipment_info_page(unique_id):
         session.pop('unique_equipment_token', None)
         #save tag url to session.
         session['unique_equipment_token'] = str(unique_id)
+        session['unit_id'] = unit_id
                 
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
@@ -698,6 +726,18 @@ def view_all_ods_tags():
         tech_id_current = session.get('tech_id')
         data = CRUD.read(RepairFormUnitView, all=True, tech_id=tech_id_current)
         
+        return render_template("beta/view_all_ods_tags.html", data=data)
+    else:
+        return "Invalid request method (you posted to this route)"
+    
+#This is the table with the list of all ods tags a EQUIPMENT HAS attached to it.
+@technician.route("/view_unit_ods_tags", methods=["GET", "POST"])
+def view_all_unit_ods_tags():
+    if request.method == "GET":
+        current_unit_id = session.get('unit_id')
+        print("current_unit_id: ", current_unit_id)
+        data = CRUD.read(RepairFormUnitView, all=True, unit_id = current_unit_id)
+        print(data)
         return render_template("beta/view_all_ods_tags.html", data=data)
     else:
         return "Invalid request method (you posted to this route)"

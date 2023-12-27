@@ -129,10 +129,6 @@
                             <span class="info-label"><i class="fas fa-phone-alt"></i> Phone No:</span>
                             <span class="info-value">{{user_data.telephone}}</span>
                         </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-user"></i> Name:</span>
-                            <span class="info-value">{{user_data.first_name}} {{user_data.last_name}}</span>
-                        </div>
                     </div>
                 </div>
 
@@ -140,6 +136,10 @@
                 <div class="card mb-4">
                     <div class="card-header"><i class="fas fa-tools"></i> Technician Info</div>
                     <div class="card-body">
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-user"></i> Name:</span>
+                            <span class="info-value">{{user_data.first_name}} {{user_data.last_name}}</span>
+                        </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-calendar-alt"></i> Expiry Date:</span>
                             <span class="info-value">{{tech_data.license_expiry_date}}</span>
@@ -239,15 +239,17 @@
                         <div class="info-row">
                             <div class="info-label"><i class="fas fa-water"></i> Leak Status:</div>
                             <span class="info-value">
-                                {% if data.leak_test_result == 'true' %}
-                                leak was Detected ❗.
+                                {% if data.leak_test_result == true %}
+                                Leak was Detected ❗.
+                                    {% if data.is_leak_repaired == true %}
+                                    Leak repaired. 🛠️
+                                    {% else %}
+                                    Leak was not repaired ❌.
+                                    {% endif %}
                                 {% else %}
                                 No leak was detected ✅.
-                                {% endif %}{% if data.is_leak_repaired == 'true' %}
-                                Leak repaired. 🛠️
-                                {% else %}
-                                Leak was not repaired ❌.
                                 {% endif %}
+
                             </span>
                         </div>
                         <div class="info-row">

@@ -123,91 +123,12 @@
                                                         name="refrigerant_type" id="refrigerant_type_id"
                                                         value="{{data.type_of_refrigerant}}"></div>
                                                 <input type="hidden" name="refrigerant_type_send" value="{{ data.type_of_refrigerant }}">
-                                                <!-- <p>Factory Refrigerant Weight</p>
-                                                <div class="row mb-4">
-                                                    <div class="col dropdown">
-                                                        <button class="btn w-100 btn-outline-secondary dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false" disabled>
-                                                            lb/oz
-                                                        </button>
-                                                    </div>
-                                                    <div class="col mb-3">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;"
-                                                                placeholder="{{data.factory_charge_lbs}}" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">lb</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col mb-3">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;"
-                                                                placeholder="{{data.factory_charge_oz}}" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">oz</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-
-                                                <!-- <p>Total Refrigerant Weight</p> -->
-                                                <!-- <div class="row">
-                                                    <div class="col dropdown">
-                                                        <button class="btn w-100 btn-outline-secondary dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false" disabled>
-                                                            lb/oz
-                                                        </button>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">lb</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">oz</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                             </div>
-                                        </div>
-                                        <!--Buttons For Tab 1-->
-                                        <div class="row d-flex pt-5 justify-content-center">
-                                            <div class="d-flex flex-col align-items-center gap-4">
-                                                <a href="/back-by-role" class="btn btn-outline-primary btn-lg w-100"
-                                                    role="button">Cancel</a>
-                                                <button class="btn btn-lg btn-primary w-100 btn-next"
-                                                    type="button">Next</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" role="tabpanel" id="tab-2">
-                                        <!-- Start: Form Input -->
-                                        <div class="row">
-                                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
-                                                required.</p>
-                                            <h5 class="mb-3">Leak Test Result<span class="text-danger">*</span></h5>
+                                            <h4 class="mt-4 mb-4">Leak Test Result<span class="text-danger">*</span></h4>
                                             <!-- Leak Test Result -->
                                             <div class="form-check mx-3">
                                                 <input class="form-check-input" type="radio" name="leakDetectedRadio"
-                                                    id="leakDetectedRadio1">
+                                                    id="leakDetectedRadio1" required>
                                                 <label class="form-check-label" for="leakDetectedRadio1"
                                                     value="leakDetected">
                                                     Leak detected - Do not add refrigerant until repaired
@@ -238,12 +159,29 @@
                                             </div>
                                             <div class="form-check mx-3">
                                                 <input class="form-check-input" type="radio" name="leakDetectedRadio"
-                                                    id="noLeakDetected">
+                                                    id="noLeakDetected" required>
                                                 <label class="form-check-label" for="leakDetectedRadio1"
                                                     value="noLeakDetected">
                                                     No leak detected
                                                 </label>
                                             </div>
+                                        </div>
+                                        <!--Buttons For Tab 1-->
+                                        <div class="row d-flex pt-5 justify-content-center">
+                                            <div class="d-flex flex-col align-items-center gap-4">
+                                                <a href="/back-by-role" class="btn btn-outline-primary btn-lg w-100"
+                                                    role="button">Cancel</a>
+                                                <button class="btn btn-lg btn-primary w-100 btn-next"
+                                                    type="button">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" role="tabpanel" id="tab-2">
+                                        <!-- Start: Form Input -->
+                                        <div class="row">
+                                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
+                                                required.</p>
+                                            <!-- Sub-menu Options -->
                                             <h5 class="mt-3">Other Test Results
                                             </h5>
                                             <div class="form-check mx-3 mt-3">
@@ -390,12 +328,10 @@
                                                 <ul class="list-group my-3 mx-2">
                                                     <li class="list-group-item border-0 p-0">1. Scan cylinder QR tag
                                                     </li>
-                                                    <li class="list-group-item border-0 p-0">2. Add refrigerant to
-                                                        equipment</li>
-                                                    <li class="list-group-item border-0 p-0">3. Record refrigerant added
-                                                    </li>
+                                                    <li class="list-group-item border-0 p-0">2. Refrigerant will be added to the cylinder's ReFit Tag</li>
                                                 </ul>
-                                                <p>If you do not need to add refrigerant, proceed to review ODS sheet.
+                                                <p>If you do not need to add refrigerant, click the button below to
+                                                    submit the form.</p>
                                                 </p>
                                             </div>
                                             <div class="row d-flex pt-5 justify-content-center">
