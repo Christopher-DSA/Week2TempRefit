@@ -318,7 +318,7 @@ def repair_ODS_Sheet_New():
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
             msg['To'] = 'refit_dev@sidneyshapiro.com'
-            msg['Subject'] = "New ODS Tag Submitted"
+            msg['Subject'] = ("New ODS Tag Submitted by " + str(user_detail_data.first_name) + " " + str(user_detail_data.last_name)) 
 
             # Attach the HTML part to the email
             part = MIMEText(html_content, "html")
