@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Service Details</title>
 </head>
+
 <body>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family: Arial, sans-serif; font-size: 14px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+        style="font-family: Arial, sans-serif; font-size: 14px;">
         <tr>
             <td style="text-align: center; padding: 20px;">
                 <h1 style="font-family: Arial, sans-serif; font-size: 24px;">ODS Tag</h1>
@@ -15,7 +18,8 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="5">
                     <!-- Company and User Information -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Company & User Info</td>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Company &
+                            User Info</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Company Name:</td>
@@ -28,7 +32,8 @@
 
                     <!-- Technical Information -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Technical Info</td>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Technical
+                            Info</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Technician Name:</td>
@@ -49,7 +54,8 @@
 
                     <!-- Refrigerant Information -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Refrigerant Info</td>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Refrigerant
+                            Info</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Oil:</td>
@@ -67,10 +73,19 @@
                         <td style="font-weight: bold;">Amount Reclaimed:</td>
                         <td>{{ data.refrigerant_removed_total_oz }} oz</td>
                     </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Contains Refrigerant:</td>
+                        <td>{% if data.no_longer_contains_refrigerant ==true%}
+                            No
+                            {%else%}
+                            Yes
+                            {%endif%}</td>
+                    </tr>
 
                     <!-- Additional Information -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Additional Info</td>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Additional
+                            Info</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Model:</td>
@@ -85,13 +100,13 @@
                         <td>{{data.repair_date}}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Test Results:</td>
+                        <td style="font-weight: bold;">Other Tests:</td>
                         <td>Vaccuum Test:
                             {% if data.vacuum_test_performed == true %}
                             Yes
                             {% else %}
                             No
-                            {% endif %},                                 Pressure Test:
+                            {% endif %}, Pressure Test:
                             {% if data.pressure_test_performed ==true%}
                             Yes, PSIG result: {{data.psig_result}}
                             {%else%}
@@ -108,11 +123,11 @@
                         <td>
                             {% if data.leak_test_result == true %}
                             Leak was Detected ❗.
-                                {% if data.is_leak_repaired == true %}
-                                Leak repaired. 🛠️
-                                {% else %}
-                                Leak was not repaired ❌.
-                                {% endif %}
+                            {% if data.is_leak_repaired == true %}
+                            Leak repaired. 🛠️
+                            {% else %}
+                            Leak was not repaired ❌.
+                            {% endif %}
                             {% else %}
                             No leak was detected ✅.
                             {% endif %}
@@ -124,4 +139,5 @@
         </tr>
     </table>
 </body>
+
 </html>
