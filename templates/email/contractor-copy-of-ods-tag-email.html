@@ -19,15 +19,15 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Company Name:</td>
-                        <td>{{company_data.name}}</td>
+                        <td>{{ company_data.name }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Phone No:</td>
-                        <td>{{user_data.telephone}}</td>
+                        <td>{{ user_data.telephone }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Name:</td>
-                        <td>{{user_data.first_name}} {{user_data.last_name}}</td>
+                        <td>{{ user_data.first_name }} {{ user_data.last_name }}</td>
                     </tr>
 
                     <!-- Technical Information -->
@@ -36,15 +36,15 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Expiry Date:</td>
-                        <td>{{tech_data.license_expiry_date}}</td>
+                        <td>{{ tech_data.license_expiry_date }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Certificate No:</td>
-                        <td>{{tech_data.ods_licence_number}}</td>
+                        <td>{{ tech_data.ods_licence_number }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Job No.:</td>
-                        <td><!-- Job number here --></td>
+                        <td style="font-weight: bold;">Job No:</td>
+                        <td>{{ data.job_number }}</td>
                     </tr>
 
                     <!-- Refrigerant Information -->
@@ -53,19 +53,19 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Oil:</td>
-                        <td><!-- Oil information here --></td>
+                        <td>{{ data.oil }}</td> <!-- Assuming 'oil' is part of 'data' -->
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Refrigerant Type:</td>
-                        <td>{{data.refrigerant_type}}</td>
+                        <td>{{ data.refrigerant_type }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Amount Added:</td>
-                        <td><!-- Amount added here --></td>
+                        <td>{{ data.refrigerant_added_total_oz }} oz</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Amount Reclaimed:</td>
-                        <td><!-- Amount reclaimed here --></td>
+                        <td>{{ data.refrigerant_removed_total_oz }} oz</td>
                     </tr>
 
                     <!-- Additional Information -->
@@ -74,19 +74,49 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Model:</td>
-                        <td><!-- Model information here --></td>
+                        <td>{{ unit_data.model }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Serial No:</td>
-                        <td><!-- Serial number here --></td>
+                        <td>{{ unit_data.serial_number }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Test Results:</td>
+                        <td style="font-weight: bold;">Issue Date:</td>
                         <td>{{data.repair_date}}</td>
                     </tr>
                     <tr>
+                        <td style="font-weight: bold;">Test Results:</td>
+                        <td>Vaccuum Test:
+                            {% if data.vacuum_test_performed == true %}
+                            Yes
+                            {% else %}
+                            No
+                            {% endif %},                                 Pressure Test:
+                            {% if data.pressure_test_performed ==true%}
+                            Yes, PSIG result: {{data.psig_result}}
+                            {%else%}
+                            No
+                            {%endif%}, Compressor Oil Removed:
+                            {% if data.compressor_oil_removed ==true%}
+                            Yes
+                            {%else%}
+                            No
+                            {%endif%}</td>
+                    </tr>
+                    <tr>
                         <td style="font-weight: bold;">Leak Detected:</td>
-                        <td>{{data.leak_test_result}}</td>
+                        <td>
+                            {% if data.leak_test_result == true %}
+                            Leak was Detected ❗.
+                                {% if data.is_leak_repaired == true %}
+                                Leak repaired. 🛠️
+                                {% else %}
+                                Leak was not repaired ❌.
+                                {% endif %}
+                            {% else %}
+                            No leak was detected ✅.
+                            {% endif %}
+                        </td>
                     </tr>
                     <!-- Add more rows as needed -->
                 </table>

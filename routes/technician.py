@@ -6,6 +6,8 @@ from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Tec
 from functools import wraps
 import pint
 from datetime import datetime
+from jinja2 import Environment, FileSystemLoader
+
 
 
 
@@ -292,19 +294,34 @@ def repair_ODS_Sheet_New():
             'unit_id': session.get('unit_id') 
         }
         
-        # send email to contractor
+        #Save to database before sending email.
+        CRUD.create(Repair_form, **model_data)
+        
+        #Send email to contractor
         try:
+            print("start of try")
+            # Set up Jinja2 environment
+            env = Environment(loader=FileSystemLoader('templates/email'))
+            template = env.get_template('contractor-copy-of-ods-tag-email.html')
+            
+            current_tech_id = session.get('tech_id')
+            #data for email
+            tech_data = CRUD.read(Technician, all=False, technician_id=current_tech_id)
+            user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+            company_data = CRUD.read(Contractor, all=False, contractor_id=tech_data.contractor_id)
+            unit_data = CRUD.read(Unit, all=False, unit_id=model_data['unit_id'])
+            
+            # Render the template with your data
+            html_content = template.render(data=model_data,tech_data=tech_data, user_data=user_detail_data, company_data=company_data, unit_data=unit_data)
+            
+            #This needs to be dynamic based on the contractor's email we have in the database.
             msg = MIMEMultipart()
             msg['From'] = 'refit_dev@sidneyshapiro.com'
             msg['To'] = 'refit_dev@sidneyshapiro.com'
             msg['Subject'] = "New ODS Tag Submitted"
-            
-            # Read your HTML content from a file
-            with open('templates/email/contractor-copy-of-ods-tag-email.html', 'r', encoding='utf-8') as file:
-                html = file.read()
 
             # Attach the HTML part to the email
-            part = MIMEText(html, "html")
+            part = MIMEText(html_content, "html")
             msg.attach(part)
             
             email_text = msg.as_string()
@@ -317,8 +334,6 @@ def repair_ODS_Sheet_New():
         except Exception as e:
             print("Oops, something went wrong: ", e)
         
-        CRUD.create(Repair_form, **model_data)
-        print("model_data: ", model_data)
         return redirect('/back-by-role')
 
 @technician.route('/equipment common/qr-scan')
