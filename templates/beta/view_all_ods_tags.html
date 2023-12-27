@@ -113,7 +113,10 @@
                 <td>{{x.refrigerant_type}}</td>
                 <td>{{x.unit_type}}</td>
                 <td>
-                    <button type="button" onclick="location.href='/ods-tags'">View Tag</button>
+                    <form action="/ods-tags" method="post">
+                        <button type="submit" name ="selected_ods_tag" value="{{x.repair_form_id}}">View this tag</button>
+                        <input type="hidden" name="selected_ods_tag_id" value="{{x.repair_form_id}}">
+                    </form>
                 </td>
                 <!-- <td>
                         <form action="/admin/reply" method="post">

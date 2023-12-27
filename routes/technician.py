@@ -230,7 +230,7 @@ def repair_ODS_Sheet_New():
             my_dict['factory_charge_oz'] = remainder
         print("my_dict: ", my_dict)
         return render_template('equipment/repair_ODS_Sheet.html', data = my_dict, date=str(current_scan_date))
-    elif request.method == 'POST':
+    elif request.method == 'POST': #This is the rpair form post.
         ods_form_names = ['current_date','refrigerant_type_send','leakDetectedRadio','repairStatusRadio','noLongerContainsRefrigerant','vacuumTest','compressorOil','pressureTest','psigResult','refrigerant_added_lbs','refrigerant_added_oz','refrigerant_removed_lbs','refrigerant_removed_oz','additionalNotes']
         form_data_dictionary = {}
         for x in ods_form_names:
@@ -671,14 +671,25 @@ def equipment_hist():
 
     return "Invalid request method"
 
-#This is the digitized ods tag.
+#This is the digitized ods tag. (Singular Tag)
 @technician.route("/ods-tags", methods=["GET", "POST"])
 def ods_tags_new():
     if request.method == "GET":
         return render_template("beta/digitized_ods_tag.html")
     else:
-        return "Invalid request method (you posted to this route)"
-
+        selected_repair_form_id = request.form.get('selected_ods_tag')
+        print("selected_repair_form_id: ", selected_repair_form_id)
+        
+        current_tech_id = session.get('tech_id')
+        
+        #Get data from database
+        data = CRUD.read(Repair_form, all=False, repair_form_id=selected_repair_form_id)
+        tech_data = CRUD.read(Technician, all=False, technician_id=current_tech_id)
+        user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+        company_data = CRUD.read(Contractor, all=False, contractor_id=tech_data.contractor_id)   
+        
+        return render_template("beta/digitized_ods_tag.html", data=data, tech_data=tech_data, user_data=user_detail_data, company_data=company_data)
+        
 #This is the table with the list of all ods tags a technician has ever filled out.
 @technician.route("/view_all_ods_tags", methods=["GET", "POST"])
 def view_all_ods_tags():

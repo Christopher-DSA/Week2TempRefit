@@ -95,23 +95,23 @@
         <div class="ods-tag">
             <div class="ods-tag-header row mb-4">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="COMPANY NAME">
+                    <input type="text" class="form-control" placeholder="COMPANY NAME: {{company_data.name}}">
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="PHONE NO.">
+                    <input type="text" class="form-control" placeholder="PHONE NO: {{user_data.telephone[0:3]}}-{{user_data.telephone[3:6]}}-{{user_data.telephone[6:10]}}">
                 </div>
             </div>
             <div class="ods-tag-body mb-4">
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="TECHNICIAN'S NAME">
+                        <input type="text" class="form-control" placeholder="Name: {{user_data.first_name}} {{user_data.last_name}}">
                     </div>
                 </div>
                 <div class="row mb-4 mt-4">
                     <div class="col">
                         <label for="expiryDate" class="form-label">EXPIRY DATE:</label>
-                        <input type="date" id="expiryDate" class="form-control">
-                        <input type="text" class="form-control" placeholder="CERTIFICATE NO.">
+                        <input type="text" id="expiryDate" class="form-control" placeholder="{{tech_data.license_expiry_date}}">
+                        <input type="text" class="form-control" placeholder="CERTIFICATE NO: {{tech_data.ods_licence_number}}">
                     </div>
 
                 <div class="row mb-4 mt-4">
@@ -126,7 +126,7 @@
                         <input type="text" class="form-control" placeholder="OIL">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="REFRIGERANT">
+                        <input type="text" class="form-control" placeholder="{{data.refrigerant_type}}" value="{{data.refrigerant_type}}">
                     </div>
                 </div>
                 <div class="row mb-4">
@@ -151,10 +151,10 @@
                 <div class="col-12">
                     <label class="form-label bold">TEST RESULTS</label>
                     <div class="col">
-                        <input type="date" class="form-control">
+                        <input type="text" class="form-control" placeholder="{{data.repair_date}}">
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="leakDetected">
+                        <input class="form-check-input" type="checkbox" id="leakDetected" value="{{data.leak_test_result}}">
                         <label class="form-check-label" for="leakDetected">
                             LEAK DETECTED DO NOT ADD REFRIGERANT UNTIL REPAIRED
                         </label>
