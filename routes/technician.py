@@ -1,5 +1,5 @@
 # Import necessary modules from flask
-from flask import make_response, session, Blueprint
+from flask import make_response, session, Blueprint, jsonify
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
 from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History, RepairFormUnitView,ODP,DetailedEquipmentScanView,Repair_form
@@ -194,7 +194,48 @@ def my_choose_qr_type():
         else: #go to register a new tag page
             print("error in qr scan, this qr tag needs to be registered.")
             session['QR_unique_token'] = unique_token
-            return render_template('Equipment Common/choose-qr-type.html')    
+            return render_template('Equipment Common/choose-qr-type.html')
+        
+
+@technician.route('/for-ods-form-choose-qr-type', methods=['POST'])
+def ods_form_qr_type():
+    # Get the JSON data sent from the client
+    data = request.get_json()
+    unique_token = data.get('unique_token')
+    lbs_added = data.get('refrigerant_lbs_added')
+    oz_added = data.get('refrigerant_oz_added')
+    lbs_removed = data.get('refrigerant_lbs_removed')
+    oz_removed = data.get('refrigerant_oz_removed')
+
+    print("unique_token IN QR TYPE: ", unique_token)
+    print("lbs_added: ", lbs_added) 
+    print("oz_added: ", oz_added)
+    print("lbs_removed: ", lbs_removed)
+    print("oz_removed: ", oz_removed)
+
+    if unique_token:
+        x = CRUD.read(Tag, all=False, tag_url=unique_token)
+        if x:
+            if x.type == "equipment":
+                print("this is an equipment qr tag")
+                return jsonify({"error": "Oops, this is an equipment QR tag. Try again with a cylinder QR tag."})
+            elif x.type == "cylinder":
+                if(float(lbs_added) == 0 and float(oz_added) == 0 and float(lbs_removed) == 0 and float(oz_removed) == 0):
+                    return jsonify({"error": "Oops, you need to fill out atleast one of the fields."})
+                else:
+                    print("adding or removing refrigerant from cylinder")
+                    # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces (add try catch here if there are problems)
+                    total_refrigerant_added_oz = (float(lbs_added) * 16) + float(oz_added)
+                    total_refrigerant_removed_oz = (float(lbs_removed) * 16) + float(oz_removed)
+                    #Update Cylinder Refrigerant Amount
+                    new_amount_difference = total_refrigerant_added_oz - total_refrigerant_removed_oz
+                    calculated_amount = float(CRUD.read(Cylinder, all=False, cylinder_id=x.cylinder_id).current_refrigerant_weight) + new_amount_difference
+                    CRUD.update(Cylinder, cylinder_id=x.cylinder_id, attr="current_refrigerant_weight", new=calculated_amount)
+                    return jsonify({"calculated_amount": calculated_amount})
+        else:
+            return jsonify({"error": "This tag needs to be registered before you can add refrigerant to it."})
+    else:
+        return jsonify({"error": "No unique token provided."})  
         
 
 @technician.route('/New Cylinder/tag-linked')
