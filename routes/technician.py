@@ -232,6 +232,7 @@ def repair_ODS_Sheet_New():
             my_dict['factory_charge_oz'] = remainder
         print("my_dict: ", my_dict)
         return render_template('equipment/repair_ODS_Sheet.html', data = my_dict, date=str(current_scan_date))
+    
     elif request.method == 'POST': #This is the rpair form post.
         ods_form_names = ['current_date','refrigerant_type_send','leakDetectedRadio','repairStatusRadio','noLongerContainsRefrigerant','vacuumTest','compressorOil','pressureTest','psigResult','refrigerant_added_lbs','refrigerant_added_oz','refrigerant_removed_lbs','refrigerant_removed_oz','additionalNotes']
         form_data_dictionary = {}
@@ -294,9 +295,14 @@ def repair_ODS_Sheet_New():
             'unit_id': session.get('unit_id') 
         }
         
+        refrigerant_changed_amount = total_refrigerant_added_oz - total_refrigerant_removed_oz
+        new_refrigerant_amount = CRUD.read(Unit, all=False, unit_id=session.get('unit_id')).amount_of_refrigerant_in_unit_oz + refrigerant_changed_amount
+        
         #Save to database before sending email.
         CRUD.create(Repair_form, **model_data)
-        
+        #Update unit table with new data.
+        CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "last_maintenance_date", new = model_data['repair_date'])
+        CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "amount_of_refrigerant_in_unit_oz", new = new_refrigerant_amount)
         #Send email to contractor
         try:
             print("start of try")
