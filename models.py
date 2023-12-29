@@ -379,6 +379,7 @@ class Cylinder(Base):
     unique_url_id = Column(String)
     tare_weight_before_repair = Column(Numeric)
     tare_weight_after_repair = Column(Numeric)
+    clean_or_burnout = Column(Text)
 
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')

@@ -75,7 +75,13 @@
     <br>
     <div class="container" id="information" style="margin-top: 20px;">
         <h2 style="margin-bottom: 15px;">Cylinder Information</h2>
-        <h5>Cylinder Type: {{name.cylinder_type}} </h4>
+        <h5>Cylinder Type: {{name.cylinder_type}} {% if data.clean_or_burnout == 'clean' %}
+            <!-- Do something here when the condition is true -->
+            with Contaminant-Free Gas
+          {% else %}
+            with Burnout Gas/Contaminated Gas
+            <!-- Do something else when the condition is false -->
+          {% endif %}</h4>
             <h5>Refrigerant Type: {{name.refrigerant_name}} </h4>
                 <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight}} oz</h4>
                     <a href="#more-information-table">
