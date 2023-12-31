@@ -275,8 +275,9 @@ def ods_form_qr_type():
                 total_added_lbs = (float(kg_added) * kg_to_lbs) + float(lbs_added)
                 total_removed_lbs = (float(kg_removed) * kg_to_lbs) + float(lbs_removed)
 
-                # Calculate new total weights
-                new_weight_lbs = float(cylinder_record.current_refrigerant_weight_lbs) + total_added_lbs - total_removed_lbs
+                # Calculate new total weights of the cylinder not the unit.
+                #Removed = refrigerant reclaimed, Added = refrigerant trasnferred to unit.
+                new_weight_lbs = float(cylinder_record.current_refrigerant_weight_lbs) - total_added_lbs + total_removed_lbs
                 new_weight_kg = new_weight_lbs * lbs_to_kg
                 
                 new_weight_kg = round(new_weight_kg, 2)
@@ -369,6 +370,35 @@ def repair_ODS_Sheet_New():
             refrigerant_removed_kg = 0
         else:  
             refrigerant_removed_kg = float(refrigerant_removed_kg)
+            
+        # Conversion factors
+        lbs_to_kg = 0.453592
+        kg_to_lbs = 2.20462
+        
+        if refrigerant_added_lbs == 0 or refrigerant_removed_lbs == 0: #this means they selected imperial so we need to sync the metric column
+            refrigerant_added_lbs = (float(refrigerant_added_kg) * kg_to_lbs) + float(refrigerant_added_lbs)
+            refrigerant_removed_lbs = (float(refrigerant_removed_kg) * kg_to_lbs) + float(refrigerant_removed_lbs)
+            #rounding
+            refrigerant_added_lbs = round(refrigerant_added_lbs, 2)
+            refrigerant_removed_lbs = round(refrigerant_removed_lbs, 2)
+            print("refrigerant_added_lbs: ", refrigerant_added_lbs)
+            print("refrigerant_removed_lbs: ", refrigerant_removed_lbs)
+            print("refrigerant_added_kg: ", refrigerant_added_kg)
+            print("refrigerant_removed_kg: ", refrigerant_removed_kg)
+        else: #this means they selected metric so we need to sync the imperial column
+            refrigerant_added_kg = (float(refrigerant_added_lbs) * lbs_to_kg) + float(refrigerant_added_kg)
+            refrigerant_removed_kg = (float(refrigerant_removed_lbs) * lbs_to_kg) + float(refrigerant_removed_kg)
+            #rounding
+            refrigerant_added_kg = round(refrigerant_added_kg, 2)
+            refrigerant_removed_kg = round(refrigerant_removed_kg, 2)
+            print("case2")
+            print("refrigerant_added_lbs: ", refrigerant_added_lbs)
+            print("refrigerant_removed_lbs: ", refrigerant_removed_lbs)
+            print("refrigerant_added_kg: ", refrigerant_added_kg)
+            print("refrigerant_removed_kg: ", refrigerant_removed_kg)
+
+            
+
         
         # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces
         # total_refrigerant_added_oz = (float(refrigerant_added_lbs) * 16) + float(refrigerant_added_oz)

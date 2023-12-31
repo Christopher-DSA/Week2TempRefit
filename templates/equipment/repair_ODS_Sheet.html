@@ -198,13 +198,13 @@
                                                     <div id="refrigerantKgContainer">
                                                         <div class="row">
                                                             <div class="col-md-6 mb-3">
-                                                                <label for="refrigerantAddedKg">Refrigerant Added
+                                                                <label for="refrigerantAddedKg">Refrigerant Added to Unit
                                                                     <strong>(kg)</strong></label>
                                                                 <input type="number" class="form-control"
                                                                     name="refrigerant_added_kg" id="refrigerantAddedKg">
                                                             </div>
                                                             <div class="col-md-6 mb-3">
-                                                                <label for="refrigerantRemovedKg">Refrigerant Reclaimed
+                                                                <label for="refrigerantRemovedKg">Refrigerant Reclaimed from Unit
                                                                     <strong>(kg)</strong></label>
                                                                 <input type="number" class="form-control"
                                                                     id="refrigerantRemovedKg"
@@ -217,14 +217,14 @@
                                                     <div id="refrigerantLbsContainer" style="display: none;">
                                                         <div class="row">
                                                             <div class="col-md-6 mb-3">
-                                                                <label for="refrigerantAddedLbs">Refrigerant Added
+                                                                <label for="refrigerantAddedLbs">Refrigerant Added to Unit
                                                                     <strong>(lbs)</strong></label>
                                                                 <input type="number" class="form-control"
                                                                     id="refrigerantAddedLbs"
                                                                     name="refrigerant_added_lbs">
                                                             </div>
                                                             <div class="col-md-6 mb-3">
-                                                                <label for="refrigerantRemovedLbs">Refrigerant Reclaimed
+                                                                <label for="refrigerantRemovedLbs">Refrigerant Reclaimed from Unit
                                                                     <strong>(lbs)</strong></label>
                                                                 <input type="number" class="form-control"
                                                                     id="refrigerantRemovedLbs"
@@ -741,7 +741,7 @@
                 let reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
                 var kgAdded = document.getElementById('refrigerantAddedKg').value;
                 var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
-                var reviewText = 'Refrigerant Added: ';
+                var reviewText = 'Refrigerant Added to Unit: ';
 
                 // Using getComputedStyle to check the display property
                 var displayStyle = window.getComputedStyle(refrigerantKgContainer).display;
@@ -762,7 +762,7 @@
                 let reviewRefrigerantRemovedElement = document.getElementById('review_refrigerant_removed');
                 var kgRemoved = document.getElementById('refrigerantRemovedKg').value;
                 var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
-                var reviewText = 'Refrigerant Removed: ';
+                var reviewText = 'Refrigerant Removed/Reclaimed from Unit: ';
 
                 // Using getComputedStyle to check the display property
                 var displayStyle = window.getComputedStyle(refrigerantKgContainer).display;
