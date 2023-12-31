@@ -380,6 +380,8 @@ class Cylinder(Base):
     tare_weight_before_repair = Column(Numeric)
     tare_weight_after_repair = Column(Numeric)
     clean_or_burnout = Column(Text)
+    current_refrigerant_weight_lbs = Column(Numeric)
+    current_refrigerant_weight_kg = Column(Numeric)
 
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')
@@ -611,8 +613,10 @@ class Repair_form(Base):
     pressure_test_performed = Column(Boolean)
     psig_result = Column(Numeric)
     additional_notes = Column(Text)
-    refrigerant_added_total_oz = Column(Numeric)
-    refrigerant_removed_total_oz = Column(Numeric)
+    refrigerant_added_lbs = Column(Numeric)
+    refrigerant_removed_lbs = Column(Numeric)
+    refrigerant_added_kg = Column(Numeric)
+    refrigerant_removed_kg = Column(Numeric)
     tech_id = Column(Integer)
     unit_id = Column(Integer)
     job_number = Column(Text)

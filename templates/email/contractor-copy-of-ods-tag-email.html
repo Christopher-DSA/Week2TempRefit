@@ -67,14 +67,30 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Amount Added:</td>
-                        <td>{{ data.refrigerant_added_total_oz }} oz</td>
+                        <td>
+                            {% if data.refrigerant_added_lbs > 0 %}
+                            {{ data.refrigerant_added_lbs }} lbs
+                            {% elif data.refrigerant_added_kg > 0 %}
+                            {{ data.refrigerant_added_kg }} kg
+                            {% else %}
+                            n/a
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Amount Reclaimed:</td>
-                        <td>{{ data.refrigerant_removed_total_oz }} oz</td>
+                        <td>
+                            {% if data.refrigerant_removed_lbs > 0 %}
+                            {{ data.refrigerant_removed_lbs }} lbs
+                            {% elif data.refrigerant_removed_kg > 0 %}
+                            {{ data.refrigerant_removed_kg }} kg
+                            {% else %}
+                            n/a
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Contains Refrigerant:</td>
+                        <td style="font-weight: bold;">Unit Contains Refrigerant:</td>
                         <td>{% if data.no_longer_contains_refrigerant ==true%}
                             No
                             {%else%}

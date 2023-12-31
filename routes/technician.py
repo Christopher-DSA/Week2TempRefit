@@ -197,8 +197,8 @@ def my_choose_qr_type():
             return render_template('Equipment Common/choose-qr-type.html')
         
 
-@technician.route('/for-ods-form-choose-qr-type', methods=['POST'])
-def ods_form_qr_type():
+@technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
+def ods_form_qr_type_old():
     # Get the JSON data sent from the client
     data = request.get_json()
     unique_token = data.get('unique_token')
@@ -236,7 +236,63 @@ def ods_form_qr_type():
             return jsonify({"error": "This tag needs to be registered before you can add refrigerant to it."})
     else:
         return jsonify({"error": "No unique token provided."})  
-        
+
+@technician.route('/for-ods-form-choose-qr-type', methods=['POST'])
+def ods_form_qr_type():
+    # Get the JSON data sent from the client
+    data = request.get_json()
+    unique_token = data.get('unique_token')
+    lbs_added = data.get('refrigerant_lbs_added', 0)
+    kg_added = data.get('refrigerant_kg_added', 0)
+    lbs_removed = data.get('refrigerant_lbs_removed', 0)
+    kg_removed = data.get('refrigerant_kg_removed', 0)
+    
+    if lbs_added == "" or lbs_added == None:
+        lbs_added = float(0)
+    if kg_added == "" or kg_added == None:
+        kg_added = float(0)
+    if lbs_removed == "" or lbs_removed == None:
+        lbs_removed = float(0)
+    if kg_removed == "" or kg_removed == None:
+        kg_removed = float(0)
+
+    print("kg_added: ", kg_added)
+    print("kg_removed: ", kg_removed)
+    print("lbs_added: ", lbs_added)
+    print("lbs_removed: ", lbs_removed)
+
+    # Conversion factors
+    lbs_to_kg = 0.453592
+    kg_to_lbs = 2.20462
+
+    # Check for valid token and cylinder
+    if unique_token:
+        x = CRUD.read(Tag, all=False, tag_url=unique_token)
+        if x:
+            if x.type == "cylinder":
+                cylinder_record = CRUD.read(Cylinder, all=False, cylinder_id=x.cylinder_id)
+                # Convert all to a common unit (lbs in this case)
+                total_added_lbs = (float(kg_added) * kg_to_lbs) + float(lbs_added)
+                total_removed_lbs = (float(kg_removed) * kg_to_lbs) + float(lbs_removed)
+
+                # Calculate new total weights
+                new_weight_lbs = float(cylinder_record.current_refrigerant_weight_lbs) + total_added_lbs - total_removed_lbs
+                new_weight_kg = new_weight_lbs * lbs_to_kg
+                
+                new_weight_kg = round(new_weight_kg, 2)
+                new_weight_lbs = round(new_weight_lbs, 2)
+
+
+                CRUD.update(Cylinder, cylinder_id=x.cylinder_id, attr="current_refrigerant_weight_lbs", new=new_weight_lbs)
+                CRUD.update(Cylinder, cylinder_id=x.cylinder_id, attr="current_refrigerant_weight_kg", new=new_weight_kg)
+
+                return jsonify({"success": "Refrigerant updated successfully.", "calculated_amount_lbs":new_weight_lbs, "calculated_amount_kg":new_weight_kg})
+            else:
+                return jsonify({"error": "This QR code is not for a cylinder."})
+        else:
+            return jsonify({"error": "Cylinder not found."})
+    else:
+        return jsonify({"error": "No unique token provided."})
 
 @technician.route('/New Cylinder/tag-linked')
 def add_qr():
@@ -274,8 +330,8 @@ def repair_ODS_Sheet_New():
         print("my_dict: ", my_dict)
         return render_template('equipment/repair_ODS_Sheet.html', data = my_dict, date=str(current_scan_date))
     
-    elif request.method == 'POST': #This is the rpair form post.
-        ods_form_names = ['current_date','refrigerant_type_send','leakDetectedRadio','repairStatusRadio','noLongerContainsRefrigerant','vacuumTest','compressorOil','pressureTest','psigResult','refrigerant_added_lbs','refrigerant_added_oz','refrigerant_removed_lbs','refrigerant_removed_oz','additionalNotes']
+    elif request.method == 'POST': #This is the repair form post.
+        ods_form_names = ['current_date','refrigerant_type_send','leakDetectedRadio','repairStatusRadio','noLongerContainsRefrigerant','vacuumTest','compressorOil','pressureTest','psigResult','refrigerant_added_lbs','refrigerant_added_kg','refrigerant_removed_lbs','refrigerant_removed_kg','additionalNotes']
         form_data_dictionary = {}
         for x in ods_form_names:
             form_data_dictionary[x] = request.form.get(x)
@@ -289,13 +345,34 @@ def repair_ODS_Sheet_New():
         
         #Refrigerant Totals in OZ for database storage
         refrigerant_added_lbs = form_data_dictionary.get('refrigerant_added_lbs')
-        refrigerant_added_oz = form_data_dictionary.get('refrigerant_added_oz')
         refrigerant_removed_lbs = form_data_dictionary.get('refrigerant_removed_lbs')
-        refrigerant_removed_oz = form_data_dictionary.get('refrigerant_removed_oz')
+        
+        refrigerant_added_kg = form_data_dictionary.get('refrigerant_added_kg')
+        refrigerant_removed_kg = form_data_dictionary.get('refrigerant_removed_kg')
+        
+        if refrigerant_added_lbs is None or refrigerant_added_lbs == '':
+            refrigerant_added_lbs = 0  # or any default value you prefer
+        else:
+            refrigerant_added_lbs = float(refrigerant_added_lbs)
+            
+        if refrigerant_removed_lbs is None or refrigerant_removed_lbs == '':
+            refrigerant_removed_lbs = 0
+        else:
+            refrigerant_removed_lbs = float(refrigerant_removed_lbs)
+            
+        if refrigerant_added_kg is None or refrigerant_added_kg == '':
+            refrigerant_added_kg = 0
+        else: 
+            refrigerant_added_kg = float(refrigerant_added_kg)
+            
+        if refrigerant_removed_kg is None or refrigerant_removed_kg == '':
+            refrigerant_removed_kg = 0
+        else:  
+            refrigerant_removed_kg = float(refrigerant_removed_kg)
         
         # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces
-        total_refrigerant_added_oz = (float(refrigerant_added_lbs) * 16) + float(refrigerant_added_oz)
-        total_refrigerant_removed_oz = (float(refrigerant_removed_lbs) * 16) + float(refrigerant_removed_oz)
+        # total_refrigerant_added_oz = (float(refrigerant_added_lbs) * 16) + float(refrigerant_added_oz)
+        # total_refrigerant_removed_oz = (float(refrigerant_removed_lbs) * 16) + float(refrigerant_removed_oz)
     
         # Convert 'on' and '' to True, False, and None for other radio boxes
         def convert_radio_to_boolean(form_value):
@@ -330,20 +407,23 @@ def repair_ODS_Sheet_New():
             'pressure_test_performed': form_data_dictionary.get('pressureTest'),
             'additional_notes': form_data_dictionary.get('additionalNotes'),
             'psig_result': psig_result,
-            'refrigerant_added_total_oz': total_refrigerant_added_oz,
-            'refrigerant_removed_total_oz': total_refrigerant_removed_oz,
+            'refrigerant_added_lbs': refrigerant_added_lbs,
+            'refrigerant_removed_lbs': refrigerant_removed_lbs,
+            'refrigerant_added_kg': refrigerant_added_kg,
+            'refrigerant_removed_kg': refrigerant_removed_kg,
             'tech_id': session.get('tech_id'),
             'unit_id': session.get('unit_id') 
         }
         
-        refrigerant_changed_amount = total_refrigerant_added_oz - total_refrigerant_removed_oz
-        new_refrigerant_amount = CRUD.read(Unit, all=False, unit_id=session.get('unit_id')).amount_of_refrigerant_in_unit_oz + refrigerant_changed_amount
+        #updating amount of refrigerant in unit table in database.
+        # refrigerant_changed_amount = total_refrigerant_added_oz - total_refrigerant_removed_oz
+        # new_refrigerant_amount = CRUD.read(Unit, all=False, unit_id=session.get('unit_id')).amount_of_refrigerant_in_unit_oz + refrigerant_changed_amount
         
         #Save to database before sending email.
         CRUD.create(Repair_form, **model_data)
         #Update unit table with new data.
         CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "last_maintenance_date", new = model_data['repair_date'])
-        CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "amount_of_refrigerant_in_unit_oz", new = new_refrigerant_amount)
+        # CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "amount_of_refrigerant_in_unit_oz", new = new_refrigerant_amount)
         #Send email to contractor
         try:
             print("start of try")

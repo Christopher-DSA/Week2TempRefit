@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Setup Account</title>
+    <title>Repair Form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/png" sizes="130x165"
         href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
@@ -200,14 +200,15 @@
                                                             <div class="col-md-6 mb-3">
                                                                 <label for="refrigerantAddedKg">Refrigerant Added
                                                                     (kg)</label>
-                                                                <input type="number" class="form-control" name = "refrigerant_added_kg"
-                                                                    id="refrigerantAddedKg">
+                                                                <input type="number" class="form-control"
+                                                                    name="refrigerant_added_kg" id="refrigerantAddedKg">
                                                             </div>
                                                             <div class="col-md-6 mb-3">
                                                                 <label for="refrigerantRemovedKg">Refrigerant Reclaimed
                                                                     (kg)</label>
                                                                 <input type="number" class="form-control"
-                                                                    id="refrigerantRemovedKg" name ="refrigerant_removed_kg">
+                                                                    id="refrigerantRemovedKg"
+                                                                    name="refrigerant_removed_kg">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -219,13 +220,15 @@
                                                                 <label for="refrigerantAddedLbs">Refrigerant Added
                                                                     (lbs)</label>
                                                                 <input type="number" class="form-control"
-                                                                    id="refrigerantAddedLbs" name="refrigerant_added_lbs">
+                                                                    id="refrigerantAddedLbs"
+                                                                    name="refrigerant_added_lbs">
                                                             </div>
                                                             <div class="col-md-6 mb-3">
                                                                 <label for="refrigerantRemovedLbs">Refrigerant Reclaimed
                                                                     (lbs)</label>
                                                                 <input type="number" class="form-control"
-                                                                    id="refrigerantRemovedLbs" name="refrigerant_removed_lbs">
+                                                                    id="refrigerantRemovedLbs"
+                                                                    name="refrigerant_removed_lbs">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -233,7 +236,7 @@
                                                     <!-- Toggle for kg and lbs -->
                                                     <div class="row">
                                                         <div class="col">
-                                                            <button id="switchUnitButton"
+                                                            <button id="switchUnitButton" type="button"
                                                                 class="btn btn-primary mt-2">Switch to Pounds</button>
                                                         </div>
                                                     </div>
@@ -443,10 +446,12 @@
                                                             qrResult.hidden = false;
                                                             canvasElement.hidden = true;
                                                             btnScanQR.hidden = false;
-                                                            var lbsAdded = document.getElementById('refrigerant_added_lbs').value;
-                                                            var ozAdded = document.getElementById('refrigerant_added_oz').value;
-                                                            var lbsRemoved = document.getElementById('refrigerant_removed_lbs_id').value;
-                                                            var ozRemoved = document.getElementById('refrigerant_removed_oz_id').value;
+
+                                                            // Get refrigerant values in both lbs and kg
+                                                            var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
+                                                            var kgAdded = document.getElementById('refrigerantAddedKg').value;
+                                                            var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
+                                                            var kgRemoved = document.getElementById('refrigerantRemovedKg').value;
 
                                                             // Check for a valid UUID
                                                             if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(res)) {
@@ -454,9 +459,9 @@
                                                                 let myData = {
                                                                     unique_token: res,
                                                                     refrigerant_lbs_added: lbsAdded,
-                                                                    refrigerant_oz_added: ozAdded,
+                                                                    refrigerant_kg_added: kgAdded,
                                                                     refrigerant_lbs_removed: lbsRemoved,
-                                                                    refrigerant_oz_removed: ozRemoved
+                                                                    refrigerant_kg_removed: kgRemoved
                                                                 };
 
                                                                 // Call Flask backend
@@ -474,12 +479,14 @@
                                                                         // Handle the data received from the server
                                                                         console.log("Data from server: ", data);
                                                                         // Update the review section
-                                                                        if ('calculated_amount' in data) {
-                                                                            outputData.innerText = ('There is now: ' + data['calculated_amount']) + 'oz of refrigerant in this cylinder.';
-                                                                            console.log('Key exists:', data.someKey);
+                                                                        my_calculated_amount_lbs = data.calculated_amount_lbs;
+                                                                        my_calculated_amount_kg = data.calculated_amount_kg;
+                                                                        console.log("Calculated amount lbs: ", my_calculated_amount_lbs);
+                                                                        console.log("Calculated amount kg: ", my_calculated_amount_kg);
+                                                                        if (my_calculated_amount_lbs >= 0) {
+                                                                            outputData.innerText = my_calculated_amount_lbs + ' lbs / ' + my_calculated_amount_kg + ' kg' + ' is the new amount of refrigerant in the cylinder.';
                                                                         } else {
                                                                             outputData.innerText = 'Oops! Something went wrong.' + data['error'];
-                                                                            console.log('Key does not exist');
                                                                         }
                                                                     } else {
                                                                         console.log("Server responded with an error: ", response.status);
@@ -493,7 +500,6 @@
                                                             }
                                                         }
                                                     };
-
 
                                                     btnScanQR.onclick = () => {
                                                         navigator.mediaDevices
@@ -527,6 +533,7 @@
                                                         }
                                                     }
                                                 </script>
+
                                                 <!-- End: QR Scanner Scripts -->
                                             </div>
                                         </div>
@@ -562,37 +569,6 @@
             const switchUnitButton = document.getElementById('switchUnitButton');
             const refrigerantKgContainer = document.getElementById('refrigerantKgContainer');
             const refrigerantLbsContainer = document.getElementById('refrigerantLbsContainer');
-
-            // switchUnitButton.addEventListener('click', function () {
-            //     const kgAdded = document.getElementById('refrigerantAddedKg');
-            //     const lbsAdded = document.getElementById('refrigerantAddedLbs');
-            //     const kgRemoved = document.getElementById('refrigerantRemovedKg');
-            //     const lbsRemoved = document.getElementById('refrigerantRemovedLbs');
-            //     const reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
-            //     const reviewRefrigerantRemovedElement = document.getElementById('review_refrigerant_removed');
-
-            //     if (refrigerantKgContainer.style.display === 'none') {
-            //         refrigerantKgContainer.style.display = 'block';
-            //         refrigerantLbsContainer.style.display = 'none';
-            //         switchUnitButton.innerText = 'Switch to Pounds';
-
-            //         // Reset lbs inputs to zero and hide review elements
-            //         lbsAdded.value = '0';
-            //         lbsRemoved.value = '0';
-            //         reviewRefrigerantAddedElement.style.display = 'none';
-            //         reviewRefrigerantRemovedElement.style.display = 'none';
-            //     } else {
-            //         refrigerantKgContainer.style.display = 'none';
-            //         refrigerantLbsContainer.style.display = 'block';
-            //         switchUnitButton.innerText = 'Switch to Kilograms';
-
-            //         // Reset kg inputs to zero and hide review elements
-            //         kgAdded.value = '0';
-            //         kgRemoved.value = '0';
-            //         reviewRefrigerantAddedElement.style.display = 'none';
-            //         reviewRefrigerantRemovedElement.style.display = 'none';
-            //     }
-            // });
 
             switchUnitButton.addEventListener('click', function () {
                 if (refrigerantKgContainer.style.display === 'none') {
@@ -664,6 +640,7 @@
                 checkLeakStatus();
                 checkLeakRepairStatus();
                 showQRScan();
+                // Update review texts
                 NewupdateRefrigerantAddedReview();
                 NewupdateRefrigerantRemovedReview();
                 console.log('ran function');
@@ -673,12 +650,12 @@
             function showQRScan() {
                 let qrDiv = document.getElementById('all-qr');
 
-                var lbsAdded = document.getElementById('refrigerant_added_lbs').value;
-                var ozAdded = document.getElementById('refrigerant_added_oz').value;
-                var lbsRemoved = document.getElementById('refrigerant_removed_lbs_id').value;
-                var ozRemoved = document.getElementById('refrigerant_removed_oz_id').value;
+                var kgAdded = document.getElementById('refrigerantAddedKg').value;
+                var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
+                var kgRemoved = document.getElementById('refrigerantRemovedKg').value;
+                var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
 
-                if (lbsAdded != 0 || ozAdded != 0 || lbsRemoved != 0 || ozRemoved != 0) {
+                if (kgAdded != 0 || lbsAdded != 0 || kgRemoved != 0 || lbsRemoved != 0) {
                     console.log("Displaying QR Scan Because Refrigerant Amount has Changed.");
                     qrDiv.style.setProperty('display', 'block', 'important'); // Making display: block !important
                 } else {
@@ -686,6 +663,7 @@
                     qrDiv.style.setProperty('display', 'none', 'important'); // Making display: none !important
                 }
             }
+
 
             function checkNoteStatus() {
                 let noteInput = document.getElementById('additional_notes').value;
@@ -754,7 +732,10 @@
                 var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
                 var reviewText = 'Refrigerant Added: ';
 
-                if (refrigerantKgContainer.style.display !== 'none') {
+                // Using getComputedStyle to check the display property
+                var displayStyle = window.getComputedStyle(refrigerantKgContainer).display;
+
+                if (displayStyle !== 'none') {
                     // Display kilograms
                     reviewText += kgAdded ? `${kgAdded} Kg` : 'Not specified';
                 } else {
@@ -763,7 +744,7 @@
                 }
 
                 reviewRefrigerantAddedElement.textContent = reviewText;
-                reviewRefrigerantAddedElement.style.display = kgAdded || lbsAdded ? 'block' : 'none';
+                reviewRefrigerantAddedElement.style.setProperty('display', kgAdded || lbsAdded ? 'block' : 'none');
             }
 
             function NewupdateRefrigerantRemovedReview() {
@@ -772,7 +753,10 @@
                 var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
                 var reviewText = 'Refrigerant Removed: ';
 
-                if (refrigerantKgContainer.style.display !== 'none') {
+                // Using getComputedStyle to check the display property
+                var displayStyle = window.getComputedStyle(refrigerantKgContainer).display;
+
+                if (displayStyle !== 'none') {
                     // Display kilograms
                     reviewText += kgRemoved ? `${kgRemoved} Kg` : 'Not specified';
                 } else {
@@ -781,8 +765,9 @@
                 }
 
                 reviewRefrigerantRemovedElement.textContent = reviewText;
-                reviewRefrigerantRemovedElement.style.display = kgRemoved || lbsRemoved ? 'block' : 'none';
+                reviewRefrigerantRemovedElement.style.setProperty('display', kgRemoved || lbsRemoved ? 'block' : 'none');
             }
+
 
 
             function updateRefrigerantAddedReview() {
