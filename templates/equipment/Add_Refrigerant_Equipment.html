@@ -70,14 +70,14 @@
     <!-- Adjust the height as needed -->
     <form id="myForm" method="post" action="/refrigerant_recovery">
       <h1>User Input</h1>
-      <label for="createDate" class="form-label">Date:</label> 
+      <label for="createDate" class="form-label">Date:</label>
       <input type="date" id="createDate" name="createDate" value="{{dt.date}}" class="form-control mb-3" required>
 
       <label for="cylinder_weight_after_service" class="form-label">Cylinder Weight AFTER service:</label>
       <input type="number" id="cylinder_weight_after_service" name="cylinder_weight_after_service" value=""
         class="form-control" required>
       <div id="error-message-container" style="max-width: 300px; word-wrap: break-word;">
-      <span id="error-message" style="color: red;"></span> <!-- Error message span -->
+        <span id="error-message" style="color: red;"></span> <!-- Error message span -->
       </div>
       <label for="refrigerantWeightAfterService" class="form-label">Refrigerant Weight Recovered
         (lbs):</label>
@@ -91,31 +91,67 @@
       </div>
     </form>
   </div>
+
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="row">
+      <div class="col" id="kgInputContainer">
+        <label for="inputKg">Weight in Kilograms</label>
+        <input type="number" class="form-control" id="inputKg">
+      </div>
+      <div class="col" id="lbsInputContainer" style="display: none;">
+        <label for="inputLbs">Weight in Pounds</label>
+        <input type="number" class="form-control" id="inputLbs">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button id="switchButton" class="btn btn-primary mt-2">Switch to Pounds</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      const kgInputContainer = document.getElementById('kgInputContainer');
+      const lbsInputContainer = document.getElementById('lbsInputContainer');
+      const switchButton = document.getElementById('switchButton');
+
+      switchButton.addEventListener('click', function () {
+        if (kgInputContainer.style.getPropertyValue('display') === 'none') {
+          kgInputContainer.style.setProperty('display', 'block');
+          lbsInputContainer.style.setProperty('display', 'none');
+          switchButton.innerText = 'Switch to Pounds';
+        } else {
+          kgInputContainer.style.setProperty('display', 'none');
+          lbsInputContainer.style.setProperty('display', 'block');
+          switchButton.innerText = 'Switch to Kilograms';
+        }
+      });
+
+      // Form submission logic
       const form = document.getElementById('myForm');
       const errorMessageContainer = document.getElementById('error-message-container');
+
       form.addEventListener('submit', function (event) {
-        // Check if the error message is displayed
         if (errorMessageContainer.textContent.trim() !== '') {
-            event.preventDefault(); // Prevent form submission
-            alert('Please correct the errors before submitting.');
+          event.preventDefault(); // Prevent form submission
+          alert('Please correct the errors before submitting.');
         }
-    });
 
+        // Set the current date
+        document.getElementById('createDate').value = new Date().toISOString().split('T')[0];
+      });
 
-      document.getElementById('createDate').value = new Date().toISOString().split('T')[0];
-
+      // Weight calculation logic
       document.getElementById('cylinder_weight_after_service').addEventListener('input', function () {
         const currentWeightText = document.getElementById('tare_weight_before_repair').textContent || '0';
         const currentWeight = parseFloat(currentWeightText);
         const reclaimedWeight = parseFloat(this.value) || 0;
 
-        // Validation check
         if (reclaimedWeight <= currentWeight) {
           document.getElementById('error-message').textContent = "Cylinder weight AFTER refrigerant recovery cannot be less than BEFORE service.";
           document.getElementById('refrigerantWeightAfterService').value = '';
@@ -126,4 +162,5 @@
       });
     });
   </script>
+
 </body>

@@ -29,6 +29,13 @@
     <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
     <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .refrigerant-container {
+            min-height: 100px;
+            /* Adjust this based on your form's needs */
+        }
+    </style>
 </head>
 
 <body>
@@ -183,53 +190,102 @@
                                         <div class="row" id="content-for-tab-2">
                                             <p>Fields with an asterisk (<span class="text-danger">*</span>) are
                                                 required.</p>
-                                            <div class="my-3" id="add-or-remove-refrigerant-section">
-                                                <div class="container">
-                                                    <h5 class="my-3">Added Refrigerant:</h5>
-                                                    <div class="form-row">
-                                                        <!--LBS Added-->
-                                                        <div class="form-group col-md-6">
-                                                            <label for="refrigerant_added_lbs" class="form-label">Lbs
-                                                                <strong>Added:</strong></label>
-                                                            <input type="number" id="refrigerant_added_lbs"
-                                                                name="refrigerant_added_lbs" class="form-control"
-                                                                value="0">
-                                                        </div>
-                                                        <!--OZ Added-->
-                                                        <div class="form-group col-md-6">
-                                                            <label for="refrigerant_added_oz" class="form-label">Oz
-                                                                <strong>Added:</strong></label>
-                                                            <input type="number" id="refrigerant_added_oz"
-                                                                name="refrigerant_added_oz" class="form-control"
-                                                                value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="container">
-                                                    <h5 class="my-3">Removed Refrigerant:</h5>
-                                                    <!--LBS Removed-->
-                                                    <div class="form-row">
-                                                        <!--LBS Removed-->
-                                                        <div class="form-group col-md-6">
-                                                            <label for="refrigerant_removed_lbs_id"
-                                                                class="form-label">Lbs <strong>Removed:</strong></label>
-                                                            <input type="number" id="refrigerant_removed_lbs_id"
-                                                                name="refrigerant_removed_lbs" class="form-control"
-                                                                value="0">
-                                                        </div>
-                                                        <!--OZ Removed-->
-                                                        <div class="form-group col-md-6">
-                                                            <label for="refrigerant_removed_oz_id" class="form-label">Oz
-                                                                <strong>Removed:</strong></label>
-                                                            <input type="number" id="refrigerant_removed_oz_id"
-                                                                name="refrigerant_removed_oz" class="form-control"
-                                                                value="0">
+                                            <h5 class="mt-4">Added/Removed Refrigerant:</h5>
+                                            <div class="" id="add-or-remove-refrigerant-section">
+                                                <!--code here-->
+                                                <div class="my-3" id="add-or-remove-refrigerant-section">
+                                                    <!-- Refrigerant Handling in Kilograms -->
+                                                    <div id="refrigerantKgContainer">
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantAddedKg">Refrigerant Added
+                                                                    (kg)</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="refrigerantAddedKg">
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantRemovedKg">Refrigerant Reclaimed
+                                                                    (kg)</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="refrigerantRemovedKg">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
+                                                    <!-- Refrigerant Handling in Pounds (Initially Hidden) -->
+                                                    <div id="refrigerantLbsContainer" style="display: none;">
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantAddedLbs">Refrigerant Added
+                                                                    (lbs)</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="refrigerantAddedLbs">
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantRemovedLbs">Refrigerant Reclaimed
+                                                                    (lbs)</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="refrigerantRemovedLbs">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Toggle for kg and lbs -->
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <button id="switchUnitButton"
+                                                                class="btn btn-primary mt-2">Switch to Pounds</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end code here-->
+                                                <!-- <div id="old-way-has-lbs-and-oz-section-only">
+                                                    <div class="container">
+
+                                                        <h5 class="my-3">Added Refrigerant:</h5>
+                                                        <div class="form-row">
+
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_added_lbs"
+                                                                    class="form-label">Lbs
+                                                                    <strong>Added:</strong></label>
+                                                                <input type="number" id="refrigerant_added_lbs"
+                                                                    name="refrigerant_added_lbs" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_added_oz" class="form-label">Oz
+                                                                    <strong>Added:</strong></label>
+                                                                <input type="number" id="refrigerant_added_oz"
+                                                                    name="refrigerant_added_oz" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="container">
+                                                        <h5 class="my-3">Removed Refrigerant:</h5>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_removed_lbs_id"
+                                                                    class="form-label">Lbs
+                                                                    <strong>Removed:</strong></label>
+                                                                <input type="number" id="refrigerant_removed_lbs_id"
+                                                                    name="refrigerant_removed_lbs" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_removed_oz_id"
+                                                                    class="form-label">Oz
+                                                                    <strong>Removed:</strong></label>
+                                                                <input type="number" id="refrigerant_removed_oz_id"
+                                                                    name="refrigerant_removed_oz" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
                                             </div>
-                                            <div id = "otherTestResults">
+                                            <div id="otherTestResults">
                                                 <!-- Sub-menu Options -->
                                                 <h5 class="mt-3">Other Test Results
                                                 </h5>
@@ -262,7 +318,8 @@
                                                     </label>
                                                 </div>
                                                 <div class="px-5">
-                                                    <p class="mt-3" disabled>PSIG Result<span class="text-danger">*</span>
+                                                    <p class="mt-3" disabled>PSIG Result<span
+                                                            class="text-danger">*</span>
                                                     </p>
                                                     <input class="form-control" type="text" id="psigResultInput"
                                                         name="psigResult" disabled>
@@ -502,6 +559,65 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            const switchUnitButton = document.getElementById('switchUnitButton');
+            const refrigerantKgContainer = document.getElementById('refrigerantKgContainer');
+            const refrigerantLbsContainer = document.getElementById('refrigerantLbsContainer');
+
+            // switchUnitButton.addEventListener('click', function () {
+            //     const kgAdded = document.getElementById('refrigerantAddedKg');
+            //     const lbsAdded = document.getElementById('refrigerantAddedLbs');
+            //     const kgRemoved = document.getElementById('refrigerantRemovedKg');
+            //     const lbsRemoved = document.getElementById('refrigerantRemovedLbs');
+            //     const reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
+            //     const reviewRefrigerantRemovedElement = document.getElementById('review_refrigerant_removed');
+
+            //     if (refrigerantKgContainer.style.display === 'none') {
+            //         refrigerantKgContainer.style.display = 'block';
+            //         refrigerantLbsContainer.style.display = 'none';
+            //         switchUnitButton.innerText = 'Switch to Pounds';
+
+            //         // Reset lbs inputs to zero and hide review elements
+            //         lbsAdded.value = '0';
+            //         lbsRemoved.value = '0';
+            //         reviewRefrigerantAddedElement.style.display = 'none';
+            //         reviewRefrigerantRemovedElement.style.display = 'none';
+            //     } else {
+            //         refrigerantKgContainer.style.display = 'none';
+            //         refrigerantLbsContainer.style.display = 'block';
+            //         switchUnitButton.innerText = 'Switch to Kilograms';
+
+            //         // Reset kg inputs to zero and hide review elements
+            //         kgAdded.value = '0';
+            //         kgRemoved.value = '0';
+            //         reviewRefrigerantAddedElement.style.display = 'none';
+            //         reviewRefrigerantRemovedElement.style.display = 'none';
+            //     }
+            // });
+
+            switchUnitButton.addEventListener('click', function () {
+                if (refrigerantKgContainer.style.display === 'none') {
+                    // Switch to kg view
+                    refrigerantKgContainer.style.display = 'block';
+                    refrigerantLbsContainer.style.display = 'none';
+                    switchUnitButton.innerText = 'Switch to Pounds';
+                    // Update review to kg (or zero if no kg value)
+                    document.getElementById('refrigerantAddedLbs').value = '0';
+                    document.getElementById('refrigerantRemovedLbs').value = '0';
+                } else {
+                    // Switch to lbs view
+                    refrigerantKgContainer.style.display = 'none';
+                    refrigerantLbsContainer.style.display = 'block';
+                    switchUnitButton.innerText = 'Switch to Kilograms';
+                    // Update review to lbs (or zero if no lbs value)
+                    document.getElementById('refrigerantAddedKg').value = '0';
+                    document.getElementById('refrigerantRemovedKg').value = '0';
+                }
+
+                // Update review texts
+                NewupdateRefrigerantAddedReview();
+                NewupdateRefrigerantRemovedReview();
+            });
+
             document.querySelectorAll('.btn-next').forEach(button => {
                 button.addEventListener('click', (e) => {
                     let nextTab = new bootstrap.Tab(document.querySelector('.nav-tabs .active').parentElement.nextElementSibling.querySelector('.nav-link'));
@@ -547,9 +663,9 @@
                 checkNoteStatus();
                 checkLeakStatus();
                 checkLeakRepairStatus();
-                updateRefrigerantAddedReview();
-                updateRefrigerantRemovedReview();
                 showQRScan();
+                NewupdateRefrigerantAddedReview();
+                NewupdateRefrigerantRemovedReview();
                 console.log('ran function');
             }
             updateReviewSection();
@@ -631,6 +747,43 @@
                     leakRepairReviewElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
                 }
             }
+
+            function NewupdateRefrigerantAddedReview() {
+                let reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
+                var kgAdded = document.getElementById('refrigerantAddedKg').value;
+                var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
+                var reviewText = 'Refrigerant Added: ';
+
+                if (refrigerantKgContainer.style.display !== 'none') {
+                    // Display kilograms
+                    reviewText += kgAdded ? `${kgAdded} Kg` : 'Not specified';
+                } else {
+                    // Display pounds
+                    reviewText += lbsAdded ? `${lbsAdded} Lbs` : 'Not specified';
+                }
+
+                reviewRefrigerantAddedElement.textContent = reviewText;
+                reviewRefrigerantAddedElement.style.display = kgAdded || lbsAdded ? 'block' : 'none';
+            }
+
+            function NewupdateRefrigerantRemovedReview() {
+                let reviewRefrigerantRemovedElement = document.getElementById('review_refrigerant_removed');
+                var kgRemoved = document.getElementById('refrigerantRemovedKg').value;
+                var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
+                var reviewText = 'Refrigerant Removed: ';
+
+                if (refrigerantKgContainer.style.display !== 'none') {
+                    // Display kilograms
+                    reviewText += kgRemoved ? `${kgRemoved} Kg` : 'Not specified';
+                } else {
+                    // Display pounds
+                    reviewText += lbsRemoved ? `${lbsRemoved} Lbs` : 'Not specified';
+                }
+
+                reviewRefrigerantRemovedElement.textContent = reviewText;
+                reviewRefrigerantRemovedElement.style.display = kgRemoved || lbsRemoved ? 'block' : 'none';
+            }
+
 
             function updateRefrigerantAddedReview() {
                 let reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
