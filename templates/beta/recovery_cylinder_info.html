@@ -75,14 +75,14 @@
     <br>
     <div class="container" id="information" style="margin-top: 20px;">
         <h2 style="margin-bottom: 15px;">Cylinder Information</h2>
-        <h5>Cylinder Type: {{name.cylinder_type}} {% if data.clean_or_burnout == 'clean' %}
+        <h5>Cylinder Type: {{my_cylinder_type}} {% if data.clean_or_burnout == 'clean' %}
             <!-- Do something here when the condition is true -->
             with Contaminant-Free Gas
           {% else %}
             with Burnout Gas/Contaminated Gas
             <!-- Do something else when the condition is false -->
           {% endif %}</h4>
-            <h5>Refrigerant Type: {{name.refrigerant_name}} </h4>
+            <h5>Refrigerant Type: {{data.refrigerant_type}} </h4>
                 <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight_lbs}} lbs || {{data.current_refrigerant_weight_kg}} kg</h4>
                     <a href="#more-information-table">
                         <h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6>
@@ -178,8 +178,8 @@
                     <tr>
                         <td>{{data.cylinder_id}}</td>
                         <td>{{data.cylinder_size}}lbs</td>
-                        <td>{{name.cylinder_type}}</td>
-                        <td>{{name.refrigerant_name}}</td>
+                        <td>{{data.cylinder_type_id}}</td>
+                        <td>{{data.refrigerant_refrigerant_type}}</td>
                         <td>{{data.supplier}}</td>
                         <td>{{data.cylinder_tare_weight}}</td>
                         <td>{{data.current_refrigerant_weight}}</td>
@@ -192,35 +192,4 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 </body>
-<!-- <script>
-    document.getElementById("recoveryButton").addEventListener("click", function() {
-        var url =window.location.pathname;
-        var tag = url.substring(url.lastIndexOf('/') + 1);
-    var dataToSend = {
-        cylinder_id: "{{data.cylinder_id}}",
-        cylinder_size: "{{data.cylinder_size}}",
-        cylinder_type: "{{name.cylinder_type}}",
-        refrigerant_name: "{{name.refrigerant_name}}",
-        supplier: "{{data.supplier}}",
-        current_refrigerant_weight: "{{data.current_refrigerant_weight}}",
-        tag:tag
-    };
-
-    fetch('/datacapture', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataToSend)
-    })
-    .then(response => {
-        // Handle the response from the Flask backend if needed
-        console.log("Data sent successfully");
-        window.location.href = '/refrigerant_recovery'
-    })
-    .catch(error => {
-        // Handle errors if the request fails
-        console.error('Error:', error);
-    });
-});
-</script>     -->
+</html>

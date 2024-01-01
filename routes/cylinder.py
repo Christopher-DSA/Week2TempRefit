@@ -163,7 +163,7 @@ def new_cylinder_view():
             print("Succesfully added new Tag row to database.")
             
             #New Row in Tag Table
-            CRUD.create(Tag, tag_url = unique_cylinder_token, cylinder_id = new_row.cylinder_id, type ="cylinder", technician_id = session.get('tech_id'))
+            CRUD.create(Tag, tag_url = unique_cylinder_token, cylinder_id = new_row.cylinder_id, type ="cylinder")
             return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token)
         else:
             print("error adding row to TAG table, Try enabling cookies in your browser for site to function properly.")
@@ -173,81 +173,33 @@ def new_cylinder_view():
         return render_template("New Cylinder/new-cylinder.html")
 
 
-@cylinder.route("/cylinder_info/<unique_id>", methods=["GET", "POST"])
+@cylinder.route("/cylinder_info/<unique_id>", methods=["GET"])
 def CylinderInfo(unique_id):
     if request.method == 'GET':
         print("inside get for /cylinder_info")
         
-        #1. Getting the cylinder id from the database based on the <unique id>.
-        print("unique_id: " + unique_id)
-        
-        #Find cylinder id based on tag_url
+        #1. Get row in database for specific tag. From Tag Table.
+        #Get Tag Data from Tag Table
         tag_data = CRUD.read(Tag, all = False, tag_url = unique_id)
+        #Get Technician ID from session
         tech_id = session.get('tech_id')
-        
         #get cylinder id from tag table
         cyl_id = tag_data.cylinder_id
         
         
-        #2. Get row in database for specific cylinder.
-        data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
+        #2. Get row in database for specific cylinder. From Cylinder Table.
+        cylinder_data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
+        if cylinder_data is None:
+            return redirect("/") #cylinder does not exist in the database.
+        elif cylinder_data.cylinder_type_id == 1: #1 is recovery a recovery cylinder
+            my_cylinder_type = 'Recovery Cylinder'
+            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type)
+        elif cylinder_data.cylinder_type_id == 3: #3 is a charge cylinder
+            my_cylinder_type = 'Charge Cylinder'
+            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data=tag_data ,my_cylinder_type=my_cylinder_type)
+    
         
-        print(data.refrigerant_id)
-        
-        #Get foreign keys to search other tables.
-        cylinder_refrigerant_id = data.refrigerant_id
-        current_cylinder_type_id = data.cylinder_type_id
-        
-        #Get name of refrigerant and the type of cylinder.
-        refrigerant_table_lookup = CRUD.read(Refrigerant, all = False, refrigerant_id = cylinder_refrigerant_id)
-        cylinder_type_lookup = CRUD.read(Cylinder_Type, all = False, cylinder_type_id = current_cylinder_type_id)    
-        
-        name_data = {
-            "refrigerant_name": refrigerant_table_lookup.refrigerant_name,
-            "cylinder_type": cylinder_type_lookup.type_name
-        }
-        
-        session['cyl_id']=cyl_id
-        session['tag']=unique_id
-        session['gas_name']=refrigerant_table_lookup.refrigerant_name
-        session['size']=data.cylinder_size
-        session['weight']=data.current_refrigerant_weight
-        session.update({
-            'cyl_id': cyl_id,
-            'tag': unique_id,
-            'gas_name': refrigerant_table_lookup.refrigerant_name,
-            'size': data.cylinder_size,
-            'weight': data.current_refrigerant_weight,
-            'type': cylinder_type_lookup.type_name,
-            'cylinder_tare_weight': data.cylinder_tare_weight,
-            'tare_weight_before_repair': data.tare_weight_before_repair,
-            'tare_weight_after_repair': data.tare_weight_after_repair,
-        })
-
-
-
-        current_scan_date = datetime.date.today()
-        print(current_scan_date)
-
-        history_entry = Cylinder_History(
-        date_qr_scanned=current_scan_date,
-        cylinder_id= cyl_id, 
-        technician_id=tech_id,
-        refrigerant_id = cylinder_refrigerant_id,
-        refrigerant_name = refrigerant_table_lookup.refrigerant_name,
-        refrigerant_weight = data.current_refrigerant_weight
-        )
-        CRUD.create(Cylinder_History, date_qr_scanned=current_scan_date, cylinder_id=cyl_id, technician_id=tech_id, refrigerant_id = cylinder_refrigerant_id, refrigerant_name = refrigerant_table_lookup.refrigerant_name, refrigerant_weight = data.current_refrigerant_weight )
-        
-        if (name_data["cylinder_type"] == "Charge Cylinder"):
-            print("charge cylinder info page")
-            return render_template("beta/charge_cylinder_info.html", data=data, name = name_data)
-        elif (name_data["cylinder_type"] == "Recovery Cylinder"):
-            print("recovery cylinder info page")
-            return render_template("beta/recovery_cylinder_info.html", data=data, name = name_data)
-        else:
-            print("else")
-            return render_template("beta/cylinder_info.html", data=data, name = name_data)
+    
 
     
 
