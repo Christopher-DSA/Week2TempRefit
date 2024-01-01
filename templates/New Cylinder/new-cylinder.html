@@ -59,6 +59,7 @@
       </div>
     </nav>
     <!-- End: Navbar -->
+
     <div class="row justify-content-center mt-5">
       <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
         <form method="post" action="/new_cylinder" class="px-4">
@@ -77,96 +78,120 @@
               <!-- Start: General Information -->
               <div class="mb-5">
                 <h4 class="mb-3">General Information</h4>
-                <div class="mb-3"><label class="form-label">Create Date<span
+                <div class="mb-3"><label class="form-label">Today's Date<span
                       class="text-danger fw-bold">*</span></label><input name="createDate" class="form-control"
                     type="date" required=""></div>
-                <div><label class="form-label">Wholesaler</label><input
-                    name="wholeSaler" class="form-control" type="text" required="">
-                </div>
-              </div><!-- End: General Information -->
-              <!-- Start: Cylinder Information -->
-              <div class="mb-5">
-                <!-- <h4 class="mb-3">Cylinder Information</h4> -->
-                <!-- <div class="mb-3"><label class="form-label">Amount of Refrigerant in Cylinder<span
-                      class="text-danger fw-bold">*</span></label>
-                  <div class="input-group"><input name="cylinder_size" class="form-control" type="number"><span
-                      class="input-group-text">lb</span></div>
-                  <div class="mb-3 mt-3"><label class="form-label">Cylinder Tare Weight<span
-                        class="text-danger fw-bold">*</span></label>
-                    <div class="d-flex justify-content-between gap-3"><select name="tareWeightUnit" class="form-select">
-                        <option value="12" selected="">lb/oz</option>
-                        <option value="13">kg/g</option>
-                      </select>
-                      <div class="input-group"><input name="tareWeight1" class="form-control" type="number"><span
-                          class="input-group-text">lb</span></div>
-                      <div class="input-group"><input name="tareWeight2" class="form-control" type="number"><span
-                          class="input-group-text">oz</span></div>
-                    </div><sub>You can input values in either one or both boxes.</sub>
-                  </div>
+                <!-- <div><label class="form-label">Wholesaler</label><input name="wholeSaler" class="form-control"
+                    type="text" required="">
                 </div> -->
-                <!-- Start: Refrigerant Information -->
-                <div>
-                  <h4 class="mb-3">Refrigerant Information</h4>
-
-                  <!-- {% with messages = get_flashed_messages(with_categories=true) %}
-                  {% if messages %}
-                  <div class="flash-messages">
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                  </div>
-                  {% endif %}
-                  {% endwith %} -->
-                  <div class="mb-3"><label class="form-label">Refrigerant Type (eg. R-410A)*</label><input
-                      name="refrigerantType" class="form-control" type="text" required=""></div>
-                  <div class="mb-3"><label class="form-label">Current Refrigerant Weight in Cylinder<span
-                        class="text-danger fw-bold">*</span></label>
-                    <div class="d-flex justify-content-between gap-3"><select name="currentRefrigerantWeightUnit"
-                        class="form-select">
-                        <option value="12" selected="">lb/oz</option>
-                        <option value="13">kg/g</option>
-                      </select>
-                      <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
-                          type="number" required=""><span class="input-group-text">lb</span></div>
-                      <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
-                          type="number" required=""><span class="input-group-text">oz</span></div>
+                <!--dropdown to select use case of cylinder-->
+                <div class="mb-3 mt-3">
+                  <label class="form-label">Purpose of Cylinder<span class="text-danger fw-bold">*</span></label>
+                  <select name="useCase" class="form-select" required>
+                    <option value="" disabled selected hidden>Select an option...</option>
+                    <option value="charge">Charge</option>
+                    <option value="recovery">Recovery</option>
+                  </select>
+                </div>
+                <div class="mb-3 mt-3">
+                  <label class="form-label">Quality of Gas in Cylinder<span class="text-danger fw-bold">*</span></label>
+                  <select name="gasQuality" class="form-select" required>
+                    <option value="" disabled selected hidden>Select an option...</option>
+                    <option value="clean">Clean</option>
+                    <option value="contaminated">Contaminated/Burnout</option>
+                  </select>
+                </div>
+                <!-- End: General Information -->
+                <!-- Start: Cylinder Information -->
+                <div class="mb-5">
+                  <!-- Start: Refrigerant Information -->
+                  <div>
+                    <h4 class="mb-3">Refrigerant Information</h4>
+                    <div class="mb-3"><label class="form-label">Refrigerant Type (eg. R-410A)<span
+                          class="text-danger fw-bold">*</span></label><input name="refrigerantType" class="form-control"
+                        type="text" required=""></div>
+                    <div class="mb-3"><label class="form-label">Current Refrigerant Weight in Cylinder<span
+                          class="text-danger fw-bold">*</span></label>
+                      <div class="d-flex justify-content-between gap-3"><select name="currentRefrigerantWeightUnit"
+                          class="form-select">
+                          <option value="imperial" selected="">lb/oz</option>
+                          <option value="metric">kg/g</option>
+                        </select>
+                        <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
+                            type="number" required=""><span class="input-group-text" id="input-label-unit-big">lb</span>
+                        </div>
+                        <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
+                            type="number" required=""><span class="input-group-text"
+                            id="input-label-unit-small">oz</span></div>
+                      </div>
                     </div>
-                  </div>
-                </div><!-- End: Refrigerant Information -->
-              </div>
-            </div><!-- End: Form Input -->
-            <!-- Start: Form Submit -->
-            <div class="row mb-5">
-              <div class="col d-flex justify-content-between gap-3"><button class="btn btn-outline-primary w-100"
-                  type="button" data-bs-target="#modal-1" data-bs-toggle="modal">Cancel</button><input
-                  class="btn btn-primary w-100" type="submit" name="Submit" value="Submit"></div>
-            </div><!-- End: Form Submit -->
-            <!-- Start: Form Modals -->
-            <div class="row">
-              <div class="col">
-                <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Leave Form?</h4><button class="btn-close" type="button"
-                          aria-label="Close" data-bs-dismiss="modal"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p>Changes that you made may not be saved.</p>
-                      </div>
-                      <div class="modal-footer"><button class="btn btn-outline-primary" type="button"
-                          data-bs-dismiss="modal">Back</button><button class="btn btn-danger"
-                          type="button">Leave</button>
+                  </div><!-- End: Refrigerant Information -->
+                </div>
+              </div><!-- End: Form Input -->
+              <!-- Start: Form Submit -->
+              <div class="row mb-5">
+                <div class="col d-flex justify-content-between gap-3"><button class="btn btn-outline-primary w-100"
+                    type="button" data-bs-target="#modal-1" data-bs-toggle="modal">Cancel</button><input
+                    class="btn btn-primary w-100" type="submit" name="Submit" value="Submit"></div>
+              </div><!-- End: Form Submit -->
+              <!-- Start: Form Modals -->
+              <div class="row">
+                <div class="col">
+                  <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Leave Form?</h4><button class="btn-close" type="button"
+                            aria-label="Close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Changes that you made may not be saved.</p>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-outline-primary" type="button"
+                            data-bs-dismiss="modal">Back</button><button class="btn btn-danger"
+                            type="button">Leave</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div><!-- End: Form Modals -->
+              </div><!-- End: Form Modals -->
         </form>
       </div>
     </div>
   </section><!-- End: Form -->
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+      var yyyy = today.getFullYear();
+
+      today = yyyy + '-' + mm + '-' + dd;
+      document.getElementsByName("createDate")[0].value = today;
+
+      //listener for metric or imperial dropdown
+      document.getElementsByName("currentRefrigerantWeightUnit")[0].addEventListener("change", function () {
+        if (this.value == "metric") {
+          document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "kg";
+          document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "g";
+
+          document.getElementById("input-label-unit-big").innerHTML = "kg";
+          document.getElementById("input-label-unit-small").innerHTML = "g";
+
+        } else {
+          document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "lb";
+          document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "oz";
+
+          document.getElementById("input-label-unit-big").innerHTML = "lb";
+          document.getElementById("input-label-unit-small").innerHTML = "oz";
+        }
+      });
+
+
+
+    });
+  </script>
 </body>
 
 </html>

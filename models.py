@@ -1,6 +1,6 @@
 # In each table, one forignkey go with one relationship, other relationships should be deleted as they are duplicated from the reference table.
 # From user to company, in the user table, there should be empty, but in the user table, it shpould be a forignkey and a relationship.
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, Numeric, Date, create_engine
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, Numeric, Date, VARCHAR, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.sql import func
 import os
@@ -382,6 +382,7 @@ class Cylinder(Base):
     clean_or_burnout = Column(Text)
     current_refrigerant_weight_lbs = Column(Numeric)
     current_refrigerant_weight_kg = Column(Numeric)
+    refrigerant_type = Column(VARCHAR(16))
 
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')
