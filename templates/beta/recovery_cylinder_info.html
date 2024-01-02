@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Cylinder Info Recovery Version</title>
+    <title>Recovery Cylinder Info</title>
     <link rel="icon" type="image/png" sizes="130x165"
         href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
 
@@ -77,13 +77,14 @@
         <h2 style="margin-bottom: 15px;">Cylinder Information</h2>
         <h5>Cylinder Type: {{my_cylinder_type}} {% if data.clean_or_burnout == 'clean' %}
             <!-- Do something here when the condition is true -->
-            with Contaminant-Free Gas
-          {% else %}
-            with Burnout Gas/Contaminated Gas
+            for Contaminant-Free Gas
+            {% else %}
+            for Burnout Gas/Contaminated Gas
             <!-- Do something else when the condition is false -->
-          {% endif %}</h4>
+            {% endif %}</h4>
             <h5>Refrigerant Type: {{data.refrigerant_type}} </h4>
-                <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight_lbs}} lbs || {{data.current_refrigerant_weight_kg}} kg</h4>
+                <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight_lbs}} lbs ||
+                    {{data.current_refrigerant_weight_kg}} kg</h4>
                     <a href="#more-information-table">
                         <h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6>
                     </a>
@@ -102,11 +103,15 @@
                             <div class="card-body d-flex flex-md-column flex-row align-items-center"
                                 style="padding: 20px;">
                                 <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <img src="/static/images/snowflake-emoji.png" width="75" height="75"
-                                        alt="Descriptive Text">
+                                    <svg width="50" height="83" viewBox="0 0 50 83" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M49.4757 63.4009V26.6663C49.4757 20.9189 45.325 15.9363 39.5806 14.7435V1.60834C39.5806 0.720216 38.8421 0 37.9314 0H36.5131C33.4004 0 30.7694 2.0426 29.9508 4.82503H19.5249C18.7063 2.0426 16.0753 0 12.9626 0H11.5443C10.6336 0 9.89514 0.720216 9.89514 1.60834V14.7434C4.4538 15.8732 0 20.6104 0 26.6662V63.4007C0 69.5049 4.49734 74.2028 9.89514 75.3235V80.4172C9.89514 81.3053 10.6336 82.0255 11.5443 82.0255H16.4919C17.1166 82.0255 17.6876 81.6813 17.9669 81.1364L20.8095 75.5921H28.6662L31.5088 81.1364C31.7881 81.6813 32.3591 82.0255 32.9838 82.0255H37.9314C38.8421 82.0255 39.5806 81.3053 39.5806 80.4172V75.3239C45.3156 74.1329 49.4757 69.1586 49.4757 63.4009ZM3.29838 62.7254V27.3418H46.1773V62.7254H3.29838ZM36.2822 3.22392V14.4751H32.9838V6.65854C32.9838 4.83629 34.4433 3.34037 36.2822 3.22392ZM26.387 14.4751V12.8667C26.387 11.9786 25.6485 11.2584 24.7378 11.2584C23.8272 11.2584 23.0887 11.9786 23.0887 12.8667V14.4751H19.7903V8.04172H29.6854V14.4751H26.387ZM16.4919 6.65854V14.4751H13.1935V3.22392C15.0324 3.34037 16.4919 4.83629 16.4919 6.65854ZM12.5009 17.6918H36.9748C41.1442 17.6918 44.6726 20.4107 45.7993 24.1251H3.67638C4.8031 20.4107 8.33154 17.6918 12.5009 17.6918ZM15.4725 78.8088H13.1935V75.5921H17.1217L15.4725 78.8088ZM36.2822 78.8088H34.0032L32.354 75.5921H36.2822V78.8088ZM36.9748 72.3754C34.0312 72.3754 15.4435 72.3754 12.5009 72.3754C8.33154 72.3754 4.8031 69.6565 3.67638 65.9421H45.7993C44.6726 69.6565 41.1442 72.3754 36.9748 72.3754Z"
+                                            fill="#111A66" />
+                                    </svg>
                                 </button>
                                 <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">
-                                    Recover Refrigerant</p>
+                                    Edit Cylinder Details</p>
                             </div>
                         </div>
                     </div>
@@ -135,13 +140,13 @@
 
 
 
-                <div class="row d-md-flex" onclick="location.href='/choose-equipment-history-type'">
+                <!-- <div class="row d-md-flex" onclick="location.href='/choose-equipment-history-type'">
                     <div class="col-md-6 col-12 mb-3">
                         <div class="card h-100 border btn p-0"
                             style="height: 300px; border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
                             <div class="card-body d-flex flex-md-column flex-row align-items-center">
                                 <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <!-- SVG for Card 5 -->
+                                    SVG for Card 5 
                                     <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
                                         class="bi bi-file-earmark-text" viewBox="0 0 16 16">
                                         <path
@@ -154,12 +159,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 
-    <div class="container" id="more-information-table">
+    <!-- <div class="container" id="more-information-table">
         <h1 class="text-center my-4">More Information</h1>
         <div class="table-responsive">
             <table class="table table-hover table-striped table-bordered">
@@ -187,9 +192,10 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 </body>
+
 </html>
