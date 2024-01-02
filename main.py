@@ -17,8 +17,8 @@ from flask_jwt_extended import JWTManager #New package, you will need to pip ins
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
-load_dotenv()
 
+load_dotenv()
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')

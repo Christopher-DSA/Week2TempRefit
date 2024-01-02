@@ -25,9 +25,10 @@ def create_qr_code(y):
 
 #Always choose option 2 unless you have a special use case.
 if __name__ ==  '__main__':
-    Choice = input("\nCustom Data or Unique Token?(1 or 2)[if unsure, choose 2]: ")
-    print(Choice)
+    # Choice = input("\nCustom Data or Unique Token?(1 or 2)[if unsure, choose 2]: ")
+    # print(Choice)
     
+    Choice = '2'
     if Choice == '1':
         create_qr_code(Choice)
     elif Choice == '2':

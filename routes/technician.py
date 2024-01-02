@@ -1,11 +1,15 @@
 # Import necessary modules from flask
-from flask import make_response, session, Blueprint
+from flask import make_response, session, Blueprint, jsonify
 from flask import session,send_from_directory,send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History,ODP,DetailedEquipmentScanView
-
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer,Contractor, Cylinder_History, Equipment_History, RepairFormUnitView,ODP,DetailedEquipmentScanView,Repair_form
 from functools import wraps
 import pint
+from datetime import datetime
+from jinja2 import Environment, FileSystemLoader
+
+
+
 
 # Import other necessary modules
 import UUID_Generate
@@ -190,8 +194,106 @@ def my_choose_qr_type():
         else: #go to register a new tag page
             print("error in qr scan, this qr tag needs to be registered.")
             session['QR_unique_token'] = unique_token
-            return render_template('Equipment Common/choose-qr-type.html')    
+            return render_template('Equipment Common/choose-qr-type.html')
         
+
+@technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
+def ods_form_qr_type_old():
+    # Get the JSON data sent from the client
+    data = request.get_json()
+    unique_token = data.get('unique_token')
+    lbs_added = data.get('refrigerant_lbs_added')
+    oz_added = data.get('refrigerant_oz_added')
+    lbs_removed = data.get('refrigerant_lbs_removed')
+    oz_removed = data.get('refrigerant_oz_removed')
+
+    print("unique_token IN QR TYPE: ", unique_token)
+    print("lbs_added: ", lbs_added) 
+    print("oz_added: ", oz_added)
+    print("lbs_removed: ", lbs_removed)
+    print("oz_removed: ", oz_removed)
+
+    if unique_token:
+        x = CRUD.read(Tag, all=False, tag_url=unique_token)
+        if x:
+            if x.type == "equipment":
+                print("this is an equipment qr tag")
+                return jsonify({"error": "Oops, this is an equipment QR tag. Try again with a cylinder QR tag."})
+            elif x.type == "cylinder":
+                if(float(lbs_added) == 0 and float(oz_added) == 0 and float(lbs_removed) == 0 and float(oz_removed) == 0):
+                    return jsonify({"error": "Oops, you need to fill out atleast one of the fields."})
+                else:
+                    print("adding or removing refrigerant from cylinder")
+                    # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces (add try catch here if there are problems)
+                    total_refrigerant_added_oz = (float(lbs_added) * 16) + float(oz_added)
+                    total_refrigerant_removed_oz = (float(lbs_removed) * 16) + float(oz_removed)
+                    #Update Cylinder Refrigerant Amount
+                    new_amount_difference = total_refrigerant_added_oz - total_refrigerant_removed_oz
+                    calculated_amount = float(CRUD.read(Cylinder, all=False, cylinder_id=x.cylinder_id).current_refrigerant_weight) + new_amount_difference
+                    CRUD.update(Cylinder, cylinder_id=x.cylinder_id, attr="current_refrigerant_weight", new=calculated_amount)
+                    return jsonify({"calculated_amount": calculated_amount})
+        else:
+            return jsonify({"error": "This tag needs to be registered before you can add refrigerant to it."})
+    else:
+        return jsonify({"error": "No unique token provided."})  
+
+@technician.route('/for-ods-form-choose-qr-type', methods=['POST'])
+def ods_form_qr_type():
+    # Get the JSON data sent from the client
+    data = request.get_json()
+    unique_token = data.get('unique_token')
+    lbs_added = data.get('refrigerant_lbs_added', 0)
+    kg_added = data.get('refrigerant_kg_added', 0)
+    lbs_removed = data.get('refrigerant_lbs_removed', 0)
+    kg_removed = data.get('refrigerant_kg_removed', 0)
+    
+    if lbs_added == "" or lbs_added == None:
+        lbs_added = float(0)
+    if kg_added == "" or kg_added == None:
+        kg_added = float(0)
+    if lbs_removed == "" or lbs_removed == None:
+        lbs_removed = float(0)
+    if kg_removed == "" or kg_removed == None:
+        kg_removed = float(0)
+
+    print("kg_added: ", kg_added)
+    print("kg_removed: ", kg_removed)
+    print("lbs_added: ", lbs_added)
+    print("lbs_removed: ", lbs_removed)
+
+    # Conversion factors
+    lbs_to_kg = 0.453592
+    kg_to_lbs = 2.20462
+
+    # Check for valid token and cylinder
+    if unique_token:
+        x = CRUD.read(Tag, all=False, tag_url=unique_token)
+        if x:
+            if x.type == "cylinder":
+                cylinder_record = CRUD.read(Cylinder, all=False, cylinder_id=x.cylinder_id)
+                # Convert all to a common unit (lbs in this case)
+                total_added_lbs = (float(kg_added) * kg_to_lbs) + float(lbs_added)
+                total_removed_lbs = (float(kg_removed) * kg_to_lbs) + float(lbs_removed)
+
+                # Calculate new total weights of the cylinder not the unit.
+                #Removed = refrigerant reclaimed, Added = refrigerant trasnferred to unit.
+                new_weight_lbs = float(cylinder_record.current_refrigerant_weight_lbs) - total_added_lbs + total_removed_lbs
+                new_weight_kg = new_weight_lbs * lbs_to_kg
+                
+                new_weight_kg = round(new_weight_kg, 2)
+                new_weight_lbs = round(new_weight_lbs, 2)
+
+
+                CRUD.update(Cylinder, cylinder_id=x.cylinder_id, attr="current_refrigerant_weight_lbs", new=new_weight_lbs)
+                CRUD.update(Cylinder, cylinder_id=x.cylinder_id, attr="current_refrigerant_weight_kg", new=new_weight_kg)
+
+                return jsonify({"success": "Refrigerant updated successfully.", "calculated_amount_lbs":new_weight_lbs, "calculated_amount_kg":new_weight_kg})
+            else:
+                return jsonify({"error": "This QR code is not for a cylinder."})
+        else:
+            return jsonify({"error": "Cylinder not found."})
+    else:
+        return jsonify({"error": "No unique token provided."})
 
 @technician.route('/New Cylinder/tag-linked')
 def add_qr():
@@ -206,6 +308,10 @@ def remove_qr():
 def repair_ODS_Sheet_New():
     if request.method == 'GET':
         #Get data about unit to pass on to placeholder fields on the next page.
+        current_scan_date = today_date = datetime.now().strftime("%Y-%m-%d")
+        # Get today's date and format it to "yyyy-mm-dd"
+
+        print("Today's date is:", current_scan_date)
         current_tag_url = session.get('unique_equipment_token')
         tag_data = CRUD.read(Tag, all = False, tag_url = str(current_tag_url))
         x = tag_data.unit_id
@@ -223,9 +329,169 @@ def repair_ODS_Sheet_New():
             my_dict['factory_charge_lbs'] = (float(my_dict['factory_charge_amount']) - remainder) / 16
             my_dict['factory_charge_oz'] = remainder
         print("my_dict: ", my_dict)
-        return render_template('equipment/repair_ODS_Sheet.html', data = my_dict)
-    elif request.method == 'POST':
-        return "ayyy"
+        return render_template('equipment/repair_ODS_Sheet.html', data = my_dict, date=str(current_scan_date))
+    
+    elif request.method == 'POST': #This is the repair form post.
+        ods_form_names = ['current_date','refrigerant_type_send','leakDetectedRadio','repairStatusRadio','noLongerContainsRefrigerant','vacuumTest','compressorOil','pressureTest','psigResult','refrigerant_added_lbs','refrigerant_added_kg','refrigerant_removed_lbs','refrigerant_removed_kg','additionalNotes']
+        form_data_dictionary = {}
+        for x in ods_form_names:
+            form_data_dictionary[x] = request.form.get(x)
+        
+        # Type Conversions
+        psig_result = form_data_dictionary.get('psigResult')
+        if psig_result is None or psig_result == '':
+            psig_result = 0  # or any default value you prefer
+        else:
+            psig_result = float(psig_result)
+        
+        #Refrigerant Totals in OZ for database storage
+        refrigerant_added_lbs = form_data_dictionary.get('refrigerant_added_lbs')
+        refrigerant_removed_lbs = form_data_dictionary.get('refrigerant_removed_lbs')
+        
+        refrigerant_added_kg = form_data_dictionary.get('refrigerant_added_kg')
+        refrigerant_removed_kg = form_data_dictionary.get('refrigerant_removed_kg')
+        
+        if refrigerant_added_lbs is None or refrigerant_added_lbs == '':
+            refrigerant_added_lbs = 0  # or any default value you prefer
+        else:
+            refrigerant_added_lbs = float(refrigerant_added_lbs)
+            
+        if refrigerant_removed_lbs is None or refrigerant_removed_lbs == '':
+            refrigerant_removed_lbs = 0
+        else:
+            refrigerant_removed_lbs = float(refrigerant_removed_lbs)
+            
+        if refrigerant_added_kg is None or refrigerant_added_kg == '':
+            refrigerant_added_kg = 0
+        else: 
+            refrigerant_added_kg = float(refrigerant_added_kg)
+            
+        if refrigerant_removed_kg is None or refrigerant_removed_kg == '':
+            refrigerant_removed_kg = 0
+        else:  
+            refrigerant_removed_kg = float(refrigerant_removed_kg)
+            
+        # Conversion factors
+        lbs_to_kg = 0.453592
+        kg_to_lbs = 2.20462
+        
+        if refrigerant_added_lbs == 0 or refrigerant_removed_lbs == 0: #this means they selected imperial so we need to sync the metric column
+            refrigerant_added_lbs = (float(refrigerant_added_kg) * kg_to_lbs) + float(refrigerant_added_lbs)
+            refrigerant_removed_lbs = (float(refrigerant_removed_kg) * kg_to_lbs) + float(refrigerant_removed_lbs)
+            #rounding
+            refrigerant_added_lbs = round(refrigerant_added_lbs, 2)
+            refrigerant_removed_lbs = round(refrigerant_removed_lbs, 2)
+            print("refrigerant_added_lbs: ", refrigerant_added_lbs)
+            print("refrigerant_removed_lbs: ", refrigerant_removed_lbs)
+            print("refrigerant_added_kg: ", refrigerant_added_kg)
+            print("refrigerant_removed_kg: ", refrigerant_removed_kg)
+        else: #this means they selected metric so we need to sync the imperial column
+            refrigerant_added_kg = (float(refrigerant_added_lbs) * lbs_to_kg) + float(refrigerant_added_kg)
+            refrigerant_removed_kg = (float(refrigerant_removed_lbs) * lbs_to_kg) + float(refrigerant_removed_kg)
+            #rounding
+            refrigerant_added_kg = round(refrigerant_added_kg, 2)
+            refrigerant_removed_kg = round(refrigerant_removed_kg, 2)
+            print("case2")
+            print("refrigerant_added_lbs: ", refrigerant_added_lbs)
+            print("refrigerant_removed_lbs: ", refrigerant_removed_lbs)
+            print("refrigerant_added_kg: ", refrigerant_added_kg)
+            print("refrigerant_removed_kg: ", refrigerant_removed_kg)
+
+            
+
+        
+        # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces
+        # total_refrigerant_added_oz = (float(refrigerant_added_lbs) * 16) + float(refrigerant_added_oz)
+        # total_refrigerant_removed_oz = (float(refrigerant_removed_lbs) * 16) + float(refrigerant_removed_oz)
+    
+        # Convert 'on' and '' to True, False, and None for other radio boxes
+        def convert_radio_to_boolean(form_value):
+            if form_value == 'on':
+                return True
+            elif form_value == '':
+                return None
+            else:
+                return False
+        form_data_dictionary['leakDetectedRadio'] = convert_radio_to_boolean(form_data_dictionary.get('leakDetectedRadio'))
+        form_data_dictionary['repairStatusRadio'] = convert_radio_to_boolean(form_data_dictionary.get('repairStatusRadio'))
+        
+        def convert_check_to_boolean(form_value):
+            if form_value == '':
+                return True
+            else:
+                return False
+        form_data_dictionary['vacuumTest'] = convert_check_to_boolean(form_data_dictionary.get('vacuumTest'))
+        form_data_dictionary['compressorOil'] = convert_check_to_boolean(form_data_dictionary.get('compressorOil'))
+        form_data_dictionary['pressureTest'] = convert_check_to_boolean(form_data_dictionary.get('pressureTest'))
+        form_data_dictionary['noLongerContainsRefrigerant'] = convert_check_to_boolean(form_data_dictionary.get('noLongerContainsRefrigerant'))
+            
+        # Mapping form data to model attributes
+        model_data = {
+            'repair_date': form_data_dictionary.get('current_date'),  # Assuming it's in the correct date format
+            'refrigerant_type': form_data_dictionary.get('refrigerant_type_send'),
+            'leak_test_result': form_data_dictionary.get('leakDetectedRadio'),  # Assuming 'true' or 'false' strings
+            'is_leak_repaired': form_data_dictionary.get('repairStatusRadio'),  # Similar assumption
+            'no_longer_contains_refrigerant': form_data_dictionary.get('noLongerContainsRefrigerant'),
+            'vacuum_test_performed': form_data_dictionary.get('vacuumTest'),
+            'compressor_oil_removed': form_data_dictionary.get('compressorOil'),
+            'pressure_test_performed': form_data_dictionary.get('pressureTest'),
+            'additional_notes': form_data_dictionary.get('additionalNotes'),
+            'psig_result': psig_result,
+            'refrigerant_added_lbs': refrigerant_added_lbs,
+            'refrigerant_removed_lbs': refrigerant_removed_lbs,
+            'refrigerant_added_kg': refrigerant_added_kg,
+            'refrigerant_removed_kg': refrigerant_removed_kg,
+            'tech_id': session.get('tech_id'),
+            'unit_id': session.get('unit_id') 
+        }
+        
+        #updating amount of refrigerant in unit table in database.
+        # refrigerant_changed_amount = total_refrigerant_added_oz - total_refrigerant_removed_oz
+        # new_refrigerant_amount = CRUD.read(Unit, all=False, unit_id=session.get('unit_id')).amount_of_refrigerant_in_unit_oz + refrigerant_changed_amount
+        
+        #Save to database before sending email.
+        CRUD.create(Repair_form, **model_data)
+        #Update unit table with new data.
+        CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "last_maintenance_date", new = model_data['repair_date'])
+        # CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "amount_of_refrigerant_in_unit_oz", new = new_refrigerant_amount)
+        #Send email to contractor
+        try:
+            print("start of try")
+            # Set up Jinja2 environment
+            env = Environment(loader=FileSystemLoader('templates/email'))
+            template = env.get_template('contractor-copy-of-ods-tag-email.html')
+            
+            current_tech_id = session.get('tech_id')
+            #data for email
+            tech_data = CRUD.read(Technician, all=False, technician_id=current_tech_id)
+            user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+            company_data = CRUD.read(Contractor, all=False, contractor_id=tech_data.contractor_id)
+            unit_data = CRUD.read(Unit, all=False, unit_id=model_data['unit_id'])
+            
+            # Render the template with your data
+            html_content = template.render(data=model_data,tech_data=tech_data, user_data=user_detail_data, company_data=company_data, unit_data=unit_data)
+            
+            #This needs to be dynamic based on the contractor's email we have in the database.
+            msg = MIMEMultipart()
+            msg['From'] = 'refit_dev@sidneyshapiro.com'
+            msg['To'] = 'refit_dev@sidneyshapiro.com'
+            msg['Subject'] = ("New ODS Tag Submitted by " + str(user_detail_data.first_name) + " " + str(user_detail_data.last_name)) 
+
+            # Attach the HTML part to the email
+            part = MIMEText(html_content, "html")
+            msg.attach(part)
+            
+            email_text = msg.as_string()
+            #Send an email to the email address typed in the form.
+            smtpObj = smtplib.SMTP_SSL('mail.sidneyshapiro.com', 465)  # Using SMTP_SSL for secure connection
+            smtpObj.login('refit_dev@sidneyshapiro.com', 'P7*XVEf1&V#Q')  # Log in to the server
+            smtpObj.sendmail('refit_dev@sidneyshapiro.com', 'refit_dev@sidneyshapiro.com', email_text)
+            smtpObj.quit()  # Quitting the connection
+            print("Email sent successfully!")
+        except Exception as e:
+            print("Oops, something went wrong: ", e)
+        
+        return redirect('/back-by-role')
 
 @technician.route('/equipment common/qr-scan')
 def qr_scan():
@@ -507,6 +773,7 @@ def equipment_info_page(unique_id):
         session.pop('unique_equipment_token', None)
         #save tag url to session.
         session['unique_equipment_token'] = str(unique_id)
+        session['unit_id'] = unit_id
                 
         #3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id = tech_id)
@@ -604,4 +871,46 @@ def equipment_hist():
 
     return "Invalid request method"
 
+#This is the digitized ods tag. (Singular Tag)
+@technician.route("/ods-tags", methods=["GET", "POST"])
+def ods_tags_new():
+    if request.method == "GET":
+        return render_template("beta/digitized_ods_tag.html")
+    else:
+        selected_repair_form_id = request.form.get('selected_ods_tag')
+        print("selected_repair_form_id: ", selected_repair_form_id)
+        
+        current_tech_id = session.get('tech_id')
+        
+        #Get data from database
+        data = CRUD.read(Repair_form, all=False, repair_form_id=selected_repair_form_id)
+        tech_data = CRUD.read(Technician, all=False, technician_id=current_tech_id)
+        user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+        company_data = CRUD.read(Contractor, all=False, contractor_id=tech_data.contractor_id)
+        unit_data = CRUD.read(Unit, all=False, unit_id=data.unit_id)
+        
+        return render_template("beta/digitized_ods_tag.html", data=data, tech_data=tech_data, user_data=user_detail_data, company_data=company_data, unit_data=unit_data)
+        
+#This is the table with the list of all ods tags a technician has ever filled out.
+@technician.route("/view_all_ods_tags", methods=["GET", "POST"])
+def view_all_ods_tags():
+    if request.method == "GET":
+        tech_id_current = session.get('tech_id')
+        data = CRUD.read(RepairFormUnitView, all=True, tech_id=tech_id_current)
+        
+        return render_template("beta/view_all_ods_tags.html", data=data)
+    else:
+        return "Invalid request method (you posted to this route)"
+    
+#This is the table with the list of all ods tags a EQUIPMENT HAS attached to it.
+@technician.route("/view_unit_ods_tags", methods=["GET", "POST"])
+def view_all_unit_ods_tags():
+    if request.method == "GET":
+        current_unit_id = session.get('unit_id')
+        print("current_unit_id: ", current_unit_id)
+        data = CRUD.read(RepairFormUnitView, all=True, unit_id = current_unit_id)
+        print(data)
+        return render_template("beta/view_all_ods_tags.html", data=data)
+    else:
+        return "Invalid request method (you posted to this route)"
 

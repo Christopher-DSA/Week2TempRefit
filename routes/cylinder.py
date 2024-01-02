@@ -88,205 +88,118 @@ def cylinderform():
     # print('rendering cylinder form')
     return render_template(('cylinder/cylinder.html')) #for testing
 
-@cylinder.route('/new_cylinder_new_qr',methods=['GET','POST'])
 
 @cylinder.route("/new_cylinder", methods=["GET", "POST"])
-def formcylinder():
+def new_cylinder_view():
     if request.method == 'POST':
-        # Get data from form
+        ###########Get data from form############
+        #database column name: added_date
         createDate = request.form.get('createDate')
-        name = request.form.get('wholeSaler')
-            # Cylinder information
-        cylinderSize = request.form.get('cylinder_size')
-        cylinderTareWeightUnit = request.form.get('tareWeightUnit')
-
-        print("cylinderTareWeightUnit:" + cylinderTareWeightUnit)
-        print(type(cylinderTareWeightUnit))
-
-
-        tare_weight_entered_value = request.form.get('tareWeight1')
-        tare_weight_second_entered_value = request.form.get('tareWeight2')
+        #current_refrigerant_weight_unit 
+        metricOrImperial = request.form.get('currentRefrigerantWeightUnit')
+        print("metricOrImperial:" + metricOrImperial) #should be "metric" or "imperial"
+        #cylinder_type_id
+        useCase = request.form.get('useCase')
+        #clean_or_burnout
+        cleanOrBurnout = request.form.get('gasQuality')
+        #refrigerant_type <- this is not to be confused another column called "refrigerant_type_id"
+        refrigerantType = request.form.get('refrigerantType') #example: "R-22", "R-134a", "R-410a", etc.  
+        #current_refrigerant_weight_lbs and current_refrigerant_weight_kg
+        bigUnit = request.form.get('currentRefrigerantWeight1') #kg or lbs
+        smallUnit = request.form.get('currentRefrigerantWeight2') #oz or gm
         
-        if tare_weight_second_entered_value == None:
-            tare_weight_second_entered_value = 0
-        print("SECOND VALUE:" + tare_weight_second_entered_value)
-
-        entered_lbs = request.form.get('currentRefrigerantWeight1')
-        entered_oz = request.form.get('currentRefrigerantWeight2')
+        ############Process Data#################
+        # Conversion factors
+        oz_to_lbs = 16
+        g_to_kg = 1000
         
-        print("entered_lbs:" + entered_lbs + "entered_oz:" + entered_oz)
-
-        if cylinderTareWeightUnit == "12":
-            print("inside HERE")
-            tareWeight = convert_to_oz(tare_weight_entered_value, tare_weight_second_entered_value)
-            print("Tare weight in OZ from lb:" + str(tareWeight))
+        lbs_to_kg = 0.453592
+        kg_to_lbs = 2.20462
+        
+        #Unit Conversions for Database Storage
+        current_refrigerant_weight_lbs = 0
+        current_refrigerant_weight_kg = 0
+        if metricOrImperial == "imperial": #if the user selected "imperial" for the current refrigerant weight unit.
+            current_refrigerant_weight_lbs = float(bigUnit) + float(smallUnit) / oz_to_lbs
+            current_refrigerant_weight_kg = current_refrigerant_weight_lbs * lbs_to_kg
+        else: #if the user selected "metric" for the current refrigerant weight unit.
+            current_refrigerant_weight_kg = float(bigUnit) + float(smallUnit) / g_to_kg
+            current_refrigerant_weight_lbs = current_refrigerant_weight_kg * kg_to_lbs
+        
+        #Cylinder Use Case Conversion to Cylinder Type ID
+        cyl_type_id = 17
+        if useCase == "charge":
+            cyl_type_id = 3
+        elif useCase == "recovery":
+            cyl_type_id = 1
         else:
-            print("inside THERE")
-            tareWeight = convert_kg_to_oz(request.form.get('tareWeight1'), request.form.get('tareWeight2'))
-            print("Tare weight in OZ from kg:" + str(tareWeight))
-
-        #Refrigerant information
-        refrigerantType = request.form.get('refrigerantType')
-        currentRefrigerantweightUnit = request.form.get('currentRefrigerantWeightUnit')
-        print("currentRefrigerantweightUnit:" + cylinderTareWeightUnit)
-        
-        #My Debugging
-        print(request.form.get('currentRefrigerantWeight1'))
-        print(request.form.get('currentRefrigerantWeight2'))
-        
-        if currentRefrigerantweightUnit == "12":
-            print("Inside HERE HERE!")
-            currentRefrigerantweight = convert_to_oz(entered_lbs, entered_oz)
-            print("currentRefrigerantweight from lb: " + str(currentRefrigerantweight))
+            cyl_type_id = 17
+            
+        #clean_or_burnout Conversion to clean_or_burnout
+        cleanOrBurnout = cleanOrBurnout.lower()
+        if cleanOrBurnout == "clean":
+            cleanOrBurnout = "clean"
         else:
-            print("Inside THERE THERE!")
-            currentRefrigerantweight = convert_kg_to_oz(request.form.get('currentRefrigerantWeight1'), request.form.get('currentRefrigerantWeight2'))
-            print("currentRefrigerantweight from kg" + str(currentRefrigerantweight))
+            cleanOrBurnout = "burnout"
+            
+        #data to be passed on to crud create for Cylinder table.
+        my_dictionary = {
+            'added_date': createDate, #the date the cylinder was added to the database. Comes from the form.
+            'cylinder_type_id': cyl_type_id, #the id of the cylinder type based on the cylinder_type table.
+            'clean_or_burnout': cleanOrBurnout, #the string "clean" or "burnout"
+            'refrigerant_type': refrigerantType, #the string of the refrigerant type. Example: "R-22", "R-134a", "R-410a", etc.
+            'current_refrigerant_weight_lbs': current_refrigerant_weight_lbs, #the current refrigerant weight in lbs.
+            'current_refrigerant_weight_kg': current_refrigerant_weight_kg #the current refrigerant weight in kg.
+        }
+            
+        ############CRUD Create Row for new Cylinder#############
+        new_row =CRUD.create(Cylinder, **my_dictionary)
+        
 
-        print("currentRefrigerantweight" + str(currentRefrigerantweight))
-        print(f"CreateDate is{createDate}")
-        print(f"wholeSaler name is {name}")
-        print(f"cylinderTareWeightUnit is {cylinderTareWeightUnit}")
-        print(f"refrigerantType: {refrigerantType}")
-        print(f"Cylinder Weight: {cylinderSize}")
-        print(request.method)
-#nithin changes
-        # data_cylinder = CRUD.create(Cylinder, added_date = createDate, cylinder_type_id = 2, cylinder_size = 50, cylinder_tare_weight = tareWeight,current_refrigerant_weight = 50)
-        # return render_template ("New Cylinder/tag-linked.html") #redirect(url_for('cylinder.cylinder'))
-
-    
-    
-        ##########Adding Cylinder to the database##############
-        
-        #Step 1. Find out refrigerant_id based on the name typed into the form (auto generated value from the database.) based on refrigerant name.
-        df = pd.read_csv("RefrigerantTypeLookupData.csv") #csv file with refrigerant types and their corresponding id's.
-        
-        #converting to lower case to match csv file where all entries are lowercase.
-        refrigerantType = refrigerantType.lower()
-        # Using the query method to filter rows
-        filtered_rows = df.query("refrigerant_name == @refrigerantType")
-        print(filtered_rows)
-
-        refrigerant_type_id_from_db = None
-        
-        # If you want to get the first occurrence
-        if not filtered_rows.empty:
-            single_row = filtered_rows.iloc[0]
-            refrigerant_type_id_from_db = int(filtered_rows.iloc[0]['refrigerant_id'])
-            print(single_row)
-        else:
-            print("No rows found")
-            flash("No matching refrigerant found with name below. (Check list of refrigerants in RefrigerantTypeLookupData.csv)", "error")  # The second argument "error" is an optional category.
-            return render_template("New Cylinder/new-cylinder.html")
-        
-        
-        #Step 2: Create a new row in the database for the cylinder
-        #Form needs a place for user to type in cylinder_size, right now we are getting the amount of refrigerant in the cylinder which in the case that the cylinder is brand new it would be equal to the size, however in any other case, it will not.
-        #The same goes for needing a drop down for cylinder type.
-        new_row =CRUD.create(Cylinder, added_date = createDate, cylinder_tare_weight = tareWeight, refrigerant_id = refrigerant_type_id_from_db, current_refrigerant_weight = currentRefrigerantweight, supplier = name, cylinder_size = cylinderSize, cylinder_type_id = 1 )
-        print(new_row.cylinder_id)
-        PK = new_row.cylinder_id
-        print("PK:" + str(PK))
-        
-        #Step 3. Geneate a unique url token that can be used on the QR Code when they are manufactured.
-        #Note in the future this unique url token may directly come from the QR code itself instead of being generated here.
-        
+        #############Create Row in Tag Table###############
         unique_cylinder_token = None
-        #either generate a new unique token or use the one that was passed in from the QR code registration page.
-        if session.get('QR_unique_token') != None: #if the user got here from the new QR code registration page.
-            unique_cylinder_token = session.get('QR_unique_token')
-            print("Unique_Cylinder_Token: ", unique_cylinder_token)
+        if session.get('QR_unique_token') != None: #If the user got here from the new QR code registration page. Which should be the case.
+            unique_cylinder_token = session.get('QR_unique_token') #This is comes from when user scans the code in the first place.
+            print("Succesfully added new Tag row to database.")
             
-            #new row in tag table
-            CRUD.create(Tag, tag_url = unique_cylinder_token, cylinder_id = PK, type = "cylinder")
-            return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token) #redirect(url_for('cylinder.cylinder'))
-            
+            #New Row in Tag Table
+            CRUD.create(Tag, tag_url = unique_cylinder_token, cylinder_id = new_row.cylinder_id, type ="cylinder")
+            return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token)
         else:
-            #there was an error, ask user to try scanning again.
-            unique_cylinder_token = UUID_Generate.CylinderQRGenerator.generate_cylinder_unique_id(PK)
-            
-        print("Unique_Cylinder_Token: ", unique_cylinder_token)
-        #CRUD.update(Cylinder, 'unique_url_id', new = unique_cylinder_token, cylinder_id = PK)
-        return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token) #redirect(url_for('cylinder.cylinder'))
-    else:
+            print("error adding row to TAG table, Try enabling cookies in your browser for site to function properly.")
+            return redirect('back-by-role')
+    else: #should not be a GET request but if somehow it is then...
+        print("This route only accepts POST requests.")
         return render_template("New Cylinder/new-cylinder.html")
 
 
-#Later this will be changed to a dynamic route that will take in the unique cylinder link from the QR code.
-@cylinder.route("/cylinder_info/<unique_id>", methods=["GET", "POST"])
+@cylinder.route("/cylinder_info/<unique_id>", methods=["GET"])
 def CylinderInfo(unique_id):
     if request.method == 'GET':
         print("inside get for /cylinder_info")
         
-        #1. Getting the cylinder id from the database based on the <unique id>.
-        print("unique_id: " + unique_id)
-        
-        #Find cylinder id based on tag_url
+        #1. Get row in database for specific tag. From Tag Table.
+        #Get Tag Data from Tag Table
         tag_data = CRUD.read(Tag, all = False, tag_url = unique_id)
+        #Get Technician ID from session
         tech_id = session.get('tech_id')
-        
         #get cylinder id from tag table
         cyl_id = tag_data.cylinder_id
         
         
-        #2. Get row in database for specific cylinder.
-        data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
+        #2. Get row in database for specific cylinder. From Cylinder Table.
+        cylinder_data = CRUD.read(Cylinder, all = False, cylinder_id = cyl_id)
+        if cylinder_data is None:
+            return redirect("/") #cylinder does not exist in the database.
+        elif cylinder_data.cylinder_type_id == 1: #1 is recovery a recovery cylinder
+            my_cylinder_type = 'Recovery Cylinder'
+            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type)
+        elif cylinder_data.cylinder_type_id == 3: #3 is a charge cylinder
+            my_cylinder_type = 'Charge Cylinder'
+            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data=tag_data ,my_cylinder_type=my_cylinder_type)
+    
         
-        print(data.refrigerant_id)
-        
-        #Get foreign keys to search other tables.
-        cylinder_refrigerant_id = data.refrigerant_id
-        current_cylinder_type_id = data.cylinder_type_id
-        
-        #Get name of refrigerant and the type of cylinder.
-        refrigerant_table_lookup = CRUD.read(Refrigerant, all = False, refrigerant_id = cylinder_refrigerant_id)
-        cylinder_type_lookup = CRUD.read(Cylinder_Type, all = False, cylinder_type_id = current_cylinder_type_id)    
-        
-        name_data = {
-            "refrigerant_name": refrigerant_table_lookup.refrigerant_name,
-            "cylinder_type": cylinder_type_lookup.type_name
-        }
-        
-        session['cyl_id']=cyl_id
-        session['tag']=unique_id
-        session['gas_name']=refrigerant_table_lookup.refrigerant_name
-        session['size']=data.cylinder_size
-        session['weight']=data.current_refrigerant_weight
-        session.update({
-            'cyl_id': cyl_id,
-            'tag': unique_id,
-            'gas_name': refrigerant_table_lookup.refrigerant_name,
-            'size': data.cylinder_size,
-            'weight': data.current_refrigerant_weight,
-            'type': cylinder_type_lookup.type_name,
-            'cylinder_tare_weight': data.cylinder_tare_weight,
-            'tare_weight_before_repair': data.tare_weight_before_repair,
-            'tare_weight_after_repair': data.tare_weight_after_repair,
-        })
-
-
-
-        current_scan_date = datetime.date.today() 
-
-        history_entry = Cylinder_History(
-        date_qr_scanned=current_scan_date,
-        cylinder_id= cyl_id, 
-        technician_id=tech_id,
-        refrigerant_id = cylinder_refrigerant_id,
-        refrigerant_name = refrigerant_table_lookup.refrigerant_name,
-        refrigerant_weight = data.current_refrigerant_weight
-        )
-        CRUD.create(Cylinder_History, date_qr_scanned=current_scan_date, cylinder_id=cyl_id, technician_id=tech_id, refrigerant_id = cylinder_refrigerant_id, refrigerant_name = refrigerant_table_lookup.refrigerant_name, refrigerant_weight = data.current_refrigerant_weight )
-        
-        if (name_data["cylinder_type"] == "Charge Cylinder"):
-            print("charge cylinder info page")
-            return render_template("beta/charge_cylinder_info.html", data=data, name = name_data)
-        elif (name_data["cylinder_type"] == "Recovery Cylinder"):
-            print("recovery cylinder info page")
-            return render_template("beta/recovery_cylinder_info.html", data=data, name = name_data)
-        else:
-            print("else")
-            return render_template("beta/cylinder_info.html", data=data, name = name_data)
+    
 
     
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Setup Account</title>
+    <title>Repair Form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/png" sizes="130x165"
         href="/static/images/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c">
@@ -29,6 +29,13 @@
     <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
     <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .refrigerant-container {
+            min-height: 100px;
+            /* Adjust this based on your form's needs */
+        }
+    </style>
 </head>
 
 <body>
@@ -79,8 +86,8 @@
                 <form action="/equipment/repair_ODS_Sheet" method="post" class="px-4" id="repair-form">
                     <div class="row mb-3">
                         <h2>Repair ODS Sheet</h2>
-                        <span>Control Number: 123123</span>
-                        <span>Equipment QR Ref Number: A0081295</span>
+                        <!-- <span>Control Number: 123123</span>
+                        <span>Equipment QR Ref Number: A0081295</span> -->
                     </div>
                     <div class="row mb-5">
                         <div class="col">
@@ -109,81 +116,63 @@
                                                 <div class="py-3">
                                                     <p>Repair Date<span class="text-danger">*</span></p>
                                                     <div class="mb-3"><input class="form-control" type="date"
-                                                            required=""></div>
+                                                            id="dateField" name="current_date"></div>
                                                 </div>
-                                                <div class="pb-3">
+                                                <!-- <div class="pb-3">
                                                     <p>Job Number (Optional)</p>
                                                     <div class="mb-3"><input class="form-control" type="text"></div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <h4 class="mt-4">Equipment Refrigerant Information</h4>
                                             <div class="py-3">
                                                 <p>Refrigerant Type</p>
                                                 <div class="mb-5"><input class="form-control" type="text" disabled
-                                                        placeholder="{{data.type_of_refrigerant}}"></div>
-                                                <p>Factory Refrigerant Weight</p>
-                                                <div class="row mb-4">
-                                                    <div class="col dropdown">
-                                                        <button class="btn w-100 btn-outline-secondary dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false" disabled>
-                                                            lb/oz
-                                                        </button>
-                                                    </div>
-                                                    <div class="col mb-3">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;"
-                                                                placeholder="{{data.factory_charge_lbs}}" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">lb</span>
-                                                            </div>
+                                                        name="refrigerant_type" id="refrigerant_type_id"
+                                                        value="{{data.type_of_refrigerant}}"></div>
+                                                <input type="hidden" name="refrigerant_type_send"
+                                                    value="{{ data.type_of_refrigerant }}">
+                                            </div>
+                                            <h4 class="mt-4 mb-4">Leak Test Result<span class="text-danger">*</span>
+                                            </h4>
+                                            <!-- Leak Test Result -->
+                                            <div class="form-check mx-3">
+                                                <input class="form-check-input" type="radio" name="leakDetectedRadio"
+                                                    id="leakDetectedRadio1" required>
+                                                <label class="form-check-label" for="leakDetectedRadio1"
+                                                    value="leakDetected">
+                                                    Leak detected - Do not add refrigerant until repaired
+                                                </label>
+                                            </div>
+                                            <!-- Sub-menu Options -->
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-6">
+                                                        <div class="form-check my-3">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="repairStatusRadio" id="leakRepairedRadioButton"
+                                                                value="leakRepaired" disabled>
+                                                            <label class="form-check-label" for="repairStatusRadio1">
+                                                                Leak Repaired
+                                                            </label>
                                                         </div>
-                                                    </div>
-                                                    <div class="col mb-3">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;"
-                                                                placeholder="{{data.factory_charge_oz}}" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">oz</span>
-                                                            </div>
+                                                        <div class="form-check my-3">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="repairStatusRadio" id="leakNotRepairedRadioButton"
+                                                                value="leakNotRepaired" disabled>
+                                                            <label class="form-check-label" for="repairStatusRadio2">
+                                                                Leak Not Repaired
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <!-- <p>Total Refrigerant Weight</p> -->
-                                                <!-- <div class="row">
-                                                    <div class="col dropdown">
-                                                        <button class="btn w-100 btn-outline-secondary dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false" disabled>
-                                                            lb/oz
-                                                        </button>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">lb</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control"
-                                                                style="border-radius: 5px;" placeholder="0" disabled>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text text-center"
-                                                                    style="text-align:center; border: none;">oz</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                            </div>
+                                            <div class="form-check mx-3">
+                                                <input class="form-check-input" type="radio" name="leakDetectedRadio"
+                                                    id="noLeakDetected" required>
+                                                <label class="form-check-label" for="leakDetectedRadio1"
+                                                    value="noLeakDetected">
+                                                    No leak detected
+                                                </label>
                                             </div>
                                         </div>
                                         <!--Buttons For Tab 1-->
@@ -198,127 +187,375 @@
                                     </div>
                                     <div class="tab-pane" role="tabpanel" id="tab-2">
                                         <!-- Start: Form Input -->
-                                        <div class="row">
+                                        <div class="row" id="content-for-tab-2">
                                             <p>Fields with an asterisk (<span class="text-danger">*</span>) are
                                                 required.</p>
-                                            <h5 class="mb-3">Leak Test Result<span class="text-danger">*</span></h5>
-                                            <!-- Leak Test Result -->
-                                            <div class="form-check mx-3">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Leak detected - Do not add refrigerant until repaired
-                                                </label>
-                                            </div>
-                                            <!-- Sub-menu Options -->
-                                            <div class="container">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-6">
-                                                        <div class="form-check my-3">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="radioOption" id="radioOption1" value="option1"
-                                                                disabled>
-                                                            <label class="form-check-label" for="radioOption1">
-                                                                Leak Repaired
-                                                            </label>
+                                            <h5 class="mt-4">Added/Removed Refrigerant:</h5>
+                                            <div class="" id="add-or-remove-refrigerant-section">
+                                                <!--code here-->
+                                                <div class="my-3" id="add-or-remove-refrigerant-section">
+                                                    <!-- Refrigerant Handling in Kilograms -->
+                                                    <div id="refrigerantKgContainer">
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantAddedKg">Refrigerant Added to Unit
+                                                                    <strong>(kg)</strong></label>
+                                                                <input type="number" class="form-control"
+                                                                    name="refrigerant_added_kg" id="refrigerantAddedKg">
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantRemovedKg">Refrigerant Reclaimed from Unit
+                                                                    <strong>(kg)</strong></label>
+                                                                <input type="number" class="form-control"
+                                                                    id="refrigerantRemovedKg"
+                                                                    name="refrigerant_removed_kg">
+                                                            </div>
                                                         </div>
-                                                        <div class="form-check my-3">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="radioOption" id="radioOption2" value="option2"
-                                                                disabled>
-                                                            <label class="form-check-label" for="radioOption2">
-                                                                Leak Not Repaired
-                                                            </label>
+                                                    </div>
+
+                                                    <!-- Refrigerant Handling in Pounds (Initially Hidden) -->
+                                                    <div id="refrigerantLbsContainer" style="display: none;">
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantAddedLbs">Refrigerant Added to Unit
+                                                                    <strong>(lbs)</strong></label>
+                                                                <input type="number" class="form-control"
+                                                                    id="refrigerantAddedLbs"
+                                                                    name="refrigerant_added_lbs">
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="refrigerantRemovedLbs">Refrigerant Reclaimed from Unit
+                                                                    <strong>(lbs)</strong></label>
+                                                                <input type="number" class="form-control"
+                                                                    id="refrigerantRemovedLbs"
+                                                                    name="refrigerant_removed_lbs">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Toggle for kg and lbs -->
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <button id="switchUnitButton" type="button"
+                                                                class="btn btn-primary mt-2">Switch to Pounds</button>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!--end code here-->
+                                                <!-- <div id="old-way-has-lbs-and-oz-section-only">
+                                                    <div class="container">
+
+                                                        <h5 class="my-3">Added Refrigerant:</h5>
+                                                        <div class="form-row">
+
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_added_lbs"
+                                                                    class="form-label">Lbs
+                                                                    <strong>Added:</strong></label>
+                                                                <input type="number" id="refrigerant_added_lbs"
+                                                                    name="refrigerant_added_lbs" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_added_oz" class="form-label">Oz
+                                                                    <strong>Added:</strong></label>
+                                                                <input type="number" id="refrigerant_added_oz"
+                                                                    name="refrigerant_added_oz" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="container">
+                                                        <h5 class="my-3">Removed Refrigerant:</h5>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_removed_lbs_id"
+                                                                    class="form-label">Lbs
+                                                                    <strong>Removed:</strong></label>
+                                                                <input type="number" id="refrigerant_removed_lbs_id"
+                                                                    name="refrigerant_removed_lbs" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="refrigerant_removed_oz_id"
+                                                                    class="form-label">Oz
+                                                                    <strong>Removed:</strong></label>
+                                                                <input type="number" id="refrigerant_removed_oz_id"
+                                                                    name="refrigerant_removed_oz" class="form-control"
+                                                                    value="0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
                                             </div>
-                                            <div class="form-check mx-3">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="noLeakDetected">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    No leak detected
-                                                </label>
-                                            </div>
-                                            <h5 class="mt-3">Other Test Results
-                                            </h5>
-                                            <div class="form-check mx-3 mt-3">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    No longer contains refrigerant
-                                                </label>
-                                            </div>
-                                            <div class="form-check mx-3 mt-3">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Vacuum test performed
-                                                </label>
-                                            </div>
-                                            <div class="form-check mx-3 mt-3">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Compressor oil removed
-                                                </label>
-                                            </div>
-                                            <div class="form-check mx-3 mt-3">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="pressureTestCheckbox">
-                                                <label class="form-check-label" for="pressureTestCheckbox">
-                                                    Pressure test performed
-                                                </label>
-                                            </div>
-                                            <div class="px-5">
-                                                <p class="mt-3" disabled>PSIG Result<span class="text-danger">*</span>
-                                                </p>
-                                                <input class="form-control" type="text" id="psigResultInput"
-                                                    name="psigResult" disabled>
+                                            <div id="otherTestResults">
+                                                <!-- Sub-menu Options -->
+                                                <h5 class="mt-3">Other Test Results
+                                                </h5>
+                                                <div class="form-check mx-3 mt-3">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefault" name="noLongerContainsRefrigerant">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        No longer contains refrigerant
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mx-3 mt-3">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefault" name="vacuumTest">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        Vacuum test performed
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mx-3 mt-3">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefault" name="compressorOil">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        Compressor oil removed
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mx-3 mt-3">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="pressureTestCheckbox" name="pressureTest">
+                                                    <label class="form-check-label" for="pressureTestCheckbox">
+                                                        Pressure test performed
+                                                    </label>
+                                                </div>
+                                                <div class="px-5">
+                                                    <p class="mt-3" disabled>PSIG Result<span
+                                                            class="text-danger">*</span>
+                                                    </p>
+                                                    <input class="form-control" type="text" id="psigResultInput"
+                                                        name="psigResult" disabled>
+                                                </div>
                                             </div>
                                             <h5 class="my-3">Additional Notes</h5>
                                             <div class="form-group">
-                                                <label class="mb-2" for="exampleFormControlTextarea1">Repair
+                                                <label class="mb-2" for="additionalNotes">Repair
                                                     Notes</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                    rows="3"></textarea>
+                                                <textarea class="form-control" id="additional_notes"
+                                                    name="additionalNotes" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="row d-flex pt-5 justify-content-center">
                                             <div class="d-flex flex-col align-items-center gap-4">
                                                 <button class="btn btn-outline-primary btn-lg w-100"
-                                                    type="button">Cancel</button>
+                                                    type="button" onclick="location.href='/back-by-role'">Cancel</button>
                                                 <button class="btn btn-lg btn-primary w-100 btn-next"
                                                     type="button">Next</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane" role="tabpanel" id="tab-3">
+                                        <!--Content for tab 3-->
                                         <!-- Start: Form Input -->
-                                        <div class="row">
-                                            <div class="col">
-                                                <h4>Adding Repair Refrigerant</h4>
+                                        <div class="row" id="form-review-section">
+                                            <!--Form Review Section-->
+                                            <h4>Review Form Input Here:</h4>
+                                            <ul class="list-group list-group-flush">
+                                                <li id="review_repair_date"
+                                                    class="list-group-item d-flex justify-content-between align-items-start">
+                                                    Repair Date:
+                                                </li>
+                                                <li id="review_refrigerant_type"
+                                                    class="list-group-item d-flex justify-content-between align-items-start">
+                                                    Refrigerant Type
+                                                </li>
+                                                <li id="review_additional_notes"
+                                                    class="list-group-item d-flex justify-content-between align-items-start"
+                                                    style="display: none;">
+                                                    Additional Notes: N/A
+                                                </li>
+                                                <li id="review_leak_test_result"
+                                                    class="list-group-item d-flex justify-content-between align-items-start">
+                                                    Leak Test Result: N/A
+                                                </li>
+                                                <li id="repair_leak_status"
+                                                    class="list-group-item d-flex justify-content-between align-items-start">
+                                                    Leak Repair Status: N/A
+                                                </li>
+                                                <li id="review_refrigerant_added"
+                                                    class="list-group-item d-flex justify-content-between align-items-start">
+                                                    Refrigerant Added: 0
+                                                </li>
+                                                <li id="review_refrigerant_removed"
+                                                    class="list-group-item d-flex justify-content-between align-items-start">
+                                                    Refrigerant Removed: 0
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div id='all-qr' class="row" style="display: none;">
+                                            <div class="row" id="qr-instructions-section">
+                                                <h4 class="mt-2">Adding Repair Refrigerant</h4>
                                                 <ul class="list-group my-3 mx-2">
-                                                    <li class="list-group-item border-0 p-0">1. Scan cylinder QR tag
+                                                    <li class="list-group-item border-0 p-0 mb-1">1. Scan cylinder QR tag
                                                     </li>
-                                                    <li class="list-group-item border-0 p-0">2. Add refrigerant to
-                                                        equipment</li>
-                                                    <li class="list-group-item border-0 p-0">3. Record refrigerant added
-                                                    </li>
+                                                    <li class="list-group-item border-0 p-0">2. Refrigerant will be
+                                                        added or
+                                                        removed from
+                                                        the cylinder's ReFit Tag</li>
                                                 </ul>
-                                                <p>If you do not need to add refrigerant, proceed to review ODS sheet.
+                                                <p><em>If you do not need to add refrigerant, click the button below to
+                                                    submit the form.</em></p>
                                                 </p>
                                             </div>
-                                            <div class="row d-flex pt-5 justify-content-center">
-                                                <div class="row d-flex flex-col align-items-center gap-4">
-                                                    <input class="btn btn-lg btn-primary w-100" type="submit"
-                                                        name="Scan Cylinder" value="Scan Cylinder">
-                                                    <button class="btn btn-outline-primary btn-lg w-100"
-                                                        onclick="submitMyForm()">Submit Form</button>
+                                            <div class="row" id="qr-scan-section">
+                                                <!-- Start: QR Image -->
+                                                <script
+                                                    src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js">
+                                                    </script>
+                                                <div id="container" id="qr-image">
+                                                    <a id="btn-scan-qr">
+                                                        <img
+                                                            src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
+                                                        <a />
 
+                                                        <p class="text-center">Click QR-Code Sample Image Above to Begin
+                                                            Scanning.</p>
+
+                                                        <canvas hidden="" id="qr-canvas"></canvas>
+
+                                                        <div id="qr-result" hidden="">
+                                                            <b>Data:</b> <span id="outputData"></span>
+                                                        </div>
                                                 </div>
+                                                <!-- End: QR Image-->
+                                                <!-- Start: QR Scanner Scripts -->
+                                                <script>
+                                                    var qrcode = window.qrcode;
+
+                                                    const video = document.createElement("video");
+                                                    const canvasElement = document.getElementById("qr-canvas");
+                                                    const canvas = canvasElement.getContext("2d");
+
+                                                    const qrResult = document.getElementById("qr-result");
+                                                    const outputData = document.getElementById("outputData");
+                                                    const btnScanQR = document.getElementById("btn-scan-qr");
+
+                                                    let scanning = false;
+
+                                                    qrcode.callback = async (res) => {
+                                                        if (res) {
+                                                            outputData.innerText = res;
+                                                            scanning = false;
+
+                                                            video.srcObject.getTracks().forEach(track => {
+                                                                track.stop();
+                                                            });
+
+                                                            qrResult.hidden = false;
+                                                            canvasElement.hidden = true;
+                                                            btnScanQR.hidden = false;
+
+                                                            let qrDiv = document.getElementById('all-qr');
+
+                                                            // Get refrigerant values in both lbs and kg
+                                                            var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
+                                                            var kgAdded = document.getElementById('refrigerantAddedKg').value;
+                                                            var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
+                                                            var kgRemoved = document.getElementById('refrigerantRemovedKg').value;
+
+                                                            // Check for a valid UUID
+                                                            if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(res)) {
+                                                                console.log("UUID Found: ", res);
+                                                                let myData = {
+                                                                    unique_token: res,
+                                                                    refrigerant_lbs_added: lbsAdded,
+                                                                    refrigerant_kg_added: kgAdded,
+                                                                    refrigerant_lbs_removed: lbsRemoved,
+                                                                    refrigerant_kg_removed: kgRemoved
+                                                                };
+
+                                                                // Call Flask backend
+                                                                try {
+                                                                    let response = await fetch('/for-ods-form-choose-qr-type', {
+                                                                        method: 'POST',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json',
+                                                                        },
+                                                                        body: JSON.stringify(myData), // Send Data to Server
+                                                                    });
+
+                                                                    if (response.ok) {
+                                                                        let data = await response.json();
+                                                                        // Handle the data received from the server
+                                                                        console.log("Data from server: ", data);
+                                                                        // Update the review section
+                                                                        my_calculated_amount_lbs = data.calculated_amount_lbs;
+                                                                        my_calculated_amount_kg = data.calculated_amount_kg;
+                                                                        console.log("Calculated amount lbs: ", my_calculated_amount_lbs);
+                                                                        console.log("Calculated amount kg: ", my_calculated_amount_kg);
+                                                                        if (my_calculated_amount_lbs >= 0) {
+                                                                            outputData.innerText = my_calculated_amount_lbs + ' lbs / ' + my_calculated_amount_kg + ' kg' + ' is the new amount of refrigerant in the cylinder.';
+                                                                            document.getElementById('scan-result-text').style.setProperty('display', 'block', 'important'); // Making display: block !important
+                                                                            document.getElementById('scan-result-text').textContent = my_calculated_amount_lbs + ' lbs / ' + my_calculated_amount_kg + ' kg' + ' is the new amount of refrigerant in the cylinder.'; // Update the text on the page
+                                                                            qrDiv.style.setProperty('display', 'none', 'important'); // Making display: none !important
+                                                                            
+                                                                        } else {
+                                                                            outputData.innerText = 'Oops! Something went wrong.' + data['error'];
+                                                                        }
+                                                                    } else {
+                                                                        console.log("Server responded with an error: ", response.status);
+                                                                    }
+                                                                } catch (error) {
+                                                                    console.log("Error fetching data: ", error);
+                                                                }
+
+                                                            } else {
+                                                                console.log("QR Code does not contain a URL or a UUID: ", res);
+                                                            }
+                                                        }
+                                                    };
+
+                                                    btnScanQR.onclick = () => {
+                                                        navigator.mediaDevices
+                                                            .getUserMedia({ video: { facingMode: "environment" } })
+                                                            .then(function (stream) {
+                                                                scanning = true;
+                                                                qrResult.hidden = true;
+                                                                btnScanQR.hidden = true;
+                                                                canvasElement.hidden = false;
+                                                                video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                                                                video.srcObject = stream;
+                                                                video.play();
+                                                                tick();
+                                                                scan();
+                                                            });
+                                                    };
+
+                                                    function tick() {
+                                                        canvasElement.height = video.videoHeight;
+                                                        canvasElement.width = video.videoWidth;
+                                                        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+
+                                                        scanning && requestAnimationFrame(tick);
+                                                    }
+
+                                                    function scan() {
+                                                        try {
+                                                            qrcode.decode();
+                                                        } catch (e) {
+                                                            setTimeout(scan, 300);
+                                                        }
+                                                    }
+                                                </script>
+
+                                                <!-- End: QR Scanner Scripts -->
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <h5 class="mt-3" id = scan-result-text style="display: none;"></h5>
+                                        </div>
+
+                                        <!--Form Submit Buttons-->
+                                        <div class="row d-flex pt-5 justify-content-center" id="form-submit-section">
+                                            <div class="row d-flex flex-col align-items-center gap-4">
+                                                <!-- <input class="btn btn-lg btn-primary w-100" type="submit"
+                                                    name="Scan Cylinder" value="Scan Cylinder"> -->
+                                                <button class="btn btn-outline-primary btn-lg w-100"
+                                                    onclick="submitMyForm()">Submit Form</button>
+                                            </div>
+                                        </div>
+                                        <!-- End: Form Submit Buttons -->
                                     </div>
                                 </div>
                             </div>
@@ -338,19 +575,49 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            const switchUnitButton = document.getElementById('switchUnitButton');
+            const refrigerantKgContainer = document.getElementById('refrigerantKgContainer');
+            const refrigerantLbsContainer = document.getElementById('refrigerantLbsContainer');
+
+            switchUnitButton.addEventListener('click', function () {
+                if (refrigerantKgContainer.style.display === 'none') {
+                    // Switch to kg view
+                    refrigerantKgContainer.style.display = 'block';
+                    refrigerantLbsContainer.style.display = 'none';
+                    switchUnitButton.innerText = 'Switch to Pounds';
+                    // Update review to kg (or zero if no kg value)
+                    document.getElementById('refrigerantAddedLbs').value = '0';
+                    document.getElementById('refrigerantRemovedLbs').value = '0';
+                } else {
+                    // Switch to lbs view
+                    refrigerantKgContainer.style.display = 'none';
+                    refrigerantLbsContainer.style.display = 'block';
+                    switchUnitButton.innerText = 'Switch to Kilograms';
+                    // Update review to lbs (or zero if no lbs value)
+                    document.getElementById('refrigerantAddedKg').value = '0';
+                    document.getElementById('refrigerantRemovedKg').value = '0';
+                }
+
+                // Update review texts
+                NewupdateRefrigerantAddedReview();
+                NewupdateRefrigerantRemovedReview();
+            });
+
             document.querySelectorAll('.btn-next').forEach(button => {
                 button.addEventListener('click', (e) => {
                     let nextTab = new bootstrap.Tab(document.querySelector('.nav-tabs .active').parentElement.nextElementSibling.querySelector('.nav-link'));
                     if (nextTab) {
                         nextTab.show();
                     }
+                    // var element = document.getElementById('my-special-element');
+                    // element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             });
             // Event listener for 'Leak detected'
-            document.getElementById('flexRadioDefault1').addEventListener('change', function () {
+            document.getElementById('leakDetectedRadio1').addEventListener('change', function () {
                 if (this.checked) {
-                    document.getElementById('radioOption1').disabled = false;
-                    document.getElementById('radioOption2').disabled = false;
+                    document.getElementById('leakRepairedRadioButton').disabled = false;
+                    document.getElementById('leakNotRepairedRadioButton').disabled = false;
                 }
             });
 
@@ -358,31 +625,225 @@
             document.getElementById('noLeakDetected').addEventListener('change', function () {
                 if (this.checked) {
                     // Reset and disable 'Leak Repaired' and 'Leak Not Repaired'
-                    document.getElementById('radioOption1').checked = false;
-                    document.getElementById('radioOption2').checked = false;
-                    document.getElementById('radioOption1').disabled = true;
-                    document.getElementById('radioOption2').disabled = true;
+                    document.getElementById('leakRepairedRadioButton').checked = false;
+                    document.getElementById('leakNotRepairedRadioButton').checked = false;
+                    document.getElementById('leakRepairedRadioButton').disabled = true;
+                    document.getElementById('leakNotRepairedRadioButton').disabled = true;
+                    document.getElementById('review_leak_test_result').textContent = 'Leak Test Result: No Leak Detected';
+                    document.getElementById('repair_leak_status').textContent = 'Leak Repair Status: N/A';
+
                 }
             });
-        });
-        document.getElementById('pressureTestCheckbox').addEventListener('change', function () {
-            var psigInput = document.getElementById('psigResultInput');
-            if (this.checked) {
-                psigInput.disabled = false;
-            } else {
-                psigInput.disabled = true;
-                psigInput.value = '';  // Clear the input field
+
+            document.getElementById('dateField').valueAsDate = new Date();
+
+
+            document.getElementById('repair-form').addEventListener('input', function () {
+                console.log('Form input changed!');
+                updateReviewSection();
+            });
+
+            function updateReviewSection() {
+                document.getElementById('review_repair_date').textContent = 'Repair Date: ' + document.getElementById('dateField').value;
+                document.getElementById('review_refrigerant_type').textContent = 'Refrigerant Type: ' + document.getElementById('refrigerant_type_id').value;
+                // Repeat for other fields
+                checkNoteStatus();
+                checkLeakStatus();
+                checkLeakRepairStatus();
+                showQRScan();
+                // Update review texts
+                NewupdateRefrigerantAddedReview();
+                NewupdateRefrigerantRemovedReview();
+                console.log('ran function');
             }
-        });
-        function submitMyForm() {
-            var form = document.getElementById('repair-form');
-            if (form.checkValidity()) {
-                form.submit();
-            } else {
-                // Optional: Provide feedback to the user that the form is invalid
-                console.log('Form is invalid!');
+            updateReviewSection();
+
+            function showQRScan() {
+                let qrDiv = document.getElementById('all-qr');
+
+                var kgAdded = document.getElementById('refrigerantAddedKg').value;
+                var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
+                var kgRemoved = document.getElementById('refrigerantRemovedKg').value;
+                var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
+
+                if (kgAdded != 0 || lbsAdded != 0 || kgRemoved != 0 || lbsRemoved != 0) {
+                    console.log("Displaying QR Scan Because Refrigerant Amount has Changed.");
+                    qrDiv.style.setProperty('display', 'block', 'important'); // Making display: block !important
+                } else {
+                    console.log("Not displaying QR Scan Because Refrigerant Amount has not Changed.");
+                    qrDiv.style.setProperty('display', 'none', 'important'); // Making display: none !important
+                }
             }
-        }
+
+
+            function checkNoteStatus() {
+                let noteInput = document.getElementById('additional_notes').value;
+                let noteReviewElement = document.getElementById('review_additional_notes');
+
+
+                if (noteInput != '') {
+                    noteReviewElement.textContent = 'Additional Notes: ' + noteInput;
+                    noteReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+                } else {
+                    console.log("No note input")
+                    noteReviewElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
+                }
+            }
+
+            function checkLeakStatus() {
+                let leakDetected = document.getElementById('leakDetectedRadio1').checked;
+                let noLeakDetected = document.getElementById('noLeakDetected').checked;
+                let leakReviewElement = document.getElementById('review_leak_test_result');
+
+                if (leakDetected) {
+                    console.log("Leak Detected");
+                    // Do something if leak is detected
+                    document.getElementById('review_leak_test_result').textContent = 'Leak Test Result: True';
+                    leakReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+                } else if (noLeakDetected) {
+                    console.log("No Leak Detected");
+                    // Do something if no leak is detected
+                    document.getElementById('review_leak_test_result').textContent = 'Leak Test Result: False';
+                    leakReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+                } else {
+                    console.log("No option selected");
+                    // Handle the case where no option is selected
+                    leakReviewElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
+                }
+            }
+
+            function checkLeakRepairStatus() {
+                let leakRepaired = document.getElementById('leakRepairedRadioButton').checked;
+                let leakNotRepaired = document.getElementById('leakNotRepairedRadioButton').checked;
+
+                let leakRepairReviewElement = document.getElementById('repair_leak_status');
+
+
+                if (leakRepaired) {
+                    console.log("Leak Repaired selected");
+                    // Do something if leak is repaired
+                    document.getElementById('repair_leak_status').textContent = 'Leak Repair Status: Repaired';
+                    leakRepairReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+
+                } else if (leakNotRepaired) {
+                    console.log("Leak Not Repaired selected");
+                    // Do something if leak is not repaired
+                    document.getElementById('repair_leak_status').textContent = 'Leak Repair Status: Not Repaired';
+                    leakRepairReviewElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+                } else {
+                    console.log("No option selected for leak repair status");
+                    // Handle the case where no option is selected
+                    leakRepairReviewElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
+                }
+            }
+
+            function NewupdateRefrigerantAddedReview() {
+                let reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
+                var kgAdded = document.getElementById('refrigerantAddedKg').value;
+                var lbsAdded = document.getElementById('refrigerantAddedLbs').value;
+                var reviewText = 'Refrigerant Added to Unit: ';
+
+                // Using getComputedStyle to check the display property
+                var displayStyle = window.getComputedStyle(refrigerantKgContainer).display;
+
+                if (displayStyle !== 'none') {
+                    // Display kilograms
+                    reviewText += kgAdded ? `${kgAdded} Kg` : 'Not specified';
+                } else {
+                    // Display pounds
+                    reviewText += lbsAdded ? `${lbsAdded} Lbs` : 'Not specified';
+                }
+
+                reviewRefrigerantAddedElement.textContent = reviewText;
+                reviewRefrigerantAddedElement.style.setProperty('display', kgAdded || lbsAdded ? 'block' : 'none');
+            }
+
+            function NewupdateRefrigerantRemovedReview() {
+                let reviewRefrigerantRemovedElement = document.getElementById('review_refrigerant_removed');
+                var kgRemoved = document.getElementById('refrigerantRemovedKg').value;
+                var lbsRemoved = document.getElementById('refrigerantRemovedLbs').value;
+                var reviewText = 'Refrigerant Removed/Reclaimed from Unit: ';
+
+                // Using getComputedStyle to check the display property
+                var displayStyle = window.getComputedStyle(refrigerantKgContainer).display;
+
+                if (displayStyle !== 'none') {
+                    // Display kilograms
+                    reviewText += kgRemoved ? `${kgRemoved} Kg` : 'Not specified';
+                } else {
+                    // Display pounds
+                    reviewText += lbsRemoved ? `${lbsRemoved} Lbs` : 'Not specified';
+                }
+
+                reviewRefrigerantRemovedElement.textContent = reviewText;
+                reviewRefrigerantRemovedElement.style.setProperty('display', kgRemoved || lbsRemoved ? 'block' : 'none');
+            }
+
+
+
+            function updateRefrigerantAddedReview() {
+                let reviewRefrigerantAddedElement = document.getElementById('review_refrigerant_added');
+
+                var lbsAdded = document.getElementById('refrigerant_added_lbs').value;
+                var ozAdded = document.getElementById('refrigerant_added_oz').value;
+                var reviewText = 'Refrigerant Added: ';
+
+                if (lbsAdded || ozAdded) {
+                    reviewText += `${lbsAdded || 0} Lbs ${ozAdded || 0} Oz`;
+                    reviewRefrigerantAddedElement.style.setProperty('display', 'block', 'important'); // Making display: none !important
+
+                } else {
+                    reviewText += 'Not specified';
+                    reviewRefrigerantAddedElement.style.setProperty('display', 'none', 'important'); // Making display: none !important
+                }
+
+                document.getElementById('review_refrigerant_added').textContent = reviewText;
+            }
+
+            function updateRefrigerantRemovedReview() {
+                var lbsRemoved = document.getElementById('refrigerant_removed_lbs_id').value;
+                var ozRemoved = document.getElementById('refrigerant_removed_oz_id').value;
+                var reviewText = 'Refrigerant Removed: ';
+                let reviewRefrigerantRemovedElement = document.getElementById('review_refrigerant_removed');
+
+                if (lbsRemoved || ozRemoved) {
+                    reviewText += `${lbsRemoved || 0} Lbs ${ozRemoved || 0} Oz`;
+                    reviewRefrigerantRemovedElement.style.setProperty('display', 'block', 'important');
+                } else {
+                    reviewText += 'Not specified';
+                    reviewRefrigerantRemovedElement.style.setProperty('display', 'none', 'important');
+                }
+
+                document.getElementById('review_refrigerant_removed').textContent = reviewText;
+            }
+
+            function submitMyForm() {
+                console.log("Submit Clicked")
+                var form = document.getElementById('repair-form');
+                if (form.checkValidity()) {
+                    form.submit();
+                } else {
+                    // Optional: Provide feedback to the user that the form is invalid
+                    console.log('Form is invalid!');
+                }
+            }
+
+            function scanResultText() {
+                var scanResultText = document.getElementById('scan-result-text');
+                scanResultText.textContent = 'Scan Result: ' + document.getElementById('outputData').value;
+            }
+
+            document.getElementById('pressureTestCheckbox').addEventListener('change', function () {
+                var psigInput = document.getElementById('psigResultInput');
+                if (this.checked) {
+                    psigInput.disabled = false;
+                } else {
+                    psigInput.disabled = true;
+                    psigInput.value = '';  // Clear the input field
+                }
+            });
+            //end of DOMContentLoaded
+        });
     </script>
 </body>
 

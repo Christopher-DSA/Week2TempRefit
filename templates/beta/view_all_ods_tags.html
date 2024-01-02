@@ -1,9 +1,18 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Technician Dashboard</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+
+
+
+
     <style>
         .banner-close-btn {
             position: absolute;
@@ -26,6 +35,11 @@
                 /* Adjust this value as needed */
             }
         }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
     </style>
     <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
     <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
@@ -37,7 +51,7 @@
 
 <body>
     <!-- Start: Navbar -->
-    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme="">
+    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme="" style="margin-bottom: 30px;">
         <div class="container-fluid"><a href="/back-by-role" class="btn btn-primary btn-lg" role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
                     class="bi bi-house-door-fill fs-1">
@@ -79,105 +93,66 @@
         </div>
     </nav>
     <!-- End: Navbar -->
-    <div class="position-relative" id="banner">
-        <a class="d-block text-decoration-none py-2" style="background: #AFD3FF;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10 col-9 banner-content">
-                        <span
-                            style="color: #111A66; font-size: 16px; font-family: Inter; font-weight: 400; line-height: 22.40px; word-wrap: break-word">Click</span>
-                        <span onclick="location.href='https://refitcanada.ca/'"
-                            style="color: #111A66; font-size: 16px; font-family: Inter; font-weight: 700; line-height: 22.40px; word-wrap: break-word">
-                            here</span>
-                        <span
-                            style="color: #111A66; font-size: 16px; font-family: Inter; font-weight: 400; line-height: 22.40px; word-wrap: break-word">
-                            to see how your company can benefit from refrigerant tracking.</span>
-                    </div>
-                    <div class="col-md-2 col-3 text-end">
-                        <button type="button" class="banner-close-btn" aria-label="Close"
-                            onclick="document.getElementById('banner').style.display='none'">
-                            &times;
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
 
-    <div
-        style="width: 100%; text-align: center; color: #121212; font-size: 28px; font-family: Poppins; font-weight: 600; line-height: 33.60px; word-wrap: break-word">
-        <br>
-        <h3>Welcome back, {{user_first_name}}!</h3>
-        <br>
-    </div>
+    <h1>All ODS Tags History: </h1>
 
-    <div class="container">
-        <div class="row">
-            <!-- Card box 1 -->
-            <div class="container">
-                <div class="row d-md-flex">
-                    <!-- Card box 1 -->
-                    <div class="col-md-6 col-12 mb-3" onclick="location.href='/equipment common/qr-scan'">
-                        <div class="card card-height-sm h-100 border btn p-0"
-                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); background-color: #AFD3FF;">
-                            <div class="card-body d-flex flex-md-column flex-row align-items-center"
-                                style="padding: 20px;">
-                                <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
-                                        class="bi bi-qr-code-scan" viewBox="0 0 16 16">
-                                        <path
-                                            d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0v-3Zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5ZM.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5Zm15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5ZM4 4h1v1H4V4Z" />
-                                        <path d="M7 2H2v5h5V2ZM3 3h3v3H3V3Zm2 8H4v1h1v-1Z" />
-                                        <path d="M7 9H2v5h5V9Zm-4 1h3v3H3v-3Zm8-6h1v1h-1V4Z" />
-                                        <path
-                                            d="M9 2h5v5H9V2Zm1 1v3h3V3h-3ZM8 8v2h1v1H8v1h2v-2h1v2h1v-1h2v-1h-3V8H8Zm2 2H9V9h1v1Zm4 2h-1v1h-2v1h3v-2Zm-4 2v-1H8v1h2Z" />
-                                        <path d="M12 9h2V8h-2v1Z" />
-                                    </svg>
-                                </button>
-                                <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">
-                                    Scan QR Tag</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Card box 2 -->
-                    <div class="col-md-6 col-12 mb-3" button onclick="location.href='https://refitcanada.ca/'">
-                        <div class="card h-100 border btn p-0"
-                            style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
-                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
-                                <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
-                                        viewBox="0 0 576 512">
-                                        <path
-                                            d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
-                                    </svg>
-                                </button>
-                                <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">Buy QR Tags</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row d-md-flex" >
-                    <div class="col-md-6 col-12 mb-3" onclick="location.href='/view_all_ods_tags'">
-                        <div class="card h-100 border btn p-0"
-                            style="height: 300px; border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
-                            <div class="card-body d-flex flex-md-column flex-row align-items-center">
-                                <button class="btn mb-4 mb-md-0 p-0" type="button">
-                                    <!-- SVG for Card 5 -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="3.5em" fill="#111A66"
-                                        class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-                                        <path
-                                            d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
-                                        <path
-                                            d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
-                                    </svg>
-                                </button>
-                                <p style="font-size: 12px; word-wrap: break-word;padding: 20px;">View My History</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <table id="data" class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Repair Date</th>
+                <th scope="col">Refrigerant Type</th>
+                <th scope="col">Unit Type</th>
+                <th scope="col">Model</th>
+                <th scope="col">View Tag</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in data%}
+            <tr>
+                <td>{{x.repair_date}}</td>
+                <td>{{x.refrigerant_type}}</td>
+                <td>{{x.unit_type}}</td>
+                <td>{{x.model}}</td>
+                <td>
+                    <form action="/ods-tags" method="post">
+                        <button type="submit" name ="selected_ods_tag" value="{{x.repair_form_id}}">View this tag</button>
+                        <input type="hidden" name="selected_ods_tag_id" value="{{x.repair_form_id}}">
+                    </form>
+                </td>
+                <!-- <td>
+                        <form action="/admin/reply" method="post">
+                            <button type="submit" name ="selected_user_id" value="{{data.user_id}}">Reply to this data</button>
+                            <input type="hidden" name="selected_data_id" value="{{data.data_id}}">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/admin/close_data" method="post">
+                            <button type="submit" name ="selected_data_id" value="{{data.data_id}}">Close data</button>
+                        </form>
+                    </td> -->
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 </body>
+<script>
+    $(document).ready(function () {
+        $('#data').DataTable({
+            columns: [
+                { searchable: true },
+                { searchable: true },
+                { searchable: true },
+                { searchable: true },
+                { searchable: false }
+            ]
+        });
+    });
+</script>
+
 </html>

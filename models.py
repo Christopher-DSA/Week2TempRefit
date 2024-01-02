@@ -1,6 +1,6 @@
 # In each table, one forignkey go with one relationship, other relationships should be deleted as they are duplicated from the reference table.
 # From user to company, in the user table, there should be empty, but in the user table, it shpould be a forignkey and a relationship.
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, Numeric, create_engine
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Boolean, REAL, Text, DateTime, Sequence, Numeric, Date, VARCHAR, create_engine
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
 from sqlalchemy.sql import func
 import os
@@ -238,6 +238,7 @@ class Unit(Base):
     unit_type = Column(String)
     store_id = Column(Integer,ForeignKey('Store.store_id'), nullable= True)
     serial_number = Column(String)
+    amount_of_refrigerant_in_unit_oz = Column(Numeric)
     
 
     technician = relationship('Technician', backref='Unit')
@@ -378,6 +379,10 @@ class Cylinder(Base):
     unique_url_id = Column(String)
     tare_weight_before_repair = Column(Numeric)
     tare_weight_after_repair = Column(Numeric)
+    clean_or_burnout = Column(Text)
+    current_refrigerant_weight_lbs = Column(Numeric)
+    current_refrigerant_weight_kg = Column(Numeric)
+    refrigerant_type = Column(VARCHAR(16))
 
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')
@@ -603,8 +608,76 @@ class DetailedEquipmentScanView(Base):
     def __repr__(self):
         return f"<DetailedEquipmentScanView(date_qr_scanned_eq={self.date_qr_scanned_eq}, tech_id={self.tech_id})>"
 
+class Repair_form(Base):
 
+    __tablename__ = "Repair_form"
 
+    repair_form_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    repair_date = Column(Date)
+    refrigerant_type = Column(Text)
+    leak_test_result = Column(Boolean)
+    is_leak_repaired = Column(Boolean)
+    no_longer_contains_refrigerant = Column(Boolean)
+    vacuum_test_performed = Column(Boolean)
+    compressor_oil_removed = Column(Boolean)
+    pressure_test_performed = Column(Boolean)
+    psig_result = Column(Numeric)
+    additional_notes = Column(Text)
+    refrigerant_added_lbs = Column(Numeric)
+    refrigerant_removed_lbs = Column(Numeric)
+    refrigerant_added_kg = Column(Numeric)
+    refrigerant_removed_kg = Column(Numeric)
+    tech_id = Column(Integer)
+    unit_id = Column(Integer)
+    job_number = Column(Text)
+    
+    def __repr__(self):
+        return 'Repair_form Model'
+
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Date, Text, Boolean, Numeric, ForeignKey
+
+Base = declarative_base()
+
+class RepairFormUnitView(Base):
+    __tablename__ = 'repairformunitview'  # Make sure this matches your view's name
+
+    # Primary key from Repair_form
+    repair_form_id = Column(Integer, primary_key=True)
+
+    # Other columns from Repair_form
+    repair_date = Column(Date)
+    refrigerant_type = Column(Text)
+    leak_test_result = Column(Boolean)
+    is_leak_repaired = Column(Boolean)
+    no_longer_contains_refrigerant = Column(Boolean)
+    vacuum_test_performed = Column(Boolean)
+    compressor_oil_removed = Column(Boolean)
+    pressure_test_performed = Column(Boolean)
+    psig_result = Column(Numeric)
+    additional_notes = Column(Text)
+    refrigerant_added_total_oz = Column(Numeric)
+    refrigerant_removed_total_oz = Column(Numeric)
+    tech_id = Column(Integer)
+
+    # Columns from Unit
+    unit_id = Column(Integer)
+    technician_id = Column(Integer)
+    unit_name = Column(String)
+    tag_id = Column(Integer)
+    other_attribute = Column(String)
+    installation_date = Column(String)  # Assuming String type based on your Unit table
+    last_maintenance_date = Column(String)  # Assuming String type
+    manufacturer = Column(String)
+    model = Column(String)
+    type_of_refrigerant = Column(String)
+    factory_charge_amount = Column(Integer)
+    unit_type = Column(String)
+    store_id = Column(Integer)
+    serial_number = Column(String)
+
+    def __repr__(self):
+        return f"<RepairFormUnitView(repair_form_id={self.repair_form_id}, unit_id={self.unit_id}, ...)>"
 
 
 # Class CRUD with all important features to work with the Database.
