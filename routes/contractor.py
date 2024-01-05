@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant
+from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant, RepairFormUnitView, Repair_form
 from functools import wraps
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -92,16 +92,13 @@ def view_my_techs_ods_tags():
         
         return render_template("beta/view_all_ods_tags.html")
     elif request.method == "POST":
-        data = ""
         #We need to get the technician id from the table
         selected_technician = request.form.get('technician_id')
+        data = CRUD.read(RepairFormUnitView, all=True, tech_id=selected_technician)
         
         
         return render_template("beta/view_all_ods_tags.html", data=data)
-        
-
-        return "Invalid request method (you posted to this route)"
-
+    
 @contractor.route('/technician_details', methods=['GET', 'POST'])
 def technician_managment():
         if request.method == 'GET':
