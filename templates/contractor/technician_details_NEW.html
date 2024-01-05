@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Template</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1>My Team: </h1>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>License No</th>
+                    <th>Delete Account</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in technicians %}
+                    <tr>
+                        <td class="user-name">{{ user['name'] }}</td>
+                        <td>{{ user['ods_licence_no'] }}</td>
+
+                        <td>
+                            <form method="post" action="/delete/technician" onsubmit="return confirmDelete();">
+                                <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                            <br>
+                            <form>
+                                <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                                <button type="submit" class="btn btn-secondary btn-sm">Archive</button>
+                            </form>
+                            <br>
+                            <form method="post" action="/equipment/ODS-history">
+                                <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                                <button type="submit" class="btn btn-primary btn-sm">View ODS</button>
+                            </form>
+                            <br>
+                            <form method="post" action="/equipment/maintenance_history">
+                                <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                                <button type="submit" class="btn btn-info btn-sm">Maintenance History</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        <button onclick="location.href='/add_technician'" class="btn btn-success">Join My Team</button>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete?");
+        }
+    </script>
+</body>
+
+</html>
