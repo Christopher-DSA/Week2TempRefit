@@ -107,7 +107,7 @@ def technician_managment():
             contractor_id = contractor_data.contractor_id
             technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
             print("----------")
-            print(technician_data[0].license_expiry_date)
+            # print(technician_data[0].license_expiry_date)
             # print(technician_data[1].user_id)
             technician_list = []
             for item in technician_data:
