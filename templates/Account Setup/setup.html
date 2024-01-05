@@ -180,7 +180,7 @@
                     <div class="row">
                       <div class="col">
                         <br>
-                        <h4 class = "mb-3">Company Details</h4><!-- Start: Company Name -->
+                        <h4 class="mb-3">Company Details</h4><!-- Start: Company Name -->
                         <div class="tab-pane" role="tabpanel" id="tab-2">
                           <!-- Start: Form Input -->
                           <div class="row">
@@ -198,9 +198,7 @@
                         <div class="mb-4"><label class="form-label">Company Name <span
                               class="text-danger">*</span></label><input class="form-control" type="text"
                             name="Company Name" required=""></div><!-- End: Company Name -->
-                        <!-- Start: Branch Number -->
-                        <div class="mb-4"><label class="form-label">Company Branch Number (optional)</label><input
-                            class="form-control" type="text" name="Branch Number" required="" id="not-required"></div>
+
                         <!-- End: Branch Number -->
                         <!-- Start: Phone Number -->
                         <div class="mb-4"><label class="form-label">Company Phone Number <span
@@ -211,21 +209,27 @@
                               class="text-danger">*</span></label><input class="form-control" type="email"
                             name="recipient_email" required=""></div><!-- End: ODS Email -->
                         <!-- Start: Company Address -->
-                        <h4 class = "mb-3">Optional Company Details </h4>
+                        <h4 class="mb-3">Optional Company Details (These do not get saved to database yet) </h4>
+                        <!-- Start: Branch Number -->
+                        <div class="mb-4"><label class="form-label">Company Branch Number</label><input
+                            class="form-control" type="text" name="Branch Number" required="" id="not-required"></div>
                         <div class="mb-4"><label class="form-label">Company Address</label><input class="form-control"
                             type="text" name="Company Address" id="not-required"></div><!-- End: Company Address -->
                         <!-- Start: Suite -->
                         <div class="mb-4"><label class="form-label">Apartment, Suite, etc.</label><input
-                            class="form-control" type="text" name="Suite Number" id="not-required"></div><!-- End: Suite -->
+                            class="form-control" type="text" name="Suite Number" id="not-required"></div>
+                        <!-- End: Suite -->
                         <!-- Start: Company City -->
                         <div class="mb-4"><label class="form-label">City</label><input class="form-control" type="text"
                             name="Company City" required="" id="not-required"></div><!-- End: Company City -->
                         <!-- Start: Company Province -->
                         <div class="mb-4"><label class="form-label">Province</label><input class="form-control"
-                            type="text" name="Company Province" required="" id="not-required"></div><!-- End: Company Province -->
+                            type="text" name="Company Province" required="" id="not-required"></div>
+                        <!-- End: Company Province -->
                         <!-- Start: Company Postal -->
                         <div class="mb-4"><label class="form-label">Postal Code</label><input class="form-control"
-                            type="text" required="" name="Postal Code" id="not-required" pattern="^[ABCEGHJKLMNPRSTVXY]\d[A-Z] \d[A-Z]\d$"
+                            type="text" required="" name="Postal Code" id="not-required"
+                            pattern="^[ABCEGHJKLMNPRSTVXY]\d[A-Z] \d[A-Z]\d$"
                             title="Please enter a valid Canadian postal code in the format A1A 1A1"></div>
                         <!-- End: Company Postal -->
                       </div>

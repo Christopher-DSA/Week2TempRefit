@@ -411,6 +411,7 @@ def account_setup():
         City = request.form['Company City']
         Company_province = request.form['Company Province']
         Postal_code = request.form['Postal Code']
+        phone_number = request.form['Phone Number']
         #Drop down menu for role, will add later
         selected_role = request.form['Selected_role']
                 
@@ -422,7 +423,7 @@ def account_setup():
         if selected_role == 'technician':
             CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License, ods_recipient_email=ODS_sheet_recipient_email)
         elif selected_role == 'contractor':
-            CRUD.create(Contractor, False, user_id = current_user_id, companyName = Company_name, status = 'active', name = first_name, branchId = Company_branch_number)
+            CRUD.create(Contractor, False, user_id = current_user_id, name = Company_name, status = 'active', telephone = phone_number, ods_recipient_email = ODS_sheet_recipient_email)
         elif selected_role == 'wholesaler':
             pass
         elif selected_role == 'admin':
