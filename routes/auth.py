@@ -405,7 +405,7 @@ def account_setup():
         ODS_License = request.form['License']
         Company_name = request.form['Company Name']
         Company_branch_number = request.form['Branch Number']
-        ODS_sheet_recipent_email = request.form['Recipient Email']
+        ODS_sheet_recipient_email = request.form['recipient_email']
         Company_address = request.form['Company Address']
         Apartment_number = request.form['Suite Number']
         City = request.form['Company City']
@@ -413,14 +413,14 @@ def account_setup():
         Postal_code = request.form['Postal Code']
         #Drop down menu for role, will add later
         selected_role = request.form['Selected_role']
-        
-        #Always do these two things.
+                
+        #Always do these two things. We already create the user row in the database in /create route. which is directly above this one.
         CRUD.update(User, 'role', new = selected_role, email = current_user_email)
         CRUD.create(User_Detail, False, first_name=first_name, last_name=Last_name, user_id = current_user_id)
 
         print("Selected role: ", selected_role)
         if selected_role == 'technician':
-            CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License)
+            CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License, ods_recipient_email=ODS_sheet_recipient_email)
         elif selected_role == 'contractor':
             CRUD.create(Contractor, False, user_id = current_user_id, companyName = Company_name, status = 'active', name = first_name, branchId = Company_branch_number)
         elif selected_role == 'wholesaler':

@@ -71,6 +71,7 @@ class Technician(Base):
     user_status = Column(String)
     contractor_status = Column(String)
     license_expiry_date = Column(String)
+    ods_recipent_email = Column(String)
 
     user = relationship('User', backref='Technician')
     contractor = relationship('Contractor', backref='Technician')
