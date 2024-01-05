@@ -8,6 +8,64 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+    <style>
+        .info-row {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .info-row:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+            font-size: 1.1em;
+        }
+
+        .info-label i {
+            margin-right: 10px;
+        }
+
+        .info-value {
+            font-size: 1em;
+            color: #333;
+            margin-left: 15px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #000000;
+            margin-bottom: 30px;
+            /* Adjust as needed */
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            /* Large, readable font size */
+            font-weight: bold;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: bold !important;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
 </head>
 
 <body>
@@ -54,8 +112,12 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-4">
-        <h1>My Team: </h1>
+    <div class="container mt-4 justify-content-center">
+
+        <div class="row">
+            <h1>Manage Technicians</h1>
+        </div>
+
         <table class="table table-hover">
             <thead class="table-light">
                 <tr>
