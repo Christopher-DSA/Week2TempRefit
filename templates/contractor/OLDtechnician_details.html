@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Template</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My Team: </h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>License No</th>
+                <th>Delete Account</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in technicians %}
+                <tr>
+                    <td class="user-name">{{ user['name'] }}</td>
+                    <td>{{ user['ods_licence_no'] }}</td>
+
+                    <td>
+                        <form method="post" action="/delete/technician" onsubmit="return confirmDelete();">
+                            <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                        <br>
+                        <form>
+                            <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                            <button type="submit">Archive</button>
+                        </form>
+                        <br>
+                        <form method="post" action="/equipment/ODS-history">
+                            <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                            <button type="submit">View ODS</button>
+                        </form>
+                        <br>
+                        <form method="post" action="/equipment/maintenance_history">
+                            <input type="hidden" name="technician_id" value="{{ user['tech_user_id'] }}">
+                            <button type="submit">Maintanance History</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<button onclick="location.href='/add_technician'">Join My Team</button>
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete?");
+    }
+</script>
+
+
+
+    <!-- <div class="action-buttons">
+        <button id="archiveBtn" name="archiveBtn">Archive</button>
+        <button id="deleteBtn" name="deleteBtn">Delete</button>
+    </div> -->
+
+    <!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const nameCells = document.querySelectorAll('.user-name');
+    const actionButtons = document.querySelector('.action-buttons');
+
+    nameCells.forEach(cell => {
+        cell.addEventListener('click', function () {
+            actionButtons.style.display = 'block';
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        const target = event.target;
+
+        // Check if the click is outside the table and action buttons
+        if (!target.closest('table') && !target.closest('.action-buttons')) {
+            actionButtons.style.display = 'none';
+        }
+
+        // Check if the click is on the delete button
+        if (target.id === 'deleteBtn') {
+            const row = target.closest('tr'); // Find the closest row to the clicked delete button
+            const userName = row.querySelector('.user-name').textContent; // Get the user name from the row
+
+            flashUserName(userName);
+        }
+    });
+
+    function flashUserName(userName) {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = `Deleting user: ${userName}`;
+        messageDiv.classList.add('flash-message');
+
+        document.body.appendChild(messageDiv);
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
+    }
+});
+
+    </script> -->
+ 
+</body>
+
+</html>

@@ -902,6 +902,8 @@ def view_all_ods_tags():
     else:
         return "Invalid request method (you posted to this route)"
     
+
+    
 #This is the table with the list of all ods tags a EQUIPMENT HAS attached to it.
 @technician.route("/view_unit_ods_tags", methods=["GET", "POST"])
 def view_all_unit_ods_tags():
