@@ -880,10 +880,13 @@ def ods_tags_new():
         selected_repair_form_id = request.form.get('selected_ods_tag')
         print("selected_repair_form_id: ", selected_repair_form_id)
         
-        current_tech_id = session.get('tech_id')
         
         #Get data from database
         data = CRUD.read(Repair_form, all=False, repair_form_id=selected_repair_form_id)
+        
+        current_tech_id = data.tech_id
+
+        
         tech_data = CRUD.read(Technician, all=False, technician_id=current_tech_id)
         user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
         company_data = CRUD.read(Contractor, all=False, contractor_id=tech_data.contractor_id)

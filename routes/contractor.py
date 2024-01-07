@@ -87,9 +87,6 @@ def handle_qr_code():
 @contractor.route("/view_my_techs_ods_tags", methods=["GET", "POST"])
 def view_my_techs_ods_tags():
     if request.method == "GET":
-        # tech_id_current = session.get('tech_id')
-        # data = CRUD.read(RepairFormUnitView, all=True, tech_id=tech_id_current)
-        
         return render_template("beta/view_all_ods_tags.html")
     elif request.method == "POST":
         #We need to get the technician id from the table
