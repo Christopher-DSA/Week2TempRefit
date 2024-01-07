@@ -242,6 +242,8 @@ class Unit(Base):
     store_id = Column(Integer,ForeignKey('Store.store_id'), nullable= True)
     serial_number = Column(String)
     amount_of_refrigerant_in_unit_oz = Column(Numeric)
+    amount_of_refrigerant_kg = Column(Numeric)
+    amount_of_refrigerant_lbs = Column(Numeric)
     
 
     technician = relationship('Technician', backref='Unit')
