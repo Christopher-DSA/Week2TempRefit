@@ -336,7 +336,7 @@ def add_qr():
 def remove_qr():
     return render_template('Equipment Common/qr-remove.html')
 
-# REPAIR MAINTENANCE LOG FOR EQUIPMENT.
+# REPAIR MAINTENANCE LOG FOR EQUIPMENT. Repair Ods
 
 
 @technician.route('/equipment/repair_ODS_Sheet', methods=['GET', 'POST'])
@@ -958,10 +958,12 @@ def ods_tags_new():
     else:
         selected_repair_form_id = request.form.get('selected_ods_tag')
         print("selected_repair_form_id: ", selected_repair_form_id)
-
+        
         # Get data from database
         data = CRUD.read(Repair_form, all=False,
                          repair_form_id=selected_repair_form_id)
+        
+        print("step 2")
 
         current_tech_id = data.tech_id
 

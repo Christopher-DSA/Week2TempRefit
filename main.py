@@ -1,7 +1,5 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
-from flask import Flask, request, jsonify
 from models import User, CRUD
 from routes.store import store
 from routes.admin import admin
@@ -11,7 +9,6 @@ from routes.wholesaler import wholesaler
 from routes.contractor import contractor
 from routes.cylinder import cylinder
 from routes.auth import auth
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager #New package, you will need to pip install flask-jwt-extended.
 from datetime import timedelta

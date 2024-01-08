@@ -660,7 +660,6 @@ class RepairFormUnitView(Base):
     unit_id = Column(Integer)
     technician_id = Column(Integer)
     unit_name = Column(String)
-    tag_id = Column(Integer)
     other_attribute = Column(String)
     installation_date = Column(String)  # Assuming String type based on your Unit table
     last_maintenance_date = Column(String)  # Assuming String type
