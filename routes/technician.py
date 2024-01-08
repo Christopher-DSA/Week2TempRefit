@@ -448,8 +448,15 @@ def repair_ODS_Sheet_New():
                 return False
         form_data_dictionary['leakDetectedRadio'] = convert_radio_to_boolean(
             form_data_dictionary.get('leakDetectedRadio'))
-        form_data_dictionary['repairStatusRadio'] = convert_radio_to_boolean(
-            form_data_dictionary.get('repairStatusRadio'))
+        
+        #repairStatusRadio
+        
+        if form_data_dictionary.get('repairStatusRadio') == 'leakRepaired':
+            form_data_dictionary['repairStatusRadio'] = True
+        elif form_data_dictionary.get('repairStatusRadio') == 'leakNotRepaired':
+            form_data_dictionary['repairStatusRadio'] = False
+        else:
+            form_data_dictionary['repairStatusRadio'] = None
 
         def convert_check_to_boolean(form_value):
             if form_value == '':
