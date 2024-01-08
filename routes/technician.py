@@ -140,14 +140,14 @@ def equipment_create_QR():
         # Metric or Imperial
         if currentRefrigerantWeightUnit == 'metric':
             print("Using Metric KG/G")
-            amount_of_refrigerant_kg = currentRefrigerantWeight_1 + (currentRefrigerantWeight_2 * 0.001)
-            amount_of_refrigerant_lbs = amount_of_refrigerant_kg * 2.20462
+            amount_of_refrigerant_kg = float(currentRefrigerantWeight_1) + (float(currentRefrigerantWeight_2) * 0.001)
+            amount_of_refrigerant_lbs = float(amount_of_refrigerant_kg) * 2.20462
             # rounding
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
         else:
             print("Using Imperial LBS/OZ")
-            amount_of_refrigerant_lbs = currentRefrigerantWeight_1 + (currentRefrigerantWeight_2 * 0.0625)
+            amount_of_refrigerant_lbs = float(currentRefrigerantWeight_1) + (float(currentRefrigerantWeight_2) * 0.0625)
             amount_of_refrigerant_kg = amount_of_refrigerant_lbs * 0.453592
             # rounding
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
@@ -158,10 +158,10 @@ def equipment_create_QR():
             serialNumber = "N/A"
         
         # Making sure strings do not have special characters
-        manufacturerName = re.sub('[^A-Za-z0-9]+', '', manufacturerName)
-        equipmentType = re.sub('[^A-Za-z0-9]+', '', equipmentType)
-        refrigerantType = re.sub('[^A-Za-z0-9]+', '', refrigerantType)
-        serialNumber = re.sub('[^A-Za-z0-9]+', '', serialNumber)
+        manufacturerName = re.sub('[^A-Za-z0-9 &]+', '', manufacturerName)
+        equipmentType = re.sub('[^A-Za-z0-9 ]+', '', equipmentType)
+        refrigerantType = re.sub('[^A-Za-z0-9 ]+', '', refrigerantType)
+        serialNumber = re.sub('[^A-Za-z0-9 ]+', '', serialNumber)
         
         
         ###################################################
@@ -171,7 +171,7 @@ def equipment_create_QR():
         tech_id = session.get('tech_id')
         # 1.Add new unit to the database
         my_unit = CRUD.create(Unit, type_of_refrigerant=refrigerantType, installation_date=createDate,
-                              manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, current_refrigerant_weight_kg=amount_of_refrigerant_kg, current_refrigerant_weight_lbs=amount_of_refrigerant_lbs)
+                              manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, amount_of_refrigerant_kg=amount_of_refrigerant_kg, amount_of_refrigerant_lbs=amount_of_refrigerant_lbs)
         my_equipment_id = my_unit.unit_id
         # 2.Get the Unique URL for the unit from the QR code.
         unique_equipment_token = session.get('QR_unique_token')
@@ -192,27 +192,30 @@ def successful_add():
     return render_template('equipment/equipment-linked.html')
 
 
-@technician.route('/choose-qr-type', methods=['GET'])
+@technician.route('/choose-qr-type', methods=['POST'])
 def my_choose_qr_type():
-    print("inside choose-qr-type")
-    # Check if qr is already in the system:
-    unique_token = request.args.get('unique_token')  # get token from url
-    x = None
-    print("unique_token IN QR TYPE: ", unique_token)
-    if unique_token != None:  # always will have this after a qr scan.
-        x = CRUD.read(Tag, all=False, tag_url=unique_token)
-        if x != None:  # qr is registered in the system
-            if x.type == "equipment":
-                print("this is an equipment qr tag")
-                url = 'equipment-info/' + str(unique_token)
-                return redirect(url)
-            elif x.type == "cylinder":
-                url = 'cylinder_info/' + str(unique_token)
-                return redirect(url)
-        else:  # go to register a new tag page
-            print("error in qr scan, this qr tag needs to be registered.")
-            session['QR_unique_token'] = unique_token
-            return render_template('Equipment Common/choose-qr-type.html')
+    if request.method == 'POST':
+        print("inside choose-qr-type")
+        # Check if qr is already in the system:
+        unique_token = request.form.get('unique_token') # get token from post request
+        print("unique_token IN QR TYPE: ", unique_token)
+        if unique_token:  # always will have this after a qr scan.
+            print("going to read tag in database")
+            print("unique_token AGAIN: ", unique_token)
+            x = CRUD.read(Tag, all=False, tag_url=str(unique_token))
+            
+            if x != None:  # qr is registered in the system
+                if x.type == "equipment":
+                    print("this is an equipment qr tag")
+                    url = 'equipment-info/' + str(unique_token)
+                    return redirect(url)
+                elif x.type == "cylinder":
+                    url = 'cylinder_info/' + str(unique_token)
+                    return redirect(url)
+            else:  # go to register a new tag page
+                print("error in qr scan, this qr tag needs to be registered.")
+                session['QR_unique_token'] = unique_token
+                return render_template('Equipment Common/choose-qr-type.html')
 
 
 @technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
@@ -351,17 +354,7 @@ def repair_ODS_Sheet_New():
         data = CRUD.read(Unit, all=False, unit_id=x)
         my_dict = {
             'type_of_refrigerant': data.type_of_refrigerant,
-            'factory_charge_amount': data.factory_charge_amount
         }
-        if (float(my_dict['factory_charge_amount']) % 16 == 0):
-            my_dict['factory_charge_lbs'] = float(
-                my_dict['factory_charge_amount']) / 16
-            my_dict['factory_charge_oz'] = 0
-        else:
-            remainder = float(my_dict['factory_charge_amount']) % 16
-            my_dict['factory_charge_lbs'] = (
-                float(my_dict['factory_charge_amount']) - remainder) / 16
-            my_dict['factory_charge_oz'] = remainder
         print("my_dict: ", my_dict)
         return render_template('equipment/repair_ODS_Sheet.html', data=my_dict, date=str(current_scan_date))
 
@@ -504,7 +497,21 @@ def repair_ODS_Sheet_New():
         # Update unit table with new data.
         CRUD.update(Unit, unit_id=session.get('unit_id'),
                     attr="last_maintenance_date", new=model_data['repair_date'])
-        # CRUD.update(Unit, unit_id = session.get('unit_id'), attr = "amount_of_refrigerant_in_unit_oz", new = new_refrigerant_amount)
+        
+        #Math for new amount of refrigerant in unit table in database.
+        previous_unit_data = CRUD.read(Unit, all=False, unit_id=session.get('unit_id'))
+        previous_amount_lbs = previous_unit_data.amount_of_refrigerant_lbs
+        previous_amount_kg = previous_unit_data.amount_of_refrigerant_kg
+        
+        new_amount_lbs = float(previous_amount_lbs) + model_data['refrigerant_added_lbs'] - model_data['refrigerant_removed_lbs']
+        new_amount_kg = float(previous_amount_kg) + model_data['refrigerant_added_kg'] - model_data['refrigerant_removed_kg']
+        
+        ###################################################
+        #Update amount of refrigerant inside Unit.
+        
+        CRUD.update(Unit, unit_id=session.get('unit_id'), attr="amount_of_refrigerant_lbs", new=new_amount_lbs)
+        CRUD.update(Unit, unit_id=session.get('unit_id'), attr="amount_of_refrigerant_kg", new=new_amount_kg)
+        
         # Send email to contractor
         try:
             print("start of try")

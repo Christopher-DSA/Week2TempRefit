@@ -28,9 +28,10 @@ if __name__ ==  '__main__':
     # Choice = input("\nCustom Data or Unique Token?(1 or 2)[if unsure, choose 2]: ")
     # print(Choice)
     
-    Choice = '2'
+    Choice = '1'
+    myText = 'TST0000001'
     if Choice == '1':
-        create_qr_code(Choice)
+        create_qr_code(myText)
     elif Choice == '2':
         generate_uuid = str(uuid.uuid4())
         unique_token = generate_uuid
