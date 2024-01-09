@@ -58,7 +58,7 @@ def email():
 @auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        print("Received POST request for login.")
+        print("Received POST request for login Login Button Pressed.")
         
         #1. Get the data from the form.
         entered_email = request.form["Email"]

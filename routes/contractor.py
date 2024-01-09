@@ -401,6 +401,15 @@ def refrigerant_type(refrigerant):
 @contractor.route('/contractor_activity_logs', methods=['POST','GET'])
 def contractor_activity_logs():
     if request.method == 'GET':
-        current_contractor_id = session.get('contractor_id')
-        data = CRUD.read(Activity_Logs, all=True))
-        return render_template('beta/contractor_activity_logs.html')
+        #Getting the data we need
+        current_user_id = session.get('user_id')
+        contractor_data = CRUD.read(Contractor,user_id=current_user_id)
+        current_contractor_id = contractor_data.contractor_id
+        
+        ####
+        activity_data = CRUD.read(Activity_Logs, contractor_id=current_contractor_id, all=True)
+        
+        
+        #Sending the data over
+        data = CRUD.read(Activity_Logs, all=True)
+        return render_template('beta/contractor_activity_logs.html', data=activity_data)
