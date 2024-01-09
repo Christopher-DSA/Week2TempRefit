@@ -550,6 +550,19 @@ class Cylinder_History(Base):
     def __repr__(self):
         return 'Cylinder History Model'
     
+class Activity_Logs(Base):
+
+    __tablename__ = "Activity_Logs"
+
+    activity_log_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    activity_type = Column(Text)
+    date_logged = Column(Date)
+    user_id = Column(Integer)
+
+    
+    def __repr__(self):
+        return 'Activity Logs Model'
+    
 
 
 class Equipment_History(Base):

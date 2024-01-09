@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant, RepairFormUnitView, Repair_form
+from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant, RepairFormUnitView, Repair_form, Activity_Logs
 from functools import wraps
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -396,3 +396,11 @@ def refrigerant_type(refrigerant):
                             }
                         dt.append(cylinder)
     return render_template('contractor/refregerant_inventory.html',dt=dt)
+
+
+@contractor.route('/contractor_activity_logs', methods=['POST','GET'])
+def contractor_activity_logs():
+    if request.method == 'GET':
+        current_contractor_id = session.get('contractor_id')
+        data = CRUD.read(Activity_Logs, all=True))
+        return render_template('beta/contractor_activity_logs.html')
