@@ -560,6 +560,7 @@ class Activity_Logs(Base):
     user_id = Column(Integer)
     contractor_id = Column(Integer)
     user_role = Column(Text)
+    technician_id = Column(Integer)
 
     
     def __repr__(self):

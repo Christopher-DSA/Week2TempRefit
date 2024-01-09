@@ -109,6 +109,7 @@ def login():
                 current_user_id=session.get('user_id')
                 current_tech_id = CRUD.read(Technician, user_id=current_user_id).technician_id
                 session['tech_id'] = current_tech_id
+                session['contractor_id'] = CRUD.read(Technician, user_id=current_user_id).contractor_id
                 print(current_tech_id)
                 #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
@@ -117,7 +118,8 @@ def login():
                 #An admin has logged in! This is now functional.
                 return redirect('/admin')
             elif current_user.role=='contractor':
-                session['user_role'] = 'contractor'                
+                session['user_role'] = 'contractor'
+                session['contractor_id'] = CRUD.read(Contractor, user_id=session.get('user_id')).contractor_id            
                 #A contractor has logged in! This is now functional.
                 return redirect(url_for('contractor.dashboardcontractor'))
             elif current_user.role=='wholesaler':

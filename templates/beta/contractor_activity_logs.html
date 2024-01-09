@@ -95,32 +95,29 @@
     </nav>
     <!-- End: Navbar -->
 
-    <h1>ReFit Activity Logs: </h1>
+    <h1>REFit Activity Logs: </h1>
 
 
     <table id="data" class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">Repair Date</th>
-                <th scope="col">Refrigerant Type</th>
-                <th scope="col">Unit Type</th>
-                <th scope="col">Model</th>
-                <th scope="col">View Tag</th>
+                <th scope="col">Date</th>
+                <th scope="col">Activity Type</th>
+                <th scope="col">User Type</th>
             </tr>
         </thead>
         <tbody>
             {% for x in data%}
             <tr>
-                <td>{{x.repair_date}}</td>
-                <td>{{x.refrigerant_type}}</td>
-                <td>{{x.unit_type}}</td>
-                <td>{{x.model}}</td>
-                <td>
+                <td>{{x.date_logged}}</td>
+                <td>{{x.activity_type}}</td>
+                <td>{{x.user_role}}</td>
+                <!-- <td>
                     <form action="/ods-tags" method="post">
                         <button type="submit" name ="selected_ods_tag" value="{{x.repair_form_id}}">View this tag</button>
                         <input type="hidden" name="selected_ods_tag_id" value="{{x.repair_form_id}}">
                     </form>
-                </td>
+                </td> -->
                 <!-- <td>
                         <form action="/admin/reply" method="post">
                             <button type="submit" name ="selected_user_id" value="{{data.user_id}}">Reply to this data</button>
@@ -149,8 +146,7 @@
                 { searchable: true },
                 { searchable: true },
                 { searchable: true },
-                { searchable: true },
-                { searchable: false }
+                { searchable: false },
             ]
         });
     });

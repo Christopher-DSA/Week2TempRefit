@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,Cylinder,Reclaim_Recovery, Refrigerant, Cylinder_Type, Tag, Cylinder_History
+from models import CRUD,Cylinder,Reclaim_Recovery, Refrigerant, Cylinder_Type, Tag, Cylinder_History, Activity_Logs, Technician
 from models import CRUD, User,User_Detail,Contractor
 from functools import wraps
 import UUID_Generate
@@ -164,6 +164,20 @@ def new_cylinder_view():
             
             #New Row in Tag Table
             CRUD.create(Tag, tag_url = unique_cylinder_token, cylinder_id = new_row.cylinder_id, type ="cylinder")
+            
+            # 4. Record the activity in the Activity_Logs table.#####################
+            current_date = datetime.now().strftime("%Y-%m-%d")
+            current_user_role = session.get('user_role')
+            current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
+            current_user_id = session.get('user_id')
+            tech_id = session.get('tech_id')
+        
+            if current_user_role == 'technician':
+                CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-CYLINDER-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+            elif current_user_role == 'contractor':
+                CRUD.create(Activity_Logs, activity_type='NEW-CYLINDER-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+            
+            ############################################
             return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token)
         else:
             print("error adding row to TAG table, Try enabling cookies in your browser for site to function properly.")

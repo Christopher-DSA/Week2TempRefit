@@ -2,7 +2,7 @@
 from flask import make_response, session, Blueprint, jsonify
 from flask import session, send_from_directory, send_file
 from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, request
-from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer, Contractor, Cylinder_History, Equipment_History, RepairFormUnitView, ODP, DetailedEquipmentScanView, Repair_form
+from models import CRUD, User, User_Detail, Technician, Unit, Cylinder, Tag, Technician_Offer, Contractor, Cylinder_History, Equipment_History, RepairFormUnitView, ODP, DetailedEquipmentScanView, Repair_form, Activity_Logs
 from functools import wraps
 import pint
 from datetime import datetime
@@ -168,7 +168,7 @@ def equipment_create_QR():
         ########### Add new unit to the database############
         ###################################################
         # 0.Get Technician ID from session.
-        tech_id = session.get('tech_id')
+        tech_id = session.get('tech_id') #hmmm
         # 1.Add new unit to the database
         my_unit = CRUD.create(Unit, type_of_refrigerant=refrigerantType, installation_date=createDate,
                               manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, amount_of_refrigerant_kg=amount_of_refrigerant_kg, amount_of_refrigerant_lbs=amount_of_refrigerant_lbs)
@@ -178,6 +178,17 @@ def equipment_create_QR():
         # 3.Add the tag to the database "Tag" table.
         CRUD.create(Tag, tag_url=unique_equipment_token,
                     unit_id=my_equipment_id, type="equipment")
+        # 4. Record the activity in the Activity_Logs table.
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        current_user_role = session.get('user_role')
+        current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
+        current_user_id = session.get('user_id')
+        
+        if current_user_role == 'technician':
+            CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+        elif current_user_role == 'contractor':
+            CRUD.create(Activity_Logs, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+
         # 5.Render Success page
         return render_template('equipment/equipment-linked.html', unique_url=unique_equipment_token, tech_id=tech_id)
 
@@ -518,6 +529,15 @@ def repair_ODS_Sheet_New():
         
         CRUD.update(Unit, unit_id=session.get('unit_id'), attr="amount_of_refrigerant_lbs", new=new_amount_lbs)
         CRUD.update(Unit, unit_id=session.get('unit_id'), attr="amount_of_refrigerant_kg", new=new_amount_kg)
+        
+        #record activity in activity logs table
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        current_user_role = session.get('user_role')
+        current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
+        current_user_id = session.get('user_id')
+        tech_id = session.get('tech_id') #Only technicians can fill out this form so it's ok to do this.
+        CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='ODS-TAG', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+
         
         # Send email to contractor
         try:
