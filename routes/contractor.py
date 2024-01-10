@@ -312,7 +312,7 @@ def delete_technician():
     return render_template('contractor/technician_details.html')
 
 
-@contractor.route('/refrigerant', methods=['POST','GET'])
+@contractor.route('/refrigerant-inventory', methods=['POST','GET'])
 def inventory_Refrigerant():
         if request.method == 'GET':
             contractor_user_id =session.get('user_id')
