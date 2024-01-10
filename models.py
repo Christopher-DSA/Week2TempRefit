@@ -561,6 +561,7 @@ class Activity_Logs(Base):
     contractor_id = Column(Integer)
     user_role = Column(Text)
     technician_id = Column(Integer)
+    name = Column(Text)
 
     
     def __repr__(self):

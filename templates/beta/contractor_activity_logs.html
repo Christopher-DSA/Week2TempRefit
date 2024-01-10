@@ -97,7 +97,7 @@
     </nav>
     <!-- End: Navbar -->
 
-    <h1>REFit Activity Logs: </h1>
+    <h1>REFit Activity Logs </h1>
 
 
     <table id="data" class="table table-hover">
@@ -105,7 +105,9 @@
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Activity Type</th>
-                <th scope="col">User Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -130,7 +132,20 @@
                     {{ x.activity_type }}
                     {% endif %}
                 </td>
-                <td>{{x.user_role}}</td>
+                <td>{{x.name}}</td>
+                <td>
+                    {% if x.user_role == 'technician' %}
+                    <!-- Content for technician -->
+                    <span>Technician</span>
+                    {% elif x.user_role == 'contractor' %}
+                    <!-- Content for contractor -->
+                    <span>Contractor Role</span>
+                    {% else %}
+                    <!-- Fallback content for any other case -->
+                    <span>Contractor</span>
+                    {% endif %}
+                </td>
+                
                 <!-- <td>
                     <form action="/ods-tags" method="post">
                         <button type="submit" name ="selected_ods_tag" value="{{x.repair_form_id}}">View this tag</button>
@@ -165,7 +180,7 @@
                 { searchable: true },
                 { searchable: true },
                 { searchable: true },
-                { searchable: false },
+                { searchable: true },
             ]
         });
     });
