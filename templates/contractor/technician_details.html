@@ -60,13 +60,15 @@
             </thead>
             <tbody>
                 {% for user in technicians %}
-                <tr data-email="{{ user['email'] }}" data-licenseexpirydate="{{ user['license_expiry_date'] }}"
-                    data-techid="{{user['tech_id']}}">
-                    <td class="user-name">{{ user['name'] }}</td>
-                    <td>{{ user['ods_licence_no'] }}</td>
-                    <td class="details-control text-center"><button class="btn btn-outline-primary btn-sm">▼</button>
-                    </td>
-                </tr>
+                <form action = "/view_my_techs_ods_tags" method = "POST">
+                    <tr data-email="{{ user['email'] }}" data-licenseexpirydate="{{ user['license_expiry_date'] }}"
+                        data-techid="{{user['tech_id']}}">
+                        <td class="user-name">{{ user['name'] }}</td>
+                        <td>{{ user['ods_licence_no'] }}</td>
+                        <td class="details-control text-center"><button class="btn btn-outline-primary btn-sm">▼</button>
+                        </td>
+                    </tr>
+                </form>
                 {% endfor %}
             </tbody>
         </table>
