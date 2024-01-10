@@ -39,6 +39,7 @@
 
         h1 {
             text-align: center;
+            color: #111A66;
             margin-bottom: 30px;
         }
     </style>
@@ -52,7 +53,8 @@
 
 <body>
     <!-- Start: Navbar -->
-    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme="" style="margin-bottom: 30px;">
+    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme=""
+        style="margin-bottom: 30px;">
         <div class="container-fluid"><a href="/back-by-role" class="btn btn-primary btn-lg" role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
                     class="bi bi-house-door-fill fs-1">
@@ -110,7 +112,24 @@
             {% for x in data%}
             <tr>
                 <td>{{x.date_logged}}</td>
-                <td>{{x.activity_type}}</td>
+                <td>
+                    {% if x.activity_type == 'ODS-TAG' %}
+                    <!-- Content for ODS-TAG -->
+                    <span>ODS Tag Submitted</span>
+                    {% elif x.activity_type == 'MAINTENANCE-FORM' %}
+                    <!-- Content for MAINTENANCE-FORM -->
+                    <span>Unit Maintenance Form Submitted (Non Refrigerant-Related)</span>
+                    {% elif x.activity_type == 'NEW-CYLINDER-REGISTERED' %}
+                    <!-- Content for NEW-CYLINDER-REGISTERED -->
+                    <span>New Cylinder Registration</span>
+                    {% elif x.activity_type == 'NEW-EQUIPMENT-REGISTERED' %}
+                    <!-- Content for NEW-EQUIPMENT-REGISTERED -->
+                    <span>New Equipment Registration</span>
+                    {% else %}
+                    <!-- Default content if none of the above values match -->
+                    {{ x.activity_type }}
+                    {% endif %}
+                </td>
                 <td>{{x.user_role}}</td>
                 <!-- <td>
                     <form action="/ods-tags" method="post">
