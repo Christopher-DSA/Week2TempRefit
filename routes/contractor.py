@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant, RepairFormUnitView, Repair_form, Activity_Logs
+from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant, RepairFormUnitView, Repair_form, Activity_Logs, Tag
 from functools import wraps
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -217,35 +217,75 @@ def inventory():
             for i in technician_data:
                 tech_ids.append(i.technician_id)
             
-            for i in tech_ids:
-                cylinder_data = CRUD.read(Cylinder,all = True,technician_id=i)
-                # print(cylinder_data[0].cylinder_id)
-                for cy in cylinder_data:
-                    c_techId = cy.technician_id
-                    c_id = cy.cylinder_id
-                    c_size = cy.cylinder_size
-                    c_tareWeight = cy.cylinder_tare_weight
-                    c_addedDate = cy.added_date
-                    c_referigentId = cy.refrigerant_id
-                    data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId)
-                    c_refrigerant_name=data_refrigerant.refrigerant_name 
-                    c_purchasedDate = cy.purchase_date
-                    c_supplier = cy.supplier
-
-                    cylinder= {
-                        "technician_id": c_techId,
-                        "id": c_id,
-                        "size": c_size,
-                        "tareWeight": c_tareWeight,
-                        "addedDate": c_addedDate,
-                        "refrigerantId": c_referigentId,
-                        "refrigerant_name":c_refrigerant_name,
-                        "purchasedDate": c_purchasedDate,
-                        "supplier": c_supplier
+            print("aaaaaaaaaaaaaaaaaaaaaaaaaaaa")    
+            print(tech_ids)
+            
+                
+            for i in tech_ids: #For every technician working in that contractors company
+                print("bbbbbbbbbbbbbb")
+                print(i)
+                cylinder_tag_data = CRUD.read(Tag, all = True,technician_id=i)#Find rows in the tag table that have the technician id
+                print("dddddddddddddddddddddd")
+                print(cylinder_tag_data)
+                for tag in cylinder_tag_data: #For each cylinder registered by that technician
+                    if tag.type == "cylinder":
+                        print("cccccccccccccccc")
+                        print(tag.cylinder_id)
+                        cyl_data = CRUD.read(Cylinder, cylinder_id = tag.cylinder_id, all = False)  
+                        
+                        c_techId = cyl_data.technician_id
+                        c_id = tag.cylinder_id
+                        #Date Registered
+                        c_addedDate = cyl_data.added_date
+                        #Gas Quality
+                        c_clean_or_burnout = cyl_data.clean_or_burnout
+                        #Current Refrigerant Amount
+                        c_current_refrigerant_weight_lbs = cyl_data.current_refrigerant_weight_lbs
+                        c_current_refrigerant_weight_kg = cyl_data.current_refrigerant_weight_kg
+                        #Refrigerant Type
+                        c_refrigerant_type = cyl_data.refrigerant_type
+                        
+                        cylinder = {
+                            "technician_id": c_techId,
+                            "id": c_id,
+                            "addedDate": c_addedDate,
+                            "clean_or_burnout": c_clean_or_burnout,
+                            "current_refrigerant_weight_lbs": c_current_refrigerant_weight_lbs,
+                            "current_refrigerant_weight_kg": c_current_refrigerant_weight_kg,
+                            "refrigerant_type": c_refrigerant_type
                         }
-                    dt.append(cylinder)
-            # print(dt)
-    return render_template('contractor/inventory.html',dt=dt)
+                        
+                        dt.append(cylinder)
+
+            return render_template('contractor/new_inventory.html',dt=dt)  
+            # for i in tech_ids:
+            #     cylinder_data = CRUD.read(Cylinder,all = True,technician_id=i)
+            #     for cy in cylinder_data:
+            #         c_techId = cy.technician_id
+            #         c_id = cy.cylinder_id
+            #         c_size = cy.cylinder_size
+            #         c_tareWeight = cy.cylinder_tare_weight
+            #         c_addedDate = cy.added_date
+            #         c_referigentId = cy.refrigerant_id
+            #         data_refrigerant=CRUD.read(Refrigerant,refrigerant_id=c_referigentId)
+            #         c_refrigerant_name=data_refrigerant.refrigerant_name 
+            #         c_purchasedDate = cy.purchase_date
+            #         c_supplier = cy.supplier
+
+            #         cylinder= {
+            #             "technician_id": c_techId,
+            #             "id": c_id,
+            #             "size": c_size,
+            #             "tareWeight": c_tareWeight,
+            #             "addedDate": c_addedDate,
+            #             "refrigerantId": c_referigentId,
+            #             "refrigerant_name":c_refrigerant_name,
+            #             "purchasedDate": c_purchasedDate,
+            #             "supplier": c_supplier
+            #             }
+            #         dt.append(cylinder)
+
+
 
 @contractor.route('/delete/technician', methods=['POST'])
 def delete_technician():
