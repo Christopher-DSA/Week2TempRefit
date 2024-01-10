@@ -137,6 +137,7 @@ def login():
 #LOGOUT ROUTE
 @auth.route('/logout')
 def logout():
+    print("logging out")
     #Clear Session Variables
     session.clear()
     #Send user to login page
