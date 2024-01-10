@@ -166,16 +166,19 @@ def new_cylinder_view():
             CRUD.create(Tag, tag_url = unique_cylinder_token, cylinder_id = new_row.cylinder_id, type ="cylinder")
             
             # 4. Record the activity in the Activity_Logs table.#####################
-            current_date = datetime.now().strftime("%Y-%m-%d")
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d")
             current_user_role = session.get('user_role')
             current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
             current_user_id = session.get('user_id')
             tech_id = session.get('tech_id')
+            current_user_first_name = session.get('user_first_name')
+            current_user_last_name = session.get('user_last_name')
+            combined_name = current_user_first_name + " " + current_user_last_name
         
             if current_user_role == 'technician':
-                CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-CYLINDER-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+                CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-CYLINDER-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
             elif current_user_role == 'contractor':
-                CRUD.create(Activity_Logs, activity_type='NEW-CYLINDER-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+                CRUD.create(Activity_Logs, activity_type='NEW-CYLINDER-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
             
             ############################################
             return render_template ("New Cylinder/tag-linked.html",unique_cylinder_token = unique_cylinder_token)

@@ -184,10 +184,14 @@ def equipment_create_QR():
         current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
         current_user_id = session.get('user_id')
         
+        current_user_first_name = session.get('user_first_name')
+        current_user_last_name = session.get('user_last_name')
+        combined_name = current_user_first_name + " " + current_user_last_name
+        
         if current_user_role == 'technician':
-            CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+            CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
         elif current_user_role == 'contractor':
-            CRUD.create(Activity_Logs, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+            CRUD.create(Activity_Logs, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
 
         # 5.Render Success page
         return render_template('equipment/equipment-linked.html', unique_url=unique_equipment_token, tech_id=tech_id)
@@ -536,7 +540,11 @@ def repair_ODS_Sheet_New():
         current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
         current_user_id = session.get('user_id')
         tech_id = session.get('tech_id') #Only technicians can fill out this form so it's ok to do this.
-        CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='ODS-TAG', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id)
+        
+        current_user_first_name = session.get('user_first_name')
+        current_user_last_name = session.get('user_last_name')
+        combined_name = current_user_first_name + " " + current_user_last_name
+        CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='ODS-TAG', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
 
         
         # Send email to contractor
