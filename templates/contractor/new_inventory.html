@@ -621,9 +621,9 @@
                         <tr data-email="cylinder-info/unique-id" >
                             <td>
                                 <div class="row justify-content-center">
-                                    <form id="cylinderForm" action="/inventory-cylinder-info" method="post">
+                                    <form id="{{x.id}}cylinderForm" action="/inventory-cylinder-info" method="post">
                                         <input type="hidden" name="unique_id" value="{{x.id}}">
-                                        <div class="col-12" onclick="document.getElementById('cylinderForm').submit();">
+                                        <div class="col-12" onclick="document.getElementById('{{x.id}}cylinderForm').submit();">
                                             <!-- ... Card 2 content ... -->
                                             <div class="card h-100 border btn p-0"
                                                 style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
