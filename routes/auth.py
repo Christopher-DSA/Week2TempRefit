@@ -473,6 +473,7 @@ def upload():
 
 
 #Use this route if you have a page that needs to go back to a role specific dashboard.
+
 @auth.route('/back-by-role', methods=['GET'])
 def back_by_role():
     if request.method == 'GET':
