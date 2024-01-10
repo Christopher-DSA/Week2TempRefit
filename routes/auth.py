@@ -59,7 +59,7 @@ def email():
 @auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        print("Received POST request for login.")
+        print("Received POST request for login Login Button Pressed.")
         
         #1. Get the data from the form.
         entered_email = request.form["Email"]
@@ -110,6 +110,7 @@ def login():
                 current_user_id=session.get('user_id')
                 current_tech_id = CRUD.read(Technician, user_id=current_user_id).technician_id
                 session['tech_id'] = current_tech_id
+                session['contractor_id'] = CRUD.read(Technician, user_id=current_user_id).contractor_id
                 print(current_tech_id)
                 #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
@@ -118,7 +119,8 @@ def login():
                 #An admin has logged in! This is now functional.
                 return redirect('/admin')
             elif current_user.role=='contractor':
-                session['user_role'] = 'contractor'                
+                session['user_role'] = 'contractor'
+                session['contractor_id'] = CRUD.read(Contractor, user_id=session.get('user_id')).contractor_id            
                 #A contractor has logged in! This is now functional.
                 return redirect(url_for('contractor.dashboardcontractor'))
             elif current_user.role=='wholesaler':
@@ -136,6 +138,7 @@ def login():
 #LOGOUT ROUTE
 @auth.route('/logout')
 def logout():
+    print("logging out")
     #Clear Session Variables
     session.clear()
     #Send user to login page
@@ -406,24 +409,25 @@ def account_setup():
         ODS_License = request.form['License']
         Company_name = request.form['Company Name']
         Company_branch_number = request.form['Branch Number']
-        ODS_sheet_recipent_email = request.form['Recipient Email']
+        ODS_sheet_recipient_email = request.form['recipient_email']
         Company_address = request.form['Company Address']
         Apartment_number = request.form['Suite Number']
         City = request.form['Company City']
         Company_province = request.form['Company Province']
         Postal_code = request.form['Postal Code']
+        phone_number = request.form['Phone Number']
         #Drop down menu for role, will add later
         selected_role = request.form['Selected_role']
-        
-        #Always do these two things.
+                
+        #Always do these two things. We already create the user row in the database in /create route. which is directly above this one.
         CRUD.update(User, 'role', new = selected_role, email = current_user_email)
         CRUD.create(User_Detail, False, first_name=first_name, last_name=Last_name, user_id = current_user_id)
 
         print("Selected role: ", selected_role)
         if selected_role == 'technician':
-            CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License)
+            CRUD.create(Technician, False, user_id = current_user_id, ods_licence_number=ODS_License, ods_recipient_email=ODS_sheet_recipient_email)
         elif selected_role == 'contractor':
-            CRUD.create(Contractor, False, user_id = current_user_id, companyName = Company_name, status = 'active', name = first_name, branchId = Company_branch_number)
+            CRUD.create(Contractor, False, user_id = current_user_id, name = Company_name, status = 'active', telephone = phone_number, ods_recipient_email = ODS_sheet_recipient_email)
         elif selected_role == 'wholesaler':
             pass
         elif selected_role == 'admin':
@@ -470,6 +474,7 @@ def upload():
 
 
 #Use this route if you have a page that needs to go back to a role specific dashboard.
+
 @auth.route('/back-by-role', methods=['GET'])
 def back_by_role():
     if request.method == 'GET':

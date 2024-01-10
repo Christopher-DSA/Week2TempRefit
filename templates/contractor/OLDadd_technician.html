@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Add Technician</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+
+    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+
+    <style>
+        .tech-form {
+            display: inline-block;
+            /* or any other styling that matches your original layout */
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Technican</h1>
+    <form method="post" action="/add_technician">
+        
+        <label for="Email">Email Id:</label><br>
+        <input type="text" id="email" name="email" required><br>
+        <br>
+        <input type="submit" value="Send Invitation" onclick="location.href='/add_technician'">
+    </form>
+</body>
+</html>

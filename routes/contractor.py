@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
-from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant
+from models import CRUD,User,User_Detail,Contractor,Technician,Cylinder,Technician_Offer,Refrigerant, RepairFormUnitView, Repair_form, Activity_Logs
 from functools import wraps
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -82,6 +82,20 @@ def handle_qr_code():
     # Return a response
     return jsonify({'message': 'QR code received successfully.'}), 200
 
+
+#This is the table with the list of all ods tags a specific technician has
+@contractor.route("/view_my_techs_ods_tags", methods=["GET", "POST"])
+def view_my_techs_ods_tags():
+    if request.method == "GET":
+        return render_template("beta/view_all_ods_tags.html")
+    elif request.method == "POST":
+        #We need to get the technician id from the table
+        selected_technician = request.form.get('technician_id')
+        data = CRUD.read(RepairFormUnitView, all=True, tech_id=selected_technician)
+        
+        
+        return render_template("beta/view_all_ods_tags.html", data=data)
+    
 @contractor.route('/technician_details', methods=['GET', 'POST'])
 def technician_managment():
         if request.method == 'GET':
@@ -90,19 +104,22 @@ def technician_managment():
             contractor_id = contractor_data.contractor_id
             technician_data = CRUD.read(Technician,contractor_id=contractor_id,contractor_status="Engaged", all = True)
             print("----------")
-            # print(technician_data[0].user_id)
+            # print(technician_data[0].license_expiry_date)
             # print(technician_data[1].user_id)
             technician_list = []
             for item in technician_data:
                 ods_licence_no = item.ods_licence_number
+                license_expiry_date = item.license_expiry_date
                 date_begin = item.date_begin
                 date_end = item.date_end
                 user_status = item.user_status
                 tech_user_id = item.user_id
                 contactor_status = item.contractor_status
                 user_detail_data = CRUD.read(User_Detail,user_id = tech_user_id )
+                tech_email = CRUD.read(User,user_id = tech_user_id).email
                 tech_firstname = user_detail_data.first_name
                 tech_lastname = user_detail_data.last_name
+                tech_id = item.technician_id
                 tech_name = tech_firstname + " " + tech_lastname
                 technician_obj = {
                 "ods_licence_no": ods_licence_no,
@@ -112,6 +129,9 @@ def technician_managment():
                 "tech_user_id":tech_user_id,
                 "contactor_status":contactor_status,
                 "name":tech_name,
+                "email":tech_email,
+                "license_expiry_date":license_expiry_date,
+                "tech_id":tech_id
                 # "lastname":tech_lastname
                                         }
                 technician_list.append(technician_obj)
@@ -142,7 +162,7 @@ def add_technician():
         contractor_id = contractor_data.contractor_id
         contractor_name = contractor_data.name
 
-        sent_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sent_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         fname = details.first_name
         fname_upper = fname.upper()
         cname_upper = contractor_name.upper()
@@ -376,3 +396,20 @@ def refrigerant_type(refrigerant):
                             }
                         dt.append(cylinder)
     return render_template('contractor/refregerant_inventory.html',dt=dt)
+
+
+@contractor.route('/contractor_activity_logs', methods=['POST','GET'])
+def contractor_activity_logs():
+    if request.method == 'GET':
+        #Getting the data we need
+        current_user_id = session.get('user_id')
+        contractor_data = CRUD.read(Contractor,user_id=current_user_id)
+        current_contractor_id = contractor_data.contractor_id
+        
+        ####
+        activity_data = CRUD.read(Activity_Logs, contractor_id=current_contractor_id, all=True)
+        
+        
+        #Sending the data over
+        data = CRUD.read(Activity_Logs, all=True)
+        return render_template('beta/contractor_activity_logs.html', data=activity_data)

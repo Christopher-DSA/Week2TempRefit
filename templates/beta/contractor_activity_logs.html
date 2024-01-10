@@ -1,30 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Template</title>
-    <!-- Bootstrap CSS -->
+    <!--/contractor_activity_logs is the flask route-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
 
-    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
-    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
-    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
-    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+
+
 
     <style>
-        .tech-form {
-            display: inline-block;
-            /* or any other styling that matches your original layout */
+        .banner-close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background-color: transparent;
+            color: #111A66;
+            cursor: pointer;
+
         }
     </style>
+
+    <style>
+        /* Custom CSS for small screens */
+        @media (max-width: 767.98px) {
+            .card-height-sm {
+                min-height: 200px;
+                /* Adjust this value as needed */
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #111A66;
+            margin-bottom: 30px;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+    <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+    <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+    <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+    <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+    <link rel="stylesheet" href="/static/css/test.css">
 </head>
 
 <body>
     <!-- Start: Navbar -->
-    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" style="margin-bottom: 30px;">
+    <nav class="navbar navbar-expand-md bg-primary d-flex flex-row justify-content-evenly" data-bs-theme=""
+        style="margin-bottom: 30px;">
         <div class="container-fluid"><a href="/back-by-role" class="btn btn-primary btn-lg" role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
                     class="bi bi-house-door-fill fs-1">
@@ -65,30 +95,95 @@
             </div>
         </div>
     </nav>
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h5 class="text-center mb-4">Instructions:</h5>
-                <p>1. Type in the email address of the technician you would like to invite to join your team on the
-                    ReFit app.</p>
-                <p>2. The technician will receive an email to join your team</p>
-                <p>3. If the technician does not already have an account they will be invited to sign up.</p>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h1 class="text-center mb-4">Add Technician</h1>
-                <form method="post" action="/add_technician" class="card card-body">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email of Technician:</label>
-                        <input type="text" id="email" name="email" class="form-control" required>
-                    </div>
-                    <div class="d-grid">
-                        <input type="submit" class="btn btn-primary" value="Send Invitation">
-                    </div>
-                </form>
-            </div>
-        </div>
+    <!-- End: Navbar -->
+
+    <h1>REFit Activity Logs </h1>
+
+
+    <table id="data" class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Activity Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in data%}
+            <tr>
+                <td>{{x.date_logged}}</td>
+                <td>
+                    {% if x.activity_type == 'ODS-TAG' %}
+                    <!-- Content for ODS-TAG -->
+                    <span>ODS Tag Submitted</span>
+                    {% elif x.activity_type == 'MAINTENANCE-FORM' %}
+                    <!-- Content for MAINTENANCE-FORM -->
+                    <span>Unit Maintenance Form Submitted (Non Refrigerant-Related)</span>
+                    {% elif x.activity_type == 'NEW-CYLINDER-REGISTERED' %}
+                    <!-- Content for NEW-CYLINDER-REGISTERED -->
+                    <span>New Cylinder Registration</span>
+                    {% elif x.activity_type == 'NEW-EQUIPMENT-REGISTERED' %}
+                    <!-- Content for NEW-EQUIPMENT-REGISTERED -->
+                    <span>New Equipment Registration</span>
+                    {% else %}
+                    <!-- Default content if none of the above values match -->
+                    {{ x.activity_type }}
+                    {% endif %}
+                </td>
+                <td>{{x.name}}</td>
+                <td>
+                    {% if x.user_role == 'technician' %}
+                    <!-- Content for technician -->
+                    <span>Technician</span>
+                    {% elif x.user_role == 'contractor' %}
+                    <!-- Content for contractor -->
+                    <span>Contractor Role</span>
+                    {% else %}
+                    <!-- Fallback content for any other case -->
+                    <span>Contractor</span>
+                    {% endif %}
+                </td>
+                
+                <!-- <td>
+                    <form action="/ods-tags" method="post">
+                        <button type="submit" name ="selected_ods_tag" value="{{x.repair_form_id}}">View this tag</button>
+                        <input type="hidden" name="selected_ods_tag_id" value="{{x.repair_form_id}}">
+                    </form>
+                </td> -->
+                <!-- <td>
+                        <form action="/admin/reply" method="post">
+                            <button type="submit" name ="selected_user_id" value="{{data.user_id}}">Reply to this data</button>
+                            <input type="hidden" name="selected_data_id" value="{{data.data_id}}">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/admin/close_data" method="post">
+                            <button type="submit" name ="selected_data_id" value="{{data.data_id}}">Close data</button>
+                        </form>
+                    </td> -->
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 </body>
+<script>
+    $(document).ready(function () {
+        $('#data').DataTable({
+            columns: [
+                { searchable: true },
+                { searchable: true },
+                { searchable: true },
+                { searchable: true },
+            ]
+        });
+    });
+</script>
 
 </html>

@@ -1,5 +1,6 @@
 import qrcode
 import uuid
+import pandas as pd
 
 def create_qr_code(y):
     # Creating the QR code
@@ -23,20 +24,19 @@ def create_qr_code(y):
     img.save(route)
 
 
-#Always choose option 2 unless you have a special use case.
 if __name__ ==  '__main__':
-    # Choice = input("\nCustom Data or Unique Token?(1 or 2)[if unsure, choose 2]: ")
-    # print(Choice)
     
-    Choice = '1'
-    myText = 'TST0000001'
-    if Choice == '1':
-        create_qr_code(myText)
-    elif Choice == '2':
-        generate_uuid = str(uuid.uuid4())
-        unique_token = generate_uuid
-        create_qr_code(unique_token)
-        print("Complete! Your file is in the generated_qr_codes folder.")
-    else:   
-        print("Invalid Choice")
-        exit()
+    myList = pd.read_csv('TestNumbers.csv')
+    print(myList.shape)
+    
+    print(myList.head())
+    
+    #1. Create QR Code
+    myText = myList.iloc[0,0]
+    create_qr_code(myText)
+    
+    #2. Removed used QR Code Value from CSV
+    myList = myList.iloc[1:]
+    myList.to_csv('TestNumbers.csv', index=False)
+        
+    print("Complete! Your QR-Code is in the generated_qr_codes folder.")

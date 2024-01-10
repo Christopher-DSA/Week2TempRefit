@@ -71,6 +71,7 @@ class Technician(Base):
     user_status = Column(String)
     contractor_status = Column(String)
     license_expiry_date = Column(String)
+    ods_recipient_email = Column(String)
 
     user = relationship('User', backref='Technician')
     contractor = relationship('Contractor', backref='Technician')
@@ -94,7 +95,9 @@ class Contractor(Base):
     are_they_tracking_refrigerant = Column(String)
     time_basis = Column(String)
     companyName = Column(String)
-    branchId = Column(Integer)    
+    branchId = Column(Integer)
+    telephone = Column(String)
+    ods_recipient_email = Column(String)
     user = relationship('User', backref='Contractor')
 
     def __repr__(self):
@@ -239,6 +242,8 @@ class Unit(Base):
     store_id = Column(Integer,ForeignKey('Store.store_id'), nullable= True)
     serial_number = Column(String)
     amount_of_refrigerant_in_unit_oz = Column(Numeric)
+    amount_of_refrigerant_kg = Column(Numeric)
+    amount_of_refrigerant_lbs = Column(Numeric)
     
 
     technician = relationship('Technician', backref='Unit')
@@ -554,6 +559,23 @@ class Cylinder_History(Base):
     def __repr__(self):
         return 'Cylinder History Model'
     
+class Activity_Logs(Base):
+
+    __tablename__ = "Activity_Logs"
+
+    activity_log_id = Column(Integer, primary_key=True, autoincrement=True, nullable= True)
+    activity_type = Column(Text)
+    date_logged = Column(Date)
+    user_id = Column(Integer)
+    contractor_id = Column(Integer)
+    user_role = Column(Text)
+    technician_id = Column(Integer)
+    name = Column(Text)
+
+    
+    def __repr__(self):
+        return 'Activity Logs Model'
+    
 
 
 class Equipment_History(Base):
@@ -664,7 +686,6 @@ class RepairFormUnitView(Base):
     unit_id = Column(Integer)
     technician_id = Column(Integer)
     unit_name = Column(String)
-    tag_id = Column(Integer)
     other_attribute = Column(String)
     installation_date = Column(String)  # Assuming String type based on your Unit table
     last_maintenance_date = Column(String)  # Assuming String type
