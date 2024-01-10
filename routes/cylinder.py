@@ -122,9 +122,13 @@ def new_cylinder_view():
         if metricOrImperial == "imperial": #if the user selected "imperial" for the current refrigerant weight unit.
             current_refrigerant_weight_lbs = float(bigUnit) + float(smallUnit) / oz_to_lbs
             current_refrigerant_weight_kg = current_refrigerant_weight_lbs * lbs_to_kg
+            current_refrigerant_weight_kg = round(current_refrigerant_weight_kg, 2)
+            current_refrigerant_weight_lbs = round(current_refrigerant_weight_lbs, 2)
         else: #if the user selected "metric" for the current refrigerant weight unit.
             current_refrigerant_weight_kg = float(bigUnit) + float(smallUnit) / g_to_kg
             current_refrigerant_weight_lbs = current_refrigerant_weight_kg * kg_to_lbs
+            current_refrigerant_weight_kg = round(current_refrigerant_weight_kg, 2)
+            current_refrigerant_weight_lbs = round(current_refrigerant_weight_lbs, 2)
         
         #Cylinder Use Case Conversion to Cylinder Type ID
         cyl_type_id = 17

@@ -137,6 +137,11 @@ def equipment_create_QR():
         amount_of_refrigerant_kg = 0
         amount_of_refrigerant_lbs = 0
         
+        if currentRefrigerantWeight_1 == "" or currentRefrigerantWeight_1 == None:
+            currentRefrigerantWeight_1 = 0
+        if currentRefrigerantWeight_2 == "" or currentRefrigerantWeight_2 == None:
+            currentRefrigerantWeight_2 = 0
+        
         # Metric or Imperial
         if currentRefrigerantWeightUnit == 'metric':
             print("Using Metric KG/G")
