@@ -416,7 +416,8 @@
                     var cameraModal = new bootstrap.Modal(document.getElementById('exampleModal'));
                     if (permissionStatus.state === 'denied') {
                         // Show camera access modal if permission is denied
-                        cameraModal.show();
+                        console.log("Camera access denied");
+                        startCamera();
                     } else if (permissionStatus.state === 'granted') {
                         // If permission already granted, start camera
                         cameraModal.hide();
@@ -424,7 +425,7 @@
                         initiateQRCodeModalTimer(); // Ensure this function is defined
                     } else if (permissionStatus.state === 'prompt') {
                         // Show camera access modal if permission decision is pending
-                        cameraModal.show();
+                        console.log("Camera access prompt");
                         startCamera();
                     }
                 })
