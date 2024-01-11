@@ -233,9 +233,18 @@ def my_choose_qr_type():
                     url = 'cylinder_info/' + str(unique_token)
                     return redirect(url)
             else:  # go to register a new tag page
-                print("error in qr scan, this qr tag needs to be registered.")
-                session['QR_unique_token'] = unique_token
-                return render_template('Equipment Common/choose-qr-type.html')
+                if "UNT" in unique_token:
+                    print("Unregistered equipment tag scanned")
+                    session['QR_unique_token'] = unique_token
+                    return render_template('Equipment Common/choose-qr-type.html')
+                elif "CYL" in unique_token:
+                    print("Unregistered cylinder tag scanned")
+                    session['QR_unique_token'] = unique_token
+                    return render_template('Equipment Common/choose-qr-type.html')
+                else: #Test codes go here.
+                    print("error in qr scan, this qr tag needs to be registered.")
+                    session['QR_unique_token'] = unique_token
+                    return render_template('Equipment Common/choose-qr-type.html')
 
 
 @technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
