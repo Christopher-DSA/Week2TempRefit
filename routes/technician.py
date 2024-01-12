@@ -132,6 +132,7 @@ def equipment_create_QR():
         manufacturerName = request.form.get('manufacturerName')
         serialNumber = request.form.get('serialNumber')
         equipmentType = request.form.get('equipmentType')
+        modelNumber = request.form.get('modelNumber')
 
         #For database 
         amount_of_refrigerant_kg = 0
@@ -176,7 +177,7 @@ def equipment_create_QR():
         tech_id = session.get('tech_id') #hmmm
         # 1.Add new unit to the database
         my_unit = CRUD.create(Unit, type_of_refrigerant=refrigerantType, installation_date=createDate,
-                              manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, amount_of_refrigerant_kg=amount_of_refrigerant_kg, amount_of_refrigerant_lbs=amount_of_refrigerant_lbs)
+                              manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, amount_of_refrigerant_kg=amount_of_refrigerant_kg, amount_of_refrigerant_lbs=amount_of_refrigerant_lbs, model=modelNumber)
         my_equipment_id = my_unit.unit_id
         # 2.Get the Unique URL for the unit from the QR code.
         unique_equipment_token = session.get('QR_unique_token')
@@ -233,9 +234,18 @@ def my_choose_qr_type():
                     url = 'cylinder_info/' + str(unique_token)
                     return redirect(url)
             else:  # go to register a new tag page
-                print("error in qr scan, this qr tag needs to be registered.")
-                session['QR_unique_token'] = unique_token
-                return render_template('Equipment Common/choose-qr-type.html')
+                if "UNT" in unique_token:
+                    print("Unregistered equipment tag scanned")
+                    session['QR_unique_token'] = unique_token
+                    return render_template('Equipment Common/choose-qr-type.html')
+                elif "CYL" in unique_token:
+                    print("Unregistered cylinder tag scanned")
+                    session['QR_unique_token'] = unique_token
+                    return render_template('Equipment Common/choose-qr-type.html')
+                else: #Test codes go here.
+                    print("error in qr scan, this qr tag needs to be registered.")
+                    session['QR_unique_token'] = unique_token
+                    return render_template('Equipment Common/choose-qr-type.html')
 
 
 @technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
