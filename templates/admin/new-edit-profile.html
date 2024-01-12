@@ -73,7 +73,7 @@
       <div class="mb-3">
         <label for="firstName" class="form-label" style="color: gray;">First Name</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="first_name" id="firstName" disabled>
+          <input type="text" class="form-control" name="first_name" id="firstName" placeholder="{{first_name}}" disabled>
           <button class="btn btn-outline-secondary" type="button" onclick="enableEditing('firstName')">Change</button>
         </div>
       </div>
@@ -82,7 +82,7 @@
       <div class="mb-3">
         <label for="lastName" class="form-label" style="color: gray;">Last Name</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="last_name" id="lastName" disabled>
+          <input type="text" class="form-control" name="last_name" id="lastName" placeholder="{{last_name}}"disabled>
           <button class="btn btn-outline-secondary" type="button" onclick="enableEditing('lastName')">Change</button>
         </div>
       </div>
@@ -91,8 +91,8 @@
       <div class="mb-3">
         <label for="phone" class="form-label" style="color: gray;">Phone</label>
         <div class="input-group">
-          <input type="text" class="form-control transparent-placeholder" name="telephone" id="phone"
-            placeholder="123-456-7890" disabled>
+          <input type="text" class="form-control " name="telephone" id="phone"
+            placeholder="{{current_user_details.telephone}}" disabled>
           <button class="btn btn-outline-secondary" type="button" onclick="enableEditing('phone')">Change</button>
         </div>
       </div>
@@ -101,7 +101,7 @@
       <div class="mb-3">
         <label for="odsCertification" class="form-label" style="color: gray;">ODS Certification</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="ods_licence_number" id="odsCertification" disabled>
+          <input type="text" class="form-control" name="ods_licence_number" id="odsCertification" placeholder="{{ods_licence_number}}" disabled>
           <button class="btn btn-outline-secondary" type="button"
             onclick="enableEditing('odsCertification')">Change</button>
         </div>
@@ -111,7 +111,7 @@
       <div class="mb-3">
         <label for="address" class="form-label" style="color: gray;">Street Address</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="address" id="address" disabled>
+          <input type="text" class="form-control" name="address" id="address" placeholder="{{current_user_details.address}}" disabled>
           <button class="btn btn-outline-secondary" type="button" onclick="enableEditing('address')">Change</button>
         </div>
       </div>
@@ -120,7 +120,7 @@
       <div class="mb-3">
         <label for="apartment" class="form-label" style="color: gray;">Apartment, Suite, etc.</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="suite_number" id="apartment" disabled>
+          <input type="text" class="form-control" name="suite_number" id="apartment" placeholder="{{current_user_details.suite_number}}" disabled>
           <button class="btn btn-outline-secondary" type="button" onclick="enableEditing('apartment')">Change</button>
         </div>
       </div>
@@ -129,7 +129,7 @@
       <div class="mb-3">
         <label for="province" class="form-label" style="color: gray;">Province/State</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="province" id="province" disabled>
+          <input type="text" class="form-control" name="province" id="province" placeholder="{{current_user_details.province}}" disabled>
           <button class="btn btn-outline-secondary" type="button" onclick="enableEditing('province')">Change</button>
         </div>
       </div>
@@ -138,8 +138,8 @@
       <div class="mb-5">
         <label for="postalCode" class="form-label" style="color: gray;">Postal Code</label>
         <div class="input-group">
-          <input type="text" class="form-control transparent-placeholder" name="postal_code" id="postalCode"
-            placeholder="A1A 1A1" disabled>
+          <input type="text" class="form-control" name="postal_code" id="postalCode"
+            placeholder="{{current_user_details.postal_code}}" disabled>
           <button class="btn btn-outline-secondary" type="button" onclick="enableEditing('postalCode')">Change</button>
         </div>
       </div>

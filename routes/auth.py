@@ -111,6 +111,7 @@ def login():
                 current_tech_id = CRUD.read(Technician, user_id=current_user_id).technician_id
                 session['tech_id'] = current_tech_id
                 session['contractor_id'] = CRUD.read(Technician, user_id=current_user_id).contractor_id
+                session['ods_licence_number'] = CRUD.read(Technician, user_id=current_user_id).ods_licence_number
                 print(current_tech_id)
                 #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
@@ -509,7 +510,14 @@ def profile_edit_page():
     if request.method == 'GET':
         first_name = session.get('user_first_name')
         last_name = session.get('user_last_name')
-        return render_template('admin/new-edit-profile.html',first_name=first_name,last_name=last_name)
+        
+        current_user_details = CRUD.read(User_Detail, user_id=session.get('user_id'))
+        
+        ods_licence_number = session.get('ods_licence_number')
+
+        
+        
+        return render_template('admin/new-edit-profile.html',first_name=first_name,last_name=last_name, current_user_details=current_user_details, ods_licence_number=ods_licence_number)
     elif request.method == 'POST': #User has submitted the form to edit their profile.
         #Get the data from the form.
         # Initialize an empty dictionary to store the filled fields
