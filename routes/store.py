@@ -12,3 +12,7 @@ store = Blueprint('store', __name__)
 @store.route("/store/REFit-Tags", methods=['GET', 'POST'])
 def REFit_Tags():
     return render_template('store/tag-shop.html')
+
+@store.route("/store/checkout", methods=['GET', 'POST'])
+def Checkout():
+    return render_template('store/checkout-example.html')
