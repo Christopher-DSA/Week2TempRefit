@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <title>Your Page Title</title>
+  <title>Account Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <style>
@@ -41,7 +42,7 @@
     }
 
     .delete-button {
-      width: 311px;
+      width: 100%;
       padding: 12px 24px;
       margin-top: 30px;
       border-radius: 8px;
@@ -52,11 +53,463 @@
       align-items: center;
     }
   </style>
+
+  <!--Bootstrap-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="manifest" href="/manifest.json?h=1925185a4fdbc423b5c4a32f4cfda507">
+  <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
+  <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
+  <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
+  <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
+  <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
+  <link rel="stylesheet" href="/static/css/test.css">
 </head>
 
 <body>
+  <section>
+    <!-- Start: Navbar -->
+    <nav class="navbar navbar-expand-md bg-primary" data-bs-theme="dark">
+      <div class="container d-flex justify-content-between p-0 pe-2 pt-4">
+        <button class="btn btn-primary btn-lg" type="button" onclick="location.href='/back-by-role'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor"
+            class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+          </svg>
+        </button>
+        <!-- Start: Logo -->
+        <div class="navbar-brand">
+          <svg width="126" height="44" viewBox="0 0 126 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M40.9725 30.9919V43.9755H44.0501H47.1277V39.1067V34.2378H48.0911C49.551 34.2378 50.7129 35.6823 54.4313 42.1203L55.3988 43.7952L59.241 43.8976L63.0833 44L62.2172 42.6353C58.3999 36.62 57.014 34.6028 55.9035 33.4466L54.6239 32.1143L55.536 31.8864C56.0378 31.7609 57.0179 31.0619 57.7142 30.3334C61.6046 26.2609 59.875 19.7425 54.5497 18.4067C53.6764 18.1878 50.2646 18.0085 46.9673 18.0085H40.9725V30.9919ZM65.2311 30.9919V43.9755H73.0156H80.8001V41.4509V38.9263H76.0932H71.3863V36.2214V33.5165H75.5501H79.7139V30.9919V28.4674H75.5501H71.3863V25.7625V23.0576H75.9121H80.438V20.5331V18.0085H72.8346H65.2311V30.9919ZM84.7828 30.9919V43.9755H88.0414H91.3001V39.1067V34.2378H95.4639H99.6277V31.5329V28.828H95.4639H91.3001V25.9428V23.0576H95.8259H100.352V20.5331V18.0085H92.5673H84.7828V30.9919ZM52.0435 23.5838C52.7578 24.0498 52.9208 24.4595 52.9208 25.7874C52.9208 28.185 51.8038 29.1887 49.1353 29.1887H47.1277V25.8923V22.596L49.1469 22.8037C50.2577 22.9177 51.5612 23.269 52.0435 23.5838Z"
+              fill="white" />
+            <path
+              d="M22.0247 2.58985C21.7231 2.25661 21.3642 1.53747 21.2277 0.991796L20.979 0L23.2814 0.00540998C24.5475 0.00865586 25.7782 0.134523 26.0168 0.285277C26.2587 0.438554 26.5784 1.97494 26.741 3.76703C27.1157 7.90156 27.8308 8.33398 27.9981 4.52765C28.1038 2.12606 28.0426 1.80182 27.4843 1.80255C27.0494 1.80291 26.8507 1.52015 26.8507 0.901633C26.8507 0.0324585 26.935 0 29.2041 0C31.4732 0 31.5576 0.0324585 31.5576 0.901633C31.5576 1.58796 31.3628 1.81012 30.7429 1.83176C30.295 1.84727 30.1321 1.94212 30.3808 2.04202C30.6299 2.14228 30.8334 2.61618 30.8334 3.09549C30.8334 3.77676 30.6423 3.96719 29.9583 3.96719C29.0604 3.96719 28.6397 4.52223 28.934 5.31964C29.0256 5.56741 29.4141 5.77045 29.7975 5.77045C30.1868 5.77045 30.6321 6.12894 30.8063 6.58193L31.1177 7.39339L31.3197 6.49176C31.4312 5.99586 31.5804 4.58931 31.6513 3.36634C31.8255 0.368227 32.1959 0 35.0414 0C37.1092 0 37.3507 0.0753769 37.3507 0.721307C37.3507 1.11803 37.0183 1.77369 36.612 2.17835C36.0555 2.73267 35.843 3.49076 35.7507 5.24931C35.6327 7.49762 35.667 7.60762 36.6761 8.20126C37.2526 8.54063 38.1291 9.42712 38.6237 10.1719C39.4977 11.4872 39.5231 11.709 39.5231 17.9966V24.4678L38.1653 23.1128C37.4187 22.3674 36.5342 21.6594 36.2 21.5393C35.2387 21.1942 35.5414 16.2283 36.5871 15.1868C37.7482 14.0301 37.5208 13.7048 35.553 13.7048C33.3791 13.7048 33.0058 14.2 33.0058 17.0838C33.0058 19.793 32.5337 20.9179 31.3968 20.9179C30.7972 20.9179 30.5557 20.7578 30.6777 20.4411C30.7827 20.1692 30.4667 19.7854 29.9424 19.5474C29.0926 19.1615 29.0231 19.1976 29.0231 20.0238C29.0231 20.7253 28.8373 20.9179 28.1603 20.9179C27.1439 20.9179 26.863 20.1652 26.8557 17.425C26.8528 16.3964 26.6917 15.1388 26.4977 14.6299C26.183 13.8062 25.9448 13.7048 24.3252 13.7048C22.9823 13.7048 22.5058 13.8412 22.5058 14.2245C22.5058 14.5105 22.6854 14.8546 22.9048 14.9898C23.6684 15.4601 24.3882 17.6918 23.9472 18.2213C23.6561 18.5708 23.6511 18.9112 23.9291 19.4284C24.5657 20.6139 24.381 21.0582 22.9027 21.8989C21.315 22.8019 19.9714 25.1321 19.9714 26.9826V28.131H9.98586H0L0.119483 23.5326C0.225569 19.4432 0.329121 18.8077 1.0576 17.7903C1.50838 17.1613 2.33716 16.4436 2.90017 16.1955C3.89007 15.7591 3.92048 15.6664 3.82453 13.3846C3.76009 11.8464 3.54466 10.8932 3.20648 10.6465C2.92081 10.4384 2.57141 9.74305 2.42984 9.10145L2.17241 7.93437H4.51029C5.94155 7.93437 6.99191 8.10929 7.21893 8.38519C7.42278 8.63332 7.69578 9.97207 7.82503 11.3606C8.13207 14.6573 8.32252 15.5081 8.7541 15.5081C8.95686 15.5081 9.10929 14.2685 9.10929 12.6229C9.10929 10.2988 9.00357 9.73764 8.56619 9.73764C8.22838 9.73764 8.02309 9.39718 8.02309 8.83601C8.02309 7.96683 8.10745 7.93437 10.3765 7.93437C12.6456 7.93437 12.73 7.96683 12.73 8.83601C12.73 9.34489 12.5207 9.73764 12.2495 9.73764C11.9218 9.73764 11.8197 10.0813 11.9287 10.8196C12.0602 11.7126 11.962 11.9016 11.3672 11.9016C10.2969 11.9016 9.62198 12.8364 10.1955 13.5245C10.4435 13.822 10.9522 14.0655 11.3259 14.0655C11.7643 14.0655 12.0058 14.3215 12.0058 14.7868C12.0058 15.1835 12.146 15.5081 12.3176 15.5081C12.6561 15.5081 13.0837 12.5987 13.0888 10.2606C13.0906 9.45742 13.2876 8.60519 13.5265 8.36716C13.7742 8.12047 14.9607 7.93437 16.2873 7.93437H18.6136L18.3862 9.06755C18.2609 9.69112 17.9065 10.3847 17.5984 10.609C17.2189 10.8852 16.9955 11.7854 16.9061 13.399C16.7826 15.6275 16.8304 15.8064 17.6487 16.1778C18.5122 16.5699 18.5231 16.5515 18.5267 14.6891C18.5314 12.1782 19.8396 9.37915 21.4805 8.36896C22.6811 7.62998 22.7108 7.55388 22.6427 5.40331C22.5993 4.02453 22.3672 2.9689 22.0247 2.58985Z"
+              fill="#54B1F5" />
+            <path
+              d="M0.441724 39.1976C0.230638 38.6393 0.057569 36.1641 0.057569 33.6976V29.2129H10.0145H19.9714V31.0162V32.8194H29.7472H39.5231V34.0817V35.344H29.7472H19.9714V37.7009C19.9714 40.3856 19.4149 41.5296 17.7812 42.2036C17.1342 42.4705 16.7127 42.912 16.7127 43.322C16.7127 43.9593 16.3351 43.9997 10.3765 43.9997C4.28183 43.9997 4.04033 43.9723 4.04033 43.2784C4.04033 42.8817 3.82779 42.5571 3.56819 42.5571C2.90053 42.5571 0.899379 40.4065 0.441724 39.1976Z"
+              fill="#54B1F5" />
+            <path d="M103.552 23.4208V20.3553V17.2897H106.81H110.069V20.3553V23.4208H106.81H103.552Z" fill="#54B1F5" />
+            <path
+              d="M115.862 21.8415C115.862 18.8506 115.675 19.045 119.664 17.8895C120.659 17.601 121.596 17.3478 121.746 17.3273C121.895 17.3067 122.017 18.9127 122.017 20.8963V24.5027H124.009H126V26.847V29.1912H123.979H121.958L122.078 33.7131C122.213 38.7857 122.355 39.0684 124.642 38.7976L126 38.6367V40.9583C126 43.7111 125.892 43.7915 122.198 43.7952C120.213 43.797 119.389 43.6264 118.397 43.0068C116.21 41.6417 116.058 41.1447 115.922 34.8715L115.798 29.1912H114.382H112.966V26.847V24.5027H114.414H115.862V21.8415Z"
+              fill="#54B1F5" />
+            <path d="M103.914 43.6174V34.7813V25.9453H106.991H110.069V34.7813V43.6174H106.991H103.914Z"
+              fill="#54B1F5" />
+          </svg>
+        </div>
+        <!-- End: Logo -->
+        <!-- Start: button for mobile Left Offcanvas menu-->
+        <button class="btn btn-primary btn-lg d-md-none" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#settingsSlideOutLeft">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-list"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+          </svg>
+        </button>
+        <!-- End: button for mobile Offcanvas menu -->
+        <!-- Start: button for Medium Screen Right Offcanvas menu-->
+        <button class="btn btn-primary btn-lg d-none d-md-block" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#settingsSlideOutRight">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-list"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+          </svg>
+        </button>
+        <!-- End: button for Medium Screen Right Offcanvas menu-->
 
-  <div class="container-fluid custom-container">
+      </div>
+    </nav>
+    <!-- End: Navbar -->
+
+
+
+    <!-- Start: MOBILE LEFT SIDE offcanvas menu-->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="settingsSlideOutLeft">
+      <div class="offcanvas-header bg-primary text-light" data-bs-theme="dark">
+        <h5 class="offcanvas-title">Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body P-0">
+
+        <!-- Start of Edit Profile -->
+        <a class="d-flex border-bottom pt-2 justify-content-between text-decoration-none" href="/edit-profile">
+          <div class="d-flex align-content-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Edit Profile</h4>
+            <small style="color: grey">Change your profile Information</small>
+          </div>
+          <div class="d-flex align-items-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right " viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Account -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/account-settings">
+          <div class="d-flex align-content-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-gear-fill"
+              viewBox="0 0 16 16">
+              <path
+                d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Account</h4>
+            <small style="color: grey">Options and contorls for signing in and keeping your account
+              safe</small>
+          </div>
+          <div class="d-flex align-items-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Membership -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/store/free-tier">
+          <div class="d-flex align-content-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-person-vcard" viewBox="0 0 16 16">
+              <path
+                d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5ZM9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8Zm1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Z" />
+              <path
+                d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96c.026-.163.04-.33.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1.006 1.006 0 0 1 1 12V4Z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Membership</h4>
+            <small style="color: grey">See your membership description and all the details</small>
+          </div>
+          <div class="d-flex align-items-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Switch Account -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="#">
+          <div class="d-flex align-content-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-repeat"
+              viewBox="0 0 16 16">
+              <path
+                d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Switch Account</h4>
+            <small style="color: grey">Switch between different accounts</small>
+          </div>
+          <div class="d-flex align-items-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Private Policy -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/privacy-policy">
+          <div class="d-flex align-content-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-lock"
+              viewBox="0 0 16 16">
+              <path
+                d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Privacy Policy</h4>
+            <small style="color: grey">Review our Privacy Policy</small>
+          </div>
+          <div class="d-flex align-items-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Contact Us -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/contact_us">
+          <div class="d-flex align-content-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-telephone-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Contact Us</h4>
+            <small style="color: grey">Contact us if you have any questions</small>
+          </div>
+          <div class="d-flex align-items-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+        <!-- Start: Buttons-->
+        <div class="d-flex flex-column gap-3 m-4">
+          <button class="btn btn-lg btn-primary" onclick="location.href='/logout'">Logout</button>
+        </div>
+        <!-- End: Buttons-->
+        <!-- Start: Theme switcher dropdown -->
+        <div class="theme-switcher dropdown d-flex justify-content-center pt-4">
+          <a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" fill="currentColor" viewBox="0 0 16 16"
+              class="bi bi-sun-fill mb-1">
+              <path
+                d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+              </path>
+            </svg>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="light">
+              <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" viewBox="0 0 16 16"
+                class="bi bi-sun-fill opacity-50 me-2">
+                <path
+                  d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+                </path>
+              </svg>Light
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="dark">
+              <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" viewBox="0 0 16 16"
+                class="bi bi-moon-stars-fill opacity-50 me-2">
+                <path
+                  d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z">
+                </path>
+                <path
+                  d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
+                </path>
+              </svg>Dark
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" viewBox="0 0 16 16"
+                class="bi bi-circle-half opacity-50 me-2">
+                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+              </svg>Auto
+            </a>
+          </div>
+        </div>
+        <!-- End: Theme switcher dropdown -->
+      </div>
+    </div>
+    <!-- End: MOBILE LEFT SIDE offcanvas menu -->
+
+    <!-- Start: MEDIUM SCREEN RIGHT SIDE offcanvas menu-->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="settingsSlideOutRight">
+      <div class="offcanvas-header bg-primary text-light" data-bs-theme="dark">
+        <h5 class="offcanvas-title">Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+
+        <!-- Start of Edit Profile -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/edit-profile">
+          <div class="d-flex align-content-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Edit Profile</h4>
+            <small style="color: grey">Change your profile Information</small>
+          </div>
+          <div class="d-flex align-items-center justify-content-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Account -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/account-settings">
+          <div class="d-flex align-items-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-gear-fill"
+              viewBox="0 0 16 16">
+              <path
+                d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column ms-4" style="flex: 1 0 70%">
+            <h4>Account</h4>
+            <small style="color: grey">Options and controls for signing in and keeping your account
+              safe</small>
+          </div>
+          <div class="d-flex align-items-center justify-content-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Membership -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/store/free-tier">
+          <div class="d-flex align-items-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-person-vcard" viewBox="0 0 16 16">
+              <path
+                d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5ZM9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8Zm1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Z" />
+              <path
+                d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96c.026-.163.04-.33.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1.006 1.006 0 0 1 1 12V4Z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Membership</h4>
+            <small style="color: grey">See your membership description and all the details</small>
+          </div>
+          <div class="d-flex align-items-center justify-content-center " style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Switch Account -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="">
+          <div class="d-flex align-items-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-repeat"
+              viewBox="0 0 16 16">
+              <path
+                d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Switch Account</h4>
+            <small style="color: grey">Switch between different accounts</small>
+          </div>
+          <div class="d-flex align-items-center justify-content-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Private Policy -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/privacy-policy">
+          <div class="d-flex align-items-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-lock"
+              viewBox="0 0 16 16">
+              <path
+                d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Privacy Policy</h4>
+            <small style="color: grey">Review our Privacy Policy</small>
+          </div>
+          <div class="d-flex align-items-center justify-content-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start of Contact Us -->
+        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/contact_us">
+          <div class="d-flex align-items-center" style="flex: 1 0 10%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-telephone-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+            </svg>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
+            <h4>Contact Us</h4>
+            <small style="color: grey">Contact us if you have any questions</small>
+          </div>
+          <div class="d-flex align-items-center justify-content-center" style="flex: 1 0 20%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
+              class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- Start: Buttons-->
+        <div class="d-flex flex-column gap-3 p-0 pt-3">
+          <button class="btn btn-lg btn-primary" onclick="location.href='/logout'">Logout</button>
+        </div>
+        <!-- End: Buttons-->
+        <!-- Start: Theme switcher dropdown -->
+        <div class="theme-switcher dropdown d-flex justify-content-center pt-4">
+          <a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" viewBox="0 0 16 16"
+              class="bi bi-sun-fill mb-1">
+              <path
+                d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+              </path>
+            </svg>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="light">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor"
+                viewBox="0 0 16 16" class="bi bi-sun-fill opacity-50 me-2">
+                <path
+                  d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+                </path>
+              </svg>Light
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="dark">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor"
+                viewBox="0 0 16 16" class="bi bi-moon-stars-fill opacity-50 me-2">
+                <path
+                  d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z">
+                </path>
+                <path
+                  d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
+                </path>
+              </svg>Dark
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor"
+                viewBox="0 0 16 16" class="bi bi-circle-half opacity-50 me-2">
+                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+              </svg>Auto
+            </a>
+          </div>
+        </div>
+        <!-- End: Theme switcher dropdown -->
+      </div>
+    </div>
+    <!-- End: Mobile offcanvas menu -->
+
+  </section>
+  <div class="container custom-container">
     <div class="item-area mt-3">
       <i class="bi bi-envelope-fill icon"></i>
       <div>

@@ -111,6 +111,7 @@ def login():
                 current_tech_id = CRUD.read(Technician, user_id=current_user_id).technician_id
                 session['tech_id'] = current_tech_id
                 session['contractor_id'] = CRUD.read(Technician, user_id=current_user_id).contractor_id
+                session['ods_licence_number'] = CRUD.read(Technician, user_id=current_user_id).ods_licence_number
                 print(current_tech_id)
                 #A Technician has logged in! This is now functional.
                 return redirect(url_for('technician.dashboardtechnician'))
@@ -509,7 +510,14 @@ def profile_edit_page():
     if request.method == 'GET':
         first_name = session.get('user_first_name')
         last_name = session.get('user_last_name')
-        return render_template('admin/edit-profile.html',first_name=first_name,last_name=last_name)
+        
+        current_user_details = CRUD.read(User_Detail, user_id=session.get('user_id'))
+        
+        ods_licence_number = session.get('ods_licence_number')
+
+        
+        
+        return render_template('admin/new-edit-profile.html',first_name=first_name,last_name=last_name, current_user_details=current_user_details, ods_licence_number=ods_licence_number)
     elif request.method == 'POST': #User has submitted the form to edit their profile.
         #Get the data from the form.
         # Initialize an empty dictionary to store the filled fields
@@ -539,7 +547,7 @@ def profile_edit_page():
                 # Update the User_Detail table for all other fields
                 CRUD.update(User_Detail, field, new=value, user_id=current_user_id)
                 
-        return redirect('/edit-profile')
+        return render_template('admin/new-edit-profile.html')
     
     
 #Edit Acccount Settings Page
@@ -564,15 +572,15 @@ def membership_settings_page():
 @auth.route('/privacy-policy', methods=['GET', 'POST'])
 def privacy_policy_page():
     if request.method == 'GET':
-        return render_template('admin/private-policy.html')
+        return render_template('admin/new-privacy-policy.html')
     elif request.method == 'POST':
-        return render_template('admin/private-policy.html')
+        return render_template('admin/new-privacy-policy.html')
     
 #Contact Page
 @auth.route('/contact_us', methods=['GET', 'POST'])
 def contact_us_page():
     if request.method == 'GET':
-        return render_template('admin/contact-us.html')
+        return render_template('admin/new-contact-us.html')
     # if post then that means the user has submitted the form for support.
     elif request.method == 'POST':
         # get user_id
@@ -588,7 +596,7 @@ def contact_us_page():
         # Create a new support ticket in the database.
         CRUD.create(User_Support, user_id = user, message = request.form.get('message'), date_received = datetime.now(est_zone).strftime('%Y-%m-%d %H:%M:%S'), date_ticket_closed = None)
 
-        return render_template('admin/contact-us.html')
+        return render_template('admin/new-contact-us.html')
         
 
 
