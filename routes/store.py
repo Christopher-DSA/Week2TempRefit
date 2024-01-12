@@ -16,3 +16,7 @@ def REFit_Tags():
 @store.route("/store/checkout", methods=['GET', 'POST'])
 def Checkout():
     return render_template('store/checkout-example.html')
+
+@store.route("/store/free-tier", methods=['GET', 'POST'])
+def free_tier():
+    return render_template('store/free-tier.html')
