@@ -564,15 +564,15 @@ def membership_settings_page():
 @auth.route('/privacy-policy', methods=['GET', 'POST'])
 def privacy_policy_page():
     if request.method == 'GET':
-        return render_template('admin/private-policy.html')
+        return render_template('admin/new-privacy-policy.html')
     elif request.method == 'POST':
-        return render_template('admin/private-policy.html')
+        return render_template('admin/new-privacy-policy.html')
     
 #Contact Page
 @auth.route('/contact_us', methods=['GET', 'POST'])
 def contact_us_page():
     if request.method == 'GET':
-        return render_template('admin/contact-us.html')
+        return render_template('admin/new-contact-us.html')
     # if post then that means the user has submitted the form for support.
     elif request.method == 'POST':
         # get user_id
@@ -588,7 +588,7 @@ def contact_us_page():
         # Create a new support ticket in the database.
         CRUD.create(User_Support, user_id = user, message = request.form.get('message'), date_received = datetime.now(est_zone).strftime('%Y-%m-%d %H:%M:%S'), date_ticket_closed = None)
 
-        return render_template('admin/contact-us.html')
+        return render_template('admin/new-contact-us.html')
         
 
 
