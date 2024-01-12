@@ -509,7 +509,7 @@ def profile_edit_page():
     if request.method == 'GET':
         first_name = session.get('user_first_name')
         last_name = session.get('user_last_name')
-        return render_template('admin/edit-profile.html',first_name=first_name,last_name=last_name)
+        return render_template('admin/new-edit-profile.html',first_name=first_name,last_name=last_name)
     elif request.method == 'POST': #User has submitted the form to edit their profile.
         #Get the data from the form.
         # Initialize an empty dictionary to store the filled fields
@@ -539,7 +539,7 @@ def profile_edit_page():
                 # Update the User_Detail table for all other fields
                 CRUD.update(User_Detail, field, new=value, user_id=current_user_id)
                 
-        return redirect('/edit-profile')
+        return render_template('admin/new-edit-profile.html')
     
     
 #Edit Acccount Settings Page
