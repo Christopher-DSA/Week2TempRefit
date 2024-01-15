@@ -3,7 +3,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ODS Tag</title>
+    <title>Digital ODS Tag</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -59,7 +59,6 @@
         h6 {
             font-weight: bold !important;
         }
-
     </style>
     <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
     <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
@@ -114,7 +113,10 @@
     </nav>
     <!-- End: Navbar -->
     <div class="container my-4">
-        <h1 class="page-title">Service Details Dashboard/Digital ODS Tag</h1>
+        <div class="row">
+            <h1 class="page-title">Digital ODS Tag</h1>
+        </div>
+
         <div class="row">
             <!-- Left Column -->
             <div class="col-md-6">
@@ -173,24 +175,27 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-plus-square"></i> Amount Added to Unit:</span>
-                            <span class="info-value"><!-- Amount added here -->{% if data.refrigerant_added_lbs > 0 or data.refrigerant_added_kg > 0 %}
+                            <span class="info-value"><!-- Amount added here -->{% if data.refrigerant_added_lbs > 0 or
+                                data.refrigerant_added_kg > 0 %}
                                 {{data.refrigerant_added_lbs}} lbs || {{data.refrigerant_added_kg}} kg
                                 {% else %}
                                 n/a
                                 {% endif %}
-                                </span>
+                            </span>
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-recycle"></i> Amount Reclaimed from Unit:</span>
-                            <span class="info-value"><!-- Amount reclaimed here -->{% if data.refrigerant_removed_lbs > 0 or data.refrigerant_removed_kg > 0 %}
+                            <span class="info-value"><!-- Amount reclaimed here -->{% if data.refrigerant_removed_lbs >
+                                0 or data.refrigerant_removed_kg > 0 %}
                                 {{data.refrigerant_removed_lbs}} lbs || {{data.refrigerant_removed_kg}} kg
                                 {% else %}
                                 n/a
                                 {% endif %}
-                                </span>
+                            </span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-wind"></i> Unit Currently Contains Refrigerant?:</span>
+                            <span class="info-label"><i class="fas fa-wind"></i> Unit Currently Contains
+                                Refrigerant?:</span>
                             <span class="info-value">
                                 {% if data.no_longer_contains_refrigerant ==true%}
                                 No
@@ -250,11 +255,11 @@
                             <span class="info-value">
                                 {% if data.leak_test_result == true %}
                                 Leak was Detected ❗.
-                                    {% if data.is_leak_repaired == true %}
-                                    Leak repaired. 🛠️
-                                    {% else %}
-                                    Leak was not repaired ❌.
-                                    {% endif %}
+                                {% if data.is_leak_repaired == true %}
+                                Leak repaired. 🛠️
+                                {% else %}
+                                Leak was not repaired ❌.
+                                {% endif %}
                                 {% else %}
                                 No leak was detected ✅.
                                 {% endif %}
