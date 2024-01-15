@@ -5,10 +5,7 @@
 - Alison (team lead)
 - Sidney (Data Science Manager)
 - Vinh (Data Scientist)
-
-- Jared (ICT)
-- Christopher (ICT)
-- Yael (ICT)
+- Christopher (Web Developer)
 
 ## Project Description
 Refit is an application to track and manage refrigerant gasses
