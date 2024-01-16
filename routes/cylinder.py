@@ -232,10 +232,17 @@ def InventoryCylinderInfo():
             return redirect("/")  # cylinder does not exist in the database.
         elif cylinder_data.cylinder_type_id == 1:  # 1 is recovery a recovery cylinder
             my_cylinder_type = 'Recovery Cylinder'
-            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data="none")
+            #Get name of technician who registered equipment.
+            print ("Recovry Cylinder")
+            tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
+            user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data="none", user_detail_data=user_detail_data)
         elif cylinder_data.cylinder_type_id == 3:  # 3 is a charge cylinder
             my_cylinder_type = 'Charge Cylinder'
-            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data="none")
+            print ("Charge Cylinder")
+            tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
+            user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data="none", user_detail_data=user_detail_data)
         
 
 @cylinder.route("/cylinder_info/<unique_id>", methods=["GET", "POST"])
@@ -257,10 +264,14 @@ def CylinderInfo(unique_id):
             return redirect("/")  # cylinder does not exist in the database.
         elif cylinder_data.cylinder_type_id == 1:  # 1 is recovery a recovery cylinder
             my_cylinder_type = 'Recovery Cylinder'
-            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type)
+            tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
+            user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data)
         elif cylinder_data.cylinder_type_id == 3:  # 3 is a charge cylinder
             my_cylinder_type = 'Charge Cylinder'
-            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type)
+            tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
+            user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data)
 
 
 

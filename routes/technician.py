@@ -892,6 +892,12 @@ def equipment_info_page(unique_id):
         unit_id = tag_data.unit_id
         data = CRUD.read(Unit, all=False, unit_id=unit_id)
 
+        
+        #Get name of technician who registered equipment.
+        tech_data = CRUD.read(Technician, all=False, technician_id=data.technician_id)
+        user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+        
+
         session['new_unit_id'] = unit_id
         session['tag'] = unique_id
         session['tech_id'] = tech_id
@@ -908,7 +914,7 @@ def equipment_info_page(unique_id):
         session['unit_id'] = unit_id
 
         # 3. Render html
-        return render_template('beta/equipment_info.html', data=data, tech_id=tech_id)
+        return render_template('beta/equipment_info.html', data=data, tech_id=tech_id, user_detail_data=user_detail_data)
 
     else:
         print('error')
