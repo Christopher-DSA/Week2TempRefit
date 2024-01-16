@@ -74,8 +74,8 @@
     <br>
     <div class="container" id="information">
         <h2 class="mb-3">Charge Cylinder Information</h2>
-        <h5>Gas Quality: {{my_cylinder_type}} {% if data.clean_or_burnout == 'clean' %}
-            for Contaminant-Free Gas
+        <h5>Gas Quality: {% if data.clean_or_burnout == 'clean' %}
+            Contaminant-Free Gas
             {% else %}Burnout Gas/Contaminated Gas
             {% endif %}
         </h5>
