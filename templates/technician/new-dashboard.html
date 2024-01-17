@@ -8,8 +8,10 @@
         :root {
             --button-padding: 20px;
             --button-border-radius: 20px;
-            --card-svg-size: 6em; /* Variable for SVG size to ensure consistency */
-            --card-text-size: 1.25rem; /* Variable for card text size */
+            --card-svg-size: 6em;
+            /* Variable for SVG size to ensure consistency */
+            --card-text-size: 1.25rem;
+            /* Variable for card text size */
         }
 
         /* General Styles */
@@ -53,37 +55,43 @@
             .card-height-sm {
                 min-height: 200px;
             }
-            
+
             .card-body p {
                 font-weight: 600;
                 color: #111A66;
             }
-            
+
             .row-square {
                 display: flex;
                 flex-wrap: wrap;
                 margin-right: -15px;
                 margin-left: -15px;
             }
-            
+
             .row-square .col-square {
                 padding-right: 15px;
                 padding-left: 15px;
                 flex: 0 0 50%;
                 max-width: 50%;
             }
-            
+
             /* SVG size adjustments */
             svg {
                 width: 100px;
                 height: auto;
             }
-            
+
             .navbar .btn-lg svg {
                 width: 1.5em;
                 height: 1.5em;
             }
         }
+    </style>
+    <style>
+        html[data-bs-theme='dark'] .bs-body-color {
+            color: white;
+        }
+    </style>
     </style>
     <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
     <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
@@ -314,7 +322,7 @@
                     </div>
                 </a>
 
-            
+
                 <!-- Start of Private Policy -->
                 <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none"
                     href="/privacy-policy">
@@ -487,7 +495,7 @@
                     </div>
                 </a>
 
-              
+
 
                 <!-- Start of Private Policy -->
                 <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none"
