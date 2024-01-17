@@ -237,7 +237,7 @@ class Unit(Base):
     installation_date = Column(String)
     last_maintenance_date = Column(String)
     manufacturer = Column(String)
-    model = Column(String)
+    model_number = Column(String)
     type_of_refrigerant = Column(String)
     factory_charge_amount = Column(Integer)
     unit_type = Column(String)
