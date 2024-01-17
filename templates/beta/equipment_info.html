@@ -89,12 +89,17 @@
             <h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6>
         </a>
         <div id="more-details" style="display:none; margin-top: 15px;">
+            <p><strong>Unit Label:</strong> {{data.unit_name}}</p>
             <p><strong>Installation Date:</strong> {{data.installation_date}}</p>
-            <p><strong>Manufacturer:</strong> {{data.manufacturer}}</p>
-            <p><strong>Factory Charge Amount:</strong> {{data.factory_charge_amount}}</p>
+            <p><strong>Refrigerant Amount:</strong> {{data.amount_of_refrigerant_lbs}}lbs</p>
             <p><strong>Serial Number:</strong> {{data.serial_number}}</p>
-            <p><strong>Model:</strong> {{data.model}}</p>
+            <p><strong>Model:</strong> {{data.model_number}}</p>
             <p><strong>Registered By:</strong> {{user_detail_data.first_name}} {{user_detail_data.last_name}}</p>
+            <p><strong>Organization Name:</strong> {{data.organization_name}}</p>
+            <p><strong>Address:</strong> {{data.equipment_unit_address}}</p>
+            <p><strong>Location:</strong> {{data.equipment_location}}</p>
+            <p><strong>Additional Notes:</strong> {{data.additional_notes}}</p>
+            <p><strong>Equipment Unit Number:</strong> {{data.equipment_unit_number}}</p>
         </div>
     </div>
 
