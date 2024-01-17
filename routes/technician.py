@@ -124,15 +124,27 @@ def equipment_create_QR():
         print("inside post for equipment_create")
         
         # Get data from form
-        createDate = request.form.get('createDate')
+        #Tab 1
+        createDate = request.form.get('createDate') #1 YES
+        equipmentType = request.form.get('equipmentType') #2 YES
+        equipmentUnitNumber = request.form.get('equipmentUnitNumber') #3 YES
+        manufacturerName = request.form.get('manufacturerName') #4 YES
+        modelNumber = request.form.get('modelNumber') #5 YES
+        serialNumber = request.form.get('serialNumber') #6 YES
+        equipmentUnitAddress = request.form.get('equipmentUnitAddress') #7 YES
+        organizationName = request.form.get('organizationName') #8 YES
+        equipmentLocation = request.form.get('equipmentLocation') #9 YES
+
+        #Tab 2
         refrigerantType = request.form.get('refrigerantType')
         currentRefrigerantWeight_1 = request.form.get('currentRefrigerantWeight1') #bigger unit
         currentRefrigerantWeight_2 = request.form.get('currentRefrigerantWeight2') #smaller unit
         currentRefrigerantWeightUnit = request.form.get('currentRefrigerantWeightUnit')
-        manufacturerName = request.form.get('manufacturerName')
-        serialNumber = request.form.get('serialNumber')
-        equipmentType = request.form.get('equipmentType')
-        modelNumber = request.form.get('modelNumber')
+        additionalNotes = request.form.get('additionalNotes') #10 YES
+        
+        #STILL NEED TO ADD
+        # unitLabel/unit_name
+
 
         #For database 
         amount_of_refrigerant_kg = 0
