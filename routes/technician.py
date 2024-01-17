@@ -189,7 +189,7 @@ def equipment_create_QR():
         tech_id = session.get('tech_id') #hmmm
         # 1.Add new unit to the database
         my_unit = CRUD.create(Unit, type_of_refrigerant=refrigerantType, installation_date=createDate,
-                              manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, amount_of_refrigerant_kg=amount_of_refrigerant_kg, amount_of_refrigerant_lbs=amount_of_refrigerant_lbs, model=modelNumber)
+                              manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, amount_of_refrigerant_kg=amount_of_refrigerant_kg, amount_of_refrigerant_lbs=amount_of_refrigerant_lbs, model=modelNumber, equipment_unit_address=equipmentUnitAddress, organization_name=organizationName, equipment_location=equipmentLocation, equipment_unit_number=equipmentUnitNumber, additional_notes=additionalNotes)
         my_equipment_id = my_unit.unit_id
         # 2.Get the Unique URL for the unit from the QR code.
         unique_equipment_token = session.get('QR_unique_token')

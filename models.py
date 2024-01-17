@@ -247,6 +247,13 @@ class Unit(Base):
     amount_of_refrigerant_kg = Column(Numeric)
     amount_of_refrigerant_lbs = Column(Numeric)
     
+    equipment_unit_number = Column(String)
+    equipment_unit_address = Column(String)
+    organization_name = Column(String)
+    equipment_location = Column(String)
+    additional_notes = Column(String)
+    
+    
 
     technician = relationship('Technician', backref='Unit')
     tag = relationship('Tag', backref='Unit')
