@@ -152,6 +152,7 @@ def equipment_create_QR():
         # For database
         amount_of_refrigerant_kg = 0
         amount_of_refrigerant_lbs = 0
+        amount_of_refrigerant_in_unit_oz = 0
 
         if currentRefrigerantWeight_1 == "" or currentRefrigerantWeight_1 == None:
             currentRefrigerantWeight_1 = 0
@@ -168,6 +169,8 @@ def equipment_create_QR():
             # rounding
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
+            amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1 * 35.274) + float(
+                currentRefrigerantWeight_2 * 0.035274)
         else:
             print("Using Imperial LBS/OZ")
             amount_of_refrigerant_lbs = float(
@@ -176,6 +179,7 @@ def equipment_create_QR():
             # rounding
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
+            amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1 * 16) + float(currentRefrigerantWeight_2)
 
         # Serial Number is Optional
         if serialNumber == "":
@@ -208,7 +212,8 @@ def equipment_create_QR():
             "equipment_location": equipmentLocation,
             "equipment_unit_number": equipmentUnitNumber,
             "additional_notes": additionalNotes,
-            "unit_name": customLabel
+            "unit_name": customLabel,
+            "amount_of_refrigerant_in_unit_oz": amount_of_refrigerant_in_unit_oz
         }
 
         my_unit = CRUD.create(model=Unit, **unit_data)
@@ -473,7 +478,11 @@ def repair_ODS_Sheet_New():
         # Conversion factors
         lbs_to_kg = 0.453592
         kg_to_lbs = 2.20462
-
+        
+        
+        refrigerant_added_oz = 0
+        refrigerant_removed_oz = 0
+        
         # this means they selected imperial so we need to sync the metric column
         if refrigerant_added_lbs == 0 or refrigerant_removed_lbs == 0:
             refrigerant_added_lbs = (
