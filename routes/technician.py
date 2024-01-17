@@ -10,7 +10,6 @@ from jinja2 import Environment, FileSystemLoader
 import re
 
 
-
 # Import other necessary modules
 import UUID_Generate
 from datetime import datetime
@@ -122,62 +121,102 @@ def equipment_create_QR():
     print("inside equipment_create")
     if request.method == 'POST':
         print("inside post for equipment_create")
-        
-        # Get data from form
-        createDate = request.form.get('createDate')
-        refrigerantType = request.form.get('refrigerantType')
-        currentRefrigerantWeight_1 = request.form.get('currentRefrigerantWeight1') #bigger unit
-        currentRefrigerantWeight_2 = request.form.get('currentRefrigerantWeight2') #smaller unit
-        currentRefrigerantWeightUnit = request.form.get('currentRefrigerantWeightUnit')
-        manufacturerName = request.form.get('manufacturerName')
-        serialNumber = request.form.get('serialNumber')
-        equipmentType = request.form.get('equipmentType')
-        modelNumber = request.form.get('modelNumber')
 
-        #For database 
+        # Get data from form
+        # Tab 1
+        createDate = request.form.get('createDate')  # 1 YES
+        equipmentType = request.form.get('equipmentType')  # 2 YES
+        equipmentUnitNumber = request.form.get('equipmentUnitNumber')  # 3 YES
+        manufacturerName = request.form.get('manufacturerName')  # 4 YES
+        modelNumber = request.form.get('modelNumber')  # 5 YES
+        serialNumber = request.form.get('serialNumber')  # 6 YES
+        equipmentUnitAddress = request.form.get(
+            'equipmentUnitAddress')  # 7 YES
+        organizationName = request.form.get('organizationName')  # 8 YES
+        equipmentLocation = request.form.get('equipmentLocation')  # 9 YES
+
+        # Tab 2
+        refrigerantType = request.form.get('refrigerantType')
+        currentRefrigerantWeight_1 = request.form.get(
+            'currentRefrigerantWeight1')  # bigger unit
+        currentRefrigerantWeight_2 = request.form.get(
+            'currentRefrigerantWeight2')  # smaller unit
+        currentRefrigerantWeightUnit = request.form.get(
+            'currentRefrigerantWeightUnit')
+        additionalNotes = request.form.get('additionalNotes')  # 10 YES
+        customLabel = request.form.get('customLabel')  # 11 YES
+
+        # STILL NEED TO ADD
+        # unitLabel/unit_name
+
+        # For database
         amount_of_refrigerant_kg = 0
         amount_of_refrigerant_lbs = 0
-        
+        amount_of_refrigerant_in_unit_oz = 0
+
         if currentRefrigerantWeight_1 == "" or currentRefrigerantWeight_1 == None:
             currentRefrigerantWeight_1 = 0
         if currentRefrigerantWeight_2 == "" or currentRefrigerantWeight_2 == None:
             currentRefrigerantWeight_2 = 0
-        
+
         # Metric or Imperial
         if currentRefrigerantWeightUnit == 'metric':
             print("Using Metric KG/G")
-            amount_of_refrigerant_kg = float(currentRefrigerantWeight_1) + (float(currentRefrigerantWeight_2) * 0.001)
-            amount_of_refrigerant_lbs = float(amount_of_refrigerant_kg) * 2.20462
+            amount_of_refrigerant_kg = float(
+                currentRefrigerantWeight_1) + (float(currentRefrigerantWeight_2) * 0.001)
+            amount_of_refrigerant_lbs = float(
+                amount_of_refrigerant_kg) * 2.20462
             # rounding
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
+            amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1 * 35.274) + float(
+                currentRefrigerantWeight_2 * 0.035274)
         else:
             print("Using Imperial LBS/OZ")
-            amount_of_refrigerant_lbs = float(currentRefrigerantWeight_1) + (float(currentRefrigerantWeight_2) * 0.0625)
+            amount_of_refrigerant_lbs = float(
+                currentRefrigerantWeight_1) + (float(currentRefrigerantWeight_2) * 0.0625)
             amount_of_refrigerant_kg = amount_of_refrigerant_lbs * 0.453592
             # rounding
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
-        
+            amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1 * 16) + float(currentRefrigerantWeight_2)
+
         # Serial Number is Optional
         if serialNumber == "":
             serialNumber = "N/A"
-        
+
         # Making sure strings do not have special characters
         manufacturerName = re.sub('[^A-Za-z0-9 &]+', '', manufacturerName)
         equipmentType = re.sub('[^A-Za-z0-9 ]+', '', equipmentType)
         refrigerantType = re.sub('[^A-Za-z0-9 ]+', '', refrigerantType)
         serialNumber = re.sub('[^A-Za-z0-9 ]+', '', serialNumber)
-        
-        
+
         ###################################################
         ########### Add new unit to the database############
         ###################################################
         # 0.Get Technician ID from session.
-        tech_id = session.get('tech_id') #hmmm
+        tech_id = session.get('tech_id')  # hmmm
         # 1.Add new unit to the database
-        my_unit = CRUD.create(Unit, type_of_refrigerant=refrigerantType, installation_date=createDate,
-                              manufacturer=manufacturerName, unit_type=equipmentType, serial_number=serialNumber, technician_id=tech_id, amount_of_refrigerant_kg=amount_of_refrigerant_kg, amount_of_refrigerant_lbs=amount_of_refrigerant_lbs, model=modelNumber)
+        unit_data = {
+            "type_of_refrigerant": refrigerantType,
+            "installation_date": createDate,
+            "manufacturer": manufacturerName,
+            "unit_type": equipmentType,
+            "serial_number": serialNumber,
+            "technician_id": tech_id,
+            "amount_of_refrigerant_kg": amount_of_refrigerant_kg,
+            "amount_of_refrigerant_lbs": amount_of_refrigerant_lbs,
+            "model_number": modelNumber,  # This is your database column 'model'
+            "equipment_unit_address": equipmentUnitAddress,
+            "organization_name": organizationName,
+            "equipment_location": equipmentLocation,
+            "equipment_unit_number": equipmentUnitNumber,
+            "additional_notes": additionalNotes,
+            "unit_name": customLabel,
+            "amount_of_refrigerant_in_unit_oz": amount_of_refrigerant_in_unit_oz
+        }
+
+        my_unit = CRUD.create(model=Unit, **unit_data)
         my_equipment_id = my_unit.unit_id
         # 2.Get the Unique URL for the unit from the QR code.
         unique_equipment_token = session.get('QR_unique_token')
@@ -187,17 +226,20 @@ def equipment_create_QR():
         # 4. Record the activity in the Activity_Logs table.
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_user_role = session.get('user_role')
-        current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
+        # This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
+        current_contractor_id = session.get('contractor_id')
         current_user_id = session.get('user_id')
-        
+
         current_user_first_name = session.get('user_first_name')
         current_user_last_name = session.get('user_last_name')
         combined_name = current_user_first_name + " " + current_user_last_name
-        
+
         if current_user_role == 'technician':
-            CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
+            CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date,
+                        user_role=current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name=combined_name)
         elif current_user_role == 'contractor':
-            CRUD.create(Activity_Logs, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
+            CRUD.create(Activity_Logs, activity_type='NEW-EQUIPMENT-REGISTERED', date_logged=current_date,
+                        user_role=current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name=combined_name)
 
         # 5.Render Success page
         return render_template('equipment/equipment-linked.html', unique_url=unique_equipment_token, tech_id=tech_id)
@@ -218,13 +260,14 @@ def my_choose_qr_type():
     if request.method == 'POST':
         print("inside choose-qr-type")
         # Check if qr is already in the system:
-        unique_token = request.form.get('unique_token') # get token from post request
+        # get token from post request
+        unique_token = request.form.get('unique_token')
         print("unique_token IN QR TYPE: ", unique_token)
         if unique_token:  # always will have this after a qr scan.
             print("going to read tag in database")
             print("unique_token AGAIN: ", unique_token)
             x = CRUD.read(Tag, all=False, tag_url=str(unique_token))
-            
+
             if x != None:  # qr is registered in the system
                 if x.type == "equipment":
                     print("this is an equipment qr tag")
@@ -242,7 +285,7 @@ def my_choose_qr_type():
                     print("Unregistered cylinder tag scanned")
                     session['QR_unique_token'] = unique_token
                     return render_template('Equipment Common/choose-qr-type.html')
-                else: #Test codes go here.
+                else:  # Test codes go here.
                     print("error in qr scan, this qr tag needs to be registered.")
                     session['QR_unique_token'] = unique_token
                     return render_template('Equipment Common/choose-qr-type.html')
@@ -435,7 +478,11 @@ def repair_ODS_Sheet_New():
         # Conversion factors
         lbs_to_kg = 0.453592
         kg_to_lbs = 2.20462
-
+        
+        
+        refrigerant_added_oz = 0
+        refrigerant_removed_oz = 0
+        
         # this means they selected imperial so we need to sync the metric column
         if refrigerant_added_lbs == 0 or refrigerant_removed_lbs == 0:
             refrigerant_added_lbs = (
@@ -478,9 +525,9 @@ def repair_ODS_Sheet_New():
                 return False
         form_data_dictionary['leakDetectedRadio'] = convert_radio_to_boolean(
             form_data_dictionary.get('leakDetectedRadio'))
-        
-        #repairStatusRadio
-        
+
+        # repairStatusRadio
+
         if form_data_dictionary.get('repairStatusRadio') == 'leakRepaired':
             form_data_dictionary['repairStatusRadio'] = True
         elif form_data_dictionary.get('repairStatusRadio') == 'leakNotRepaired':
@@ -534,34 +581,41 @@ def repair_ODS_Sheet_New():
         # Update unit table with new data.
         CRUD.update(Unit, unit_id=session.get('unit_id'),
                     attr="last_maintenance_date", new=model_data['repair_date'])
-        
-        #Math for new amount of refrigerant in unit table in database.
-        previous_unit_data = CRUD.read(Unit, all=False, unit_id=session.get('unit_id'))
+
+        # Math for new amount of refrigerant in unit table in database.
+        previous_unit_data = CRUD.read(
+            Unit, all=False, unit_id=session.get('unit_id'))
         previous_amount_lbs = previous_unit_data.amount_of_refrigerant_lbs
         previous_amount_kg = previous_unit_data.amount_of_refrigerant_kg
-        
-        new_amount_lbs = float(previous_amount_lbs) + model_data['refrigerant_added_lbs'] - model_data['refrigerant_removed_lbs']
-        new_amount_kg = float(previous_amount_kg) + model_data['refrigerant_added_kg'] - model_data['refrigerant_removed_kg']
-        
+
+        new_amount_lbs = float(
+            previous_amount_lbs) + model_data['refrigerant_added_lbs'] - model_data['refrigerant_removed_lbs']
+        new_amount_kg = float(
+            previous_amount_kg) + model_data['refrigerant_added_kg'] - model_data['refrigerant_removed_kg']
+
         ###################################################
-        #Update amount of refrigerant inside Unit.
-        
-        CRUD.update(Unit, unit_id=session.get('unit_id'), attr="amount_of_refrigerant_lbs", new=new_amount_lbs)
-        CRUD.update(Unit, unit_id=session.get('unit_id'), attr="amount_of_refrigerant_kg", new=new_amount_kg)
-        
-        #record activity in activity logs table
+        # Update amount of refrigerant inside Unit.
+
+        CRUD.update(Unit, unit_id=session.get('unit_id'),
+                    attr="amount_of_refrigerant_lbs", new=new_amount_lbs)
+        CRUD.update(Unit, unit_id=session.get('unit_id'),
+                    attr="amount_of_refrigerant_kg", new=new_amount_kg)
+
+        # record activity in activity logs table
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_user_role = session.get('user_role')
-        current_contractor_id = session.get('contractor_id') #This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
+        # This will either be the contractor the user works for or the id of the contractor that is logged in depending on the user role.
+        current_contractor_id = session.get('contractor_id')
         current_user_id = session.get('user_id')
-        tech_id = session.get('tech_id') #Only technicians can fill out this form so it's ok to do this.
-        
+        # Only technicians can fill out this form so it's ok to do this.
+        tech_id = session.get('tech_id')
+
         current_user_first_name = session.get('user_first_name')
         current_user_last_name = session.get('user_last_name')
         combined_name = current_user_first_name + " " + current_user_last_name
-        CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='ODS-TAG', date_logged=current_date, user_role = current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name = combined_name)
+        CRUD.create(Activity_Logs, technician_id=tech_id, activity_type='ODS-TAG', date_logged=current_date,
+                    user_role=current_user_role, contractor_id=current_contractor_id, user_id=current_user_id, name=combined_name)
 
-        
         # Send email to contractor
         try:
             print("start of try")
@@ -892,11 +946,11 @@ def equipment_info_page(unique_id):
         unit_id = tag_data.unit_id
         data = CRUD.read(Unit, all=False, unit_id=unit_id)
 
-        
-        #Get name of technician who registered equipment.
-        tech_data = CRUD.read(Technician, all=False, technician_id=data.technician_id)
-        user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
-        
+        # Get name of technician who registered equipment.
+        tech_data = CRUD.read(Technician, all=False,
+                              technician_id=data.technician_id)
+        user_detail_data = CRUD.read(
+            User_Detail, all=False, user_id=tech_data.user_id)
 
         session['new_unit_id'] = unit_id
         session['tag'] = unique_id
@@ -1014,11 +1068,11 @@ def ods_tags_new():
     else:
         selected_repair_form_id = request.form.get('selected_ods_tag')
         print("selected_repair_form_id: ", selected_repair_form_id)
-        
+
         # Get data from database
         data = CRUD.read(Repair_form, all=False,
                          repair_form_id=selected_repair_form_id)
-        
+
         print("step 2")
 
         current_tech_id = data.tech_id

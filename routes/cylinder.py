@@ -124,6 +124,7 @@ def new_cylinder_view():
         # Unit Conversions for Database Storage
         current_refrigerant_weight_lbs = 0
         current_refrigerant_weight_kg = 0
+        current_refrigerant_weight = 0 #oz only
         # if the user selected "imperial" for the current refrigerant weight unit.
         if metricOrImperial == "imperial":
             current_refrigerant_weight_lbs = float(
@@ -133,6 +134,7 @@ def new_cylinder_view():
                 current_refrigerant_weight_kg, 2)
             current_refrigerant_weight_lbs = round(
                 current_refrigerant_weight_lbs, 2)
+            current_refrigerant_weight = float(bigUnit) * 16 + float(smallUnit)
         else:  # if the user selected "metric" for the current refrigerant weight unit.
             current_refrigerant_weight_kg = float(
                 bigUnit) + float(smallUnit) / g_to_kg
@@ -141,6 +143,8 @@ def new_cylinder_view():
                 current_refrigerant_weight_kg, 2)
             current_refrigerant_weight_lbs = round(
                 current_refrigerant_weight_lbs, 2)
+            current_refrigerant_weight = float(bigUnit) * 35.274 + float(smallUnit) * 0.035274
+
 
         # Cylinder Use Case Conversion to Cylinder Type ID
         cyl_type_id = 17
@@ -170,7 +174,9 @@ def new_cylinder_view():
             # the current refrigerant weight in lbs.
             'current_refrigerant_weight_lbs': current_refrigerant_weight_lbs,
             # the current refrigerant weight in kg.
-            'current_refrigerant_weight_kg': current_refrigerant_weight_kg
+            'current_refrigerant_weight_kg': current_refrigerant_weight_kg,
+            # the current refrigerant weight in oz.
+            'current_refrigerant_weight': current_refrigerant_weight
         }
 
         ############ CRUD Create Row for new Cylinder#############

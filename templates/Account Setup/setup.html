@@ -143,6 +143,9 @@
                           class="text-danger">*</span></label><input class="form-control" type="text" required=""
                         name="License">
                     </div>
+                    <div class="mb-4"><label class="form-label">Expiry Date</label><input class="form-control"
+                        type="text" name="expiryDate" id="not-required">
+                    </div>
                     <div class="mb-4"><label class="form-label">ODS Sheet Recipient Email <span
                           class="text-danger">*</span></label><input class="form-control" type="email"
                         name="recipient_email" required=""></div>
@@ -179,10 +182,14 @@
                         <div class="mb-4"><label class="form-label">Company Phone Number <span
                               class="text-danger">*</span></label><input class="form-control" type="tel"
                             name="Phone Number" required=""></div><!-- End: Phone Number -->
-                        <!-- Start: ODS Email -->
-                        <div class="mb-4"><label class="form-label">ODS Sheet Recipient Email <span
-                              class="text-danger">*</span></label><input class="form-control" type="email"
-                            name="recipient_email" required=""></div><!-- End: ODS Email -->
+                        <!-- Start: Company Email-->
+                        <div class="mb-4">
+                          <label class="form-label">Company Email <span class="text-danger">*</span></label>
+                          <input class="form-control" type="email" name="recipient_email" required="">
+                          <div class="form-text">This email will receive completed ODS Sheets.</div>
+                        </div>
+                        <!--End: Company Email-->
+
                         <!-- Start: Company Address -->
                         <h4 class="mb-3">Optional Company Details (These do not get saved to database yet) </h4>
                         <!-- Start: Branch Number -->

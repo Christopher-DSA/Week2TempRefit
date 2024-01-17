@@ -237,7 +237,7 @@ class Unit(Base):
     installation_date = Column(String)
     last_maintenance_date = Column(String)
     manufacturer = Column(String)
-    model = Column(String)
+    model_number = Column(String)
     type_of_refrigerant = Column(String)
     factory_charge_amount = Column(Integer)
     unit_type = Column(String)
@@ -246,6 +246,13 @@ class Unit(Base):
     amount_of_refrigerant_in_unit_oz = Column(Numeric)
     amount_of_refrigerant_kg = Column(Numeric)
     amount_of_refrigerant_lbs = Column(Numeric)
+    
+    equipment_unit_number = Column(String)
+    equipment_unit_address = Column(String)
+    organization_name = Column(String)
+    equipment_location = Column(String)
+    additional_notes = Column(String)
+    
     
 
     technician = relationship('Technician', backref='Unit')
