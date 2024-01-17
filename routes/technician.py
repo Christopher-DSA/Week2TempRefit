@@ -144,6 +144,7 @@ def equipment_create_QR():
         currentRefrigerantWeightUnit = request.form.get(
             'currentRefrigerantWeightUnit')
         additionalNotes = request.form.get('additionalNotes')  # 10 YES
+        customLabel = request.form.get('customLabel')  # 11 YES
 
         # STILL NEED TO ADD
         # unitLabel/unit_name
@@ -206,7 +207,8 @@ def equipment_create_QR():
             "organization_name": organizationName,
             "equipment_location": equipmentLocation,
             "equipment_unit_number": equipmentUnitNumber,
-            "additional_notes": additionalNotes
+            "additional_notes": additionalNotes,
+            "unit_name": customLabel
         }
 
         my_unit = CRUD.create(model=Unit, **unit_data)
