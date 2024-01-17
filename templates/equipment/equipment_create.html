@@ -35,6 +35,21 @@
         // Call the function when the window loads
         window.onload = setCurrentDate;
     </script>
+
+    <style>
+        #equipmentLocation {
+            /* Adjust this value to your liking */
+            padding-bottom: 100px;
+            /* Adjust this value as needed */
+            text-align: left;
+
+        }
+
+        
+    </style>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -85,123 +100,290 @@
         <div class="row mb-3 justify-content-center">
             <div class="col-12 col-md-6">
                 <h1 class="text-center mb-4">Equipment Registration</h1>
-
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1">Tab 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2">Tab 2</a>
+                    </li>
+                </ul>
             </div>
         </div>
+
+
         <form id="equipmentForm" method="post" action="/equipment/equipment_create" class="needs-validation" novalidate>
+            <div class="tab-content">
 
-            <!-- Equipment Details Section -->
-            <div class="row mb-3 justify-content-center">
-                <div class="col-12 col-md-6">
-                    <label for="createDate" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="createDate" name="createDate" required>
-                </div>
-            </div>
+                <!-- Tab 1 Content-->
+                <div id="tab1" class="container tab-pane active">
 
 
-            <!-- Header -->
-            <div class="row mb-3 justify-content-center">
-                <div class="col-12 col-md-6">
-                    <h4 class="mt-3">Equipment Refrigerant Information</h4>
-                </div>
-            </div>
-
-            <!-- Refrigerant Type and Factory Charge -->
-            <div class="row mb-3 justify-content-center">
-                <div class="col-12 col-md-6">
-                    <label for="refrigerantType" class="form-label"><strong>Refrigerant Type</strong></label>
-                    <input type="text" class="form-control" id="refrigerantType" name="refrigerantType" required>
-                </div>
-
-            </div>
-
-            <div class="row mb-1 justify-content-center">
-                <div class="col-12 col-md-6">
-                    <h6 class="mt-3">Amount of Refrigerant in Unit</h6>
-                </div>
-            </div>
-
-            <div class="row mb-3 justify-content-center">
-                <div class="col-12 col-md-2">
-                    <div class="d-flex justify-content-between gap-3">
-                        <select name="currentRefrigerantWeightUnit" class="form-select">
-                            <option value="imperial" selected="">lb/oz</option>
-                            <option value="metric">kg/g</option>
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="d-flex justify-content-between gap-3">
-                        <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
-                                type="number" required=""><span class="input-group-text"
-                                id="input-label-unit-big">lb</span>
-                        </div>
-                        <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
-                                type="number" required=""><span class="input-group-text"
-                                id="input-label-unit-small">oz</span>
+                    <!-- Equipment Details Section -->
+                    <div class="row  justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <!-- <label for="createDate" class="form-label">Date</label> -->
+                            <input type="hidden" class="form-control" id="createDate" name="createDate" required>
                         </div>
                     </div>
+
+                    <div class="row justify-content-center">
+                        <div class="mt-3 col-12 col-md-6">
+                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
+                                required.</p>
+                        </div>
+                    </div>
+                    <!-- Header -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <h4 class="mt-3">Equipment Unit Information</h4>
+                        </div>
+                    </div>
+
+
+                    <!-- 1. Equipment Unit Type -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="refrigerantType" class="form-label"><strong>Equipment Unit
+                                    Type</strong><span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="equipmentUnitType" name="equipmentType"
+                                placeholder="Refrigerator" required>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row mb-3 justify-content-center mt-3">
+                        <div class="col-12 col-md-6">
+                            <select id="equipmentSelect" class="form-control" style="width: 100%;" name="equipmentType"
+                                onchange="showOtherField()">
+                                <option value="" disabled selected>Please select Unit Type</option>
+                                <option value="Central Air Conditioner">Central Air Conditioner</option>
+                                <option value="Window Air Conditioner">Window Air Conditioner</option>
+                                <option value="Split System">Split System</option>
+                                <option value="Heat Pump">Heat Pump</option>
+                                <option value="Refrigerator">Refrigerator</option>
+                                <option value="Commercial Freezer">Commercial Freezer</option>
+                                <option value="Walk-In Cooler">Walk-In Cooler</option>
+                                <option value="Chiller">Chiller</option>
+                                <option value="Rooftop Unit">Rooftop Unit</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="text" id="otherInput" class="form-control mt-2" style="display: none;"
+                                placeholder="Type unit type here..." name="otherEquipmentType">
+
+                        </div>
+                    </div> -->
+
+
+                    <!-- 2. Equipment Unit Number -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="refrigerantType" class="form-label"><strong>Equipment Unit
+                                    Number</strong></label>
+                            <input type="text" class="form-control" id="equipmentUnitNumber" name="equipmentUnitNumber"
+                                placeholder="Rooftop Unit 4" required>
+                        </div>
+
+                    </div>
+
+                    <!-- 3. Manufactuer Name-->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="manufacturerName" class="form-label"><strong>Manufacturer's
+                                    Name</strong><span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="manufacturerName" name="manufacturerName"
+                                required>
+                        </div>
+                    </div>
+
+                    <!-- 4. Model Number-->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="manufacturerName" class="form-label"><strong>Model Number</strong><span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="modelNumber" name="modelNumber">
+                        </div>
+                    </div>
+
+
+                    <!-- 5. Serial Number -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="serialNumber" class="form-label"><strong>Serial Number<span
+                                        class="text-danger">*</span></strong></label>
+                            <input type="text" class="form-control" id="serialNumber" name="serialNumber">
+                        </div>
+                    </div>
+
+                    <!-- 6. Equipment Unit Address -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="equipmentUnitAddress" class="form-label"><strong>Equipment Unit
+                                    Address</strong></label>
+                            <input type="text" class="form-control" id="equipmentUnitAddress"
+                                name="equipmentUnitAddress">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="equipmentUnitAddress" class="form-label"><strong>Equipment Unit Address</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="equipmentUnitAddress" name="equipmentUnitAddress">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    <!-- 7. OrganizationName -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="refrigerantType" class="form-label"><strong>Organization Name</strong></label>
+                            <input type="text" class="form-control" id="organizationName" name="organizationName"
+                                placeholder="Costco" required>
+                        </div>
+
+                    </div>
+
+
+                    <!-- 8. Location of Equipment -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="refrigerantType" class="form-label"><strong>Location of
+                                    Equipment</strong></label>
+                            <input type="text" class="form-control" id="equipmentLocation" name="equipmentLocation"
+                                placeholder="NE rooftop corner" required>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- Next Button to switch to Tab 2 -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <button type="button" class="btn btn-primary" onclick="switchTab('tab2')">Next</button>
+                        </div>
+                    </div>
+
+
                 </div>
+
+                <!-- Tab 2 Content -->
+                <div id="tab2" class="container tab-pane fade">
+
+                    <div class="row justify-content-center">
+                        <div class="mt-3 col-12 col-md-6">
+                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
+                                required.</p>
+                        </div>
+                    </div>
+                    <!-- Header -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <h4 class="mt-3">Equipment Refrigerant Information</h4>
+                        </div>
+                    </div>
+
+
+                    <!-- Refrigerant Type and Factory Charge -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="refrigerantType" class="form-label"><strong>Refrigerant Type</strong></label>
+                            <input type="text" class="form-control" id="refrigerantType" name="refrigerantType"
+                                placeholder="R-410A, R-22, etc." required>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-1 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <h6 class="mt-3">Amount of Refrigerant in Unit</h6>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-2">
+                            <div class="d-flex justify-content-between gap-3">
+                                <select name="currentRefrigerantWeightUnit" class="form-select">
+                                    <option value="imperial" selected="">lb/oz</option>
+                                    <option value="metric">kg/g</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="d-flex justify-content-between gap-3">
+                                <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
+                                        type="number" placeholder="lb" required=""><span class="input-group-text"
+                                        id="input-label-unit-big">lb</span>
+                                </div>
+                                <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
+                                        type="number" placeholder="oz" required=""><span class="input-group-text"
+                                        id="input-label-unit-small">oz</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- <div class="row mb-1 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <h6 class="mt-3">Factory Charge</h6>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-2">
+                            <div class="d-flex justify-content-between gap-3">
+                                <select name="currentRefrigerantWeightUnit" class="form-select">
+                                    <option value="imperial" selected="">lb/oz</option>
+                                    <option value="metric">kg/g</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="d-flex justify-content-between gap-3">
+                                <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
+                                        type="number" required=""><span class="input-group-text"
+                                        id="input-label-unit-big">lb</span>
+                                </div>
+                                <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
+                                        type="number" required=""><span class="input-group-text"
+                                        id="input-label-unit-small">oz</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- FINAL INPUT BOX ON TAB 2. Additional Notes -->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="refrigerantType" class="form-label"><strong>Additional Notes</strong></label>
+                            <input type="text" class="form-control" id="additionalNotes" name="additionalNotes"
+                                placeholder="" style="padding-bottom: 100px;" required>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Submit Button for the entire form -->
+                    <div class="row mb-3 mt-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
-
-            <div class="row mb-3 justify-content-center">
-                <div class="col-12 col-md-6">
-                    <h4 class="mt-3">Equipment Information</h4>
-                </div>
-            </div>
-            <!-- Manufacturer's Name and Serial Number -->
-            <div class="row mb-3 justify-content-center">
-                <div class="col-md-3">
-                    <label for="manufacturerName" class="form-label">Manufacturer's Name*</label>
-                    <input type="text" class="form-control" id="manufacturerName" name="manufacturerName" required>
-                </div>
-                <div class="col-md-3">
-                    <label for="serialNumber" class="form-label">Serial Number</label>
-                    <input type="text" class="form-control" id="serialNumber" name="serialNumber">
-                </div>
-            </div>
-
-            <div class="row mb-3 justify-content-center">
-                <div class="col-md-6">
-                    <label for="manufacturerName" class="form-label">Model Number</label>
-                    <input type="text" class="form-control" id="modelNumber" name="modelNumber">
-                </div>
-            </div>
-
-            
-
-            <div class="row mb-3 justify-content-center mt-3">
-                <div class="col-12 col-md-6">
-                    <select id="equipmentSelect" class="form-control" style="width: 100%;" name="equipmentType"
-                        onchange="showOtherField()">
-                        <option value="" disabled selected>Please select Unit Type</option>
-                        <option value="Central Air Conditioner">Central Air Conditioner</option>
-                        <option value="Window Air Conditioner">Window Air Conditioner</option>
-                        <option value="Split System">Split System</option>
-                        <option value="Heat Pump">Heat Pump</option>
-                        <option value="Refrigerator">Refrigerator</option>
-                        <option value="Commercial Freezer">Commercial Freezer</option>
-                        <option value="Walk-In Cooler">Walk-In Cooler</option>
-                        <option value="Chiller">Chiller</option>
-                        <option value="Rooftop Unit">Rooftop Unit</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <input type="text" id="otherInput" class="form-control mt-2" style="display: none;"
-                        placeholder="Type unit type here..." name="otherEquipmentType">
-
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="row mb-3 mt-3 justify-content-center">
-                <div class="col-12 col-md-6">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-
-        </form>
+    </div>
+    </form>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
@@ -251,6 +433,13 @@
             } else {
                 otherInput.style.display = 'none';
             }
+        }
+    </script>
+    <script>
+        function switchTab(tabId) {
+            console.log(tabId);
+            var tab = new bootstrap.Tab(document.querySelector('#' + tabId + '-tab'));
+            tab.show(); // This will switch the tab
         }
     </script>
 </body>
