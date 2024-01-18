@@ -546,8 +546,15 @@ def profile_edit_page():
             else:
                 # Update the User_Detail table for all other fields
                 CRUD.update(User_Detail, field, new=value, user_id=current_user_id)
+        
+        
                 
-        return render_template('admin/new-edit-profile.html')
+        first_name = session.get('user_first_name')
+        last_name = session.get('user_last_name')
+        current_user_details = CRUD.read(User_Detail, user_id=session.get('user_id'))
+        ods_licence_number = session.get('ods_licence_number')
+                
+        return render_template('admin/new-edit-profile.html',first_name=first_name,last_name=last_name, current_user_details=current_user_details, ods_licence_number=ods_licence_number)
     
     
 #Edit Acccount Settings Page

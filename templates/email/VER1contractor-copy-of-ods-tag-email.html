@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Service Details</title>
+</head>
+
+<body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+        style="font-family: Arial, sans-serif; font-size: 14px;">
+        <tr>
+            <td style="text-align: center; padding: 20px;">
+                <h1 style="font-family: Arial, sans-serif; font-size: 24px;">ODS Tag</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                    <!-- Company and User Information -->
+                    <tr>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Company &
+                            User Info</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Company Name:</td>
+                        <td>{{ company_data.name }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Phone No:</td>
+                        <td>{{ user_data.telephone }}</td>
+                    </tr>
+
+                    <!-- Technical Information -->
+                    <tr>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Technical
+                            Info</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Technician Name:</td>
+                        <td>{{ user_data.first_name }} {{ user_data.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Expiry Date:</td>
+                        <td>{{ tech_data.license_expiry_date }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Certificate No:</td>
+                        <td>{{ tech_data.ods_licence_number }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Job No:</td>
+                        <td>{{ data.job_number }}</td>
+                    </tr>
+
+                    <!-- Refrigerant Information -->
+                    <tr>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Refrigerant
+                            Info</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Oil:</td>
+                        <td>{{ data.oil }}</td> <!-- Assuming 'oil' is part of 'data' -->
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Refrigerant Type:</td>
+                        <td>{{ data.refrigerant_type }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Amount Added:</td>
+                        <td>
+                            {% if data.refrigerant_added_lbs > 0 %}
+                            {{ data.refrigerant_added_lbs }} lbs
+                            {% elif data.refrigerant_added_kg > 0 %}
+                            {{ data.refrigerant_added_kg }} kg
+                            {% else %}
+                            n/a
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Amount Reclaimed:</td>
+                        <td>
+                            {% if data.refrigerant_removed_lbs > 0 %}
+                            {{ data.refrigerant_removed_lbs }} lbs
+                            {% elif data.refrigerant_removed_kg > 0 %}
+                            {{ data.refrigerant_removed_kg }} kg
+                            {% else %}
+                            n/a
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Unit Contains Refrigerant:</td>
+                        <td>{% if data.no_longer_contains_refrigerant ==true%}
+                            No
+                            {%else%}
+                            Yes
+                            {%endif%}</td>
+                    </tr>
+
+                    <!-- Additional Information -->
+                    <tr>
+                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Additional
+                            Info</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Model:</td>
+                        <td>{{ unit_data.model }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Serial No:</td>
+                        <td>{{ unit_data.serial_number }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Issue Date:</td>
+                        <td>{{data.repair_date}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Other Tests:</td>
+                        <td>Vaccuum Test:
+                            {% if data.vacuum_test_performed == true %}
+                            Yes
+                            {% else %}
+                            No
+                            {% endif %}, Pressure Test:
+                            {% if data.pressure_test_performed ==true%}
+                            Yes, PSIG result: {{data.psig_result}}
+                            {%else%}
+                            No
+                            {%endif%}, Compressor Oil Removed:
+                            {% if data.compressor_oil_removed ==true%}
+                            Yes
+                            {%else%}
+                            No
+                            {%endif%}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Leak Detected:</td>
+                        <td>
+                            {% if data.leak_test_result == true %}
+                            Leak was Detected ❗.
+                            {% if data.is_leak_repaired == true %}
+                            Leak repaired. 🛠️
+                            {% else %}
+                            Leak was not repaired ❌.
+                            {% endif %}
+                            {% else %}
+                            No leak was detected ✅.
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

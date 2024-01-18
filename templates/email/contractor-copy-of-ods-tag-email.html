@@ -2,71 +2,170 @@
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
     <title>Service Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #EEEEEE;
+            color: #333333;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #FFFFFF;
+            border-collapse: collapse;
+        }
+
+        .email-header {
+            background-color: rgb(21, 27, 104);
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .email-body {
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .info-section {
+            font-weight: bold;
+            color: rgb(21, 27, 104);
+            background-color: #ffffff;
+            /* Keeping background white for readability */
+            padding: 15px 10px;
+            /* Added padding for better spacing */
+            font-size: 18px;
+            /* Increased font size for section titles */
+            border-bottom: 2px solid rgb(21, 27, 104);
+            /* Added a bottom border for definition */
+        }
+
+        .info-item {
+            padding: 10px 5px;
+            /* More vertical padding for each item */
+            color: #333333;
+            /* Standard text color for readability */
+            font-size: 17px;
+            /* Slightly larger font size for content */
+            border-bottom: 1px solid #DDD;
+            /* Add a subtle line to separate items */
+            font-weight: bold;
+
+        }
+
+        .highlight {
+            color: #2F70FF;
+        }
+
+        .footer {
+            background-color: rgb(21, 27, 104);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: rgb(21, 27, 104);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
-<body>
+<body style="font-family: Arial, sans-serif; background-color: #EEEEEE; margin: 0; padding: 0;">
     <table width="100%" border="0" cellspacing="0" cellpadding="0"
-        style="font-family: Arial, sans-serif; font-size: 14px;">
+        style="max-width: 600px; margin: auto; background-color: #FFFFFF;">
         <tr>
-            <td style="text-align: center; padding: 20px;">
-                <h1 style="font-family: Arial, sans-serif; font-size: 24px;">ODS Tag</h1>
+            <td style="background-color: rgb(21, 27, 104); text-align: center; padding: 20px;">
+                <svg width="126" height="44" viewBox="0 0 126 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M40.9725 30.9919V43.9755H44.0501H47.1277V39.1067V34.2378H48.0911C49.551 34.2378 50.7129 35.6823 54.4313 42.1203L55.3988 43.7952L59.241 43.8976L63.0833 44L62.2172 42.6353C58.3999 36.62 57.014 34.6028 55.9035 33.4466L54.6239 32.1143L55.536 31.8864C56.0378 31.7609 57.0179 31.0619 57.7142 30.3334C61.6046 26.2609 59.875 19.7425 54.5497 18.4067C53.6764 18.1878 50.2646 18.0085 46.9673 18.0085H40.9725V30.9919ZM65.2311 30.9919V43.9755H73.0156H80.8001V41.4509V38.9263H76.0932H71.3863V36.2214V33.5165H75.5501H79.7139V30.9919V28.4674H75.5501H71.3863V25.7625V23.0576H75.9121H80.438V20.5331V18.0085H72.8346H65.2311V30.9919ZM84.7828 30.9919V43.9755H88.0414H91.3001V39.1067V34.2378H95.4639H99.6277V31.5329V28.828H95.4639H91.3001V25.9428V23.0576H95.8259H100.352V20.5331V18.0085H92.5673H84.7828V30.9919ZM52.0435 23.5838C52.7578 24.0498 52.9208 24.4595 52.9208 25.7874C52.9208 28.185 51.8038 29.1887 49.1353 29.1887H47.1277V25.8923V22.596L49.1469 22.8037C50.2577 22.9177 51.5612 23.269 52.0435 23.5838Z"
+                        fill="white" />
+                    <path
+                        d="M22.0247 2.58985C21.7231 2.25661 21.3642 1.53747 21.2277 0.991796L20.979 0L23.2814 0.00540998C24.5475 0.00865586 25.7782 0.134523 26.0168 0.285277C26.2587 0.438554 26.5784 1.97494 26.741 3.76703C27.1157 7.90156 27.8308 8.33398 27.9981 4.52765C28.1038 2.12606 28.0426 1.80182 27.4843 1.80255C27.0494 1.80291 26.8507 1.52015 26.8507 0.901633C26.8507 0.0324585 26.935 0 29.2041 0C31.4732 0 31.5576 0.0324585 31.5576 0.901633C31.5576 1.58796 31.3628 1.81012 30.7429 1.83176C30.295 1.84727 30.1321 1.94212 30.3808 2.04202C30.6299 2.14228 30.8334 2.61618 30.8334 3.09549C30.8334 3.77676 30.6423 3.96719 29.9583 3.96719C29.0604 3.96719 28.6397 4.52223 28.934 5.31964C29.0256 5.56741 29.4141 5.77045 29.7975 5.77045C30.1868 5.77045 30.6321 6.12894 30.8063 6.58193L31.1177 7.39339L31.3197 6.49176C31.4312 5.99586 31.5804 4.58931 31.6513 3.36634C31.8255 0.368227 32.1959 0 35.0414 0C37.1092 0 37.3507 0.0753769 37.3507 0.721307C37.3507 1.11803 37.0183 1.77369 36.612 2.17835C36.0555 2.73267 35.843 3.49076 35.7507 5.24931C35.6327 7.49762 35.667 7.60762 36.6761 8.20126C37.2526 8.54063 38.1291 9.42712 38.6237 10.1719C39.4977 11.4872 39.5231 11.709 39.5231 17.9966V24.4678L38.1653 23.1128C37.4187 22.3674 36.5342 21.6594 36.2 21.5393C35.2387 21.1942 35.5414 16.2283 36.5871 15.1868C37.7482 14.0301 37.5208 13.7048 35.553 13.7048C33.3791 13.7048 33.0058 14.2 33.0058 17.0838C33.0058 19.793 32.5337 20.9179 31.3968 20.9179C30.7972 20.9179 30.5557 20.7578 30.6777 20.4411C30.7827 20.1692 30.4667 19.7854 29.9424 19.5474C29.0926 19.1615 29.0231 19.1976 29.0231 20.0238C29.0231 20.7253 28.8373 20.9179 28.1603 20.9179C27.1439 20.9179 26.863 20.1652 26.8557 17.425C26.8528 16.3964 26.6917 15.1388 26.4977 14.6299C26.183 13.8062 25.9448 13.7048 24.3252 13.7048C22.9823 13.7048 22.5058 13.8412 22.5058 14.2245C22.5058 14.5105 22.6854 14.8546 22.9048 14.9898C23.6684 15.4601 24.3882 17.6918 23.9472 18.2213C23.6561 18.5708 23.6511 18.9112 23.9291 19.4284C24.5657 20.6139 24.381 21.0582 22.9027 21.8989C21.315 22.8019 19.9714 25.1321 19.9714 26.9826V28.131H9.98586H0L0.119483 23.5326C0.225569 19.4432 0.329121 18.8077 1.0576 17.7903C1.50838 17.1613 2.33716 16.4436 2.90017 16.1955C3.89007 15.7591 3.92048 15.6664 3.82453 13.3846C3.76009 11.8464 3.54466 10.8932 3.20648 10.6465C2.92081 10.4384 2.57141 9.74305 2.42984 9.10145L2.17241 7.93437H4.51029C5.94155 7.93437 6.99191 8.10929 7.21893 8.38519C7.42278 8.63332 7.69578 9.97207 7.82503 11.3606C8.13207 14.6573 8.32252 15.5081 8.7541 15.5081C8.95686 15.5081 9.10929 14.2685 9.10929 12.6229C9.10929 10.2988 9.00357 9.73764 8.56619 9.73764C8.22838 9.73764 8.02309 9.39718 8.02309 8.83601C8.02309 7.96683 8.10745 7.93437 10.3765 7.93437C12.6456 7.93437 12.73 7.96683 12.73 8.83601C12.73 9.34489 12.5207 9.73764 12.2495 9.73764C11.9218 9.73764 11.8197 10.0813 11.9287 10.8196C12.0602 11.7126 11.962 11.9016 11.3672 11.9016C10.2969 11.9016 9.62198 12.8364 10.1955 13.5245C10.4435 13.822 10.9522 14.0655 11.3259 14.0655C11.7643 14.0655 12.0058 14.3215 12.0058 14.7868C12.0058 15.1835 12.146 15.5081 12.3176 15.5081C12.6561 15.5081 13.0837 12.5987 13.0888 10.2606C13.0906 9.45742 13.2876 8.60519 13.5265 8.36716C13.7742 8.12047 14.9607 7.93437 16.2873 7.93437H18.6136L18.3862 9.06755C18.2609 9.69112 17.9065 10.3847 17.5984 10.609C17.2189 10.8852 16.9955 11.7854 16.9061 13.399C16.7826 15.6275 16.8304 15.8064 17.6487 16.1778C18.5122 16.5699 18.5231 16.5515 18.5267 14.6891C18.5314 12.1782 19.8396 9.37915 21.4805 8.36896C22.6811 7.62998 22.7108 7.55388 22.6427 5.40331C22.5993 4.02453 22.3672 2.9689 22.0247 2.58985Z"
+                        fill="#54B1F5" />
+                    <path
+                        d="M0.441724 39.1976C0.230638 38.6393 0.057569 36.1641 0.057569 33.6976V29.2129H10.0145H19.9714V31.0162V32.8194H29.7472H39.5231V34.0817V35.344H29.7472H19.9714V37.7009C19.9714 40.3856 19.4149 41.5296 17.7812 42.2036C17.1342 42.4705 16.7127 42.912 16.7127 43.322C16.7127 43.9593 16.3351 43.9997 10.3765 43.9997C4.28183 43.9997 4.04033 43.9723 4.04033 43.2784C4.04033 42.8817 3.82779 42.5571 3.56819 42.5571C2.90053 42.5571 0.899379 40.4065 0.441724 39.1976Z"
+                        fill="#54B1F5" />
+                    <path d="M103.552 23.4208V20.3553V17.2897H106.81H110.069V20.3553V23.4208H106.81H103.552Z"
+                        fill="#54B1F5" />
+                    <path
+                        d="M115.862 21.8415C115.862 18.8506 115.675 19.045 119.664 17.8895C120.659 17.601 121.596 17.3478 121.746 17.3273C121.895 17.3067 122.017 18.9127 122.017 20.8963V24.5027H124.009H126V26.847V29.1912H123.979H121.958L122.078 33.7131C122.213 38.7857 122.355 39.0684 124.642 38.7976L126 38.6367V40.9583C126 43.7111 125.892 43.7915 122.198 43.7952C120.213 43.797 119.389 43.6264 118.397 43.0068C116.21 41.6417 116.058 41.1447 115.922 34.8715L115.798 29.1912H114.382H112.966V26.847V24.5027H114.414H115.862V21.8415Z"
+                        fill="#54B1F5" />
+                    <path d="M103.914 43.6174V34.7813V25.9453H106.991H110.069V34.7813V43.6174H106.991H103.914Z"
+                        fill="#54B1F5" />
+                </svg>
             </td>
         </tr>
+
         <tr>
-            <td>
+            <td style="padding: 20px; background-color: #ffffff;">
                 <table width="100%" border="0" cellspacing="0" cellpadding="5">
-                    <!-- Company and User Information -->
+                    <!-- Company & User Info Section -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Company &
-                            User Info</td>
+                        <td colspan="2"
+                            style="font-weight: bold; padding: 15px 10px; font-size: 25px; color: rgb(21, 27, 104); border-bottom: 6px solid rgb(21, 27, 104);">
+                            Company & User Info</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Company Name:</td>
+                        <td class="info-item">Company Name:</td>
                         <td>{{ company_data.name }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Phone No:</td>
+                        <td class="info-item">Phone No:</td>
                         <td>{{ user_data.telephone }}</td>
                     </tr>
 
-                    <!-- Technical Information -->
+                    <!-- Technical Info Section -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Technical
-                            Info</td>
+                        <td colspan="2"
+                            style="font-weight: bold; padding: 15px 10px; font-size: 25px; color: rgb(21, 27, 104); border-bottom: 6px solid rgb(21, 27, 104);">
+                            Technical Info</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Technician Name:</td>
+                        <td class="info-item">Technician Name:</td>
                         <td>{{ user_data.first_name }} {{ user_data.last_name }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Expiry Date:</td>
+                        <td class="info-item">Expiry Date:</td>
                         <td>{{ tech_data.license_expiry_date }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Certificate No:</td>
+                        <td class="info-item">Certificate No:</td>
                         <td>{{ tech_data.ods_licence_number }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Job No:</td>
+                        <td class="info-item">Job No:</td>
                         <td>{{ data.job_number }}</td>
                     </tr>
 
-                    <!-- Refrigerant Information -->
+                    <!-- Refrigerant Info Section -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Refrigerant
-                            Info</td>
+                        <td colspan="2"
+                            style="font-weight: bold; padding: 15px 10px; font-size: 25px; color: rgb(21, 27, 104); border-bottom: 6px solid rgb(21, 27, 104);">
+                            Refrigerant Info</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Oil:</td>
-                        <td>{{ data.oil }}</td> <!-- Assuming 'oil' is part of 'data' -->
+                        <td class="info-item">Oil:</td>
+                        <td>{{ data.oil }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Refrigerant Type:</td>
+                        <td class="info-item">Refrigerant Type:</td>
                         <td>{{ data.refrigerant_type }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Amount Added:</td>
+                        <td class="info-item">Amount Added:</td>
                         <td>
                             {% if data.refrigerant_added_lbs > 0 %}
                             {{ data.refrigerant_added_lbs }} lbs
@@ -78,7 +177,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Amount Reclaimed:</td>
+                        <td class="info-item">Amount Reclaimed:</td>
                         <td>
                             {% if data.refrigerant_removed_lbs > 0 %}
                             {{ data.refrigerant_removed_lbs }} lbs
@@ -90,56 +189,43 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Unit Contains Refrigerant:</td>
-                        <td>{% if data.no_longer_contains_refrigerant ==true%}
-                            No
-                            {%else%}
-                            Yes
-                            {%endif%}</td>
+                        <td class="info-item">Unit Contains Refrigerant:</td>
+                        <td>{{ 'No' if data.no_longer_contains_refrigerant else 'Yes' }}</td>
                     </tr>
 
-                    <!-- Additional Information -->
+                    <!-- Additional Info Section -->
                     <tr>
-                        <td colspan="2" style="background-color: #f4f4f4; font-weight: bold; padding: 10px;">Additional
-                            Info</td>
+                        <td colspan="2"
+                            style="font-weight: bold; padding: 15px 10px; font-size: 25px; color: rgb(21, 27, 104); border-bottom: 6px solid rgb(21, 27, 104);">
+                            Additional Info</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Model:</td>
+                        <td class="info-item">Model:</td>
                         <td>{{ unit_data.model }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Serial No:</td>
+                        <td class="info-item">Serial No:</td>
                         <td>{{ unit_data.serial_number }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Issue Date:</td>
-                        <td>{{data.repair_date}}</td>
+                        <td class="info-item">Issue Date:</td>
+                        <td>{{ data.repair_date }}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Other Tests:</td>
-                        <td>Vaccuum Test:
-                            {% if data.vacuum_test_performed == true %}
-                            Yes
-                            {% else %}
-                            No
-                            {% endif %}, Pressure Test:
-                            {% if data.pressure_test_performed ==true%}
-                            Yes, PSIG result: {{data.psig_result}}
-                            {%else%}
-                            No
-                            {%endif%}, Compressor Oil Removed:
-                            {% if data.compressor_oil_removed ==true%}
-                            Yes
-                            {%else%}
-                            No
-                            {%endif%}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: bold;">Leak Detected:</td>
+                        <td class="info-item">Other Tests:</td>
                         <td>
-                            {% if data.leak_test_result == true %}
-                            Leak was Detected ❗.
-                            {% if data.is_leak_repaired == true %}
+                            Vacuum Test: {{ 'Yes' if data.vacuum_test_performed else 'No' }},
+                            Pressure Test: {{ 'Yes, PSIG result: ' ~ data.psig_result if data.pressure_test_performed
+                            else 'No' }},
+                            Compressor Oil Removed: {{ 'Yes' if data.compressor_oil_removed else 'No' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item">Leak Detected:</td>
+                        <td>
+                            {% if data.leak_test_result %}
+                            Leak was Detected ❗
+                            {% if data.is_leak_repaired %}
                             Leak repaired. 🛠️
                             {% else %}
                             Leak was not repaired ❌.
@@ -149,10 +235,16 @@
                             {% endif %}
                         </td>
                     </tr>
-                    <!-- Add more rows as needed -->
                 </table>
             </td>
         </tr>
+        <tr>
+            <td style="text-align: center; padding: 10px; background-color: rgb(21, 27, 104); font-size: 12px;">
+                <a href="https://refitcanada.ca/"
+                    style="color: white; font-weight: bold; text-decoration: none;">www.refit.com</a>
+            </td>
+        </tr>
+
     </table>
 </body>
 
