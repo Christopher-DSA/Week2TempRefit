@@ -145,10 +145,11 @@
                         <td class="info-item">Certificate No:</td>
                         <td>{{ tech_data.ods_licence_number }}</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td class="info-item">Job No:</td>
-                        <td>{{ data.job_number }}</td>
-                    </tr>
+                        <td>{{ 'N/A' if data.job_number == '' else data.job_number }}
+                        </td>
+                    </tr> -->
 
                     <!-- Refrigerant Info Section -->
                     <tr>
@@ -156,10 +157,10 @@
                             style="font-weight: bold; padding: 15px 10px; font-size: 25px; color: rgb(21, 27, 104); border-bottom: 6px solid rgb(21, 27, 104);">
                             Refrigerant Info</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td class="info-item">Oil:</td>
                         <td>{{ data.oil }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td class="info-item">Refrigerant Type:</td>
                         <td>{{ data.refrigerant_type }}</td>
