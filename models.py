@@ -661,6 +661,18 @@ class Repair_form(Base):
     refrigerant_added_kg = Column(Numeric)
     refrigerant_removed_kg = Column(Numeric)
     
+    refrigerant_added_lbs_form_ver = Column(Numeric)
+    refrigerant_added_kg_form_ver = Column(Numeric)
+    refrigerant_added_oz_form_ver = Column(Numeric)
+    refrigerant_added_g_form_ver = Column(Numeric)
+    
+    refrigerant_removed_lbs_form_ver = Column(Numeric)
+    refrigerant_removed_kg_form_ver = Column(Numeric)
+    refrigerant_removed_oz_form_ver = Column(Numeric)
+    refrigerant_removed_g_form_ver = Column(Numeric)
+    
+    
+    
     refrigerant_added_total_oz = Column(Numeric)
     refrigerant_removed_total_oz = Column(Numeric)  
     tech_id = Column(Integer)

@@ -606,7 +606,15 @@ def repair_ODS_Sheet_New():
             'tech_id': session.get('tech_id'),
             'unit_id': session.get('unit_id'),
             'refrigerant_added_total_oz': total_added_oz,
-            'refrigerant_removed_total_oz': total_removed_oz
+            'refrigerant_removed_total_oz': total_removed_oz,
+            'refrigerant_added_lbs_form_ver': total_added_lbs_form_ver,
+            'refrigerant_removed_lbs_form_ver': total_removed_lbs_form_ver,
+            'refrigerant_removed_kg_form_ver': total_removed_kg_form_ver,
+            'refrigerant_added_kg_form_ver': total_added_kg_form_ver,
+            'refrigerant_added_g_form_ver': total_added_g_form_ver,
+            'refrigerant_removed_g_form_ver': total_removed_g_form_ver,
+            'refrigerant_added_oz_form_ver': total_added_oz_form_ver,
+            'refrigerant_removed_oz_form_ver': total_removed_oz_form_ver
         }
 
         # Save to database before sending email.
@@ -1127,7 +1135,8 @@ def ods_tags_new():
         # Get data from database
         data = CRUD.read(Repair_form, all=False,
                          repair_form_id=selected_repair_form_id)
-
+        
+        print("my data678", data.refrigerant_added_lbs_form_ver)
         print("step 2")
 
         current_tech_id = data.tech_id

@@ -581,22 +581,30 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-plus-square"></i> Amount Added to Unit:</span>
-                            <span class="info-value"><!-- Amount added here -->{% if data.refrigerant_added_lbs > 0 or
-                                data.refrigerant_added_kg > 0 %}
-                                {{data.refrigerant_added_lbs}} lbs || {{data.refrigerant_added_kg}} kg
+                            <span class="info-value"> {% if data.refrigerant_added_lbs_form_ver > 0 or
+                                data.refrigerant_added_oz_form_ver > 0 %}
+                                {{ data.refrigerant_added_lbs_form_ver }} lbs {{ data.refrigerant_added_oz_form_ver }} oz
+                                {% if data.refrigerant_added_kg_form_ver > 0 or data.refrigerant_added_g_form_ver > 0 %}
+                                ({{ data.refrigerant_added_kg_form_ver }} kg, {{ data.refrigerant_added_g_form_ver }} g)
+                                {% endif %}
+                                {% elif data.refrigerant_added_kg_form_ver > 0 or data.refrigerant_added_g_form_ver > 0 %}
+                                {{ data.refrigerant_added_kg_form_ver }} kg {{ data.refrigerant_added_g_form_ver}} g
                                 {% else %}
                                 n/a
                                 {% endif %}
                             </span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-recycle"></i> Amount Reclaimed from Unit:</span>
-                            <span class="info-value"><!-- Amount reclaimed here -->{% if data.refrigerant_removed_lbs >
-                                0 or data.refrigerant_removed_kg > 0 %}
-                                {{data.refrigerant_removed_lbs}} lbs || {{data.refrigerant_removed_kg}} kg
-                                {% else %}
-                                n/a
+                            <span class="info-label"><i class="fas fa-recycle"></i>Amount Reclaimed from Unit</span><span class="info-value"></span>{% if data.refrigerant_removed_lbs_form_ver > 0 or data.refrigerant_removed_oz_form_ver > 0 %}
+                                {{ data.refrigerant_removed_lbs_form_ver }} lbs {{ data.refrigerant_removed_oz_form_ver }} oz
+                                {% if data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver > 0 %}
+                                    ({{ data.refrigerant_removed_kg_form_ver }} kg, {{ data.refrigerant_removed_g_form_ver }} g)
                                 {% endif %}
+                            {% elif data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver > 0 %}
+                                {{ data.refrigerant_removed_kg_form_ver }} kg {{ data.refrigerant_removed_g_form_ver }} g
+                            {% else %}
+                                n/a
+                            {% endif %}
                             </span>
                         </div>
                         <div class="info-row">
@@ -620,7 +628,7 @@
                     <div class="card-body">
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-tag"></i> Model:</span>
-                            <span class="info-value"><!-- Model information here -->{{unit_data.model}}</span>
+                            <span class="info-value"><!-- Model information here -->{{unit_data.model_number}}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-serial-number"></i> Serial No:</span>
