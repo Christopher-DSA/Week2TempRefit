@@ -660,6 +660,9 @@ class Repair_form(Base):
     refrigerant_removed_lbs = Column(Numeric)
     refrigerant_added_kg = Column(Numeric)
     refrigerant_removed_kg = Column(Numeric)
+    
+    refrigerant_added_total_oz = Column(Numeric)
+    refrigerant_removed_total_oz = Column(Numeric)  
     tech_id = Column(Integer)
     unit_id = Column(Integer)
     job_number = Column(Text)
