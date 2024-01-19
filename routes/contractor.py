@@ -244,6 +244,8 @@ def inventory():
                         c_current_refrigerant_weight_kg = cyl_data.current_refrigerant_weight_kg
                         #Refrigerant Type
                         c_refrigerant_type = cyl_data.refrigerant_type
+                        #cylinder_type_id
+                        c_cylinder_type_id = cyl_data.cylinder_type_id
                         
                         cylinder = {
                             "technician_id": c_techId,
@@ -252,7 +254,8 @@ def inventory():
                             "clean_or_burnout": c_clean_or_burnout,
                             "current_refrigerant_weight_lbs": c_current_refrigerant_weight_lbs,
                             "current_refrigerant_weight_kg": c_current_refrigerant_weight_kg,
-                            "refrigerant_type": c_refrigerant_type
+                            "refrigerant_type": c_refrigerant_type,
+                            "cylinder_type_id": c_cylinder_type_id
                         }
                         
                         dt.append(cylinder)

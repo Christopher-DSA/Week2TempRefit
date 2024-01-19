@@ -10,143 +10,41 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
 
+
+
+
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7f6;
-        }
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-        .navbar-brand img {
-            height: 50px;
-            margin-right: 10px;
-        }
-        .navbar {
-            background-color: #007bff;
-        }
-        .navbar .navbar-toggler {
-            background-color: #fff;
-        }
-        .card {
-            margin-bottom: 1rem;
+        .banner-close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             border: none;
-        }
-        .card-header {
-            background-color: #007bff; /* Adjust the color code to match Figma design */
-            color: #fff;
-            font-size: 1rem; /* Adjust the font size as needed */
-            padding: 0.75rem 1rem; /* Adjust padding to match design */
-            border-top-left-radius: 0.625rem; /* 10px */
-            border-top-right-radius: 0.625rem; /* 10px */
-            font-weight: bold; /* If the design calls for bold headers */
-        }
-        .inventory-title {
-            font-size: 55px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: black;
-        }
-        .cylinder-title {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 0.15rem;
-        }
-        .inventory-item {
-            background-color: #fff;
-            border-radius: 0.625rem; /* 10px */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adjust shadow intensity as needed */
-            margin-bottom: 1rem; /* Adjust space between cards */
-            border: 1px solid #e0e0e0; /* If there's a border in the Figma design */
-        }
-        .inventory-item:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        .inventory-item .card-body {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-        }
-        .inventory-item img {
-            flex-shrink: 0;
-            width: 120px;
-            height: 120px;
-            border-radius: 10%;
-            margin-right: 10px;
-            object-fit: cover;
-            border: 3px solid #007bff;
-        }
-        .card-text {
-            margin-bottom: 0.5rem; /* Adjust spacing between text items */
-            color: #333; /* Adjust text color to match design */
-            font-weight: normal; /* Adjust based on design, could be bold or normal */
-        }
-        .last-updated {
-            text-align: right;
-            font-size: 0.9em;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 767px) {
-    .inventory-title {
-        font-size: 34px; /* Large font size for the title */
-        font-weight: bold; /* Bold font weight */
-        margin-bottom: 5px; /* Space below the title */
-        color: black; /* Title color */
-    }
+            background-color: transparent;
+            color: #111A66;
+            cursor: pointer;
 
-    .inventory-item {
-        margin-bottom: 1rem; /* Space between items */
-        border-radius: 10px; /* Rounded corners for the card */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-        overflow: hidden; /* Ensures content stays within the rounded corners */
-    }
+        }
 
-    .inventory-item .card-body {
-        display: flex;
-        flex-direction: row; /* Image and text side by side */
-        align-items: center; /* Vertical center alignment */
-        padding: 10px; /* Padding inside the card */
-    }
-
-    .inventory-item img {
-        flex-shrink: 0; /* Prevents the image from shrinking */
-        width: 100px; /* Width of the image */
-        height: 100px; /* Height of the image */
-        border-radius: 10%; /* Circular image */
-        margin-right: 10px; /* Space between the image and the text */
-        object-fit: cover; /* Ensures the image covers the area */
-        border: 3px solid #007bff; /* Thicker, dark blue border */
-    }
-
-    .inventory-item .card-content {
-        flex-grow: 1; /* Allows the content to fill the remaining space */
-    }
-
-    .inventory-item .cylinder-title {
-        font-size: 1.35rem; /* Size of the title within the card */
-        font-weight: bold; /* Bold font weight for the title */
-        color: #007bff; /* Color of the title */
-        margin-bottom: 0.15rem; /* Space below the title */
-    }
-
-    .inventory-item .card-text {
-        margin: 0; /* No margin for individual text elements */
-        font-size: 0.875rem; /* Font size for the text */
-    }
-
-    .card-text strong {
-        font-weight: bold; /* Bold font weight for labels */
-    }
-
-    .card-text + .card-text {
-        margin-top: 5px; /* Space between paragraphs */
-    }
-}
+        h1 {
+            color: #111A66;
+        }
     </style>
 
+    <style>
+        /* Custom CSS for small screens */
+        @media (max-width: 767.98px) {
+            .card-height-sm {
+                min-height: 200px;
+                /* Adjust this value as needed */
+            }
+        }
 
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
     <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
     <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
     <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
@@ -154,8 +52,11 @@
     <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
     <link rel="stylesheet" href="/static/css/test.css">
 
+
     <script>
         (function () {
+
+
 
             const getStoredTheme = () => localStorage.getItem('theme');
             const setStoredTheme = theme => localStorage.setItem('theme', theme);
@@ -684,7 +585,7 @@
     <div class=container>
         <div class="row justify-content-center mt-4">
             <div class="col-12">
-                <h1 class="inventory-title">Cylinder Inventory </h1>
+                <h1>Cylinder Inventory </h1>
             </div>
         </div>
         <!-- <div class="row justify-content-center">
@@ -707,41 +608,46 @@
                 </div>
             </div>
         </div> end-->
-<!-- ... other code ... -->
+        <div class="row justify-content-center mt-1">
+            <div class="col-12">
+                <table id="data" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Test</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in dt%}
+                        <tr data-email="cylinder-info/unique-id" >
+                            <td>
+                                <div class="row justify-content-center">
+                                    <form id="{{x.id}}cylinderForm" action="/inventory-cylinder-info" method="post">
+                                        <input type="hidden" name="unique_id" value="{{x.id}}">
+                                        <div class="col-12" onclick="document.getElementById('{{x.id}}cylinderForm').submit();">
+                                            <!-- ... Card 2 content ... -->
+                                            <div class="card h-100 border btn p-0"
+                                                style="border-radius: 20px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                                                <div class="card-body d-flex flex-md-column flex-row align-items-center">
+                                                    <button class="btn mb-4 mb-md-0 p-" type="button">
 
-<div class="container">
-    <table id="data" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>Cylinders</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for x in dt %}
-                <tr>
-                    <td>
-                        <div class="inventory-item card">
-                            <div class="card-body">
-                                <img src="static/images/refit-qr-tag.png" alt="Cylinder">
-                                <div class="card-content">
-                                    <h2 class="cylinder-title">{{ 'Recovery Cylinder' if x.cylinder_type_id == 3 else 'Charge Cylinder' }}</h2>
-                                    <p class="card-text"><strong>Gas Quality:</strong> {{x.clean_or_burnout}}</p>
-                                    <p class="card-text"><strong>Refrigerant Type:</strong> {{x.refrigerant_type}}</p>
-                                    <p class="card-text"><strong>Amount of Refrigerant in Cylinder:</strong> {{x.current_refrigerant_weight_lbs}}lbs || {{x.current_refrigerant_weight_kg}}kg</p>
+                                                    </button>
+                                                    <!-- <p style="font-size: 12px; word-wrap: break-word;">Refrigerant Inventory</p> -->
+                                                    <p>Refrigerant Type: {{x.refrigerant_type}}</p>
+                                                    <p>Refrigerant Amount: {{x.current_refrigerant_weight_lbs}}lbs || {{x.current_refrigerant_weight_kg}}kg</p>
+                                                    <p>Quality of Gas in Cylinder: {{x.clean_or_burnout}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-</div>
-
-<!-- ... -->
-
+                               
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- ... additional scripts ... -->
