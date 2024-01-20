@@ -292,21 +292,43 @@ def my_choose_qr_type():
                     return render_template('Equipment Common/choose-qr-type.html')
 
 
-@technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
+@technician.route('/for-ods-form-choose-qr-type', methods=['POST'])
 def ods_form_qr_type_old():
     # Get the JSON data sent from the client
     data = request.get_json()
+    
+    print(data)
     unique_token = data.get('unique_token')
-    lbs_added = data.get('refrigerant_lbs_added')
-    oz_added = data.get('refrigerant_oz_added')
-    lbs_removed = data.get('refrigerant_lbs_removed')
-    oz_removed = data.get('refrigerant_oz_removed')
+    
+    bigUnitAdded = data.get('bigUnitAdded')
+    smallUnitAdded = data.get('smallUnitAdded')
+    bigUnitRemoved = data.get('bigUnitRemoved')
+    smallUnitRemoved = data.get('smallUnitRemoved')
+    
+    AddedMetricOrImperial = data.get('AddedMetricOrImperial')
+    RemovedMetricOrImperial = data.get('RemovedMetricOrImperial')
+    
+    print("bigUnitAdded: ", bigUnitAdded)
+    print("smallUnitAdded: ", smallUnitAdded)
+    print("bigUnitRemoved: ", bigUnitRemoved)
+    print("smallUnitRemoved: ", smallUnitRemoved)
+    print("AddedMetricOrImperial: ", AddedMetricOrImperial)
+    print("RemovedMetricOrImperial: ", RemovedMetricOrImperial)
+    
+    total_refrigerant_added_oz = 0
+    total_refrigerant_removed_oz = 0
 
     print("unique_token IN QR TYPE: ", unique_token)
-    print("lbs_added: ", lbs_added)
-    print("oz_added: ", oz_added)
-    print("lbs_removed: ", lbs_removed)
-    print("oz_removed: ", oz_removed)
+    
+    #converting to 0 if ''
+    if bigUnitAdded == "" or bigUnitAdded == None:
+        bigUnitAdded = float(0)
+    if smallUnitAdded == "" or smallUnitAdded == None:
+        smallUnitAdded = float(0)
+    if bigUnitRemoved == "" or bigUnitRemoved == None:
+        bigUnitRemoved = float(0)
+    if smallUnitRemoved == "" or smallUnitRemoved == None:
+        smallUnitRemoved = float(0)
 
     if unique_token:
         x = CRUD.read(Tag, all=False, tag_url=unique_token)
@@ -315,29 +337,61 @@ def ods_form_qr_type_old():
                 print("this is an equipment qr tag")
                 return jsonify({"error": "Oops, this is an equipment QR tag. Try again with a cylinder QR tag."})
             elif x.type == "cylinder":
-                if (float(lbs_added) == 0 and float(oz_added) == 0 and float(lbs_removed) == 0 and float(oz_removed) == 0):
+                if (float(bigUnitAdded) == 0 and float(smallUnitAdded) == 0 and float(bigUnitRemoved) == 0 and float(smallUnitRemoved) == 0):
                     return jsonify({"error": "Oops, you need to fill out atleast one of the fields."})
                 else:
                     print("adding or removing refrigerant from cylinder")
                     # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces (add try catch here if there are problems)
-                    total_refrigerant_added_oz = (
-                        float(lbs_added) * 16) + float(oz_added)
-                    total_refrigerant_removed_oz = (
-                        float(lbs_removed) * 16) + float(oz_removed)
+                    if AddedMetricOrImperial == 'imperial':
+                        total_refrigerant_added_oz = (float(bigUnitAdded) * 16) + float(smallUnitAdded)
+                    elif AddedMetricOrImperial == 'metric': #convert kg + g to oz
+                        total_refrigerant_added_oz = (float(bigUnitAdded) * 35.274) + (float(smallUnitAdded) * 0.035274)
+                        
+                    if RemovedMetricOrImperial == 'imperial':
+                        total_refrigerant_removed_oz = (float(bigUnitRemoved) * 16) + float(smallUnitRemoved)
+                    elif RemovedMetricOrImperial == 'metric': #convert kg + g to oz
+                        total_refrigerant_removed_oz = (float(bigUnitRemoved) * 35.274) + (float(smallUnitRemoved) * 0.035274)
+                        
+                        
                     # Update Cylinder Refrigerant Amount
                     new_amount_difference = total_refrigerant_added_oz - total_refrigerant_removed_oz
+                    cylinder_data = CRUD.read(Cylinder, all=False, cylinder_id=x.cylinder_id)
                     calculated_amount = float(CRUD.read(
                         Cylinder, all=False, cylinder_id=x.cylinder_id).current_refrigerant_weight) + new_amount_difference
                     CRUD.update(Cylinder, cylinder_id=x.cylinder_id,
                                 attr="current_refrigerant_weight", new=calculated_amount)
-                    return jsonify({"calculated_amount": calculated_amount})
+                    
+                    refrigerant_type = cylinder_data.refrigerant_type
+                    
+                    # Your existing amount in ounces
+                    amount_oz = float(calculated_amount)
+
+                    # Converting ounces to pounds and ounces
+                    amount_lbs = int(amount_oz // 16)
+                    remaining_ounces = round(amount_oz % 16)
+
+                    # Converting ounces to kilograms and grams
+                    # 1 ounce is approximately 0.0283495 kilograms
+                    amount_kg = amount_oz * 0.0283495
+                    # Extracting the whole kilograms
+                    whole_kg = int(amount_kg)
+                    # Converting the fractional part of the kilograms into grams and rounding it
+                    remaining_g = round((amount_kg - whole_kg) * 1000)
+
+                    # Formatting for display
+                    display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
+                    display_kg_g = f"{whole_kg}kg {remaining_g}g"
+                    
+                    
+                    
+                    return jsonify({"calculated_amount": calculated_amount, "display_lbs_oz": display_lbs_oz, "display_kg_g": display_kg_g, "refrigerant_type": refrigerant_type})
         else:
             return jsonify({"error": "This tag needs to be registered before you can add refrigerant to it."})
     else:
         return jsonify({"error": "No unique token provided."})
 
 
-@technician.route('/for-ods-form-choose-qr-type', methods=['POST'])
+@technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
 def ods_form_qr_type():
     # Get the JSON data sent from the client
     data = request.get_json()

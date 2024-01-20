@@ -246,6 +246,28 @@ def inventory():
                         c_refrigerant_type = cyl_data.refrigerant_type
                         #cylinder_type_id
                         c_cylinder_type_id = cyl_data.cylinder_type_id
+                        #current_refrigerant_weight  
+                        c_current_refrigerant_weight = cyl_data.current_refrigerant_weight
+                        #supplier
+                        c_supplier = cyl_data.supplier
+                        # Your existing amount in ounces
+                        amount_oz = float(c_current_refrigerant_weight)
+
+                        # Converting ounces to pounds and ounces
+                        amount_lbs = int(amount_oz // 16)
+                        remaining_ounces = round(amount_oz % 16)
+
+                        # Converting ounces to kilograms and grams
+                        # 1 ounce is approximately 0.0283495 kilograms
+                        amount_kg = amount_oz * 0.0283495
+                        # Extracting the whole kilograms
+                        whole_kg = int(amount_kg)
+                        # Converting the fractional part of the kilograms into grams and rounding it
+                        remaining_g = round((amount_kg - whole_kg) * 1000)
+
+                        # Formatting for display
+                        display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
+                        display_kg_g = f"{whole_kg}kg {remaining_g}g"
                         
                         cylinder = {
                             "technician_id": c_techId,
@@ -255,7 +277,10 @@ def inventory():
                             "current_refrigerant_weight_lbs": c_current_refrigerant_weight_lbs,
                             "current_refrigerant_weight_kg": c_current_refrigerant_weight_kg,
                             "refrigerant_type": c_refrigerant_type,
-                            "cylinder_type_id": c_cylinder_type_id
+                            "cylinder_type_id": c_cylinder_type_id,
+                            'display_lbs_oz': display_lbs_oz,
+                            'display_kg_g': display_kg_g,
+                            'supplier': c_supplier
                         }
                         
                         dt.append(cylinder)
