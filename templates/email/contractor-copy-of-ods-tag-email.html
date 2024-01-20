@@ -150,6 +150,20 @@
                         <td>{{ 'N/A' if data.job_number == '' else data.job_number }}
                         </td>
                     </tr> -->
+                    <!-- Unit Info Section -->
+                    <tr>
+                        <td colspan="2"
+                            style="font-weight: bold; padding: 15px 10px; font-size: 25px; color: rgb(21, 27, 104); border-bottom: 6px solid rgb(21, 27, 104);">
+                            Unit Info</td>
+                    </tr>
+                    <tr>
+                        <td class="info-item">Unit Address:</td>
+                        <td>{{ unit_data.equipment_unit_address }}</td>
+                    </tr>
+                    <tr>
+                        <td class="info-item">Organization Name:</td>
+                        <td>{{ unit_data.organization_name }}</td>
+                    </tr>
 
                     <!-- Refrigerant Info Section -->
                     <tr>
@@ -169,14 +183,14 @@
                         <td class="info-item">Amount Added:</td>
                         <td>
                             {% if email_data.refrigerant_added_lbs > 0 or email_data.refrigerant_added_oz > 0 %}
-                                {{ email_data.refrigerant_added_lbs }} lbs {{ email_data.refrigerant_added_oz }} oz
-                                {% if email_data.refrigerant_added_kg > 0 or email_data.refrigerant_added_g > 0 %}
-                                    ({{ email_data.refrigerant_added_kg }} kg, {{ email_data.refrigerant_added_g }} g)
-                                {% endif %}
+                            {{ email_data.refrigerant_added_lbs }} lbs {{ email_data.refrigerant_added_oz }} oz
+                            {% if email_data.refrigerant_added_kg > 0 or email_data.refrigerant_added_g > 0 %}
+                            ({{ email_data.refrigerant_added_kg }} kg, {{ email_data.refrigerant_added_g }} g)
+                            {% endif %}
                             {% elif email_data.refrigerant_added_kg > 0 or email_data.refrigerant_added_g > 0 %}
-                                {{ email_data.refrigerant_added_kg }} kg {{ email_data.refrigerant_added_g}} g
+                            {{ email_data.refrigerant_added_kg }} kg {{ email_data.refrigerant_added_g}} g
                             {% else %}
-                                n/a
+                            n/a
                             {% endif %}
                         </td>
                     </tr>
@@ -184,17 +198,17 @@
                         <td class="info-item">Amount Reclaimed:</td>
                         <td>
                             {% if email_data.refrigerant_removed_lbs > 0 or email_data.refrigerant_removed_oz > 0 %}
-                                {{ email_data.refrigerant_removed_lbs }} lbs {{ email_data.refrigerant_removed_oz }} oz
-                                {% if email_data.refrigerant_removed_kg > 0 or email_data.refrigerant_removed_g > 0 %}
-                                    ({{ email_data.refrigerant_removed_kg }} kg, {{ email_data.refrigerant_removed_g }} g)
-                                {% endif %}
+                            {{ email_data.refrigerant_removed_lbs }} lbs {{ email_data.refrigerant_removed_oz }} oz
+                            {% if email_data.refrigerant_removed_kg > 0 or email_data.refrigerant_removed_g > 0 %}
+                            ({{ email_data.refrigerant_removed_kg }} kg, {{ email_data.refrigerant_removed_g }} g)
+                            {% endif %}
                             {% elif email_data.refrigerant_removed_kg > 0 or email_data.refrigerant_removed_g > 0 %}
-                                {{ email_data.refrigerant_removed_kg }} kg {{ email_data.refrigerant_removed_g }} g
+                            {{ email_data.refrigerant_removed_kg }} kg {{ email_data.refrigerant_removed_g }} g
                             {% else %}
-                                n/a
+                            n/a
                             {% endif %}
                         </td>
-                    </tr>                    
+                    </tr>
                     <tr>
                         <td class="info-item">Unit Contains Refrigerant:</td>
                         <td>{{ 'No' if data.no_longer_contains_refrigerant else 'Yes' }}</td>
