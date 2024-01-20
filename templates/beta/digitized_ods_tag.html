@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
     <style>
+        html[data-bs-theme='dark'] .bs-body-color {
+            color: white;
+        }
+    </style>
+    <style>
         .info-row {
             background-color: #fff;
             border-radius: 8px;
@@ -601,7 +606,7 @@
     </section>
     <div class="container my-4">
         <div class="row">
-            <h1 class="page-title">Digital ODS Sheet</h1>
+            <h1 class="page-title bs-body-color">Digital ODS Sheet</h1>
         </div>
 
         <div class="row">
@@ -648,6 +653,23 @@
 
             <!-- Right Column -->
             <div class="col-md-6">
+                <!-- Company and User Information Group -->
+                <div class="card mb-4">
+                    <div class="card-header"><i class="fas fa-info-circle"></i> Unit Info</div>
+                    <div class="card-body">
+                        <div class="info-row">
+                            <!-- Changed to a home icon for the address -->
+                            <span class="info-label"><i class="fas fa-home"></i> Unit Address:</span>
+                            <span class="info-value">{{unit_data.equipment_unit_address}}</span>
+                        </div>
+                        <div class="info-row">
+                            <!-- Changed to a sitemap icon for the organization name -->
+                            <span class="info-label"><i class="fas fa-sitemap"></i> Organization Name:</span>
+                            <span class="info-value">{{unit_data.organization_name}}</span>
+                        </div>                        
+                    </div>
+                </div>
+                
                 <!-- Refrigerant Information Group -->
                 <div class="card mb-4">
                     <div class="card-header"><i class="fas fa-snowflake"></i> Refrigerant Info</div>
@@ -679,19 +701,24 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-recycle"></i>Amount Reclaimed from
-                                Unit</span><span class="info-value"></span>{% if data.refrigerant_removed_lbs_form_ver >
-                            0 or data.refrigerant_removed_oz_form_ver > 0 %}
-                            {{ data.refrigerant_removed_lbs_form_ver }} lbs {{ data.refrigerant_removed_oz_form_ver }}
-                            oz
-                            {% if data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver > 0 %}
-                            ({{ data.refrigerant_removed_kg_form_ver }} kg, {{ data.refrigerant_removed_g_form_ver }} g)
-                            {% endif %}
-                            {% elif data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver > 0
-                            %}
-                            {{ data.refrigerant_removed_kg_form_ver }} kg {{ data.refrigerant_removed_g_form_ver }} g
-                            {% else %}
-                            n/a
-                            {% endif %}
+                                Unit</span><span class="info-value">{% if data.refrigerant_removed_lbs_form_ver >
+                                0 or data.refrigerant_removed_oz_form_ver > 0 %}
+                                {{ data.refrigerant_removed_lbs_form_ver }} lbs {{ data.refrigerant_removed_oz_form_ver
+                                }}
+                                oz
+                                {% if data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver >
+                                0 %}
+                                ({{ data.refrigerant_removed_kg_form_ver }} kg, {{ data.refrigerant_removed_g_form_ver
+                                }} g)
+                                {% endif %}
+                                {% elif data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver
+                                > 0
+                                %}
+                                {{ data.refrigerant_removed_kg_form_ver }} kg {{ data.refrigerant_removed_g_form_ver }}
+                                g
+                                {% else %}
+                                n/a
+                                {% endif %}
                             </span>
                         </div>
                         <div class="info-row">
@@ -718,9 +745,11 @@
                             <span class="info-value"><!-- Model information here -->{{unit_data.model_number}}</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-serial-number"></i> Serial No:</span>
-                            <span class="info-value"><!-- Serial number here -->{{unit_data.serial_number}}</span>
+                            <!-- Changed to a barcode icon for the serial number -->
+                            <span class="info-label"><i class="fas fa-barcode"></i> Serial No:</span>
+                            <span class="info-value">{{unit_data.serial_number}}</span>
                         </div>
+                        
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-clipboard-list"></i> Test Results:</span>
                             <span class="info-value">Issue Date: {{data.repair_date}}</span>

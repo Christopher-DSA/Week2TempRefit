@@ -63,6 +63,87 @@
   <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
   <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
   <link rel="stylesheet" href="/static/css/test.css">
+  <script>
+    (function () {
+
+
+
+      const getStoredTheme = () => localStorage.getItem('theme');
+      const setStoredTheme = theme => localStorage.setItem('theme', theme);
+      const forcedTheme = document.documentElement.getAttribute('data-bss-forced-theme');
+
+      const getPreferredTheme = () => {
+
+        if (forcedTheme) return forcedTheme;
+
+        const storedTheme = getStoredTheme();
+        if (storedTheme) {
+          return storedTheme;
+        }
+
+        const pageTheme = document.documentElement.getAttribute('data-bs-theme');
+
+        if (pageTheme) {
+          return pageTheme;
+        }
+
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      const setTheme = theme => {
+        if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      }
+
+      setTheme(getPreferredTheme());
+
+      const showActiveTheme = (theme, focus = false) => {
+        const themeSwitchers = [].slice.call(document.querySelectorAll('.theme-switcher'));
+
+        if (!themeSwitchers.length) return;
+
+        document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+          element.classList.remove('active');
+          element.setAttribute('aria-pressed', 'false');
+        });
+
+        for (const themeSwitcher of themeSwitchers) {
+
+          const btnToActivate = themeSwitcher.querySelector('[data-bs-theme-value="' + theme + '"]');
+
+          if (btnToActivate) {
+            btnToActivate.classList.add('active');
+            btnToActivate.setAttribute('aria-pressed', 'true');
+          }
+        }
+      }
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        const storedTheme = getStoredTheme();
+        if (storedTheme !== 'light' && storedTheme !== 'dark') {
+          setTheme(getPreferredTheme());
+        }
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        showActiveTheme(getPreferredTheme());
+
+        document.querySelectorAll('[data-bs-theme-value]')
+          .forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+              e.preventDefault();
+              const theme = toggle.getAttribute('data-bs-theme-value');
+              setStoredTheme(theme);
+              setTheme(theme);
+              showActiveTheme(theme);
+            })
+          })
+      });
+    })();
+  </script>
 </head>
 
 <body>
@@ -203,27 +284,7 @@
           </div>
         </a>
 
-        <!-- Start of Switch Account -->
-        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="#">
-          <div class="d-flex align-content-center" style="flex: 1 0 10%">
-            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-repeat"
-              viewBox="0 0 16 16">
-              <path
-                d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z" />
-            </svg>
-          </div>
-          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
-            <h4>Switch Account</h4>
-            <small style="color: grey">Switch between different accounts</small>
-          </div>
-          <div class="d-flex align-items-center" style="flex: 1 0 20%">
-            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
-              class="bi bi-chevron-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-            </svg>
-          </div>
-        </a>
+
 
         <!-- Start of Private Policy -->
         <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/privacy-policy">
@@ -394,28 +455,6 @@
           </div>
         </a>
 
-        <!-- Start of Switch Account -->
-        <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="">
-          <div class="d-flex align-items-center" style="flex: 1 0 10%">
-            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-repeat"
-              viewBox="0 0 16 16">
-              <path
-                d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z" />
-            </svg>
-          </div>
-          <div class="d-flex flex-column flex-grow-1 ms-4" style="flex: 1 0 70%">
-            <h4>Switch Account</h4>
-            <small style="color: grey">Switch between different accounts</small>
-          </div>
-          <div class="d-flex align-items-center justify-content-center" style="flex: 1 0 20%">
-            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor"
-              class="bi bi-chevron-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-            </svg>
-          </div>
-        </a>
-
         <!-- Start of Private Policy -->
         <a class="d-flex border-bottom pt-3 justify-content-between text-decoration-none" href="/privacy-policy">
           <div class="d-flex align-items-center" style="flex: 1 0 10%">
@@ -509,7 +548,7 @@
     <!-- End: Mobile offcanvas menu -->
 
   </section>
-  <div class="container custom-container">
+  <div class="container">
     <div class="item-area mt-3">
       <i class="bi bi-envelope-fill icon"></i>
       <div>

@@ -166,6 +166,11 @@
             /* Darker shade for hover effect */
         }
     </style>
+    <style>
+        html[data-bs-theme='dark'] .bs-body-color {
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -615,7 +620,7 @@
     </section>
 
     <div class=container>
-        <h1 class="mt-4">All ODS Tags History: </h1>
+        <h1 class="mt-4 bs-body-color">All ODS Tags History: </h1>
 
 
         <table id="data" class="table table-hover">
@@ -636,7 +641,8 @@
                         {{ x.repair_date }}
                         <span class="expand-icon d-md-none">&#9660;</span> <!-- Down arrow icon -->
                         <div class="extra-info d-md-none mt-2">
-                            <div style="overflow: visible;"><strong>Refrigerant Type:</strong> {{ x.refrigerant_type }}</div><br>
+                            <div style="overflow: visible;"><strong>Refrigerant Type:</strong> {{ x.refrigerant_type }}
+                            </div><br>
                             <div style="overflow: visible;"><strong>Unit Type:</strong> {{ x.unit_type }}</div><br>
                             <div style="overflow: visible;"><strong>Model:</strong> {{ x.model }}</div><br>
                             <div style="overflow: visible;"><strong>Notes:</strong> {{x.additional_notes}}</div>
