@@ -96,19 +96,14 @@ def cylinderform():
 def new_cylinder_view():
     if request.method == 'POST':
         ########### Get data from form############
-        # database column name: added_date
         createDate = request.form.get('createDate')
-        # current_refrigerant_weight_unit
         metricOrImperial = request.form.get('currentRefrigerantWeightUnit')
-        # should be "metric" or "imperial"
-        print("metricOrImperial:" + metricOrImperial)
-        # cylinder_type_id
         useCase = request.form.get('useCase')
-        # clean_or_burnout
         cleanOrBurnout = request.form.get('gasQuality')
-        # refrigerant_type <- this is not to be confused another column called "refrigerant_type_id"
-        # example: "R-22", "R-134a", "R-410a", etc.
         refrigerantType = request.form.get('refrigerantType')
+        wholesaler = request.form.get('wholesaler')
+        
+        
         # current_refrigerant_weight_lbs and current_refrigerant_weight_kg
         bigUnit = request.form.get('currentRefrigerantWeight1')  # kg or lbs
         smallUnit = request.form.get('currentRefrigerantWeight2')  # oz or gm
@@ -176,7 +171,8 @@ def new_cylinder_view():
             # the current refrigerant weight in kg.
             'current_refrigerant_weight_kg': current_refrigerant_weight_kg,
             # the current refrigerant weight in oz.
-            'current_refrigerant_weight': current_refrigerant_weight
+            'current_refrigerant_weight': current_refrigerant_weight,
+            'supplier': wholesaler
         }
 
         ############ CRUD Create Row for new Cylinder#############
@@ -272,11 +268,56 @@ def CylinderInfo(unique_id):
             my_cylinder_type = 'Recovery Cylinder'
             tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
             user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
-            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data)
+            
+           # Your existing amount in ounces
+            amount_oz = float(cylinder_data.current_refrigerant_weight)
+
+            # Converting ounces to pounds and ounces
+            amount_lbs = int(amount_oz // 16)
+            remaining_ounces = round(amount_oz % 16)
+
+            # Converting ounces to kilograms and grams
+            # 1 ounce is approximately 0.0283495 kilograms
+            amount_kg = amount_oz * 0.0283495
+            # Extracting the whole kilograms
+            whole_kg = int(amount_kg)
+            # Converting the fractional part of the kilograms into grams and rounding it
+            remaining_g = round((amount_kg - whole_kg) * 1000)
+
+            # Formatting for display
+            display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
+            display_kg_g = f"{whole_kg}kg {remaining_g}g"
+
+            # Returning the render_template call with all the necessary data
+
+            
+            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g)
         elif cylinder_data.cylinder_type_id == 3:  # 3 is a charge cylinder
             my_cylinder_type = 'Charge Cylinder'
             tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
             user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
+            
+            
+            
+            # Your existing amount in ounces
+            amount_oz = float(cylinder_data.current_refrigerant_weight)
+
+            # Converting ounces to pounds and ounces
+            amount_lbs = int(amount_oz // 16)
+            remaining_ounces = round(amount_oz % 16)
+
+            # Converting ounces to kilograms and grams
+            # 1 ounce is approximately 0.0283495 kilograms
+            amount_kg = amount_oz * 0.0283495
+            # Extracting the whole kilograms
+            whole_kg = int(amount_kg)
+            # Converting the fractional part of the kilograms into grams and rounding it
+            remaining_g = round((amount_kg - whole_kg) * 1000)
+
+            # Formatting for display
+            display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
+            display_kg_g = f"{whole_kg}kg {remaining_g}g"
+
             return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data)
 
 

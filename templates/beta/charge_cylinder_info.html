@@ -80,14 +80,14 @@
             {% endif %}
         </h5>
         <h5>Refrigerant Type: {{data.refrigerant_type}}</h5>
-        <h5>Amount of Refrigerant in Cylinder: {{data.current_refrigerant_weight_lbs}} lbs ||
-            {{data.current_refrigerant_weight_kg}} kg</h5>
+        <h5>Amount of Refrigerant in Cylinder: {{display_lbs_oz}} ({{display_kg_g}})</h5>
         <a href="javascript:void(0);" onclick="toggleDetails()">
             <h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6>
         </a>
         <div id="more-details" style="display:none; margin-top: 15px;">
             <p><strong>Added Date:</strong> {{data.added_date}}</p>
             <p><strong>Registered By:</strong> {{user_detail_data.first_name}} {{user_detail_data.last_name}}</p>
+            <p><strong>Wholesaler:</strong>{{data.supplier}}</p>
         </div>
     </div>
     <br>
