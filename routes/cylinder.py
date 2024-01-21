@@ -10,7 +10,7 @@ import datetime
 cylinder = Blueprint('cylinder', __name__)
 
 
-def convert_weights_for_display(amount_oz):
+def convert_weights_for_display(amount_oz): #Used in Charge Cylinder info and Recovery Cylinder info routes in this module.
     # Converting ounces to pounds and ounces
     amount_lbs = int(amount_oz // 16)
     remaining_ounces = round(amount_oz % 16)

@@ -24,7 +24,7 @@ technician = Blueprint('technician', __name__)
 # from pint import UnitRegistry
 
 
-def convert_weights_for_display(amount_oz):
+def convert_weights_for_display(amount_oz): #Used in repair-ods-form, async cylinder transaction route, digitized ods tag and sending contractor email routes in this module.
     # Converting ounces to pounds and ounces
     amount_lbs = int(amount_oz // 16)
     remaining_ounces = round(amount_oz % 16)
