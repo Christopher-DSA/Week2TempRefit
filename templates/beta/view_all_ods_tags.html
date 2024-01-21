@@ -631,6 +631,7 @@
                     <th scope="col" class="d-none d-md-table-cell">Technician Name</th>
                     <th scope="col" class="d-none d-md-table-cell">Unit Type</th>
                     <th scope="col" class="d-none d-md-table-cell">Model</th>
+                    <th scope="col" class="d-none d-md-table-cell">Organization Name</th>
                     <th scope="col">View Tag</th>
                 </tr>
             </thead>
@@ -647,12 +648,14 @@
                             <div style="overflow: visible;" class="mt-2"><strong>Model:</strong> {{ x.model }}</div>
                             <div style="overflow: visible;" class="mt-2"><strong>Notes:</strong> {{x.additional_notes}}</div>
                             <div style="overflow: visible;" class="mt-2"><strong>Technician Name:</strong> {{ x.technician_name }}</div>
+                            <div style="overflow: visible;" class="mt-2"><strong>Organization Name:</strong> {{ x.organization_name }}</div>
                         </div>
                     </td>
                     <td class="d-none d-md-table-cell">{{ x.refrigerant_type }}</td>
                     <td class="d-none d-md-table-cell">{{ x.technician_name }}</td>
                     <td class="d-none d-md-table-cell">{{ x.unit_type }}</td>
                     <td class="d-none d-md-table-cell">{{ x.model }}</td>
+                    <td class="d-none d-md-table-cell">{{ x.organization_name }}</td>
                     <td>
                         <form action="/ods-tags" method="post" class="text-center">
                             <button type="submit" name="selected_ods_tag" value="{{x.repair_form_id}}"
@@ -693,6 +696,7 @@
         $(document).ready(function () {
             $('#data').DataTable({
                 columns: [
+                    { searchable: true },
                     { searchable: true },
                     { searchable: true },
                     { searchable: true },
