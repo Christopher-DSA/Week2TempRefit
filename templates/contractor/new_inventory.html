@@ -781,11 +781,11 @@
                                         <input type="hidden" name="unique_id" value="{{x.id}}">
                                         <img src="static/images/refit-qr-tag.png" alt="Cylinder">
                                         <div class="card-content">
-                                            <h2 class="cylinder-title">{{ 'Recovery Cylinder' if x.cylinder_type_id == 3
-                                                else 'Charge Cylinder' }}</h2>
+                                            <h2 class="cylinder-title">{{ 'Recovery Cylinder' if x.cylinder_type_id == 1
+                                                else 'Charge Cylinder'}}</h2>
                                             <p class="card-text"><strong>Gas Quality:</strong> {% if x.clean_or_burnout
                                                 == 'clean' %}
-                                                Contaminant-Free Gas
+                                                Clean
                                                 {% else %}Burnout Gas/Contaminated Gas
                                                 {% endif %}</p>
                                             <p class="card-text"><strong>Refrigerant Type:</strong>
