@@ -777,19 +777,21 @@
                         <td>
                             <div class="inventory-item card">
                                 <form id="{{x.id}}cylinderForm" action="/inventory-cylinder-info" method="post">
-                                    <div class="card-body" onclick="document.getElementById('{{x.id}}cylinderForm').submit();">
+                                    <div class="card-body"
+                                        onclick="document.getElementById('{{x.id}}cylinderForm').submit();">
                                         <input type="hidden" name="unique_id" value="{{x.id}}">
-                                        <img src="static/images/refit-qr-tag.png" alt="Cylinder">
+                                        <img src="{{'static/images/recovery-qr-tag.png' if x.cylinder_type_id == 1
+                                        else 'static/images/refit-qr-tag.png'}}" alt="Cylinder">
                                         <div class="card-content">
                                             <h2 class="cylinder-title">{{ 'Recovery Cylinder' if x.cylinder_type_id == 1
-                                                else 'Charge Cylinder'}}</h2>
+                                                else 'Charge Cylinder'}} {{x.refrigerant_type}}</h2>
                                             <p class="card-text"><strong>Gas Quality:</strong> {% if x.clean_or_burnout
                                                 == 'clean' %}
                                                 Clean
                                                 {% else %}Burnout Gas/Contaminated Gas
                                                 {% endif %}</p>
-                                            <p class="card-text"><strong>Refrigerant Type:</strong>
-                                                {{x.refrigerant_type}}</p>
+                                            <!-- <p class="card-text"><strong>Refrigerant Type:</strong>
+                                                {{x.refrigerant_type}}</p> -->
                                             <p class="card-text"><strong>Amount of Refrigerant in Cylinder:</strong>
                                                 {{x.display_lbs_oz}} ({{x.display_kg_g}})</p>
                                             <p class="card-text"><strong>Wholesaler:</strong> {{x.supplier}}</p>
