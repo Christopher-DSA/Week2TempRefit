@@ -24,6 +24,27 @@ technician = Blueprint('technician', __name__)
 # from pint import UnitRegistry
 
 
+def convert_weights_for_display(amount_oz):
+    # Converting ounces to pounds and ounces
+    amount_lbs = int(amount_oz // 16)
+    remaining_ounces = round(amount_oz % 16)
+
+    # Converting ounces to kilograms and grams
+    # 1 ounce is approximately 0.0283495 kilograms
+    amount_kg = amount_oz * 0.0283495
+    # Extracting the whole kilograms
+    whole_kg = int(amount_kg)
+    # Converting the fractional part of the kilograms into grams and rounding it
+    remaining_g = round((amount_kg - whole_kg) * 1000)
+
+    # Formatting for display
+    display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
+    display_kg_g = f"{whole_kg}kg {remaining_g}g"
+
+    return display_lbs_oz, display_kg_g
+
+
+
 # Define a decorator for routes that require a user to be logged in
 def login_required(f):
     @wraps(f)
@@ -559,24 +580,24 @@ def repair_ODS_Sheet_New():
         g_to_lbs = 0.00220462  # 1 g = 0.00220462 lbs
 
         # Retrieving and processing values from the 'Added Refrigerant' section
-        added_lbs = float(form_data_dictionary.get(
-            'currentRefrigerantWeight1Added', 0))
-        added_oz = float(form_data_dictionary.get(
-            'currentRefrigerantWeight2Added', 0))
-        added_kg = float(form_data_dictionary.get(
-            'currentRefrigerantWeight1Added', 0))
-        added_g = float(form_data_dictionary.get(
-            'currentRefrigerantWeight2Added', 0))
+        # added_lbs = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight1Added', 0))
+        # added_oz = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight2Added', 0))
+        # added_kg = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight1Added', 0))
+        # added_g = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight2Added', 0))
 
-        # Retrieving and processing values from the 'Removed Refrigerant' section
-        removed_lbs = float(form_data_dictionary.get(
-            'currentRefrigerantWeight1Removed', 0))
-        removed_oz = float(form_data_dictionary.get(
-            'currentRefrigerantWeight2Removed', 0))
-        removed_kg = float(form_data_dictionary.get(
-            'currentRefrigerantWeight1Removed', 0))
-        removed_g = float(form_data_dictionary.get(
-            'currentRefrigerantWeight2Removed', 0))
+        # # Retrieving and processing values from the 'Removed Refrigerant' section
+        # removed_lbs = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight1Removed', 0))
+        # removed_oz = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight2Removed', 0))
+        # removed_kg = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight1Removed', 0))
+        # removed_g = float(form_data_dictionary.get(
+        #     'currentRefrigerantWeight2Removed', 0))
 
         total_added_kg = 0
         total_added_lbs = 0
@@ -599,16 +620,16 @@ def repair_ODS_Sheet_New():
 
         total_added_oz = 0
         # For added
-        if form_data_dictionary.get('currentRefrigerantWeightUnitAdded') == 'metric':
-            total_added_kg_form_ver = added_kg
-            total_added_g_form_ver = added_g
+        # if form_data_dictionary.get('currentRefrigerantWeightUnitAdded') == 'metric':
+        #     total_added_kg_form_ver = added_kg
+        #     total_added_g_form_ver = added_g
 
-            total_added_oz = (added_kg * kg_to_oz) + (added_g * g_to_oz)
-        else:  # Imperial
-            total_added_lbs_form_ver = added_lbs
-            total_added_oz_form_ver = added_oz
+        #     total_added_oz = (added_kg * kg_to_oz) + (added_g * g_to_oz)
+        # else:  # Imperial
+        #     total_added_lbs_form_ver = added_lbs
+        #     total_added_oz_form_ver = added_oz
 
-            total_added_oz = (added_lbs * lbs_to_oz) + total_added_oz_form_ver
+        #     total_added_oz = (added_lbs * lbs_to_oz) + total_added_oz_form_ver
 
         reclaimed_total_for_forms = form_data_dictionary.get(
             'TotalOzAdded')  # Reclaim Amount for Form
@@ -618,17 +639,17 @@ def repair_ODS_Sheet_New():
 
         total_removed_oz = 0
         # For removed
-        if form_data_dictionary.get('currentRefrigerantWeightUnitRemoved') == 'metric':
-            total_removed_kg_form_ver = removed_kg
-            total_removed_g_form_ver = removed_g
+        # if form_data_dictionary.get('currentRefrigerantWeightUnitRemoved') == 'metric':
+        #     total_removed_kg_form_ver = removed_kg
+        #     total_removed_g_form_ver = removed_g
 
-            total_removed_oz = (removed_kg * kg_to_oz) + (removed_g * g_to_oz)
-        else:  # Imperial
-            total_removed_lbs_form_ver = removed_lbs
-            total_removed_oz_form_ver = removed_oz
+        #     total_removed_oz = (removed_kg * kg_to_oz) + (removed_g * g_to_oz)
+        # else:  # Imperial
+        #     total_removed_lbs_form_ver = removed_lbs
+        #     total_removed_oz_form_ver = removed_oz
 
-            total_removed_oz = (removed_lbs * lbs_to_oz) + \
-                total_removed_oz_form_ver
+        #     total_removed_oz = (removed_lbs * lbs_to_oz) + \
+        #         total_removed_oz_form_ver
 
         print("Total Refrigerant Removed in oz: ", total_removed_oz)
 
@@ -706,8 +727,9 @@ def repair_ODS_Sheet_New():
 
         previous_amount_oz = previous_unit_data.amount_of_refrigerant_in_unit_oz
 
+        #Keeping track of refrigerant in unit, saving to database.
         new_amount_oz = float(
-            previous_amount_oz) + model_data['refrigerant_added_total_oz'] - model_data['refrigerant_removed_total_oz']
+            previous_amount_oz) + float(charge_total_for_forms) - float(reclaimed_total_for_forms)    
 
         ###################################################
         # Update amount of refrigerant inside Unit.
@@ -722,7 +744,7 @@ def repair_ODS_Sheet_New():
         ##############################################
         ##############################################
         # For Charge Amount Display
-        amount_oz = charge_total_for_forms
+        amount_oz = float(charge_total_for_forms)
 
         # Converting ounces to pounds and ounces
         amount_lbs = int(amount_oz // 16)
@@ -743,7 +765,7 @@ def repair_ODS_Sheet_New():
         ##############################################
         ##############################################
         # For reclaim Amount Display
-        amount_oz_2 = charge_total_for_forms
+        amount_oz_2 = float(reclaimed_total_for_forms)
 
         # Converting ounces to pounds and ounces
         amount_lbs = int(amount_oz_2 // 16)
@@ -1287,7 +1309,20 @@ def ods_tags_new():
             Contractor, all=False, contractor_id=tech_data.contractor_id)
         unit_data = CRUD.read(Unit, all=False, unit_id=data.unit_id)
 
-        return render_template("beta/digitized_ods_tag.html", data=data, tech_data=tech_data, user_data=user_detail_data, company_data=company_data, unit_data=unit_data)
+        #charge amount
+        charge_amount = data.refrigerant_added_total_oz
+        #reclaim amount
+        reclaim_amount = data.refrigerant_removed_total_oz
+        #############FOR CHARGE AMOUNT DISPLAY#############
+        # For Charge Amount Display
+        charge_lbs_oz_display, charge_kg_g_display = convert_weights_for_display(float(charge_amount))
+        print(float(charge_amount))
+        print(float(reclaim_amount))
+        reclaim_lbs_oz_display, reclaim_kg_g_display = convert_weights_for_display(float(reclaim_amount))
+        
+        
+        
+        return render_template("beta/digitized_ods_tag.html", data=data, tech_data=tech_data, user_data=user_detail_data, company_data=company_data, unit_data=unit_data, charge_lbs_oz_display=charge_lbs_oz_display, charge_kg_g_display=charge_kg_g_display, reclaim_lbs_oz_display=reclaim_lbs_oz_display, reclaim_kg_g_display=reclaim_kg_g_display)
 
 # This is the table with the list of all ods tags a technician has ever filled out.
 

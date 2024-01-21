@@ -671,6 +671,9 @@ class Repair_form(Base):
     refrigerant_removed_oz_form_ver = Column(Numeric)
     refrigerant_removed_g_form_ver = Column(Numeric)
     
+    display_imperial = Column(Text)
+    display_metric = Column(Text)
+    
     
     
     refrigerant_added_total_oz = Column(Numeric)

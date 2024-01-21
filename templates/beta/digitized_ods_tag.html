@@ -666,10 +666,10 @@
                             <!-- Changed to a sitemap icon for the organization name -->
                             <span class="info-label"><i class="fas fa-sitemap"></i> Organization Name:</span>
                             <span class="info-value">{{unit_data.organization_name}}</span>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
-                
+
                 <!-- Refrigerant Information Group -->
                 <div class="card mb-4">
                     <div class="card-header"><i class="fas fa-snowflake"></i> Refrigerant Info</div>
@@ -684,41 +684,12 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-plus-square"></i> Amount Added to Unit:</span>
-                            <span class="info-value"> {% if data.refrigerant_added_lbs_form_ver > 0 or
-                                data.refrigerant_added_oz_form_ver > 0 %}
-                                {{ data.refrigerant_added_lbs_form_ver }} lbs {{ data.refrigerant_added_oz_form_ver }}
-                                oz
-                                {% if data.refrigerant_added_kg_form_ver > 0 or data.refrigerant_added_g_form_ver > 0 %}
-                                ({{ data.refrigerant_added_kg_form_ver }} kg, {{ data.refrigerant_added_g_form_ver }} g)
-                                {% endif %}
-                                {% elif data.refrigerant_added_kg_form_ver > 0 or data.refrigerant_added_g_form_ver > 0
-                                %}
-                                {{ data.refrigerant_added_kg_form_ver }} kg {{ data.refrigerant_added_g_form_ver}} g
-                                {% else %}
-                                n/a
-                                {% endif %}
+                            <span class="info-value"> {{charge_lbs_oz_display}}, ({{charge_kg_g_display}})
                             </span>
                         </div>
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-recycle"></i>Amount Reclaimed from
-                                Unit</span><span class="info-value">{% if data.refrigerant_removed_lbs_form_ver >
-                                0 or data.refrigerant_removed_oz_form_ver > 0 %}
-                                {{ data.refrigerant_removed_lbs_form_ver }} lbs {{ data.refrigerant_removed_oz_form_ver
-                                }}
-                                oz
-                                {% if data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver >
-                                0 %}
-                                ({{ data.refrigerant_removed_kg_form_ver }} kg, {{ data.refrigerant_removed_g_form_ver
-                                }} g)
-                                {% endif %}
-                                {% elif data.refrigerant_removed_kg_form_ver > 0 or data.refrigerant_removed_g_form_ver
-                                > 0
-                                %}
-                                {{ data.refrigerant_removed_kg_form_ver }} kg {{ data.refrigerant_removed_g_form_ver }}
-                                g
-                                {% else %}
-                                n/a
-                                {% endif %}
+                                Unit</span><span class="info-value">{{reclaim_lbs_oz_display}}, ({{reclaim_kg_g_display}})
                             </span>
                         </div>
                         <div class="info-row">
@@ -749,7 +720,7 @@
                             <span class="info-label"><i class="fas fa-barcode"></i> Serial No:</span>
                             <span class="info-value">{{unit_data.serial_number}}</span>
                         </div>
-                        
+
                         <div class="info-row">
                             <span class="info-label"><i class="fas fa-clipboard-list"></i> Test Results:</span>
                             <span class="info-value">Issue Date: {{data.repair_date}}</span>
