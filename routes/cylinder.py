@@ -176,6 +176,10 @@ def new_cylinder_view():
         else:
             cleanOrBurnout = "burnout"
 
+        
+        current_user_id = session.get('user_id')
+        current_tech_id = session.get('tech_id')
+
         # data to be passed on to crud create for Cylinder table.
         my_dictionary = {
             # the date the cylinder was added to the database. Comes from the form.
@@ -191,7 +195,11 @@ def new_cylinder_view():
             'current_refrigerant_weight_kg': current_refrigerant_weight_kg,
             # the current refrigerant weight in oz.
             'current_refrigerant_weight': current_refrigerant_weight,
-            'supplier': wholesaler
+            'supplier': wholesaler,
+            # the id of the user who added the cylinder to the database.
+            'user_id': current_user_id,
+            # the id of the technician who added the cylinder to the database.
+            'technician_id': current_tech_id
         }
 
         ############ CRUD Create Row for new Cylinder#############
@@ -207,7 +215,7 @@ def new_cylinder_view():
 
             # New Row in Tag Table
             CRUD.create(Tag, tag_url=unique_cylinder_token,
-                        cylinder_id=new_row.cylinder_id, type="cylinder")
+                        cylinder_id=new_row.cylinder_id, type="cylinder", technician_id=current_tech_id, user_id = current_user_id)
 
             # 4. Record the activity in the Activity_Logs table.#####################
             current_date = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -285,6 +293,7 @@ def CylinderInfo(unique_id):
             return redirect("/")  # cylinder does not exist in the database.
         elif cylinder_data.cylinder_type_id == 1:  # 1 is recovery a recovery cylinder
             my_cylinder_type = 'Recovery Cylinder'
+            print("tech id from cylinder table: ", cylinder_data.technician_id)
             tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
             user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
             

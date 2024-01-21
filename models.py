@@ -152,6 +152,7 @@ class Tag(Base):
     wholesaler_id = Column(Integer, ForeignKey('Wholesaler.wholesaler_id'), nullable= True)
     unit_id = Column(String)
     technician_id = Column(Integer)
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     
 
     cylinder = relationship('Cylinder', backref='Tag')
@@ -246,6 +247,7 @@ class Unit(Base):
     amount_of_refrigerant_in_unit_oz = Column(Numeric)
     amount_of_refrigerant_kg = Column(Numeric)
     amount_of_refrigerant_lbs = Column(Numeric)
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
     
     equipment_unit_number = Column(String)
     equipment_unit_address = Column(String)
@@ -397,6 +399,7 @@ class Cylinder(Base):
     current_refrigerant_weight_lbs = Column(Numeric)
     current_refrigerant_weight_kg = Column(Numeric)
     refrigerant_type = Column(VARCHAR(16))
+    user_id = Column(Integer, ForeignKey('User.user_id'), nullable= True)
 
 
     refrigerants=relationship('Refrigerant',backref='Cylinder')

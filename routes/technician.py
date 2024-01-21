@@ -190,8 +190,8 @@ def equipment_create_QR():
             # rounding
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
-            amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1 * 35.274) + float(
-                currentRefrigerantWeight_2 * 0.035274)
+            amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1) * 35.274 + float(
+                currentRefrigerantWeight_2) * 0.035274
         else:
             print("Using Imperial LBS/OZ")
             amount_of_refrigerant_lbs = float(
@@ -200,8 +200,7 @@ def equipment_create_QR():
             # rounding
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
-            amount_of_refrigerant_in_unit_oz = float(
-                currentRefrigerantWeight_1 * 16) + float(currentRefrigerantWeight_2)
+            amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1) * 16 + float(currentRefrigerantWeight_2)
 
         # Serial Number is Optional
         if serialNumber == "":
@@ -217,7 +216,8 @@ def equipment_create_QR():
         ########### Add new unit to the database############
         ###################################################
         # 0.Get Technician ID from session.
-        tech_id = session.get('tech_id')  # hmmm
+        tech_id = session.get('tech_id')
+        current_user_id = session.get('user_id')
         # 1.Add new unit to the database
         unit_data = {
             "type_of_refrigerant": refrigerantType,
@@ -235,7 +235,8 @@ def equipment_create_QR():
             "equipment_unit_number": equipmentUnitNumber,
             "additional_notes": additionalNotes,
             "unit_name": customLabel,
-            "amount_of_refrigerant_in_unit_oz": amount_of_refrigerant_in_unit_oz
+            "amount_of_refrigerant_in_unit_oz": amount_of_refrigerant_in_unit_oz,
+            "user_id": current_user_id
         }
 
         my_unit = CRUD.create(model=Unit, **unit_data)
@@ -244,7 +245,7 @@ def equipment_create_QR():
         unique_equipment_token = session.get('QR_unique_token')
         # 3.Add the tag to the database "Tag" table.
         CRUD.create(Tag, tag_url=unique_equipment_token,
-                    unit_id=my_equipment_id, type="equipment")
+                    unit_id=my_equipment_id, type="equipment", user_id=current_user_id, technician_id=tech_id)
         # 4. Record the activity in the Activity_Logs table.
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_user_role = session.get('user_role')
