@@ -41,9 +41,7 @@
 
         .x-padding {
             padding-left: 70px;
-            /* You can adjust the value to your preference, darling! */
             padding-right: 70px;
-            /* Same value as padding-left to keep it even */
         }
     </style>
 
@@ -171,6 +169,7 @@
             color: white;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -627,11 +626,11 @@
             <thead>
                 <tr>
                     <th scope="col">Repair Date</th>
-                    <th scope="col" class="d-none d-md-table-cell">Refrigerant Type</th>
-                    <th scope="col" class="d-none d-md-table-cell">Technician Name</th>
-                    <th scope="col" class="d-none d-md-table-cell">Unit Type</th>
-                    <th scope="col" class="d-none d-md-table-cell">Model</th>
-                    <th scope="col" class="d-none d-md-table-cell">Organization Name</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Refrigerant Type</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Technician Name</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Unit Type</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Model</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Organization Name</th>
                     <th scope="col">View Tag</th>
                 </tr>
             </thead>
@@ -641,8 +640,8 @@
                 <tr class="main-row">
                     <td>
                         {{ x.repair_date }}
-                        <span class="expand-icon d-md-none">&#9660;</span> <!-- Down arrow icon -->
-                        <div class="extra-info d-md-none mt-2">
+                        <span class="expand-icon d-lg-none">&#9660;</span> <!-- Down arrow icon -->
+                        <div class="extra-info d-lg-none mt-2">
                             <div style="overflow: visible;" class="mt-4"><strong>Refrigerant Type:</strong> {{ x.refrigerant_type }}</div>
                             <div style="overflow: visible;" class="mt-2"><strong>Unit Type:</strong> {{ x.unit_type }}</div>
                             <div style="overflow: visible;" class="mt-2"><strong>Model:</strong> {{ x.model }}</div>
@@ -651,11 +650,11 @@
                             <div style="overflow: visible;" class="mt-2"><strong>Organization Name:</strong> {{ x.organization_name }}</div>
                         </div>
                     </td>
-                    <td class="d-none d-md-table-cell">{{ x.refrigerant_type }}</td>
-                    <td class="d-none d-md-table-cell">{{ x.technician_name }}</td>
-                    <td class="d-none d-md-table-cell">{{ x.unit_type }}</td>
-                    <td class="d-none d-md-table-cell">{{ x.model }}</td>
-                    <td class="d-none d-md-table-cell">{{ x.organization_name }}</td>
+                    <td class="d-none d-lg-table-cell">{{ x.refrigerant_type }}</td>
+                    <td class="d-none d-lg-table-cell">{{ x.technician_name }}</td>
+                    <td class="d-none d-lg-table-cell">{{ x.unit_type }}</td>
+                    <td class="d-none d-lg-table-cell">{{ x.model }}</td>
+                    <td class="d-none d-lg-table-cell">{{ x.organization_name }}</td>
                     <td>
                         <form action="/ods-tags" method="post" class="text-center">
                             <button type="submit" name="selected_ods_tag" value="{{x.repair_form_id}}"
