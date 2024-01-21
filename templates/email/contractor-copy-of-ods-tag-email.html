@@ -182,31 +182,13 @@
                     <tr>
                         <td class="info-item">Amount Added:</td>
                         <td>
-                            {% if email_data.refrigerant_added_lbs > 0 or email_data.refrigerant_added_oz > 0 %}
-                            {{ email_data.refrigerant_added_lbs }} lbs {{ email_data.refrigerant_added_oz }} oz
-                            {% if email_data.refrigerant_added_kg > 0 or email_data.refrigerant_added_g > 0 %}
-                            ({{ email_data.refrigerant_added_kg }} kg, {{ email_data.refrigerant_added_g }} g)
-                            {% endif %}
-                            {% elif email_data.refrigerant_added_kg > 0 or email_data.refrigerant_added_g > 0 %}
-                            {{ email_data.refrigerant_added_kg }} kg {{ email_data.refrigerant_added_g}} g
-                            {% else %}
-                            n/a
-                            {% endif %}
+                            {{ email_data.display_lbs_oz_charge}}, ({{ email_data.display_kg_g_charge}})
                         </td>
                     </tr>
                     <tr>
                         <td class="info-item">Amount Reclaimed:</td>
                         <td>
-                            {% if email_data.refrigerant_removed_lbs > 0 or email_data.refrigerant_removed_oz > 0 %}
-                            {{ email_data.refrigerant_removed_lbs }} lbs {{ email_data.refrigerant_removed_oz }} oz
-                            {% if email_data.refrigerant_removed_kg > 0 or email_data.refrigerant_removed_g > 0 %}
-                            ({{ email_data.refrigerant_removed_kg }} kg, {{ email_data.refrigerant_removed_g }} g)
-                            {% endif %}
-                            {% elif email_data.refrigerant_removed_kg > 0 or email_data.refrigerant_removed_g > 0 %}
-                            {{ email_data.refrigerant_removed_kg }} kg {{ email_data.refrigerant_removed_g }} g
-                            {% else %}
-                            n/a
-                            {% endif %}
+                            {{ email_data.display_lbs_oz_reclaim}}, ({{ email_data.display_kg_g_reclaim}})
                         </td>
                     </tr>
                     <tr>

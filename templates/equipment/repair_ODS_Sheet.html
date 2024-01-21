@@ -746,16 +746,20 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <h5 class="mt-4">Recover Refrigerant:</h5>
-                                        <div>
+
+                                        <div id="general-instructions">
+                                            <h5 class="mt-4">Adding/Removing Refrigerant:</h5>
                                             <ol>
-                                                <li>Scan cylinder QR tag</li>
-                                                <li>Recover refrigerant from equipment</li>
-                                                <li>Record refrigerant recovered</li>
+                                                <li>Recover refrigerant from equipment.</li>
+                                                <li>Scan cylinder QR tag.</li>
+                                                <li>Record refrigerant recovered/added.</li>
+                                                <li>Press "Scan Additional Cylinder" if you are using more the one
+                                                    cylinder.</li>
                                             </ol>
                                         </div>
-                                        <h5 class="mt-4">Added Refrigerant to Unit:</h5>
+
                                         <div id="added-refrigerant-section">
+                                            <h5 class="mt-4">Added Refrigerant to Unit:</h5>
                                             <div class="row mb-3 justify-content-center">
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
@@ -773,7 +777,7 @@
                                                                 <input name="currentRefrigerantWeight1Added"
                                                                     type="number" class="form-control" placeholder="lb"
                                                                     id="currentRefrigerantWeight1Added"
-                                                                    aria-label="Pounds" required="">
+                                                                    aria-label="Pounds">
                                                                 <span class="input-group-text"
                                                                     id="input-label-unit-big-added">lb</span>
                                                             </div>
@@ -783,7 +787,7 @@
                                                                 <input name="currentRefrigerantWeight2Added"
                                                                     type="number" class="form-control" placeholder="oz"
                                                                     id="currentRefrigerantWeight2Added"
-                                                                    aria-label="Ounces" required="">
+                                                                    aria-label="Ounces">
                                                                 <span class="input-group-text"
                                                                     id="input-label-unit-small-added">oz</span>
                                                             </div>
@@ -793,7 +797,7 @@
                                             </div>
                                         </div>
                                         <div id="remove-refrigerant-section">
-                                            <h5 class="mt-4">Removed Refrigerant from Unit:</h5>
+                                            <h5 class="mt-4">Reclaimed Refrigerant from Unit:</h5>
                                             <div class="row mb-3 justify-content-center">
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
@@ -811,7 +815,7 @@
                                                                 <input name="currentRefrigerantWeight1Removed"
                                                                     type="number" class="form-control" placeholder="lb"
                                                                     id="currentRefrigerantWeight1Removed"
-                                                                    aria-label="Pounds" required="">
+                                                                    aria-label="Pounds">
                                                                 <span class="input-group-text"
                                                                     id="input-label-unit-big-removed">lb</span>
                                                             </div>
@@ -821,7 +825,7 @@
                                                                 <input name="currentRefrigerantWeight2Removed"
                                                                     type="number" class="form-control" placeholder="oz"
                                                                     id="currentRefrigerantWeight2Removed"
-                                                                    aria-label="Ounces" required="">
+                                                                    aria-label="Ounces">
                                                                 <span class="input-group-text"
                                                                     id="input-label-unit-small-removed">oz</span>
                                                             </div>
@@ -905,8 +909,8 @@
                                                             var addedUnitType = document.getElementById('refrigerantWeightUnitSelectRemoved').value;
                                                             var removedUnitType = document.getElementById('refrigerantWeightUnitSelectAdded').value;
 
-                                                            var AddedMetricOrImperial = document.getElementById('refrigerantWeightUnitSelectRemoved').value;
-                                                            var RemovedMetricOrImperial = document.getElementById('refrigerantWeightUnitSelectAdded').value;
+                                                            var AddedMetricOrImperial = document.getElementById('refrigerantWeightUnitSelectAdded').value;
+                                                            var RemovedMetricOrImperial = document.getElementById('refrigerantWeightUnitSelectRemoved').value;
 
 
                                                             // Check for a valid UUID
@@ -941,32 +945,57 @@
                                                                     my_calculated_amount_oz = data['calculated_amount'];
                                                                     display_lbs_oz = data['display_lbs_oz'];
                                                                     display_kg_g = data['display_kg_g'];
+                                                                    AddedOrRemoved = data['AddedOrRemoved'];
                                                                     refrigerant_type_id = document.getElementById('refrigerant_type_id').value;
+                                                                    new_amount_difference = data['new_amount_difference'];
 
                                                                     console.log("Calculated amount oz: ", my_calculated_amount_oz);
                                                                     if (my_calculated_amount_oz != null) {
 
                                                                         outputData.innerText = 'Refrigerant in Cylinder:' + display_lbs_oz + ' ' + '(' + display_kg_g + ')';
                                                                         document.getElementById('scan-result-text').style.setProperty('display', 'block', 'important');
-                                                                        document.getElementById('scan-result-text').innerHTML = '<i class="fas fa-weight mt-3"></i> Cylinder Refrigerant Amount: ' + display_lbs_oz + ' (' + display_kg_g + ')';
-                                                                        document.getElementById('scan-result-text-refrigerant-type').innerHTML = '<i class="fas fa-tools mt-3"></i> Cylinder Refrigerant Type: ' + data['refrigerant_type'];
+                                                                        //document.getElementById('scan-result-text').innerHTML = '<i class="fas fa-weight mt-3"></i> Cylinder Refrigerant Amount: ' + display_lbs_oz + ' (' + display_kg_g + ')';
+                                                                        //document.getElementById('scan-result-text-refrigerant-type').innerHTML = '<i class="fas fa-tools mt-3"></i> Cylinder Refrigerant Type: ' + data['refrigerant_type'];
 
 
-                                                                        document.getElementById('scan-result-text-unit-refrigerant-type').innerHTML = '<i class="fas fa-tint mt-3"></i> Equipment Refrigerant Type: ' + refrigerant_type_id;
+                                                                        //document.getElementById('scan-result-text-unit-refrigerant-type').innerHTML = '<i class="fas fa-tint mt-3"></i> Equipment Refrigerant Type: ' + refrigerant_type_id;
 
 
-                                                                        document.getElementById('final-results').style.setProperty('display', 'block', 'important');
+                                                                        //document.getElementById('final-results').style.setProperty('display', 'block', 'important');
+
+                                                                        document.getElementById('general-instructions').style.setProperty('display', 'none', 'important');
+                                                                        document.getElementById('added-refrigerant-section').style.setProperty('display', 'none', 'important');
+                                                                        document.getElementById('remove-refrigerant-section').style.setProperty('display', 'none', 'important');
                                                                         qrDiv.style.setProperty('display', 'none', 'important');
                                                                         qrResult.style.setProperty('display', 'none', 'important');
                                                                         document.getElementById("additionalCylinderButton").style.setProperty('display', 'block') // Making display: block !important
+
+
+                                                                        //updating oz added or removed to send with form
+                                                                        let old_added_amount = document.getElementById('TotalOzAdded').value; //This is the hidden field that will always start as 0
+                                                                        let old_added_numericAmount = parseFloat(old_added_amount); //Convert the string to a number.
+
+                                                                        let old_removed_amount = document.getElementById('TotalOzRemoved').value; //This is the hidden field that will always start as 0
+                                                                        let old_removed_numericAmount = parseFloat(old_removed_amount); //Convert the string to a number.
+
+                                                                        //if added or removed == "Added" else if "removed"
+                                                                        if (AddedOrRemoved == "Removed Refrigerant from Unit") {
+                                                                            let new_amount = (old_added_numericAmount + parseFloat(new_amount_difference)) * -1; //Add the new amount to the old amount, 0 + (-x) or 0 + (+x)
+                                                                            document.getElementById('TotalOzAdded').value = new_amount;
+                                                                            console.log("Total Oz Added (Reclaim Amount): ", document.getElementById('TotalOzAdded').value);
+                                                                        } else if (AddedOrRemoved == "Added Refrigerant to Unit") {
+                                                                            let new_amount = old_removed_numericAmount + parseFloat(new_amount_difference); //Add the new amount to the old amount, 0 + (-x) or 0 + (+x)
+                                                                            document.getElementById('TotalOzRemoved').value = new_amount;
+                                                                            console.log("Total Oz Removed (Charge Amount): ", document.getElementById('TotalOzRemoved').value);
+                                                                        }
 
                                                                         // Add a new row to the table
                                                                         let table = document.querySelector("#table-of-transactions .table tbody");
                                                                         let newRow = table.insertRow();
                                                                         newRow.innerHTML = `
-                                                                                <td>Placeholder Text</td>
+                                                                                <td>${AddedOrRemoved}</td>
                                                                                 <td>${res}</td>
-                                                                                <td>${display_lbs_oz}</td>
+                                                                                <td>${display_lbs_oz} (${display_kg_g})</td>
                                                                             `;
 
 
@@ -1041,7 +1070,7 @@
                                             <div class="col">
                                                 <div class="d-flex justify-content-between">
                                                     <h4 class="mb-0 mr-5">Total Recovered Refrigerant</h4>
-                                                    <button type="button" class="btn p-1">Edit</button>
+
                                                 </div>
 
                                                 <!-- Start of the table -->
@@ -1050,16 +1079,10 @@
                                                         <tr>
                                                             <th>Description</th>
                                                             <th>Cylinder Number</th>
-                                                            <th>Numeric Value</th>
+                                                            <th>Refrigerant in Cylinder</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>Recovered to Cylinder 1<span
-                                                                    class="text-danger fw-bold">*</span></td>
-                                                            <td>{{A0081295}}</td>
-                                                            <td><!-- Numeric value goes here --></td>
-                                                        </tr>
                                                         <!-- More rows can be added here -->
                                                     </tbody>
                                                 </table>
@@ -1067,20 +1090,6 @@
                                             </div>
                                         </div>
 
-
-
-                                        <div class="d-flex justify-content-end">
-                                            <p>1 lb 3 oz</p>
-                                        </div>
-
-                                        <div style="border-bottom: 1px black solid;"></div>
-
-                                        <div class="row">
-                                            <div class="col d-flex justify-content-between mt-2">
-                                                <p>Total</p>
-                                                <p>1 lb 3 oz</p>
-                                            </div>
-                                        </div>
 
 
                                         <div class="row" id="additionalCylinderButton" style="display: none;">
@@ -1103,6 +1112,8 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="TotalOzAdded" value="0" id="TotalOzAdded"> <!-- Reclaim Amount-->
+                    <input type="hidden" name="TotalOzRemoved" value="0" id="TotalOzRemoved"> <!-- Charge Amount-->
                 </form>
             </div>
         </div>
@@ -1325,16 +1336,7 @@
                 document.getElementById('review_refrigerant_removed').textContent = reviewText;
             }
 
-            function submitMyForm() {
-                console.log("Submit Clicked")
-                var form = document.getElementById('repair-form');
-                if (form.checkValidity()) {
-                    form.submit();
-                } else {
-                    // Optional: Provide feedback to the user that the form is invalid
-                    console.log('Form is invalid!');
-                }
-            }
+
 
             function scanResultText() {
                 var scanResultText = document.getElementById('scan-result-text');
@@ -1450,14 +1452,31 @@
             var smallUnitAdded = document.getElementById('currentRefrigerantWeight2Added').value;
 
 
+            document.getElementById('added-refrigerant-section').style.setProperty('display', 'block', 'important');
+            document.getElementById('remove-refrigerant-section').style.setProperty('display', 'block', 'important');
+            document.getElementById('general-instructions').style.setProperty('display', 'block', 'important');
 
 
             if (bigUnitRemoved != 0 || smallUnitRemoved != 0 || bigUnitAdded != 0 || smallUnitAdded != 0) {
                 console.log("Displaying QR Scan Because Refrigerant Amount has Changed.");
                 qrDiv.style.setProperty('display', 'block', 'important'); // Making display: block !important
+
+
             } else {
                 console.log("Not displaying QR Scan Because Refrigerant Amount has not Changed.");
                 qrDiv.style.setProperty('display', 'none', 'important'); // Making display: none !important
+            }
+        }
+    </script>
+    <script>
+        function submitMyForm() {
+            console.log("Submit Clicked")
+            var form = document.getElementById('repair-form');
+            if (form.checkValidity()) {
+                form.submit();
+            } else {
+                // Optional: Provide feedback to the user that the form is invalid
+                console.log('Form is invalid!');
             }
         }
     </script>

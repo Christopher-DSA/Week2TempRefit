@@ -291,36 +291,38 @@ def my_choose_qr_type():
                     session['QR_unique_token'] = unique_token
                     return render_template('Equipment Common/choose-qr-type.html')
 
+# Need this one
+
 
 @technician.route('/for-ods-form-choose-qr-type', methods=['POST'])
 def ods_form_qr_type_old():
     # Get the JSON data sent from the client
     data = request.get_json()
-    
+
     print(data)
     unique_token = data.get('unique_token')
-    
+
     bigUnitAdded = data.get('bigUnitAdded')
     smallUnitAdded = data.get('smallUnitAdded')
     bigUnitRemoved = data.get('bigUnitRemoved')
     smallUnitRemoved = data.get('smallUnitRemoved')
-    
+
     AddedMetricOrImperial = data.get('AddedMetricOrImperial')
     RemovedMetricOrImperial = data.get('RemovedMetricOrImperial')
-    
+
     print("bigUnitAdded: ", bigUnitAdded)
     print("smallUnitAdded: ", smallUnitAdded)
     print("bigUnitRemoved: ", bigUnitRemoved)
     print("smallUnitRemoved: ", smallUnitRemoved)
     print("AddedMetricOrImperial: ", AddedMetricOrImperial)
     print("RemovedMetricOrImperial: ", RemovedMetricOrImperial)
-    
+
     total_refrigerant_added_oz = 0
     total_refrigerant_removed_oz = 0
 
     print("unique_token IN QR TYPE: ", unique_token)
-    
-    #converting to 0 if ''
+
+    # converting to 0 if ''
     if bigUnitAdded == "" or bigUnitAdded == None:
         bigUnitAdded = float(0)
     if smallUnitAdded == "" or smallUnitAdded == None:
@@ -343,26 +345,37 @@ def ods_form_qr_type_old():
                     print("adding or removing refrigerant from cylinder")
                     # Convert pounds to ounces (1 lb = 16 oz) and add to existing ounces (add try catch here if there are problems)
                     if AddedMetricOrImperial == 'imperial':
-                        total_refrigerant_added_oz = (float(bigUnitAdded) * 16) + float(smallUnitAdded)
-                    elif AddedMetricOrImperial == 'metric': #convert kg + g to oz
-                        total_refrigerant_added_oz = (float(bigUnitAdded) * 35.274) + (float(smallUnitAdded) * 0.035274)
-                        
+                        total_refrigerant_added_oz = (
+                            float(bigUnitAdded) * 16) + float(smallUnitAdded)
+                    elif AddedMetricOrImperial == 'metric':  # convert kg + g to oz
+                        total_refrigerant_added_oz = (
+                            float(bigUnitAdded) * 35.274) + (float(smallUnitAdded) * 0.035274)
+
                     if RemovedMetricOrImperial == 'imperial':
-                        total_refrigerant_removed_oz = (float(bigUnitRemoved) * 16) + float(smallUnitRemoved)
-                    elif RemovedMetricOrImperial == 'metric': #convert kg + g to oz
-                        total_refrigerant_removed_oz = (float(bigUnitRemoved) * 35.274) + (float(smallUnitRemoved) * 0.035274)
-                        
-                        
+                        total_refrigerant_removed_oz = (
+                            float(bigUnitRemoved) * 16) + float(smallUnitRemoved)
+                    elif RemovedMetricOrImperial == 'metric':  # convert kg + g to oz
+                        total_refrigerant_removed_oz = (
+                            float(bigUnitRemoved) * 35.274) + (float(smallUnitRemoved) * 0.035274)
+
                     # Update Cylinder Refrigerant Amount
                     new_amount_difference = total_refrigerant_added_oz - total_refrigerant_removed_oz
-                    cylinder_data = CRUD.read(Cylinder, all=False, cylinder_id=x.cylinder_id)
+                    print("new_amount_difference: ", new_amount_difference)
+                    cylinder_data = CRUD.read(
+                        Cylinder, all=False, cylinder_id=x.cylinder_id)
                     calculated_amount = float(CRUD.read(
-                        Cylinder, all=False, cylinder_id=x.cylinder_id).current_refrigerant_weight) + new_amount_difference
+                        Cylinder, all=False, cylinder_id=x.cylinder_id).current_refrigerant_weight) + (new_amount_difference * -1)
                     CRUD.update(Cylinder, cylinder_id=x.cylinder_id,
                                 attr="current_refrigerant_weight", new=calculated_amount)
-                    
+
+                    AddedOrRemoved = ""
+                    if new_amount_difference > 0:
+                        AddedOrRemoved = "Added Refrigerant to Unit"
+                    elif new_amount_difference < 0:
+                        AddedOrRemoved = "Removed Refrigerant from Unit"
+
                     refrigerant_type = cylinder_data.refrigerant_type
-                    
+
                     # Your existing amount in ounces
                     amount_oz = float(calculated_amount)
 
@@ -381,17 +394,15 @@ def ods_form_qr_type_old():
                     # Formatting for display
                     display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
                     display_kg_g = f"{whole_kg}kg {remaining_g}g"
-                    
-                    
-                    
-                    return jsonify({"calculated_amount": calculated_amount, "display_lbs_oz": display_lbs_oz, "display_kg_g": display_kg_g, "refrigerant_type": refrigerant_type})
+
+                    return jsonify({"calculated_amount": calculated_amount, "display_lbs_oz": display_lbs_oz, "display_kg_g": display_kg_g, "refrigerant_type": refrigerant_type, "AddedOrRemoved": AddedOrRemoved, "new_amount_difference": new_amount_difference})
         else:
             return jsonify({"error": "This tag needs to be registered before you can add refrigerant to it."})
     else:
         return jsonify({"error": "No unique token provided."})
 
 
-@technician.route('/for-ods-form-choose-qr-type-old', methods=['POST'])
+@technician.route('/for-ods-form-choose-qr-type-oldDoNotUseThisOneItIsOldWay', methods=['POST'])
 def ods_form_qr_type():
     # Get the JSON data sent from the client
     data = request.get_json()
@@ -466,6 +477,8 @@ def remove_qr():
 
 # REPAIR MAINTENANCE LOG FOR EQUIPMENT. Repair Ods
 
+# Need this one
+
 
 @technician.route('/equipment/repair_ODS_Sheet', methods=['GET', 'POST'])
 def repair_ODS_Sheet_New():
@@ -519,7 +532,9 @@ def repair_ODS_Sheet_New():
             'currentRefrigerantWeightUnitRemoved',  # Updated
             'currentRefrigerantWeight1Removed',   # Updated
             'currentRefrigerantWeight2Removed',   # Updated
-            'additionalNotes'
+            'additionalNotes',
+            'TotalOzAdded',  # Reclaim Amount for Form
+            'TotalOzRemoved'  # Charge Amount for Form
         ]
 
         form_data_dictionary = {}
@@ -532,7 +547,7 @@ def repair_ODS_Sheet_New():
             psig_result = 0  # or any default value you prefer
         else:
             psig_result = float(psig_result)
-        
+
         # Conversion factors
         lbs_to_oz = 16  # 1 lb = 16 oz
         kg_to_g = 1000  # 1 kg = 1000 g
@@ -544,69 +559,77 @@ def repair_ODS_Sheet_New():
         g_to_lbs = 0.00220462  # 1 g = 0.00220462 lbs
 
         # Retrieving and processing values from the 'Added Refrigerant' section
-        added_lbs = float(form_data_dictionary.get('currentRefrigerantWeight1Added', 0))
-        added_oz = float(form_data_dictionary.get('currentRefrigerantWeight2Added', 0))
-        added_kg = float(form_data_dictionary.get('currentRefrigerantWeight1Added', 0))
-        added_g = float(form_data_dictionary.get('currentRefrigerantWeight2Added', 0))
+        added_lbs = float(form_data_dictionary.get(
+            'currentRefrigerantWeight1Added', 0))
+        added_oz = float(form_data_dictionary.get(
+            'currentRefrigerantWeight2Added', 0))
+        added_kg = float(form_data_dictionary.get(
+            'currentRefrigerantWeight1Added', 0))
+        added_g = float(form_data_dictionary.get(
+            'currentRefrigerantWeight2Added', 0))
 
         # Retrieving and processing values from the 'Removed Refrigerant' section
-        removed_lbs = float(form_data_dictionary.get('currentRefrigerantWeight1Removed', 0))
-        removed_oz = float(form_data_dictionary.get('currentRefrigerantWeight2Removed', 0))
-        removed_kg = float(form_data_dictionary.get('currentRefrigerantWeight1Removed', 0))
-        removed_g = float(form_data_dictionary.get('currentRefrigerantWeight2Removed', 0))
+        removed_lbs = float(form_data_dictionary.get(
+            'currentRefrigerantWeight1Removed', 0))
+        removed_oz = float(form_data_dictionary.get(
+            'currentRefrigerantWeight2Removed', 0))
+        removed_kg = float(form_data_dictionary.get(
+            'currentRefrigerantWeight1Removed', 0))
+        removed_g = float(form_data_dictionary.get(
+            'currentRefrigerantWeight2Removed', 0))
 
-        
         total_added_kg = 0
         total_added_lbs = 0
         total_added_g = 0
-      
-        
+
         total_removed_kg = 0
         total_removed_lbs = 0
         total_removed_g = 0
         total_removed_oz = 0
-        
-        
+
         total_added_lbs_form_ver = 0
         total_added_oz_form_ver = 0
         total_added_kg_form_ver = 0
         total_added_g_form_ver = 0
-        
+
         total_removed_lbs_form_ver = 0
         total_removed_oz_form_ver = 0
         total_removed_kg_form_ver = 0
         total_removed_g_form_ver = 0
-        
-        
+
         total_added_oz = 0
-        #For added
+        # For added
         if form_data_dictionary.get('currentRefrigerantWeightUnitAdded') == 'metric':
             total_added_kg_form_ver = added_kg
             total_added_g_form_ver = added_g
-            
+
             total_added_oz = (added_kg * kg_to_oz) + (added_g * g_to_oz)
-        else: #Imperial
+        else:  # Imperial
             total_added_lbs_form_ver = added_lbs
             total_added_oz_form_ver = added_oz
-            
-            total_added_oz = (added_lbs * lbs_to_oz) + total_added_oz_form_ver
-        
 
+            total_added_oz = (added_lbs * lbs_to_oz) + total_added_oz_form_ver
+
+        reclaimed_total_for_forms = form_data_dictionary.get(
+            'TotalOzAdded')  # Reclaim Amount for Form
+        charge_total_for_forms = form_data_dictionary.get(
+            'TotalOzRemoved')  # Charge Amount for Form
         print("Total Refrigerant Added in oz: ", total_added_oz)
-        
+
         total_removed_oz = 0
-        #For removed
+        # For removed
         if form_data_dictionary.get('currentRefrigerantWeightUnitRemoved') == 'metric':
             total_removed_kg_form_ver = removed_kg
             total_removed_g_form_ver = removed_g
-                                    
+
             total_removed_oz = (removed_kg * kg_to_oz) + (removed_g * g_to_oz)
-        else: #Imperial
+        else:  # Imperial
             total_removed_lbs_form_ver = removed_lbs
             total_removed_oz_form_ver = removed_oz
-            
-            total_removed_oz = (removed_lbs * lbs_to_oz) + total_removed_oz_form_ver
-            
+
+            total_removed_oz = (removed_lbs * lbs_to_oz) + \
+                total_removed_oz_form_ver
+
         print("Total Refrigerant Removed in oz: ", total_removed_oz)
 
         def convert_radio_to_boolean(form_value):
@@ -659,8 +682,8 @@ def repair_ODS_Sheet_New():
             'psig_result': psig_result,
             'tech_id': session.get('tech_id'),
             'unit_id': session.get('unit_id'),
-            'refrigerant_added_total_oz': total_added_oz,
-            'refrigerant_removed_total_oz': total_removed_oz,
+            'refrigerant_added_total_oz': charge_total_for_forms,  # Amount added to unit
+            'refrigerant_removed_total_oz': reclaimed_total_for_forms,  # Amount removed from unit
             'refrigerant_added_lbs_form_ver': total_added_lbs_form_ver,
             'refrigerant_removed_lbs_form_ver': total_removed_lbs_form_ver,
             'refrigerant_removed_kg_form_ver': total_removed_kg_form_ver,
@@ -680,21 +703,63 @@ def repair_ODS_Sheet_New():
         # Math for new amount of refrigerant in unit table in database.
         previous_unit_data = CRUD.read(
             Unit, all=False, unit_id=session.get('unit_id'))
-        
-        
+
         previous_amount_oz = previous_unit_data.amount_of_refrigerant_in_unit_oz
 
-        new_amount_oz = float(previous_amount_oz) + model_data['refrigerant_added_total_oz'] - model_data['refrigerant_removed_total_oz']
+        new_amount_oz = float(
+            previous_amount_oz) + model_data['refrigerant_added_total_oz'] - model_data['refrigerant_removed_total_oz']
 
         ###################################################
         # Update amount of refrigerant inside Unit.
-        CRUD.update(Unit, unit_id=session.get('unit_id'), attr="amount_of_refrigerant_in_unit_oz", new=new_amount_oz)
+        CRUD.update(Unit, unit_id=session.get('unit_id'),
+                    attr="amount_of_refrigerant_in_unit_oz", new=new_amount_oz)
         ###################################################
-        
+
         # Conversion factors
         oz_to_lbs = 1 / 16  # 1 oz = 1/16 lb
         g_to_kg = 1 / 1000  # 1 g = 1/1000 kg
 
+        ##############################################
+        ##############################################
+        # For Charge Amount Display
+        amount_oz = charge_total_for_forms
+
+        # Converting ounces to pounds and ounces
+        amount_lbs = int(amount_oz // 16)
+        remaining_ounces = round(amount_oz % 16)
+
+        # Converting ounces to kilograms and grams
+        # 1 ounce is approximately 0.0283495 kilograms
+        amount_kg = amount_oz * 0.0283495
+        # Extracting the whole kilograms
+        whole_kg = int(amount_kg)
+        # Converting the fractional part of the kilograms into grams and rounding it
+        remaining_g = round((amount_kg - whole_kg) * 1000)
+
+        # Formatting for display
+        display_lbs_oz_charge = f"{amount_lbs}lbs {remaining_ounces}oz"
+        display_kg_g_charge = f"{whole_kg}kg {remaining_g}g"
+
+        ##############################################
+        ##############################################
+        # For reclaim Amount Display
+        amount_oz_2 = charge_total_for_forms
+
+        # Converting ounces to pounds and ounces
+        amount_lbs = int(amount_oz_2 // 16)
+        remaining_ounces = round(amount_oz_2 % 16)
+
+        # Converting ounces to kilograms and grams
+        # 1 ounce is approximately 0.0283495 kilograms
+        amount_kg = amount_oz_2 * 0.0283495
+        # Extracting the whole kilograms
+        whole_kg = int(amount_kg)
+        # Converting the fractional part of the kilograms into grams and rounding it
+        remaining_g = round((amount_kg - whole_kg) * 1000)
+
+        # Formatting for display
+        display_lbs_oz_reclaim = f"{amount_lbs}lbs {remaining_ounces}oz"
+        display_kg_g_reclaim = f"{whole_kg}kg {remaining_g}g"
 
         # Assuming the model_data dictionary and conversion factors are already defined
         # Prepare the email data dictionary
@@ -703,20 +768,20 @@ def repair_ODS_Sheet_New():
             'refrigerant_added_oz': total_added_oz_form_ver,
             'refrigerant_added_kg': total_added_kg_form_ver,
             'refrigerant_added_g': total_added_g_form_ver,
-            'refrigerant_removed_lbs': total_removed_lbs_form_ver,  
+            'refrigerant_removed_lbs': total_removed_lbs_form_ver,
             'refrigerant_removed_oz': total_removed_oz_form_ver,
             'refrigerant_removed_kg': total_removed_kg_form_ver,
             'refrigerant_removed_g': total_removed_g_form_ver,
+            'display_lbs_oz_charge': display_lbs_oz_charge,
+            'display_kg_g_charge': display_kg_g_charge,
+            'display_lbs_oz_reclaim': display_lbs_oz_reclaim,
+            'display_kg_g_reclaim': display_kg_g_reclaim,
         }
 
         # Now you can pass this dictionary to your render_template function
         # return render_template('your_template.html', email_data=email_data)
 
-
-
         # Now you can pass these variables to your Jinja template
-
-
 
         # record activity in activity logs table
         current_date = datetime.now().strftime("%Y-%m-%d")
@@ -1083,7 +1148,7 @@ def equipment_info_page(unique_id):
         # save tag url to session.
         session['unique_equipment_token'] = str(unique_id)
         session['unit_id'] = unit_id
-        
+
         # Your existing amount in ounces
         amount_oz = float(data.amount_of_refrigerant_in_unit_oz)
 
@@ -1208,7 +1273,7 @@ def ods_tags_new():
         # Get data from database
         data = CRUD.read(Repair_form, all=False,
                          repair_form_id=selected_repair_form_id)
-        
+
         print("my data678", data.refrigerant_added_lbs_form_ver)
         print("step 2")
 
