@@ -628,6 +628,7 @@
                 <tr>
                     <th scope="col">Repair Date</th>
                     <th scope="col" class="d-none d-md-table-cell">Refrigerant Type</th>
+                    <th scope="col" class="d-none d-md-table-cell">Technician Name</th>
                     <th scope="col" class="d-none d-md-table-cell">Unit Type</th>
                     <th scope="col" class="d-none d-md-table-cell">Model</th>
                     <th scope="col">View Tag</th>
@@ -641,14 +642,15 @@
                         {{ x.repair_date }}
                         <span class="expand-icon d-md-none">&#9660;</span> <!-- Down arrow icon -->
                         <div class="extra-info d-md-none mt-2">
-                            <div style="overflow: visible;"><strong>Refrigerant Type:</strong> {{ x.refrigerant_type }}
-                            </div><br>
-                            <div style="overflow: visible;"><strong>Unit Type:</strong> {{ x.unit_type }}</div><br>
-                            <div style="overflow: visible;"><strong>Model:</strong> {{ x.model }}</div><br>
-                            <div style="overflow: visible;"><strong>Notes:</strong> {{x.additional_notes}}</div>
+                            <div style="overflow: visible;" class="mt-4"><strong>Refrigerant Type:</strong> {{ x.refrigerant_type }}</div>
+                            <div style="overflow: visible;" class="mt-2"><strong>Unit Type:</strong> {{ x.unit_type }}</div>
+                            <div style="overflow: visible;" class="mt-2"><strong>Model:</strong> {{ x.model }}</div>
+                            <div style="overflow: visible;" class="mt-2"><strong>Notes:</strong> {{x.additional_notes}}</div>
+                            <div style="overflow: visible;" class="mt-2"><strong>Technician Name:</strong> {{ x.technician_name }}</div>
                         </div>
                     </td>
                     <td class="d-none d-md-table-cell">{{ x.refrigerant_type }}</td>
+                    <td class="d-none d-md-table-cell">{{ x.technician_name }}</td>
                     <td class="d-none d-md-table-cell">{{ x.unit_type }}</td>
                     <td class="d-none d-md-table-cell">{{ x.model }}</td>
                     <td>
@@ -691,6 +693,7 @@
         $(document).ready(function () {
             $('#data').DataTable({
                 columns: [
+                    { searchable: true },
                     { searchable: true },
                     { searchable: true },
                     { searchable: true },

@@ -104,6 +104,11 @@
             });
         })();
     </script>
+    <style>
+        html[data-bs-theme='dark'] .bs-body-color {
+            color: white !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -520,7 +525,7 @@
         <div class="px-4">
             <div class="row mb-4">
                 <div class="col text-center">
-                    <h1 class="text-primary">Manage Technicians</h1>
+                    <h1 class="text-primary bs-body-color">Manage Technicians</h1>
                 </div>
             </div>
             <div class="row mb-5">
@@ -533,8 +538,8 @@
             </div>
             <div class="row mb-4">
                 <div class="col d-flex justify-content-center gap-3">
-                    <div class="btn btn-outline-primary w-100"><i class="bi bi-filter me-2"></i> Filters</div>
-                    <div class="btn btn-outline-primary w-100"><i class="bi bi-arrow-down-up me-2"></i> Sort</div>
+                    <div class="btn btn-outline-primary w-100 bs-body-color"><i class="bi bi-filter me-2"></i> Filters</div>
+                    <div class="btn btn-outline-primary w-100 bs-body-color"><i class="bi bi-arrow-down-up me-2"></i> Sort</div>
                 </div>
             </div>
         </div>
@@ -557,7 +562,7 @@
                         <td class="user-name">{{ user['name'] }}</td>
                         <td>{{ user['ods_licence_no'] }}</td>
                         <td class="details-control text-center"><button
-                                class="btn btn-outline-primary btn-sm">▼</button>
+                                class="btn btn-outline-primary btn-sm bs-body-color">▼</button>
                         </td>
                     </tr>
                 </form>
@@ -639,7 +644,7 @@
                     '<div class="button-group">' +
                     '<form action="/view_my_techs_ods_tags" method="POST" class="tech-form">' +
                     '<input type="hidden" name="technician_id" value="' + tech_id + '">' +
-                    '<button type="submit" class="btn btn-secondary btn-sm">View ODS Tags</button>' +
+                    '<button type="submit" class="btn btn-secondary btn-sm bs-body-color">View ODS Tags</button>' +
                     '</form>' +
                     '<form method="post" action="/delete/technician" onsubmit="return confirmDelete();" class="tech-form mx-3">' +
                     '<input type="hidden" name="technician_id" value="' + tech_id + '">' +

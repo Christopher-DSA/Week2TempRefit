@@ -680,6 +680,10 @@ def repair_ODS_Sheet_New():
         form_data_dictionary['noLongerContainsRefrigerant'] = convert_check_to_boolean(
             form_data_dictionary.get('noLongerContainsRefrigerant'))
 
+        
+        current_user_first_name = session.get('user_first_name')
+        current_user_last_name = session.get('user_last_name')
+        combined_name = current_user_first_name + " " + current_user_last_name
         # Mapping form data to model attributes
         model_data = {
             # Assuming it's in the correct date format
@@ -706,7 +710,8 @@ def repair_ODS_Sheet_New():
             'refrigerant_added_g_form_ver': total_added_g_form_ver,
             'refrigerant_removed_g_form_ver': total_removed_g_form_ver,
             'refrigerant_added_oz_form_ver': total_added_oz_form_ver,
-            'refrigerant_removed_oz_form_ver': total_removed_oz_form_ver
+            'refrigerant_removed_oz_form_ver': total_removed_oz_form_ver,
+            "technician_name": combined_name
         }
 
         # Save to database before sending email.

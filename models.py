@@ -676,6 +676,7 @@ class Repair_form(Base):
     
     display_imperial = Column(Text)
     display_metric = Column(Text)
+    technician_name = Column(Text)
     
     
     
@@ -713,6 +714,7 @@ class RepairFormUnitView(Base):
     refrigerant_added_total_oz = Column(Numeric)
     refrigerant_removed_total_oz = Column(Numeric)
     tech_id = Column(Integer)
+    technician_name = Column(Text)
 
     # Columns from Unit
     unit_id = Column(Integer)
@@ -728,6 +730,7 @@ class RepairFormUnitView(Base):
     unit_type = Column(String)
     store_id = Column(Integer)
     serial_number = Column(String)
+    organization_name = Column(String)
 
     def __repr__(self):
         return f"<RepairFormUnitView(repair_form_id={self.repair_form_id}, unit_id={self.unit_id}, ...)>"
