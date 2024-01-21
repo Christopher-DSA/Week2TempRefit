@@ -728,8 +728,8 @@ def repair_ODS_Sheet_New():
         ##############################################
         ##############################################
 
-        display_lbs_oz_charge, display_kg_g_charge = convert_weights_for_display(charge_total_for_forms)
-        display_lbs_oz_reclaim, display_kg_g_reclaim = convert_weights_for_display(reclaimed_total_for_forms)
+        display_lbs_oz_charge, display_kg_g_charge = convert_weights_for_display(float(charge_total_for_forms))
+        display_lbs_oz_reclaim, display_kg_g_reclaim = convert_weights_for_display(float(reclaimed_total_for_forms))
         
         
         # Assuming the model_data dictionary and conversion factors are already defined
