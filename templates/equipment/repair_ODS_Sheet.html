@@ -948,6 +948,7 @@
                                                                     AddedOrRemoved = data['AddedOrRemoved'];
                                                                     refrigerant_type_id = document.getElementById('refrigerant_type_id').value;
                                                                     new_amount_difference = data['new_amount_difference'];
+                                                                    short_unique_token = data['short_unique_token'];
 
                                                                     console.log("Calculated amount oz: ", my_calculated_amount_oz);
                                                                     if (my_calculated_amount_oz != null) {
@@ -1001,7 +1002,7 @@
                                                                         let newRow = table.insertRow();
                                                                         newRow.innerHTML = `
                                                                                 <td>${AddedOrRemoved}</td>
-                                                                                <td>${res}</td>
+                                                                                <td>${short_unique_token}</td>
                                                                                 <td>${display_lbs_oz} (${display_kg_g})</td>
                                                                             `;
 
@@ -1100,7 +1101,7 @@
 
 
                                         <div class="row" id="additionalCylinderButton" style="display: none;">
-                                            <button class="btn btn-primary btn-lg w-100 mt-5" type="button"
+                                            <button class="btn btn-primary btn-lg w-100 mt-5 mb-3" type="button"
                                                 onclick="showQRScan()">Scan Additional Cylinder</button>
                                         </div>
 

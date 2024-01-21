@@ -363,7 +363,8 @@ def ods_form_qr_type_old():
         smallUnitRemoved = float(0)
 
     if unique_token:
-        x = CRUD.read(Tag, all=False, tag_url=unique_token)
+        short_unique_token = unique_token.split('-')[0]
+        x = CRUD.read(Tag, all=False, tag_url=short_unique_token)
         if x:
             if x.type == "equipment":
                 print("this is an equipment qr tag")
@@ -409,7 +410,7 @@ def ods_form_qr_type_old():
                     
                     display_lbs_oz, display_kg_g = convert_weights_for_display(float(calculated_amount))
 
-                    return jsonify({"calculated_amount": calculated_amount, "display_lbs_oz": display_lbs_oz, "display_kg_g": display_kg_g, "refrigerant_type": refrigerant_type, "AddedOrRemoved": AddedOrRemoved, "new_amount_difference": new_amount_difference})
+                    return jsonify({"calculated_amount": calculated_amount, "display_lbs_oz": display_lbs_oz, "display_kg_g": display_kg_g, "refrigerant_type": refrigerant_type, "AddedOrRemoved": AddedOrRemoved, "new_amount_difference": new_amount_difference, "short_unique_token": short_unique_token})
         else:
             return jsonify({"error": "This tag needs to be registered before you can add refrigerant to it."})
     else:
