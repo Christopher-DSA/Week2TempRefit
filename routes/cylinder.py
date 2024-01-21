@@ -265,13 +265,16 @@ def InventoryCylinderInfo():
             print ("Recovry Cylinder")
             tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
             user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
-            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data="none", user_detail_data=user_detail_data)
+            # Making string, lbs and oz, and kg and g for display            
+            display_lbs_oz, display_kg_g = convert_weights_for_display(float(cylinder_data.current_refrigerant_weight))
+            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data="none", user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g)
         elif cylinder_data.cylinder_type_id == 3:  # 3 is a charge cylinder
             my_cylinder_type = 'Charge Cylinder'
             print ("Charge Cylinder")
             tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
             user_detail_data = CRUD.read(User_Detail, all=False, user_id=tech_data.user_id)
-            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data="none", user_detail_data=user_detail_data)
+            display_lbs_oz, display_kg_g = convert_weights_for_display(float(cylinder_data.current_refrigerant_weight))
+            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data="none", user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g)
         
 
 @cylinder.route("/cylinder_info/<unique_id>", methods=["GET", "POST"])
