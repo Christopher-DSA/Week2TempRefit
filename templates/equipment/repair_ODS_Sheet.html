@@ -989,6 +989,13 @@
                                                                             console.log("Total Oz Removed (Charge Amount): ", document.getElementById('TotalOzRemoved').value);
                                                                         }
 
+                                                                        document.getElementById('currentRefrigerantWeight1Removed').value = "";
+                                                                        document.getElementById('currentRefrigerantWeight2Removed').value = "";
+                                                                        document.getElementById('currentRefrigerantWeight1Added').value = "";
+                                                                        document.getElementById('currentRefrigerantWeight2Added').value = "";
+
+                                                                        // table-of-transactions
+                                                                        document.getElementById('table-of-transactions').style.setProperty('display', 'block', 'important');
                                                                         // Add a new row to the table
                                                                         let table = document.querySelector("#table-of-transactions .table tbody");
                                                                         let newRow = table.insertRow();
@@ -1066,7 +1073,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mt-5" id="table-of-transactions">
+                                        <div class="row mt-5 mb-5" id="table-of-transactions" style="display: none;">
                                             <div class="col">
                                                 <div class="d-flex justify-content-between">
                                                     <h4 class="mb-0 mr-5">Total Recovered Refrigerant</h4>
@@ -1097,8 +1104,13 @@
                                                 onclick="showQRScan()">Scan Additional Cylinder</button>
                                         </div>
 
+                                        <div id="error-message" class="alert alert-danger mt-5" role="alert"
+                                            style="display: none;">
+                                            Oops! Please fill in all the required fields before submitting the form.
+                                        </div>
+
                                         <!--Form Submit Buttons-->
-                                        <div class="row d-flex pt-5 justify-content-center" id="form-submit-section">
+                                        <div class="row d-flex pt-1 justify-content-center" id="form-submit-section">
                                             <div class="row d-flex flex-col align-items-center gap-4">
                                                 <!-- <input class="btn btn-lg btn-primary w-100" type="submit"
                                                     name="Scan Cylinder" value="Scan Cylinder"> -->
@@ -1206,6 +1218,7 @@
                 my_func_removed();
                 showQRScan();
                 document.getElementById("additionalCylinderButton").style.setProperty('display', 'none') // Making display: block !important
+                document.getElementById('error-message').style.setProperty('display', 'none', 'important'); // Making display: none !important
                 console.log('ran function');
             }
             updateReviewSection();
@@ -1476,6 +1489,8 @@
                 form.submit();
             } else {
                 // Optional: Provide feedback to the user that the form is invalid
+                console.log('Form is invalid!');
+                document.getElementById('error-message').style.display = 'block';
                 console.log('Form is invalid!');
             }
         }
