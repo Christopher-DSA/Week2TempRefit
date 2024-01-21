@@ -211,7 +211,7 @@
     </script>
 </head>
 
-<body>
+<body id = "theBody">
     <section>
         <!-- Start: Navbar -->
         <nav class="navbar navbar-expand-md bg-primary" data-bs-theme="dark">
@@ -743,43 +743,16 @@
                                 }
                             </script><!-- End: QR Scanner -->
                         </div>
-                        <!-- Start: Form Modals -->
-                        <div class="row">
-                            <div class="col">
-                                <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">QR Code Not Found</h4><button class="btn-close"
-                                                    type="button" aria-label="Close" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="mb-0">Try:</p>
-                                                <ul>
-                                                    <li>Cleaning the QR tag surface</li>
-                                                    <li>Scanning the QR tag in the designated box on the screen</li>
-                                                </ul>
-                                                <p>Or manually input an identifer.</p>
-                                            </div>
-                                            <div class="modal-footer"><button class="btn btn-outline-primary"
-                                                    type="button" data-bs-dismiss="modal">Input
-                                                    Identifier</button><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Try Again</button>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- End: Form Modals -->
                 </form>
             </div>
         </div>
         <div class="row justify-content-center mt-5">
             <div class="col-12 d-flex justify-content-center">
-                <button type="button" class="text-button" data-bs-toggle="modal" data-bs-target="#QRCodeNotFound">
+                    <button type="button" class="text-button" data-bs-toggle="modal" data-bs-target="#QRCodeNotFound">
                     <strong>QR Code Not Working?</strong>
                 </button>
 
-                <div class="modal fade" id="QRCodeNotFound" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="QRCodeNotFound" tabindex="-1" aria-labelledby="QRCodeNotFoundLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -812,54 +785,22 @@
                     </div>
                 </div>
             </div>
-        </div><!-- End: QR Scan -->
-        <div class="row">
-            <div class="col">
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <button type="button" class="btn-close mx-2 my-2" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                            <div class="container">
-                                <i class="d-flex mb-4 mt-3 fa-solid fa-camera fa-2xl justify-content-center"
-                                    style="color: #111A66"></i>
-                                <h5 class="mx-5 text-center">
-                                    "REFit" Would like to Access the Camera
-                                </h5>
-                                <p class="mx-3 justify-content-center">
-                                    This app requires access to the camera so you can scan your QR code.
-                                </p>
-                            </div>
-                            <div class="row d-flex mx-5 mb-5 justify-content-center">
-                                <div class="d-flex flex-col align-items-center gap-1">
-                                    <a href="/back-by-role" class="btn btn-outline-primary btn-md w-100"
-                                        role="button">Don't Allow</a>
-                                    <input class="btn btn-md btn-primary w-100" onclick="closePermissionModal()"
-                                        type="submit" name="Scan Cylinder" value="OK">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    </div>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             // Check camera permissions
             navigator.permissions.query({ name: 'camera' })
                 .then(permissionStatus => {
-                    var cameraModal = new bootstrap.Modal(document.getElementById('exampleModal'));
                     if (permissionStatus.state === 'denied') {
                         // Show camera access modal if permission is denied
                         console.log("Camera access denied");
                         startCamera();
                     } else if (permissionStatus.state === 'granted') {
                         // If permission already granted, start camera
-                        cameraModal.hide();
                         startCamera();
                         initiateQRCodeModalTimer(); // Ensure this function is defined
                     } else if (permissionStatus.state === 'prompt') {
@@ -890,38 +831,38 @@
         });
 
 
+        var qrModalElement = document.getElementById('QRCodeNotFound');
+        var qrModal = new bootstrap.Modal(qrModalElement);
+        let hasBeenSeen = false;
 
-
-
-        //OUT OF DOMContentLoaded
-        function requestCameraAccess() {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    // Handle the stream if needed
-                    // You might also hide the modal here
-                    // var cameraModal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-                    // cameraModal.hide();
-                })
-                .catch(error => {
-                    console.error('Camera access denied:', error);
-                });
-        }
-
-
-        function closePermissionModal() {
-            var cameraModal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
-            if (cameraModal) {
-                cameraModal.hide();
-            }
-        }
+        // Event listener for when the modal starts to show
+        qrModalElement.addEventListener('show.bs.modal', function () {
+            console.log('Modal is about to be shown event.');
+            hasBeenSeen = true;
+            console.log("Modal has been seen: ", hasBeenSeen);
+        });
 
         // Function to initiate QR code modal timer
         function initiateQRCodeModalTimer() {
+            console.log("Initiating QR code modal timer");
             setTimeout(function () {
-                var qrModal = new bootstrap.Modal(document.getElementById('QRCodeNotFound'));
-                qrModal.show();
+
+
+                if (hasBeenSeen == false) {
+                    console.log("Modal has not been seen");
+                    var qrModalElement = document.getElementById('QRCodeNotFound');
+                    var qrModal = new bootstrap.Modal(qrModalElement);
+                    var body = document.getElementById('theBody');
+                    console.log("Modal has been seen FROM TIMEOUT: ", hasBeenSeen);
+                    qrModal.show();
+                }
+                else {
+                    console.log("Modal has been seen FROM TIMEOUT: ", hasBeenSeen);
+                }
+                
             }, 15000); // 15000ms = 10s
         }
+
     </script>
 
 

@@ -1306,11 +1306,14 @@ def manual_input_search():
         print("inside manual-input-search")
         serial_number = request.form.get('EquipmentSerialNumber')
         qr_ref_number = request.form.get('EquipmentQrRef')
+        dropdown_selected = request.form.get('dropdown')
         
         print("serial_number: ", serial_number)
         print("qr_ref_number: ", qr_ref_number)
+        print("AAAAAAAAAAAAAAAAAAAAAAAAA")
+        print("dropdown_selected: ", dropdown_selected)
         
-        if qr_ref_number != '':
+        if qr_ref_number != '' and dropdown_selected == 'QR':
             print("inside qr ref number is not none")
             current_tag_data = CRUD.read(Tag, all=False, tag_url=qr_ref_number)
             
@@ -1348,5 +1351,20 @@ def manual_input_search():
                 else:
                     #This is not a valid tag number
                     return render_template("Equipment Common/newest-manual-input.html")
+        elif serial_number != '' and dropdown_selected == 'SERIAL':
+            print("inside serial number is not none")
+            #Try to get unit data with matching serial number
+            unit_data = CRUD.read(Unit, all=False, serial_number=serial_number)
+            
+            print(unit_data.unit_id)
+
+            if unit_data != None:
+                qr_ref_for_unit = CRUD.read(Tag, all=False, unit_id=str(unit_data.unit_id))
+                #Go to equipment info page if unit_data is not None
+                url = 'equipment-info/' + str(qr_ref_for_unit.tag_url)
+                return redirect(url)
+            else:
+                #This is not a valid serial number
+                return render_template("Equipment Common/newest-manual-input.html")
     else:
         return "Invalid request method (you posted to this route)"
