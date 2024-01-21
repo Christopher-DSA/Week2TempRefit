@@ -136,7 +136,7 @@ def dashboardtechnician_two():
     return render_template("technician/dashboardtechnician.html", user=user_current)
 
 
-# Register new equipment QR tag
+# Register new equipment QR tag equipment create
 @technician.route('/equipment/equipment_create', methods=['GET', 'POST'])
 def equipment_create_QR():
     print("inside equipment_create")
@@ -288,29 +288,37 @@ def my_choose_qr_type():
         if unique_token:  # always will have this after a qr scan.
             print("going to read tag in database")
             print("unique_token AGAIN: ", unique_token)
-            x = CRUD.read(Tag, all=False, tag_url=str(unique_token))
+            token_without_uuid = unique_token.split('-')[0]
+            x = CRUD.read(Tag, all=False, tag_url=str(token_without_uuid))
 
             if x != None:  # qr is registered in the system
                 if x.type == "equipment":
                     print("this is an equipment qr tag")
-                    url = 'equipment-info/' + str(unique_token)
+                    url = 'equipment-info/' + str(token_without_uuid)
                     return redirect(url)
                 elif x.type == "cylinder":
-                    url = 'cylinder_info/' + str(unique_token)
+                    url = 'cylinder_info/' + str(token_without_uuid)
                     return redirect(url)
             else:  # go to register a new tag page
-                if "UNT" in unique_token:
+                uuid4_pattern = re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+                if "UNT" in unique_token and uuid4_pattern.search(unique_token):
                     print("Unregistered equipment tag scanned")
-                    session['QR_unique_token'] = unique_token
-                    return render_template('Equipment Common/choose-qr-type.html')
-                elif "CYL" in unique_token:
+                    session['QR_unique_token'] = token_without_uuid
+                    return redirect('/equipment/equipment_create')
+                elif "CYL" in unique_token and uuid4_pattern.search(unique_token):
                     print("Unregistered cylinder tag scanned")
-                    session['QR_unique_token'] = unique_token
+                        # Split the unique_token at the hyphen and take the first part
+                    token_without_uuid = unique_token.split('-')[0]
+                    session['QR_unique_token'] = token_without_uuid
+                    return redirect('/new_cylinder')
+                elif "TST" in unique_token and uuid4_pattern.search(unique_token):
+                    print("Unregistered test tag scanned")
+                    token_without_uuid = unique_token.split('-')[0]
+                    session['QR_unique_token'] = token_without_uuid
                     return render_template('Equipment Common/choose-qr-type.html')
-                else:  # Test codes go here.
-                    print("error in qr scan, this qr tag needs to be registered.")
-                    session['QR_unique_token'] = unique_token
-                    return render_template('Equipment Common/choose-qr-type.html')
+                else:  # Not a REFit QR Tag
+                    print("Not a REFit QR Tag")
+                    return render_template('Equipment Common/qr-scan.html')
 
 # Need this one
 

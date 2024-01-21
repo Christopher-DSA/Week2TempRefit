@@ -687,24 +687,26 @@
                                         btnScanQR.hidden = false;
 
 
-                                        //Is it a valid uuid/unique token?
+                                        //Is there "-UUID4" in res if statement
+                                        if (/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.test(res)) {
+                                            console.log("REFit Tag Found: ", res);
+                                            // Create a form and submit it
+                                            var form = document.createElement('form');
+                                            form.action = '/choose-qr-type';
+                                            form.method = 'POST';
 
+                                            var input = document.createElement('input');
+                                            input.type = 'hidden';
+                                            input.name = 'unique_token';
+                                            input.value = res;
+                                            form.appendChild(input);
 
-                                        console.log("UUID Found: ", res);
+                                            document.body.appendChild(form);
+                                            form.submit();
+                                        } else {
+                                            console.log("Error Scanning: ", res);
+                                        }
 
-                                        // Create a form and submit it
-                                        var form = document.createElement('form');
-                                        form.action = '/choose-qr-type';
-                                        form.method = 'POST';
-
-                                        var input = document.createElement('input');
-                                        input.type = 'hidden';
-                                        input.name = 'unique_token';
-                                        input.value = res;
-                                        form.appendChild(input);
-
-                                        document.body.appendChild(form);
-                                        form.submit();
                                     }
                                 };
 
