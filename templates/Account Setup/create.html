@@ -24,6 +24,23 @@
     <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
     <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
     <link rel="stylesheet" href="/static/css/test.css">
+
+    <style>
+        .criteria-met {
+            color: green !important;
+        }
+
+        .criteria-not-met {
+            color: red !important;
+        }
+
+        .progress {
+            height: 10px;
+            /* makes the progress bar thinner */
+            border-radius: 5px;
+            /* rounded corners */
+        }
+    </style>
 </head>
 
 <body>
@@ -57,9 +74,10 @@
                 <form class="px-4" action="/create" method="post">
                     <!-- Start: Form Header -->
                     <div class="row mb-3">
-                        <div class="col"><a class="btn mb-4 p-0" role="button" href="/"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                                    viewBox="0 0 16 16" class="bi bi-chevron-left fs-4 me-2">
+                        <div class="col">
+                            <a class="btn mb-4 p-0" role="button" href="/"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
+                                    class="bi bi-chevron-left fs-4 me-2">
                                     <path fill-rule="evenodd"
                                         d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
                                     </path>
@@ -67,33 +85,172 @@
                             <h2>Create a Refit Account</h2>
                             <p>Fields with an asterisk (<span class="text-danger">*</span>) are required.</p>
                         </div>
-                    </div><!-- End: Form Header -->
+                    </div>
+                    <!-- End: Form Header -->
+
                     <!-- Start: Form Input -->
                     <div class="row mb-5">
                         <div class="col">
-                            <h5 class="mb-3">Enter an email address and a password you would like to use for the Refit app.</h5>
+                            <h5 class="mb-3">Enter an email address and a password you would like to use for the Refit
+                                app.</h5>
                             <!-- Start: Email -->
-                            <div class="mb-4"><label class="form-label">Email<span class="text-danger">*</span></label><input class="form-control"
-                                    type="email" required="" name="Email"></div><!-- End: Email -->
-                            <!-- Start: Password --><br>
-                            <div class="mb-4"><label class="form-label">Password<span class="text-danger">*</span></label><input class="form-control"
-                                    type="password" required="" name="Password1"></div><!-- End: Password -->
-                            <!-- Start: Confirm Password --><br>
-                            <div><label class="form-label">Confirm Password<span class="text-danger">*</span></label><input class="form-control"
-                                    type="password" required="" name="Password2"></div><!-- End: Confirm Password -->
+                            <div class="mb-4">
+                                <label class="form-label">Email<span class="text-danger">*</span></label>
+                                <input class="form-control" type="email" required="" name="Email" id="emailInput">
+                                <small id="emailFormatIndicator" class="form-text" style="display: none;"></small>
+                            </div>
+                            <!-- End: Email -->
+
+                            <!-- Start: Password -->
+                            <div class="mb-4">
+                                <label class="form-label">Password<span class="text-danger">*</span></label>
+                                <input class="form-control" type="password" required="" name="Password1"
+                                    id="passwordInput">
+                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                    Your password must be at least 8 characters long and contain at least one uppercase
+                                    letter.
+                                </small>
+                                <div id="passwordCriteria" class="mb-3">
+                                    <label>At least 8 characters</label>
+                                    <div class="progress mb-2">
+                                        <div id="lengthCriteria" class="progress-bar bg-danger" role="progressbar"
+                                            style="width: 0%"></div>
+                                    </div>
+
+                                    <label>At least one uppercase letter</label>
+                                    <div class="progress">
+                                        <div id="uppercaseCriteria" class="progress-bar bg-danger" role="progressbar"
+                                            style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- End: Password -->
+
+                            <!-- Start: Confirm Password -->
+                            <div class="mb-4">
+                                <label class="form-label">Confirm Password<span class="text-danger">*</span></label>
+                                <input class="form-control" type="password" required="" name="Password2"
+                                    id="confirmPasswordInput">
+                                <small id="passwordMatchIndicator" class="form-text" style="display: none;"></small>
+                            </div>
+                            <!-- End: Confirm Password -->
+
                         </div>
-                    </div><!-- End: Form Input -->
+                    </div>
+                    <!-- End: Form Input -->
+
                     <!-- Start: Form Submit -->
                     <div class="row">
-                        <br>
-                        <div class="col d-flex flex-column align-items-center"><input
-                                class="btn btn-lg btn-primary w-100" type="submit" value="Submit" name="Submit"></div>
-                    </div><!-- End: Form Submit -->
+                        <div class="col d-flex flex-column align-items-center">
+                            <input class="btn btn-lg btn-primary w-100" type="submit" value="Submit" name="Submit"
+                                id="submitBtn" disabled>
+                        </div>
+                    </div>
+                    <!-- End: Form Submit -->
                 </form>
             </div>
         </div>
-    </section><!-- End: Create Form -->
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <!-- Start: JavaScript for Password Validation -->
+    <script>
+        function isEmailValid(email) {
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return emailRegex.test(email);
+        }
+
+        function updateSubmitButtonState() {
+            const password = document.getElementById('passwordInput').value;
+            const confirmPassword = document.getElementById('confirmPasswordInput').value;
+            const email = document.getElementById('emailInput').value;
+            const isLengthValid = password.length >= 8;
+            const containsUppercase = /[A-Z]/.test(password);
+            const passwordsMatch = password === confirmPassword;
+            const isEmailValidFormat = isEmailValid(email);
+            const isFormValid = isLengthValid && containsUppercase && passwordsMatch && isEmailValidFormat;
+
+            document.getElementById('submitBtn').disabled = !isFormValid;
+        }
+
+
+        document.getElementById('passwordInput').addEventListener('input', function () {
+            console.log('input');
+            const password = this.value;
+            const lengthCriteria = document.getElementById('lengthCriteria');
+            const uppercaseCriteria = document.getElementById('uppercaseCriteria');
+
+            console.log(password.length);
+            // Check for length
+            let lengthPercentage = Math.min(password.length / 8 * 100, 100);
+            lengthCriteria.style.width = lengthPercentage + "%";
+            if (password.length >= 8) {
+                lengthCriteria.classList.remove('bg-danger');
+                lengthCriteria.classList.add('bg-success');
+            } else {
+                lengthCriteria.classList.remove('bg-success');
+                lengthCriteria.classList.add('bg-danger');
+            }
+
+
+            // Check for uppercase letter
+            if (password.match(/[A-Z]/)) {
+                uppercaseCriteria.style.width = "100%";
+                uppercaseCriteria.classList.remove('bg-danger');
+                uppercaseCriteria.classList.add('bg-success');
+            } else {
+                uppercaseCriteria.style.width = "0%";
+                uppercaseCriteria.classList.remove('bg-success');
+                uppercaseCriteria.classList.add('bg-danger');
+            }
+            updateSubmitButtonState();
+        });
+        document.getElementById('confirmPasswordInput').addEventListener('input', function () {
+            console.log('input in 2nd field');
+            const originalPassword = document.getElementById('passwordInput').value;
+            const confirmPassword = this.value;
+            const passwordMatchIndicator = document.getElementById('passwordMatchIndicator');
+
+            if (confirmPassword.length > 0) {
+                passwordMatchIndicator.style.display = 'block';
+                if (originalPassword === confirmPassword) {
+                    passwordMatchIndicator.textContent = 'Passwords match!';
+                    passwordMatchIndicator.classList.add('text-success');
+                    passwordMatchIndicator.classList.remove('text-danger');
+                } else {
+                    passwordMatchIndicator.textContent = 'Passwords do not match.';
+                    passwordMatchIndicator.classList.add('text-danger');
+                    passwordMatchIndicator.classList.remove('text-success');
+                }
+            } else {
+                passwordMatchIndicator.style.display = 'none';
+            }
+            updateSubmitButtonState();
+        });
+        document.getElementById('emailInput').addEventListener('input', function () {
+            const email = this.value;
+            const emailFormatIndicator = document.getElementById('emailFormatIndicator');
+
+            if (email.length > 0) {
+                emailFormatIndicator.style.display = 'block';
+                if (isEmailValid(email)) {
+                    emailFormatIndicator.textContent = 'Valid email address.';
+                    emailFormatIndicator.classList.add('text-success');
+                    emailFormatIndicator.classList.remove('text-danger');
+                } else {
+                    emailFormatIndicator.textContent = 'Invalid email format.';
+                    emailFormatIndicator.classList.add('text-danger');
+                    emailFormatIndicator.classList.remove('text-success');
+                }
+            } else {
+                emailFormatIndicator.style.display = 'none';
+            }
+
+            // Also update the submit button state
+            updateSubmitButtonState();
+        });
+
+    </script>
 </body>
