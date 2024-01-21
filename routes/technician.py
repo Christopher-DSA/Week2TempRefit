@@ -397,24 +397,8 @@ def ods_form_qr_type_old():
 
                     refrigerant_type = cylinder_data.refrigerant_type
 
-                    # Your existing amount in ounces
-                    amount_oz = float(calculated_amount)
-
-                    # Converting ounces to pounds and ounces
-                    amount_lbs = int(amount_oz // 16)
-                    remaining_ounces = round(amount_oz % 16)
-
-                    # Converting ounces to kilograms and grams
-                    # 1 ounce is approximately 0.0283495 kilograms
-                    amount_kg = amount_oz * 0.0283495
-                    # Extracting the whole kilograms
-                    whole_kg = int(amount_kg)
-                    # Converting the fractional part of the kilograms into grams and rounding it
-                    remaining_g = round((amount_kg - whole_kg) * 1000)
-
-                    # Formatting for display
-                    display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
-                    display_kg_g = f"{whole_kg}kg {remaining_g}g"
+                    
+                    display_lbs_oz, display_kg_g = convert_weights_for_display(float(calculated_amount))
 
                     return jsonify({"calculated_amount": calculated_amount, "display_lbs_oz": display_lbs_oz, "display_kg_g": display_kg_g, "refrigerant_type": refrigerant_type, "AddedOrRemoved": AddedOrRemoved, "new_amount_difference": new_amount_difference})
         else:
@@ -743,46 +727,11 @@ def repair_ODS_Sheet_New():
 
         ##############################################
         ##############################################
-        # For Charge Amount Display
-        amount_oz = float(charge_total_for_forms)
 
-        # Converting ounces to pounds and ounces
-        amount_lbs = int(amount_oz // 16)
-        remaining_ounces = round(amount_oz % 16)
-
-        # Converting ounces to kilograms and grams
-        # 1 ounce is approximately 0.0283495 kilograms
-        amount_kg = amount_oz * 0.0283495
-        # Extracting the whole kilograms
-        whole_kg = int(amount_kg)
-        # Converting the fractional part of the kilograms into grams and rounding it
-        remaining_g = round((amount_kg - whole_kg) * 1000)
-
-        # Formatting for display
-        display_lbs_oz_charge = f"{amount_lbs}lbs {remaining_ounces}oz"
-        display_kg_g_charge = f"{whole_kg}kg {remaining_g}g"
-
-        ##############################################
-        ##############################################
-        # For reclaim Amount Display
-        amount_oz_2 = float(reclaimed_total_for_forms)
-
-        # Converting ounces to pounds and ounces
-        amount_lbs = int(amount_oz_2 // 16)
-        remaining_ounces = round(amount_oz_2 % 16)
-
-        # Converting ounces to kilograms and grams
-        # 1 ounce is approximately 0.0283495 kilograms
-        amount_kg = amount_oz_2 * 0.0283495
-        # Extracting the whole kilograms
-        whole_kg = int(amount_kg)
-        # Converting the fractional part of the kilograms into grams and rounding it
-        remaining_g = round((amount_kg - whole_kg) * 1000)
-
-        # Formatting for display
-        display_lbs_oz_reclaim = f"{amount_lbs}lbs {remaining_ounces}oz"
-        display_kg_g_reclaim = f"{whole_kg}kg {remaining_g}g"
-
+        display_lbs_oz_charge, display_kg_g_charge = convert_weights_for_display(charge_total_for_forms)
+        display_lbs_oz_reclaim, display_kg_g_reclaim = convert_weights_for_display(reclaimed_total_for_forms)
+        
+        
         # Assuming the model_data dictionary and conversion factors are already defined
         # Prepare the email data dictionary
         email_data = {
@@ -1171,24 +1120,8 @@ def equipment_info_page(unique_id):
         session['unique_equipment_token'] = str(unique_id)
         session['unit_id'] = unit_id
 
-        # Your existing amount in ounces
-        amount_oz = float(data.amount_of_refrigerant_in_unit_oz)
-
-        # Converting ounces to pounds and ounces
-        amount_lbs = int(amount_oz // 16)
-        remaining_ounces = round(amount_oz % 16)
-
-        # Converting ounces to kilograms and grams
-        # 1 ounce is approximately 0.0283495 kilograms
-        amount_kg = amount_oz * 0.0283495
-        # Extracting the whole kilograms
-        whole_kg = int(amount_kg)
-        # Converting the fractional part of the kilograms into grams and rounding it
-        remaining_g = round((amount_kg - whole_kg) * 1000)
-
-        # Formatting for display
-        display_lbs_oz = f"{amount_lbs}lbs {remaining_ounces}oz"
-        display_kg_g = f"{whole_kg}kg {remaining_g}g"
+        
+        display_lbs_oz, display_kg_g = convert_weights_for_display(float(data.amount_of_refrigerant_in_unit_oz))
 
         # 3. Render html
         return render_template('beta/equipment_info.html', data=data, tech_id=tech_id, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g, unit_unique_url=unit_unique_url)
