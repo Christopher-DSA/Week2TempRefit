@@ -1291,3 +1291,62 @@ def view_all_unit_ods_tags():
         return render_template("beta/view_all_ods_tags.html", data=data)
     else:
         return "Invalid request method (you posted to this route)"
+    
+@technician.route("/manual-input", methods=["GET", "POST"])
+def manual_input():
+    if request.method == "GET":
+        return render_template("Equipment Common/newest-manual-input.html")
+    else:
+        return "Invalid request method (you posted to this route)"
+    
+    
+@technician.route("/manual-input-search", methods=["POST"])
+def manual_input_search():
+    if request.method == "POST":
+        print("inside manual-input-search")
+        serial_number = request.form.get('EquipmentSerialNumber')
+        qr_ref_number = request.form.get('EquipmentQrRef')
+        
+        print("serial_number: ", serial_number)
+        print("qr_ref_number: ", qr_ref_number)
+        
+        if qr_ref_number != '':
+            print("inside qr ref number is not none")
+            current_tag_data = CRUD.read(Tag, all=False, tag_url=qr_ref_number)
+            
+
+            if current_tag_data != None:
+                print("inside tag is not none")
+                print("current_tag_data: ", current_tag_data.type)
+                type_of_tag = current_tag_data.type
+                
+                if type_of_tag == 'cylinder':
+                    cylinder_id = current_tag_data.cylinder_id
+                    #Get the cylinder data from the cylinder table
+                    print("Cylinder id from current tag data: ", cylinder_id)
+                    cylinder_data = CRUD.read(Cylinder, all=False, cylinder_id=cylinder_id)
+                    if cylinder_data != None:
+                        url = 'cylinder_info/' + str(qr_ref_number)
+                        return redirect(url)
+                    else:
+                        #This is not a valid tag number
+                        return render_template("Equipment Common/newest-manual-input.html")
+                elif type_of_tag == 'equipment':
+                    #This is an equipment tag
+                    #Get the unit_id from the tag table
+                    unit_id = current_tag_data.unit_id
+                    #Get the unit data from the unit table
+                    unit_data = CRUD.read(Unit, all=False, unit_id=unit_id)
+                    if unit_data != None:
+                        #Go to equipment info page if unit_data is not None
+                        url = 'equipment-info/' + str(qr_ref_number)
+                        return redirect(url)
+                    else:
+                        #This is not a valid tag number
+                        return render_template("Equipment Common/newest-manual-input.html")
+
+                else:
+                    #This is not a valid tag number
+                    return render_template("Equipment Common/newest-manual-input.html")
+    else:
+        return "Invalid request method (you posted to this route)"

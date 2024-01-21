@@ -281,6 +281,7 @@ def InventoryCylinderInfo():
 def CylinderInfo(unique_id):
     if request.method == 'GET':
         print("inside get for /cylinder_info")
+        print("from cylinder_info route: ", unique_id)
 
         # 1. Get row in database for specific tag. From Tag Table.
         # Get Tag Data from Tag Table
