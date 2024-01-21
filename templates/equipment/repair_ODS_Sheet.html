@@ -553,9 +553,11 @@
                                             class="nav-link active custom-tab border-0" role="tab" data-bs-toggle="tab"
                                             href="#tab-1"><span class="bs-body-color">1</span></a></li>
                                     <li class="nav-item" role="presentation"><a class="nav-link custom-tab border-0"
-                                            role="tab" data-bs-toggle="tab" href="#tab-2"><span class="bs-body-color">2</span></a></li>
+                                            role="tab" data-bs-toggle="tab" href="#tab-2"><span
+                                                class="bs-body-color">2</span></a></li>
                                     <li class="nav-item" role="presentation"><a class="nav-link custom-tab border-0"
-                                            role="tab" data-bs-toggle="tab" href="#tab-3"><span class="bs-body-color">3</span></a></li>
+                                            role="tab" data-bs-toggle="tab" href="#tab-3"><span
+                                                class="bs-body-color">3</span></a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <!-- Content for Tab 1-->
@@ -645,88 +647,7 @@
                                         <div class="row" id="content-for-tab-2">
                                             <p>Fields with an asterisk (<span class="text-danger">*</span>) are
                                                 required.</p>
-                                            <h5 class="mt-4">Added Refrigerant:</h5>
-                                            <div id="added-refrigerant-section">
-                                                <div class="row mb-3 justify-content-center">
-                                                    <div class="col-md-4">
-                                                        <div class="mb-3">
-                                                            <select name="currentRefrigerantWeightUnitAdded"
-                                                                class="form-select"
-                                                                id="refrigerantWeightUnitSelectAdded">
-                                                                <option value="imperial" selected="">lb/oz</option>
-                                                                <option value="metric">kg/g</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="input-group mb-3">
-                                                                    <input name="currentRefrigerantWeight1Added"
-                                                                        type="number" class="form-control"
-                                                                        placeholder="lb"
-                                                                        id="currentRefrigerantWeight1Added"
-                                                                        aria-label="Pounds" required="">
-                                                                    <span class="input-group-text"
-                                                                        id="input-label-unit-big-added">lb</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="input-group mb-3">
-                                                                    <input name="currentRefrigerantWeight2Added"
-                                                                        type="number" class="form-control"
-                                                                        placeholder="oz"
-                                                                        id="currentRefrigerantWeight2Added"
-                                                                        aria-label="Ounces" required="">
-                                                                    <span class="input-group-text"
-                                                                        id="input-label-unit-small-added">oz</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="remove-refrigerant-section">
-                                                <h5 class="mt-4">Removed Refrigerant:</h5>
-                                                <div class="row mb-3 justify-content-center">
-                                                    <div class="col-md-4">
-                                                        <div class="mb-3">
-                                                            <select name="currentRefrigerantWeightUnitRemoved"
-                                                                class="form-select"
-                                                                id="refrigerantWeightUnitSelectRemoved">
-                                                                <option value="imperial" selected="">lb/oz</option>
-                                                                <option value="metric">kg/g</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="input-group mb-3">
-                                                                    <input name="currentRefrigerantWeight1Removed"
-                                                                        type="number" class="form-control"
-                                                                        placeholder="lb"
-                                                                        id="currentRefrigerantWeight1Removed"
-                                                                        aria-label="Pounds" required="">
-                                                                    <span class="input-group-text"
-                                                                        id="input-label-unit-big-removed">lb</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="input-group mb-3">
-                                                                    <input name="currentRefrigerantWeight2Removed"
-                                                                        type="number" class="form-control"
-                                                                        placeholder="oz"
-                                                                        id="currentRefrigerantWeight2Removed"
-                                                                        aria-label="Ounces" required="">
-                                                                    <span class="input-group-text"
-                                                                        id="input-label-unit-small-removed">oz</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
 
 
                                             <div id="otherTestResults">
@@ -825,9 +746,93 @@
                                                 </li>
                                             </ul>
                                         </div>
+                                        <h5 class="mt-4">Recover Refrigerant:</h5>
+                                        <div>
+                                            <ol>
+                                                <li>Scan cylinder QR tag</li>
+                                                <li>Recover refrigerant from equipment</li>
+                                                <li>Record refrigerant recovered</li>
+                                            </ol>
+                                        </div>
+                                        <h5 class="mt-4">Added Refrigerant to Unit:</h5>
+                                        <div id="added-refrigerant-section">
+                                            <div class="row mb-3 justify-content-center">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <select name="currentRefrigerantWeightUnitAdded"
+                                                            class="form-select" id="refrigerantWeightUnitSelectAdded">
+                                                            <option value="imperial" selected="">lb/oz</option>
+                                                            <option value="metric">kg/g</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="input-group mb-3">
+                                                                <input name="currentRefrigerantWeight1Added"
+                                                                    type="number" class="form-control" placeholder="lb"
+                                                                    id="currentRefrigerantWeight1Added"
+                                                                    aria-label="Pounds" required="">
+                                                                <span class="input-group-text"
+                                                                    id="input-label-unit-big-added">lb</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="input-group mb-3">
+                                                                <input name="currentRefrigerantWeight2Added"
+                                                                    type="number" class="form-control" placeholder="oz"
+                                                                    id="currentRefrigerantWeight2Added"
+                                                                    aria-label="Ounces" required="">
+                                                                <span class="input-group-text"
+                                                                    id="input-label-unit-small-added">oz</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="remove-refrigerant-section">
+                                            <h5 class="mt-4">Removed Refrigerant from Unit:</h5>
+                                            <div class="row mb-3 justify-content-center">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <select name="currentRefrigerantWeightUnitRemoved"
+                                                            class="form-select" id="refrigerantWeightUnitSelectRemoved">
+                                                            <option value="imperial" selected="">lb/oz</option>
+                                                            <option value="metric">kg/g</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="input-group mb-3">
+                                                                <input name="currentRefrigerantWeight1Removed"
+                                                                    type="number" class="form-control" placeholder="lb"
+                                                                    id="currentRefrigerantWeight1Removed"
+                                                                    aria-label="Pounds" required="">
+                                                                <span class="input-group-text"
+                                                                    id="input-label-unit-big-removed">lb</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="input-group mb-3">
+                                                                <input name="currentRefrigerantWeight2Removed"
+                                                                    type="number" class="form-control" placeholder="oz"
+                                                                    id="currentRefrigerantWeight2Removed"
+                                                                    aria-label="Ounces" required="">
+                                                                <span class="input-group-text"
+                                                                    id="input-label-unit-small-removed">oz</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div id='all-qr' class="row" style="display: none;">
                                             <div class="row" id="qr-instructions-section">
-                                                <h4 class="mt-2">Adding Repair Refrigerant</h4>
+                                                <h4 class="mt-2">Adding/Recovering Repair Refrigerant</h4>
                                                 <ul class="list-group my-3 mx-2">
                                                     <li class="list-group-item border-0 p-0 mb-1">1. Scan cylinder QR
                                                         tag
@@ -835,11 +840,9 @@
                                                     <li class="list-group-item border-0 p-0">2. Refrigerant will be
                                                         added or
                                                         removed from
-                                                        the cylinder's ReFit Tag</li>
+                                                        the cylinder's REFit Tag</li>
                                                 </ul>
-                                                <p><em>If you do not need to add refrigerant, click the button below to
-                                                        submit the form.</em></p>
-                                                </p>
+
                                             </div>
                                             <div class="row" id="qr-scan-section">
                                                 <!-- Start: QR Image -->
@@ -939,6 +942,7 @@
                                                                     display_lbs_oz = data['display_lbs_oz'];
                                                                     display_kg_g = data['display_kg_g'];
                                                                     refrigerant_type_id = document.getElementById('refrigerant_type_id').value;
+
                                                                     console.log("Calculated amount oz: ", my_calculated_amount_oz);
                                                                     if (my_calculated_amount_oz != null) {
 
@@ -955,6 +959,17 @@
                                                                         qrDiv.style.setProperty('display', 'none', 'important');
                                                                         qrResult.style.setProperty('display', 'none', 'important');
                                                                         document.getElementById("additionalCylinderButton").style.setProperty('display', 'block') // Making display: block !important
+
+                                                                        // Add a new row to the table
+                                                                        let table = document.querySelector("#table-of-transactions .table tbody");
+                                                                        let newRow = table.insertRow();
+                                                                        newRow.innerHTML = `
+                                                                                <td>Placeholder Text</td>
+                                                                                <td>${res}</td>
+                                                                                <td>${display_lbs_oz}</td>
+                                                                            `;
+
+
                                                                     } else {
                                                                         outputData.innerText = 'Oops! Something went wrong.' + data['error'];
                                                                     }
@@ -1019,6 +1034,51 @@
                                             </div>
                                             <div class="col-12 mt-1">
                                                 <h5 id="scan-result-text-unit-refrigerant-type"></h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-5" id="table-of-transactions">
+                                            <div class="col">
+                                                <div class="d-flex justify-content-between">
+                                                    <h4 class="mb-0 mr-5">Total Recovered Refrigerant</h4>
+                                                    <button type="button" class="btn p-1">Edit</button>
+                                                </div>
+
+                                                <!-- Start of the table -->
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Description</th>
+                                                            <th>Cylinder Number</th>
+                                                            <th>Numeric Value</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Recovered to Cylinder 1<span
+                                                                    class="text-danger fw-bold">*</span></td>
+                                                            <td>{{A0081295}}</td>
+                                                            <td><!-- Numeric value goes here --></td>
+                                                        </tr>
+                                                        <!-- More rows can be added here -->
+                                                    </tbody>
+                                                </table>
+                                                <!-- End of the table -->
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="d-flex justify-content-end">
+                                            <p>1 lb 3 oz</p>
+                                        </div>
+
+                                        <div style="border-bottom: 1px black solid;"></div>
+
+                                        <div class="row">
+                                            <div class="col d-flex justify-content-between mt-2">
+                                                <p>Total</p>
+                                                <p>1 lb 3 oz</p>
                                             </div>
                                         </div>
 
