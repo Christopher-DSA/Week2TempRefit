@@ -1,7 +1,7 @@
 {
     "name": "REFitV1",
     "short_name": "REFitV1",
-    "start_url": "/login.html",
+    "start_url": "/index.html",
     "background_color": "#111c62",
     "theme_color": "#080d2f",
     "display": "standalone",

@@ -2,7 +2,7 @@ self.addEventListener('install', e => { //This event is fired when the service w
   console.log('Install Chris Refit!');
   e.waitUntil( //This promise doesn't allow the service worker to be considerd installed until the promise is resolved.
     caches.open('static').then(cache => {
-        return cache.addAll(["https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css","https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js","images/refitLogo192.png","images/refitLogo512.png"])
+        return cache.addAll(["index.html","https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css","https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js","images/refitLogo192.png","images/refitLogo512.png","login.html","OfflineRepairForm.html"])
     })
   );
 }); //service workers only get installed once in their lifecycle.
