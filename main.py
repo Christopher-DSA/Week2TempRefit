@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response
+from flask import Flask, render_template, redirect, current_app, url_for, flash, make_response, send_from_directory
 from models import User, CRUD
 from routes.store import store
 from routes.admin import admin
@@ -44,11 +44,15 @@ app.register_blueprint(cylinder)
 
 db = SQLAlchemy(app)
 
+
+
+
 @app.route("/", methods=['GET', 'POST'])
-def login():
-    return render_template('auth/login.html')
+def starting():
+    #return send_from_directory('static', 'index.html')
+    return render_template('Login Flow/login.html')
 
 
 if __name__ == '__main__':
-    
+
     app.run(host='0.0.0.0',debug=True)

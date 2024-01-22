@@ -1,4 +1,4 @@
-from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session
+from flask import Blueprint,  flash, current_app, jsonify, make_response, redirect, render_template, request, url_for, session, send_from_directory
 from datetime import datetime , timedelta
 from models import User, Store, CRUD, Technician, User_Detail, Contractor, User_Support
 from functools import wraps
@@ -55,8 +55,9 @@ def email():
     s.quit()
     
 
+
 #LOGIN PAGE ROUTE
-@auth.route("/", methods=["GET", "POST"])
+@auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         print("Received POST request for login Login Button Pressed.")
@@ -132,7 +133,7 @@ def login():
             return flash("Invalid username or password.")
     elif request.method == "GET":
         print('GET request login page')                
-        return render_template('Login Flow/login.html')
+        return render_template("Login Flow/login.html")
     else:
         print('Error in login()')
 

@@ -30,21 +30,15 @@
 </body>
 <script>
     window.addEventListener('load', () => {
-        function updateOnlineStatus() {
-            console.log(navigator.onLine ? 'online' : 'offline');
-
-            if (!navigator.onLine) {
-                // Redirect to the offline page if not online
-                window.location.href = '/OfflineRepairForm.html';
-            }
+        // Check if the user is online
+        if (navigator.onLine) {
+            // User is online - Redirect to the online page
+            window.location.href = '/login'; //online page path
+        } else {
+            // User is offline - Redirect to the offline page
+            window.location.href = './offlineRepairForm'; //offline dashboard
         }
-
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-
-        updateOnlineStatus(); // Check the current online status on load
     });
-
 </script>
 
 </html>
