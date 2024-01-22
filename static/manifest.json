@@ -1,0 +1,26 @@
+{
+    "name": "REFitV1",
+    "short_name": "REFitV1",
+    "start_url": "/login.html",
+    "background_color": "#111c62",
+    "theme_color": "#080d2f",
+    "display": "standalone",
+    "icons": [
+        {
+            "src" : "images/refitLogo192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src" : "/images/refitLogo512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src" : "/images/refitLogo192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
