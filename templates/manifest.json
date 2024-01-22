@@ -1,1 +1,26 @@
-{"short_name":"REFit","name":"REFit","icons":[{"src":"/assets/img/favicon-light.png?h=1078ffc38902e5af3330798c0cfeab0c","type":"image/png","sizes":"130x165","purpose":"any maskable"},{"src":"/assets/img/refit-logo-light.png?h=1078ffc38902e5af3330798c0cfeab0c","type":"image/png","sizes":"348x122","purpose":"any maskable"}],"start_url":"/index.html","display":"fullscreen"}
+{
+    "name": "REFitV1",
+    "short_name": "REFitV1",
+    "start_url": "/index.html",
+    "background_color": "#111c62",
+    "theme_color": "#080d2f",
+    "display": "standalone",
+    "icons": [
+        {
+            "src" : "images/refitLogo192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src" : "/images/refitLogo512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src" : "/images/refitLogo192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

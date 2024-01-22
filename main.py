@@ -49,8 +49,16 @@ db = SQLAlchemy(app)
 
 @app.route("/", methods=['GET', 'POST'])
 def starting():
-    #return send_from_directory('static', 'index.html')
     return render_template('Login Flow/login.html')
+
+@app.route('/sw.js')
+def sw():
+    return send_from_directory('templates', 'sw.js')
+    #return app.send_static_file('sw.js')
+    
+@app.route('/OfflineRepairForm')
+def OfflineRepairForm():
+    return send_from_directory('templates', 'OfflineRepairForm.html')
 
 
 if __name__ == '__main__':
