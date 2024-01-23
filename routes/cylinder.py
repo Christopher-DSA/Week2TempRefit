@@ -276,7 +276,7 @@ def InventoryCylinderInfo():
             display_lbs_oz, display_kg_g = convert_weights_for_display(float(cylinder_data.current_refrigerant_weight))
             return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data="none", user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g)
         
-
+#cylinder info
 @cylinder.route("/cylinder_info/<unique_id>", methods=["GET", "POST"])
 def CylinderInfo(unique_id):
     if request.method == 'GET':
@@ -304,7 +304,7 @@ def CylinderInfo(unique_id):
             # Making string, lbs and oz, and kg and g for display
             display_lbs_oz, display_kg_g = convert_weights_for_display(float(cylinder_data.current_refrigerant_weight))
             
-            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g)
+            return render_template("beta/recovery_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g, unique_id=unique_id)
         elif cylinder_data.cylinder_type_id == 3:  # 3 is a charge cylinder
             my_cylinder_type = 'Charge Cylinder'
             tech_data = CRUD.read(Technician, all=False, technician_id=cylinder_data.technician_id)
@@ -314,7 +314,7 @@ def CylinderInfo(unique_id):
             # Making string, lbs and oz, and kg and g for display            
             display_lbs_oz, display_kg_g = convert_weights_for_display(float(cylinder_data.current_refrigerant_weight))
 
-            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g)
+            return render_template("beta/charge_cylinder_info.html", data=cylinder_data, tag_data=tag_data, my_cylinder_type=my_cylinder_type, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g, unique_id=unique_id)
 
 
 

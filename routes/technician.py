@@ -1173,9 +1173,13 @@ def equipment_info_page(unique_id):
 
         
         display_lbs_oz, display_kg_g = convert_weights_for_display(float(data.amount_of_refrigerant_in_unit_oz))
+        
+        additional_lbs_oz, additional_kg_g = convert_weights_for_display(float(data.additional_charge))
+        
+        total_lbs_oz, total_kg_g = convert_weights_for_display(float(data.total_amount_refrigerant))
 
         # 3. Render html
-        return render_template('beta/equipment_info.html', data=data, tech_id=tech_id, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g, unit_unique_url=unit_unique_url)
+        return render_template('beta/equipment_info.html', data=data, tech_id=tech_id, user_detail_data=user_detail_data, display_lbs_oz=display_lbs_oz, display_kg_g=display_kg_g, unit_unique_url=unit_unique_url, unique_id=unique_id, additional_lbs_oz=additional_lbs_oz, additional_kg_g=additional_kg_g, total_lbs_oz=total_lbs_oz, total_kg_g=total_kg_g)
 
     else:
         print('error')

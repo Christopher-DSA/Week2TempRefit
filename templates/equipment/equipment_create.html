@@ -655,7 +655,7 @@
 
 
                     <!-- Refrigerant Type and Factory Charge -->
-                    <div class="row mb-3 justify-content-center">
+                    <!-- <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
                             <label for="refrigerantType" class="form-label"><strong>Refrigerant Type</strong><span
                                     class="text-danger">*</span></label>
@@ -663,7 +663,20 @@
                                 placeholder="R-410A, R-22, etc." required>
                         </div>
 
+                    </div> -->
+
+                    <!-- New Refrigerant Seach Bar-->
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="refrigerantType" class="form-label"><strong>Refrigerant Type
+                                    Search</strong><span class="text-danger">*</span></label>
+                            <input class="form-control" id="search-input" type="text" required name="refrigerantType"
+                                placeholder="R-410A, R-22, etc." />
+                        </div>
+
                     </div>
+
+
 
                     <div class="row mb-1 justify-content-center">
                         <div class="col-12 col-md-6">
@@ -723,11 +736,11 @@
                             <div class="col-12 col-md-4">
                                 <div class="d-flex justify-content-between gap-3">
                                     <div class="input-group"><input name="additionalRefrigerantWeight1"
-                                            class="form-control" type="number" placeholder="" required=""><span
+                                            class="form-control" type="number" placeholder=""><span
                                             class="input-group-text" id="additional-input-label-unit-big">lb</span>
                                     </div>
                                     <div class="input-group"><input name="additionalRefrigerantWeight2"
-                                            class="form-control" type="number" placeholder="" required=""><span
+                                            class="form-control" type="number" placeholder=""><span
                                             class="input-group-text" id="additional-input-label-unit-small">oz</span>
                                     </div>
                                 </div>
@@ -749,7 +762,7 @@
                         <div class="col-12 col-md-6">
                             <label for="refrigerantType" class="form-label"><strong>Additional Notes</strong></label>
                             <input type="text" class="form-control" id="additionalNotes" name="additionalNotes"
-                                placeholder="" style="padding-bottom: 100px;" required>
+                                placeholder="" style="padding-bottom: 100px;">
 
                         </div>
                     </div>
@@ -769,6 +782,56 @@
     </div>
     </form>
     </div>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            var availableTags = ["hc-12a", "dr-14a", "hc-22a", "hc-502a", "hfo-1336mzz-e", "hfo-1336mzz-z (r1336mzz-z) (dr-2)", "r-10", "r-11", "r-12", "r-12b1", "r-12b2", "r-13", "r-13b1", "r-14", "r-20", "r-21", "r-22", "r-22b1", "r-23", "r-30", "r-31", "r-32", "r-40", "r-41", "r-50", "r-110", "r-111", "r-112", "r-112a", "r-113", "r-113a", "r-114", "r-114a", "r-114b2", "r-115", "r-116", "r-120", "r-121", "r-121a", "r-122", "r-122a", "r-122b", "r-123", "r-123a", "r-123b", "r-124", "r-124a", "r-125", "r-e125", "r-130", "r-130a", "r-131", "r-131a", "r-131b", "r-132", "r-132a", "r-132b", "r-132bb2", "r-132c", "r-133", "r-133a", "r-133b", "r-134", "r-134a", "r-e134", "r-140", "r-140a", "r-141", "r-141a", "r-141b", "r-141b2", "r-142a", "r-142b", "r-143", "r-143a", "r-e143a", "r-143m", "r-150", "r-150a", "r-151", "r-151a", "r-152", "r-152a", "r-160", "r-161", "r-170", "r-e170", "r-211", "r-212", "r-213", "r-214", "r-215", "r-216", "r-216ca", "r-217", "r-217ba", "r-218", "r-221", "r-222", "r-222c", "r-223", "r-223ca", "r-223cb", "r-224", "r-224ca", "r-224cb", "r-224cc", "r-225", "r-225aa", "r-225ba", "r-225bb", "r-225ca", "r-225cb", "r-225cc", "r-225da", "r-225ea", "r-225eb", "r-226", "r-226ba", "r-226ca", "r-226cb", "r-226da", "r-226ea", "r-227ca", "r-227ca2", "r-227ea", "r-227me", "r-231", "r-232", "r-232ca", "r-232cb", "r-233", "r-233ca", "r-233cb", "r-233cc", "r-234", "r-234aa", "r-234ab", "r-234ba", "r-234bb", "r-234bc", "r-234ca", "r-234cb", "r-234cc", "r-234cd", "r-234da", "r-234fa", "r-234fb", "r-235", "r-235ca", "r-235cb", "r-235cc", "r-235da", "r-235fa", "r-236cb", "r-236ea", "r-236fa", "r-236me", "r-fe-36", "r-241", "r-242", "r-243", "r-243ca", "r-243cb", "r-243cc", "r-243da", "r-243ea", "r-243ec", "r-244", "r-244ba", "r-244bb", "r-244ca", "r-244cb", "r-244cc", "r-244da", "r-244db", "r-244ea", "r-244eb", "r-244ec", "r-244fa", "r-244fb", "r-245ca", "r-245cb", "r-245ea", "r-245eb", "r-245fa", "r-245mc", "r-245mf", "r-245qc", "r-251", "r-252", "r-252ca", "r-252cb", "r-252dc", "r-252ec", "r-253", "r-253ba", "r-253bb", "r-253ca", "r-253cb", "r-253ea", "r-253eb", "r-253ec", "r-253fa", "r-253fb", "r-253fc", "r-254cb", "r-254pc", "r-261", "r-261ba", "r-262", "r-262ca", "r-262fa", "r-262fb", "r-263", "r-271", "r-271b", "r-271d", "r-271fb", "r-272", "r-281", "r-290", "r-c316", "r-c317", "r-c318", "r-3-1-10", "r-329ccb", "r-338eea", "r-347ccd", "r-347mcc", "r-347mmy", "r-365mfc", "r-4-1-12", "r-5-1-14", "r-400", "r-401a", "r-401b", "r-401c", "r-402a", "r-402b", "r-403a", "r-403b", "r-404a", "r-405a", "r-406a", "r-406b", "r-407a", "r-407b", "r-407c", "r-407d", "r-407e", "r-407f", "r-408a", "r-409a", "r-409b", "r-410a", "r-410b", "r-411a", "r-411b", "r-411c", "r-412a", "r-413a", "r-414a", "r-414b", "r-415a", "r-415b", "r-416a", "r-417a", "r-417b", "r-418a", "r-419a", "r-420a", "r-421a", "r-421b", "r-422a", "r-422b", "r-422c", "r-422d", "r-423a", "r-424a", "r-425a", "r-426a", "r-427a", "r-428a", "r-429a", "r-430a", "r-431a", "r-432a", "r-433a", "r-433b", "r-433c", "r-434a", "r-435a", "r-436a", "r-436b", "r-437a", "r-438a", "r-439a", "r-440a", "r-441a", "r-448a", "r-449a", "r-452b", "r-453a", "r-454a", "r-454b", "r-454c", "r-455a", "r-456a", "r-457a", "r-458a", "r-459a", "r-500", "r-501", "r-502", "r-503", "r-504", "r-505", "r-506", "r-507", "r-508", "r-508b", "r-509", "r-510", "r-511", "r-513a", "r-514a", "r-515b", "r-600", "r-600a", "r-601", "r-601a", "r-610", "r-611", "r-630", "r-631", "r-702", "r-704", "r-717", "r-718", "r-720", "r-728", "r-729", "r-732", "r-740", "r-744", "r-744a", "r-764", "r-784", "r-1112a", "r-1113", "r-1114", "r-1120", "r-1130", "r-1132a", "r-1140", "r-1141", "r-1150", "r-1216", "r-1218", "r-1224yd", "r-1233zd", "r-1234yf", "r-1234ze", "r-1270", "sp34e", "r-20", "r-20", "r-20"];
+            $("#search-input").autocomplete({
+                source: availableTags
+            });
+
+
+            // Add a span for the error message
+            $("#search-input").after('<span class="error-message" style="color:red; display:none;">Please select a valid option from the dropdown.</span>');
+
+            // Handling Enter key press in the search input
+            $("#search-input").on('keypress', function (event) {
+                if (event.which == 13) { // Check if Enter key is pressed
+                    event.preventDefault(); // Prevent the default Enter key action
+                    validateInput(this);
+                }
+            });
+
+            // Handling loss of focus from the search input
+            $("#search-input").on('focusout', function (event) {
+                validateInput(this);
+            });
+
+
+            // Handling form submission
+            $("#equipmentForm").on('submit', function (event) {
+                if ($(".error-message").is(":visible")) {
+                    event.preventDefault(); // Prevent form submission
+                    // You can also show an alert or make the error message flash, etc.
+                }
+            });
+
+            // Function to validate the input
+            function validateInput(inputElement) {
+                var inputVal = $(inputElement).val();
+
+                // Check if the input value is in the availableTags array
+                if (availableTags.indexOf(inputVal) === -1) {
+                    $(".error-message").show(); // Show error message
+                    $(inputElement).val(''); // Optionally clear the input
+                } else {
+                    $(".error-message").hide(); // Hide error message
+                }
+            }
+        });
+
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             var today = new Date();

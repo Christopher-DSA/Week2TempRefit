@@ -537,10 +537,13 @@
         <h5 class="bs-body-color">Equipment Type: {{data.unit_type}}</h5>
         <h5 class="bs-body-color">Refrigerant Type: {{data.type_of_refrigerant}}</h5>
         <h5 class="bs-body-color">Manufacturer: {{data.manufacturer}}</h5>
+        <h5 class="bs-body-color">REF #: {{unique_id}}</h5>
         <div id="more-details" style="display:none">
             <h5>Unit Label: {{data.unit_name}}</h5>
             <h5>Registered Date: {{data.installation_date}}</h5>
             <h5>Factory Charge: {{display_lbs_oz}} ({{display_kg_g}})</h5>
+            <h5>Additional Charge: {{additional_lbs_oz}} ({{additional_kg_g}})</h5>
+            <h5>Total Charge: {{total_lbs_oz}} ({{total_kg_g}})</h5>
             <h5>Serial Number: {{data.serial_number}}</h5>
             <h5>Model: {{data.model_number}}</h5>
             <h5>Registered By: {{user_detail_data.first_name}} {{user_detail_data.last_name}}</h5>
