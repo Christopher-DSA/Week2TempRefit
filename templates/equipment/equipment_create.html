@@ -45,6 +45,15 @@
 
         }
     </style>
+    <style>
+        /* Styling for a more noticeable checkbox border */
+        .form-check-input {
+            border: 2px solid #007bff;
+            /* Change the color and size as you like */
+            border-radius: 0.25rem;
+            /* Adds a slight rounding to the corners */
+        }
+    </style>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
@@ -596,7 +605,7 @@
                     <!-- 7. OrganizationName -->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="refrigerantType" class="form-label"><strong>Organization Name</strong><span
+                            <label for="refrigerantType" class="form-label"><strong>Equipment Owner</strong><span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="organizationName" name="organizationName"
                                 placeholder="Costco" required>
@@ -658,7 +667,7 @@
 
                     <div class="row mb-1 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <h6 class="mt-3">Amount of Refrigerant in Unit<span class="text-danger">*</span></h6>
+                            <h6 class="mt-3">Factory Charge<span class="text-danger">*</span></h6>
                         </div>
                     </div>
 
@@ -675,48 +684,56 @@
                         <div class="col-12 col-md-4">
                             <div class="d-flex justify-content-between gap-3">
                                 <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
-                                        type="number" placeholder="lb" required=""><span class="input-group-text"
+                                        type="number" placeholder="" required=""><span class="input-group-text"
                                         id="input-label-unit-big">lb</span>
                                 </div>
                                 <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
-                                        type="number" placeholder="oz" required=""><span class="input-group-text"
+                                        type="number" placeholder="" required=""><span class="input-group-text"
                                         id="input-label-unit-small">oz</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
-
-                    <!-- <div class="row mb-1 justify-content-center">
+                    <!-- Additional Refrigerant Required Checkbox -->
+                    <div class="row mt-3 mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <h6 class="mt-3">Factory Charge</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="additionalRefrigerantRequired"
+                                    name="additionalRefrigerantRequired" onclick="showAdditionalCharge(this)">
+                                <label class="form-check-label" for="additionalRefrigerantRequired"><strong>Additional
+                                        Refrigerant Required?</strong></label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row mb-3 justify-content-center">
-                        <div class="col-12 col-md-2">
-                            <div class="d-flex justify-content-between gap-3">
-                                <select name="currentRefrigerantWeightUnit" class="form-select">
-                                    <option value="imperial" selected="">lb/oz</option>
-                                    <option value="metric">kg/g</option>
-                                </select>
+                    <!-- Hidden Additional Charge Inputs, to appear when checkbox is checked -->
+                    <div class="additional-charge" style="display: none;">
+                        <div class="row mb-3 justify-content-center">
+                            <div class="col-12 col-md-2">
+                                <div class="d-flex justify-content-between gap-3">
 
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="d-flex justify-content-between gap-3">
-                                <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
-                                        type="number" required=""><span class="input-group-text"
-                                        id="input-label-unit-big">lb</span>
-                                </div>
-                                <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
-                                        type="number" required=""><span class="input-group-text"
-                                        id="input-label-unit-small">oz</span>
+                                    <select name="additionalRefrigerantWeightUnit" class="form-select">
+                                        <option value="imperial" selected="">lb/oz</option>
+                                        <option value="metric">kg/g</option>
+                                    </select>
+
                                 </div>
                             </div>
+                            <div class="col-12 col-md-4">
+                                <div class="d-flex justify-content-between gap-3">
+                                    <div class="input-group"><input name="additionalRefrigerantWeight1"
+                                            class="form-control" type="number" placeholder="" required=""><span
+                                            class="input-group-text" id="additional-input-label-unit-big">lb</span>
+                                    </div>
+                                    <div class="input-group"><input name="additionalRefrigerantWeight2"
+                                            class="form-control" type="number" placeholder="" required=""><span
+                                            class="input-group-text" id="additional-input-label-unit-small">oz</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- 7. customLabel -->
                     <div class="row mb-3 justify-content-center">
@@ -762,21 +779,39 @@
             today = yyyy + '-' + mm + '-' + dd;
             document.getElementsByName("createDate")[0].value = today;
 
-            //listener for metric or imperial dropdown
+            //Factory Charge Input
             document.getElementsByName("currentRefrigerantWeightUnit")[0].addEventListener("change", function () {
                 if (this.value == "metric") {
-                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "kg";
-                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "g";
+                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "";
+                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "";
 
                     document.getElementById("input-label-unit-big").innerHTML = "kg";
                     document.getElementById("input-label-unit-small").innerHTML = "g";
 
                 } else {
-                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "lb";
-                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "oz";
+                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "";
+                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "";
 
                     document.getElementById("input-label-unit-big").innerHTML = "lb";
                     document.getElementById("input-label-unit-small").innerHTML = "oz";
+                }
+            });
+
+            //Additional Refrigerant Input 
+            document.getElementsByName("additionalRefrigerantWeightUnit")[0].addEventListener("change", function () {
+                if (this.value == "metric") {
+                    document.getElementsByName("additionalRefrigerantWeight1")[0].placeholder = "";
+                    document.getElementsByName("additionalRefrigerantWeight2")[0].placeholder = "";
+
+                    document.getElementById("additional-input-label-unit-big").innerHTML = "kg";
+                    document.getElementById("additional-input-label-unit-small").innerHTML = "g";
+
+                } else {
+                    document.getElementsByName("additionalRefrigerantWeight1")[0].placeholder = "";
+                    document.getElementsByName("additionalRefrigerantWeight2")[0].placeholder = "";
+
+                    document.getElementById("additional-input-label-unit-big").innerHTML = "lb";
+                    document.getElementById("additional-input-label-unit-small").innerHTML = "oz";
                 }
             });
 
@@ -819,6 +854,17 @@
             console.log(tabId);
             var tab = new bootstrap.Tab(document.querySelector('#' + tabId + '-tab'));
             tab.show(); // This will switch the tab
+        }
+    </script>
+    <script>
+        // JavaScript function to show/hide Additional Charge Inputs
+        function showAdditionalCharge(checkboxElem) {
+            var additionalChargeDiv = document.querySelector('.additional-charge');
+            if (checkboxElem.checked) {
+                additionalChargeDiv.style.display = 'block';
+            } else {
+                additionalChargeDiv.style.display = 'none';
+            }
         }
     </script>
 </body>
