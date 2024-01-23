@@ -537,22 +537,23 @@
         <h5 class="bs-body-color">Equipment Type: {{data.unit_type}}</h5>
         <h5 class="bs-body-color">Refrigerant Type: {{data.type_of_refrigerant}}</h5>
         <h5 class="bs-body-color">Manufacturer: {{data.manufacturer}}</h5>
-        <a href="javascript:void(0);" onclick="toggleDetails()">
-            <h6 style="margin-top: 15px;" class="bs-body-color"><strong>SEE MORE</strong></h6>
-        </a>
-        <div id="more-details" style="display:none; margin-top: 15px;">
-            <p><strong>Unit Label:</strong> {{data.unit_name}}</p>
-            <p><strong>Registered Date:</strong> {{data.installation_date}}</p>
-            <p><strong>Factory Charge:</strong> {{display_lbs_oz}} ({{display_kg_g}})</p>
-            <p><strong>Serial Number:</strong> {{data.serial_number}}</p>
-            <p><strong>Model:</strong> {{data.model_number}}</p>
-            <p><strong>Registered By:</strong> {{user_detail_data.first_name}} {{user_detail_data.last_name}}</p>
-            <p><strong>Organization Name:</strong> {{data.organization_name}}</p>
-            <p><strong>Address:</strong> {{data.equipment_unit_address}}</p>
-            <p><strong>Location:</strong> {{data.equipment_location}}</p>
-            <p><strong>Additional Notes:</strong> {{data.additional_notes}}</p>
-            <p><strong>Equipment Unit Number:</strong> {{data.equipment_unit_number}}</p>
+        <div id="more-details" style="display:none">
+            <h5>Unit Label: {{data.unit_name}}</h5>
+            <h5>Registered Date: {{data.installation_date}}</h5>
+            <h5>Factory Charge: {{display_lbs_oz}} ({{display_kg_g}})</h5>
+            <h5>Serial Number: {{data.serial_number}}</h5>
+            <h5>Model: {{data.model_number}}</h5>
+            <h5>Registered By: {{user_detail_data.first_name}} {{user_detail_data.last_name}}</h5>
+            <h5>Organization Name: {{data.organization_name}}</h5>
+            <h5>Address: {{data.equipment_unit_address}}</h5>
+            <h5>Location: {{data.equipment_location}}</h5>
+            <h5>Additional Notes: {{data.additional_notes}}</h5>
+            <h5>Equipment Unit Number: {{data.equipment_unit_number}}</h5>
         </div>
+        <a href="javascript:void(0);" onclick="toggleDetails()">
+            <h6 style="margin-top: 15px;" class="bs-body-color" id="toggleText"><strong>SEE MORE</strong></h6>
+        </a>
+
     </div>
 
 
@@ -702,14 +703,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-
     <script>
         function toggleDetails() {
             var details = document.getElementById("more-details");
+            let toggleText = document.getElementById('toggleText');
             if (details.style.display === "none") {
                 details.style.display = "block";
+                toggleText.innerHTML = '<h6 style="margin-top: 15px;"><strong style="font-size: 1rem">SEE LESS</strong></h6>'
             } else {
                 details.style.display = "none";
+                toggleText.innerHTML = '<h6 style="margin-top: 15px;"><strong style="font-size: 1rem">SEE MORE</strong></h6>'
             }
         }
     </script>

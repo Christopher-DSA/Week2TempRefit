@@ -526,22 +526,24 @@
 
     <br>
     <div class="container" id="information">
-        <h2 class="mb-3">Charge Cylinder Information</h2>
-        <h5>Gas Quality: {% if data.clean_or_burnout == 'clean' %}
+        <h2 class="mb-3 bs-body-color">Charge Cylinder Information</h2>
+        <h5 class="bs-body-color">Gas Quality: {% if data.clean_or_burnout == 'clean' %}
             Clean
             {% else %}Burnout Gas/Contaminated Gas
             {% endif %}
         </h5>
-        <h5>Refrigerant Type: {{data.refrigerant_type}}</h5>
-        <h5>Amount of Refrigerant in Cylinder: {{display_lbs_oz}} ({{display_kg_g}})</h5>
-        <a href="javascript:void(0);" onclick="toggleDetails()">
-            <h6 style="margin-top: 15px;"><strong>SEE MORE</strong></h6>
-        </a>
-        <div id="more-details" style="display:none; margin-top: 15px;">
-            <p><strong>Added Date:</strong> {{data.added_date}}</p>
-            <p><strong>Registered By:</strong> {{user_detail_data.first_name}} {{user_detail_data.last_name}}</p>
-            <p><strong>Wholesaler:</strong> {{data.supplier}}</p>
+        <h5 class="bs-body-color">Refrigerant Type: {{data.refrigerant_type}}</h5>
+        <h5 class="bs-body-color">Amount of Refrigerant in Cylinder: {{display_lbs_oz}} ({{display_kg_g}})</h5>
+        <div id="more-details" style="display:none;">
+            <h5 class="bs-body-color">Added Date: {{data.added_date}}</h5>
+            <h5 class="bs-body-color">Registered By: {{user_detail_data.first_name}}
+                {{user_detail_data.last_name}}</h5>
+            <h5 class="bs-body-color">Wholesaler: {{data.supplier}}</h5>
         </div>
+        <a href="javascript:void(0);" onclick="toggleDetails()">
+            <h6 style="margin-top: 15px;" class="bs-body-color" id="toggleText"><strong>SEE MORE</strong></h6>
+        </a>
+
     </div>
     <br>
 
@@ -634,10 +636,13 @@
     <script>
         function toggleDetails() {
             var details = document.getElementById("more-details");
+            let toggleText = document.getElementById('toggleText');
             if (details.style.display === "none") {
                 details.style.display = "block";
+                toggleText.innerHTML = '<h6 style="margin-top: 15px;"><strong style="font-size: 1rem">SEE LESS</strong></h6>'
             } else {
                 details.style.display = "none";
+                toggleText.innerHTML = '<h6 style="margin-top: 15px;"><strong style="font-size: 1rem">SEE MORE</strong></h6>'
             }
         }
     </script>
