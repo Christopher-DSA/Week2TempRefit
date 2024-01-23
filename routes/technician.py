@@ -164,6 +164,15 @@ def equipment_create_QR():
             'currentRefrigerantWeight2')  # smaller unit
         currentRefrigerantWeightUnit = request.form.get(
             'currentRefrigerantWeightUnit')
+        
+        additionalRefrigerantWeight_1 = request.form.get(
+            'additionalRefrigerantWeight1')  # bigger unit for additional charge
+        additionalRefrigerantWeight_2 = request.form.get(
+            'additionalRefrigerantWeight2') # smaller unit for additional charge
+        additionalRefrigerantWeightUnit = request.form.get(
+            'additionalRefrigerantWeightUnit') # unit type for additional charge
+        
+        
         additionalNotes = request.form.get('additionalNotes')  # 10 YES
         customLabel = request.form.get('customLabel')  # 11 YES
 
@@ -174,11 +183,20 @@ def equipment_create_QR():
         amount_of_refrigerant_kg = 0
         amount_of_refrigerant_lbs = 0
         amount_of_refrigerant_in_unit_oz = 0
-
+        
+        
+        #Factory Charge
         if currentRefrigerantWeight_1 == "" or currentRefrigerantWeight_1 == None:
             currentRefrigerantWeight_1 = 0
         if currentRefrigerantWeight_2 == "" or currentRefrigerantWeight_2 == None:
             currentRefrigerantWeight_2 = 0
+
+        #Additional Charge
+        if additionalRefrigerantWeight_1 == "" or additionalRefrigerantWeight_1 == None:
+            additionalRefrigerantWeight_1 = 0
+        if additionalRefrigerantWeight_2 == "" or additionalRefrigerantWeight_2 == None:
+            additionalRefrigerantWeight_2 = 0
+
 
         # Metric or Imperial
         if currentRefrigerantWeightUnit == 'metric':
@@ -201,6 +219,16 @@ def equipment_create_QR():
             amount_of_refrigerant_kg = round(amount_of_refrigerant_kg, 2)
             amount_of_refrigerant_lbs = round(amount_of_refrigerant_lbs, 2)
             amount_of_refrigerant_in_unit_oz = float(currentRefrigerantWeight_1) * 16 + float(currentRefrigerantWeight_2)
+        
+        
+        additional_amount_of_refrigerant_in_unit_oz = 0
+        
+        # Metric or Imperial for additional charge
+        if additionalRefrigerantWeightUnit == 'metric':
+            additional_amount_of_refrigerant_in_unit_oz = float(additionalRefrigerantWeight_1) * 35.274 + float(
+                additionalRefrigerantWeight_2) * 0.035274
+        else: #Imperial
+            additional_amount_of_refrigerant_in_unit_oz = float(additionalRefrigerantWeight_1) * 16 + float(additionalRefrigerantWeight_2)
 
         # Serial Number is Optional
         if serialNumber == "":
@@ -211,6 +239,12 @@ def equipment_create_QR():
         equipmentType = re.sub('[^A-Za-z0-9 ]+', '', equipmentType)
         refrigerantType = re.sub('[^A-Za-z0-9 ]+', '', refrigerantType)
         serialNumber = re.sub('[^A-Za-z0-9 ]+', '', serialNumber)
+        
+        #amount_of_refrigerant_in_unit_oz is the factory charge <-
+        #additional_amount_of_refrigerant_in_unit_oz is the additional charge <-
+        #total_amount_refrigerant is the factory charge + additional charge <-
+        
+        total_amount_refrigerant = amount_of_refrigerant_in_unit_oz + additional_amount_of_refrigerant_in_unit_oz
 
         ###################################################
         ########### Add new unit to the database############
@@ -235,9 +269,11 @@ def equipment_create_QR():
             "equipment_unit_number": equipmentUnitNumber,
             "additional_notes": additionalNotes,
             "unit_name": customLabel,
-            "amount_of_refrigerant_in_unit_oz": amount_of_refrigerant_in_unit_oz,
-            "user_id": current_user_id
-        }
+            "amount_of_refrigerant_in_unit_oz": amount_of_refrigerant_in_unit_oz, #Factory Charge
+            "user_id": current_user_id,
+            "total_amount_refrigerant": total_amount_refrigerant, #Factory Charge + Additional Charge
+            "additional_charge": additional_amount_of_refrigerant_in_unit_oz #Additional Charge
+        } 
 
         my_unit = CRUD.create(model=Unit, **unit_data)
         my_equipment_id = my_unit.unit_id

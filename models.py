@@ -255,6 +255,9 @@ class Unit(Base):
     equipment_location = Column(String)
     additional_notes = Column(String)
     
+    additional_charge = Column(Numeric)
+    total_amount_refrigerant = Column(Numeric)
+    
     
 
     technician = relationship('Technician', backref='Unit')
