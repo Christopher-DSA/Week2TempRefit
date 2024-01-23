@@ -532,7 +532,7 @@
             {% else %}Burnout Gas/Contaminated Gas
             {% endif %}
         </h5>
-        <h5 class="bs-body-color">Refrigerant Type: {{data.refrigerant_type}}</h5>
+        <h5 class="bs-body-color">Refrigerant Type: <span style="text-transform: uppercase;">{{data.refrigerant_type}}</span></h5>
         <h5 class="bs-body-color">Amount of Refrigerant in Cylinder: {{display_lbs_oz}} ({{display_kg_g}})</h5>
         <h5 class="bs-body-color">REF #: {{unique_id}}</h5>
         <div id="more-details" style="display:none;">

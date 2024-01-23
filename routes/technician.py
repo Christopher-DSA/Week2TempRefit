@@ -234,11 +234,6 @@ def equipment_create_QR():
         if serialNumber == "":
             serialNumber = "N/A"
 
-        # Making sure strings do not have special characters
-        manufacturerName = re.sub('[^A-Za-z0-9 &]+', '', manufacturerName)
-        equipmentType = re.sub('[^A-Za-z0-9 ]+', '', equipmentType)
-        refrigerantType = re.sub('[^A-Za-z0-9 ]+', '', refrigerantType)
-        serialNumber = re.sub('[^A-Za-z0-9 ]+', '', serialNumber)
         
         #amount_of_refrigerant_in_unit_oz is the factory charge <-
         #additional_amount_of_refrigerant_in_unit_oz is the additional charge <-
