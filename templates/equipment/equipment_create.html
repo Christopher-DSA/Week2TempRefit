@@ -697,11 +697,11 @@
                         <div class="col-12 col-md-4">
                             <div class="d-flex justify-content-between gap-3">
                                 <div class="input-group"><input name="currentRefrigerantWeight1" class="form-control"
-                                        type="number" placeholder="" required=""><span class="input-group-text"
+                                        type="number" placeholder="0" required=""><span class="input-group-text"
                                         id="input-label-unit-big">lb</span>
                                 </div>
                                 <div class="input-group"><input name="currentRefrigerantWeight2" class="form-control"
-                                        type="number" placeholder="" required=""><span class="input-group-text"
+                                        type="number" placeholder="0" required=""><span class="input-group-text"
                                         id="input-label-unit-small">oz</span>
                                 </div>
                             </div>
@@ -736,11 +736,11 @@
                             <div class="col-12 col-md-4">
                                 <div class="d-flex justify-content-between gap-3">
                                     <div class="input-group"><input name="additionalRefrigerantWeight1"
-                                            class="form-control" type="number" placeholder=""><span
+                                            class="form-control" type="number" placeholder="0"><span
                                             class="input-group-text" id="additional-input-label-unit-big">lb</span>
                                     </div>
                                     <div class="input-group"><input name="additionalRefrigerantWeight2"
-                                            class="form-control" type="number" placeholder=""><span
+                                            class="form-control" type="number" placeholder="0"><span
                                             class="input-group-text" id="additional-input-label-unit-small">oz</span>
                                     </div>
                                 </div>
@@ -845,15 +845,15 @@
             //Factory Charge Input
             document.getElementsByName("currentRefrigerantWeightUnit")[0].addEventListener("change", function () {
                 if (this.value == "metric") {
-                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "";
-                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "";
+                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "0";
+                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "0";
 
                     document.getElementById("input-label-unit-big").innerHTML = "kg";
                     document.getElementById("input-label-unit-small").innerHTML = "g";
 
                 } else {
-                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "";
-                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "";
+                    document.getElementsByName("currentRefrigerantWeight1")[0].placeholder = "0";
+                    document.getElementsByName("currentRefrigerantWeight2")[0].placeholder = "0";
 
                     document.getElementById("input-label-unit-big").innerHTML = "lb";
                     document.getElementById("input-label-unit-small").innerHTML = "oz";
@@ -863,15 +863,15 @@
             //Additional Refrigerant Input 
             document.getElementsByName("additionalRefrigerantWeightUnit")[0].addEventListener("change", function () {
                 if (this.value == "metric") {
-                    document.getElementsByName("additionalRefrigerantWeight1")[0].placeholder = "";
-                    document.getElementsByName("additionalRefrigerantWeight2")[0].placeholder = "";
+                    document.getElementsByName("additionalRefrigerantWeight1")[0].placeholder = "0";
+                    document.getElementsByName("additionalRefrigerantWeight2")[0].placeholder = "0";
 
                     document.getElementById("additional-input-label-unit-big").innerHTML = "kg";
                     document.getElementById("additional-input-label-unit-small").innerHTML = "g";
 
                 } else {
-                    document.getElementsByName("additionalRefrigerantWeight1")[0].placeholder = "";
-                    document.getElementsByName("additionalRefrigerantWeight2")[0].placeholder = "";
+                    document.getElementsByName("additionalRefrigerantWeight1")[0].placeholder = "0";
+                    document.getElementsByName("additionalRefrigerantWeight2")[0].placeholder = "0";
 
                     document.getElementById("additional-input-label-unit-big").innerHTML = "lb";
                     document.getElementById("additional-input-label-unit-small").innerHTML = "oz";
