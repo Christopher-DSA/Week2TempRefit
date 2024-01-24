@@ -17,6 +17,69 @@
     <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
     <link rel="stylesheet" href="/static/css/test.css">
     <style>
+.more-details {
+    display: none;
+    padding: 15px;
+    background-color: #f7f7f7; /* light background for the expandable area */
+    border-radius: 8px;
+    margin-top: 10px; /* some space above the expandable area */
+    color: #111a66; /* Darker text for better contrast */
+    font-size: 16px; /* Consistent font size for readability */
+    line-height: 1.6; /* Improved line height for readability */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
+}
+
+.toggle-details-btn {
+    font-size: 18px; /* slightly larger font size for mobile readability */
+    color: #007bff; /* making the toggle link more prominent */
+    text-decoration: none; /* removing underline from the link */
+    padding: 12px 20px; /* adjusted padding for better aesthetics */
+    display: block; /* to apply padding correctly */
+    text-align: center; /* centering the button */
+    background-color: #e7f0fa; /* light background for button */
+    border-radius: 20px; /* rounded corners for button */
+    margin-top: 10px; /* increased spacing from the content above */
+    transition: background-color 0.3s ease; /* smooth background color transition */
+}
+
+
+.toggle-details-btn:hover, .toggle-details-btn:focus {
+    background-color: #d0e2f4; /* color changes on hover/focus for feedback */
+    outline: none; /* remove focus outline */
+}
+
+.section-heading {
+    font-size: 28px; /* Increased size for better visibility */
+    font-weight: bold; /* Ensuring the title is bold */
+    margin-bottom: 20px; /* More space below the title for separation */
+    color: #111a66; /* Consistent color scheme */
+    text-align: center; /* Center aligning the title for emphasis */
+}
+
+
+/* Further improvements to the card design for consistency */
+.card {
+    border-radius: 20px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.card-body {
+    align-items: center; /* Center items in card */
+    padding: 20px; /* More padding for aesthetics */
+}
+
+/* Consistent font size for all text elements */
+body, h5 {
+    font-size: 16px;
+}
+h2 {
+        font-size: 28px; /* This sets the font size to 24 pixels */
+        font-weight: bold; /* Optional: makes the font bold */
+    }
+
+    </style>
+    
+    <style>
         h1,
         h2,
         h3,
@@ -527,12 +590,9 @@
 
     <br>
     <div class="container" id="information">
-        <h2 class="mb-3 bs-body-color">Recovery Cylinder Information</h2>
-        <h5 class="bs-body-color">Gas Quality: {% if data.clean_or_burnout == 'clean' %}
-            Clean
-            {% else %}Burnout Gas/Contaminated Gas
-            {% endif %}
-        </h5>
+        <h2 class="section-heading mb-3">Recovery Cylinder Information</h2>
+        <h5 class="gas-quality">Gas Quality: {% if data.clean_or_burnout == 'clean' %} Clean {% else %} Burnout Gas/Contaminated Gas {% endif %}</h5>
+
         <h5 class="bs-body-color" >Refrigerant Type: <span style="text-transform: uppercase;">{{data.refrigerant_type}}</span></h5>
         <h5 class="bs-body-color">Amount of Refrigerant in Cylinder: {{display_lbs_oz}} ({{display_kg_g}})</h5>
         <h5 class="bs-body-color">REF #: {{unique_id}}</h5>
@@ -543,7 +603,9 @@
             <h5 class="bs-body-color">Wholesaler: {{data.supplier}}</h5>
         </div>
         <a href="javascript:void(0);" onclick="toggleDetails()">
-            <h6 style="margin-top: 15px;" class="bs-body-color" id="toggleText"><strong>SEE MORE</strong></h6>
+            <a href="javascript:void(0);" class="toggle-details-btn" onclick="toggleDetails()">
+                <strong id="toggleText">SEE MORE</strong>
+            </a>            
         </a>
 
     </div>
@@ -581,19 +643,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-    <script>
-        function toggleDetails() {
-            var details = document.getElementById("more-details");
-            let toggleText = document.getElementById('toggleText');
-            if (details.style.display === "none") {
-                details.style.display = "block";
-                toggleText.innerHTML = '<h6 style="margin-top: 15px;"><strong style="font-size: 1rem">SEE LESS</strong></h6>'
-            } else {
-                details.style.display = "none";
-                toggleText.innerHTML = '<h6 style="margin-top: 15px;"><strong style="font-size: 1rem">SEE MORE</strong></h6>'
+        <script>
+            function toggleDetails() {
+                var details = document.getElementById("more-details");
+                var toggleText = document.getElementById("toggleText");
+                if (details.style.display === "none") {
+                    details.style.display = "block";
+                    toggleText.textContent = "SEE LESS";
+                } else {
+                    details.style.display = "none";
+                    toggleText.textContent = "SEE MORE";
+                }
             }
-        }
-    </script>
+        </script>
+        
 
 </body>
 
