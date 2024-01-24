@@ -59,7 +59,7 @@
       <div class="card mt-5 p-5">
         <div class="card-body">
           <div class="d-flex justify-content-start mt-5 px-5">
-            <h2 style="color:#111A66;">Log In</h2>
+            <h2 class="fw-bold fs-1" style="color:#111A66;">Log In</h2>
           </div>
 
           <!-- Start: Flash Messages -->
@@ -85,7 +85,7 @@
                   <div class="col">
                     <!-- Start: Email -->
                     <div class="mb-4">
-                      <label class="form-label">Email<span class="text-danger fw-bold">*</span></label>
+                      <label class="form-label fw-bold fs-5" style="color:#636262">Email<span class="text-danger fw-bold">*</span></label>
                       <input class="form-control" type="email" required name="Email">
                     </div>
                     <!-- End: Email -->
@@ -99,7 +99,7 @@
 
 
                     <div class="mb-3">
-                      <label for="password-input" class="form-label">Password<span
+                      <label for="password-input" class="form-label fw-bold fs-5" style="color:#636262">Password<span
                           class="text-danger fw-bold">*</span></label>
                       <div class="input-group">
                         <input type="password" class="form-control" required name="Password" id="password-input">
@@ -109,9 +109,10 @@
                       </div>
                     </div>
 
-
-                    <a href="/forgot_password">Forgot
-                      Password?</a>
+                    <div class="w-100 d-flex justify-content-end">
+                      <a class="fw-bold fs-6" style="color:#636262" href="/forgot_password">Forgot
+                        Password?</a>
+                    </div>
                   </div>
                 </div>
 
@@ -119,10 +120,12 @@
 
                 <div class="row mb-6">
                   <div class="col d-flex flex-column align-items-center">
-                    <button class="btn btn-lg btn-primary w-100 mb-3" type="submit" value="Log In"
+                    <button class="btn btn-lg btn-primary w-100 mb-3 fw-bold fs-4" type="submit" value="Log In"
                       name="Log In">Login</button>
-                    <span>Don't have an account?</span>
-                    <a class="text-center" href="/create">Sign Up</a>
+                    <div class="d-flex w-100 text-decoration-underline">
+                      <span style="color: #111A66;">Don't have an account?&nbsp;</span> 
+                      <a style="color: #111A66;" href="/create">Sign Up</a>
+                    </div>
                   </div>
                 </div>
               </form>
