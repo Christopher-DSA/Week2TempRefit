@@ -116,67 +116,77 @@
     </div>
   </nav>
   <!-- End: Navbar -->
-  <section class="container">
-    <div class="row justify-content-center mt-5">
-      <div class="col-sm-10 col-md-6 col-lg-6 col-xl-4">
-        <form class="px-4 g-3" method="post" action="/forgot_password">
-          <!-- Start: Form Header -->
-          <div class="mb-4 text-center">
-            <h2>Forgot Password?</h2>
-            <p>
-              Please enter the email address associated with your REFit account
-              to receive a link for resetting your password.
-            </p>
-          </div>
-          <!-- End: Form Header -->
+  
+    <section class="container">
 
-          <!-- Start: Flash Messages -->
-          {% with message = get_flashed_messages() %} {% if message %}
-          <div class="alert alert-info" role="alert">
-            <i>{{ message[0] }}</i>
-          </div>
-          {% endif %} {% endwith %}
-          <!-- End: Flash Messages -->
 
-          <!-- Start: Form Input -->
-          <div class="mb-4">
-            <!-- Start: Email -->
-            <div class="form-floating mb-3">
-              <input
-                class="form-control"
-                type="email"
-                required=""
-                name="Email"
-                id="forgot-email"
-                placeholder="name@example.com"
-              />
-              <label for="forgot-email">Email*</label>
+    <div class="row container  justify-content-center mt-5">
+      <div class="col-sm-12 col-md-12 col-lg-7">
+        <div class="card mt-5 p-5">
+          <div class="card-body p-3">
+            <div class="d-flex justify-content-start mt-5 px-4">
+              <h2 class="fw-bold fs-1" style="color:#111A66;">Forgot Password?</h2>
             </div>
-            <!-- End: Email -->
-          </div>
-          <!-- End: Form Input -->
 
-          <!-- Start: Form Submit -->
-          <div class="d-flex flex-column align-items-center">
-            <input
-              class="btn btn-lg btn-primary mb-3"
-              type="submit"
-              name="Send Link"
-              value="Send Link"
-            />
-            <p>
-              If you are experiencing any problems, please
-              <a href="#" class="link-primary">Contact Customer Support</a>.
-            </p>
-            <a href="/" class="text-center">Back to Log In</a>
+            <form class="px-4 g-3" method="post" action="/forgot_password">
+              <!-- Start: Form Header -->
+              <div class="mb-4 ">
+                <p class="d-flex justify-content-start">
+                  Please enter the email address associated with your REFit account
+                  to receive a link for resetting your password.
+                </p>
+              </div>
+              <!-- End: Form Header -->
+
+              <!-- Start: Flash Messages -->
+              {% with message = get_flashed_messages() %} {% if message %}
+              <div class="alert alert-info" role="alert">
+                <i>{{ message[0] }}</i>
+              </div>
+              {% endif %} {% endwith %}
+              <!-- End: Flash Messages -->
+
+              <!-- Start: Form Input -->
+              <div class="mt-4">
+                <!-- Start: Email -->
+                <div class="mb-3">
+                  <label class="form-label fw-bold fs-5" style="color:#636262" for="forgot-email">Email*</label>
+                  <input
+                    class="form-control"
+                    type="email"
+                    required=""
+                    name="Email"
+                    id="forgot-email"
+                    placeholder="name@example.com"
+                  />
+                </div>
+                <!-- End: Email -->
+              </div>
+              <!-- End: Form Input -->
+
+              <!-- Start: Form Submit -->
+              <div class="d-flex flex-column align-items-center">
+                <input
+                  class="btn btn-lg btn-primary fw-bold mb-3 w-100"
+                  type="submit"
+                  name="Send Link"
+                  value="Send Link"
+                />
+                <p class="fs-6">
+                  If you are experiencing any problems, please
+                  <a href="#" class="link-primary">Contact Customer Support</a>.
+                </p>
+                <!-- <a href="/" class="text-center">Back to Log In</a> -->
+              </div>
+              <!-- End: Form Submit -->
+            </form>
           </div>
-          <!-- End: Form Submit -->
-        </form>
+        </div>
       </div>
 
       <!-- Begin SVG -->
       <div
-        class="col-sm-2 d-sm-none d-md-block col-md-4 col-lg-5 d-flex justify-content-center align-items-center"
+      class="d-sm-none d-lg-flex col-md-3 col-lg-5 justify-content-center align-items-center"
       >
         <svg 
           width="667"
@@ -210,5 +220,6 @@
       </div>
     </div>
   </section>
+
 </body>
 <!-- End: Forgot Form -->
