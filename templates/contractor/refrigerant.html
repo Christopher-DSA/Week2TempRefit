@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <title>Template</title>
     <style>
         table {
@@ -15,9 +18,12 @@
             padding: 8px;
             text-align: left;
         }
-        th {
-            background-color: #f2f2f2;
+
+        .table-header th {
+            background-color: #111A66;
+            color: white;
         }
+
         tr:hover {
             background-color: #f5f5f5;
         }
@@ -28,11 +34,11 @@
     
 
     <h1>Unique Refrigerants and Counts</h1>
-    <table>
-        <thead>
+    <table class="table table-responsive table-hover ">
+        <thead class="table-header">
             <tr>
-                <th>Refrigerant</th>
-                <th>Quantity</th>
+                <th class="text-center">Refrigerant <i class="fas fa-arrow-up"></i></th>
+                <th class="text-center">Quantity <i class="fas fa-arrow-down"></i></th>
                 <!-- <th>Logs</th> -->
             </tr>
         </thead>
@@ -41,11 +47,12 @@
             <tr onclick="location.href='/reftype/{{refrigerant}}'">
                  <!-- <td><a onclick="location.href='/inventory'">{{refrigerant}}</a></td>
                 <td><a href='/inventory'>{{count}}</a></td>  -->
-                <td>{{refrigerant}}</td>
-                <td>{{count}}</td>
+                <td class="text-center">{{refrigerant}}</td>
+                <td class="text-center">{{count}}</td>
                 <!-- <td><button type="button" onclick="location.href='/inventory'">{{refrigerant}}</button></td> -->
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
 </body>
