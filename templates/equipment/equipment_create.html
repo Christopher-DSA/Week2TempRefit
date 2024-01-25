@@ -53,6 +53,12 @@
             border-radius: 0.25rem;
             /* Adds a slight rounding to the corners */
         }
+        label.required::after {
+    color: red;
+  }
+  label.required {
+    color: #007bff;
+  }
     </style>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
@@ -499,13 +505,6 @@
                             <input type="hidden" class="form-control" id="createDate" name="createDate" required>
                         </div>
                     </div>
-
-                    <div class="row justify-content-center">
-                        <div class="mt-3 col-12 col-md-6">
-                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
-                                required.</p>
-                        </div>
-                    </div>
                     <!-- Header -->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
@@ -517,7 +516,7 @@
                     <!-- 1. Equipment Unit Type -->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="refrigerantType" class="form-label"><strong>Equipment Unit
+                            <label for="refrigerantType" class="required"><strong>Equipment Unit
                                     Type</strong><span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="equipmentUnitType" name="equipmentType"
                                 placeholder="Refrigerator" required>
@@ -561,7 +560,7 @@
                     <!-- 3. Manufactuer Name-->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="manufacturerName" class="form-label"><strong>Manufacturer's
+                            <label for="manufacturerName" class="required"><strong>Manufacturer's
                                     Name</strong><span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="manufacturerName" name="manufacturerName"
                                 required>
@@ -571,7 +570,7 @@
                     <!-- 4. Model Number-->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="manufacturerName" class="form-label"><strong>Model Number</strong><span
+                            <label for="manufacturerName" class="required"><strong>Model Number</strong><span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="modelNumber" name="modelNumber" required>
                         </div>
@@ -581,7 +580,7 @@
                     <!-- 5. Serial Number -->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="serialNumber" class="form-label"><strong>Serial Number</strong><span
+                            <label for="serialNumber" class="required"><strong>Serial Number</strong><span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="serialNumber" name="serialNumber" required>
                         </div>
@@ -590,7 +589,7 @@
                     <!-- 6. Equipment Unit Address -->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="equipmentUnitAddress" class="form-label"><strong>Equipment Unit
+                            <label for="equipmentUnitAddress" class="required"><strong>Equipment Unit
                                     Address</strong><span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="equipmentUnitAddress"
@@ -605,7 +604,7 @@
                     <!-- 7. OrganizationName -->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="refrigerantType" class="form-label"><strong>Equipment Owner</strong><span
+                            <label for="refrigerantType" class="required"><strong>Equipment Owner</strong><span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="organizationName" name="organizationName"
                                 placeholder="Costco" required>
@@ -625,7 +624,12 @@
                         </div>
                     </div>
 
-
+                    <div class="row justify-content-center">
+                        <div class="mt-3 col-12 col-md-6">
+                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
+                                required.</p>
+                        </div>
+                    </div>
 
                     <!-- Next Button to switch to Tab 2 -->
                     <div class="row mb-3 justify-content-center">
@@ -640,12 +644,7 @@
                 <!-- Tab 2 Content -->
                 <div id="tab2" class="container tab-pane fade">
 
-                    <div class="row justify-content-center">
-                        <div class="mt-3 col-12 col-md-6">
-                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
-                                required.</p>
-                        </div>
-                    </div>
+
                     <!-- Header -->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
@@ -668,10 +667,10 @@
                     <!-- New Refrigerant Seach Bar-->
                     <div class="row mb-3 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <label for="refrigerantType" class="form-label"><strong>Refrigerant Type
+                            <label for="refrigerantType" class="required"><strong>Refrigerant Type
                                     Search</strong><span class="text-danger">*</span></label>
                             <input class="form-control" id="search-input" type="text" required name="refrigerantType"
-                                placeholder="R-410A, R-22, etc." />
+                                placeholder="Please select a valid refrigerant type" />
                         </div>
 
                     </div>
@@ -680,7 +679,7 @@
 
                     <div class="row mb-1 justify-content-center">
                         <div class="col-12 col-md-6">
-                            <h6 class="mt-3">Factory Charge<span class="text-danger">*</span></h6>
+                            <h6 class="required" style="color: #007bff; font-weight: bold;">Factory Charge<span class="text-danger">*</span></h6>
                         </div>
                     </div>
 
@@ -767,6 +766,12 @@
                         </div>
                     </div>
 
+                    <div class="row justify-content-center">
+                        <div class="mt-3 col-12 col-md-6">
+                            <p>Fields with an asterisk (<span class="text-danger">*</span>) are
+                                required.</p>
+                        </div>
+                    </div>
 
                     <!-- Submit Button for the entire form -->
                     <div class="row mb-3 mt-3 justify-content-center">
