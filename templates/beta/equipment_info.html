@@ -534,24 +534,24 @@
     <br>
     <div class="container" id="information" style="margin-top: 20px;">
         <h2 style="margin-bottom: 15px;" class="bs-body-color">Equipment Information</h2>
-        <h5 class="bs-body-color">Equipment Type: {{data.unit_type}}</h5>
-        <h5 class="bs-body-color">Refrigerant Type: <span style="text-transform: uppercase;">{{data.type_of_refrigerant}}</span></h5>
-        <h5 class="bs-body-color">Manufacturer: {{data.manufacturer}}</h5>
-        <h5 class="bs-body-color">REF #: {{unique_id}}</h5>
+        <h5 class="bs-body-color fw-bold">Equipment Type: <span class="fw-normal">{{data.unit_type}}</span></h5>
+        <h5 class="bs-body-color fw-bold">Refrigerant Type: <span class="fw-normal" style="text-transform: uppercase;">{{data.type_of_refrigerant}}</span></h5>
+        <h5 class="bs-body-color fw-bold">Manufacturer: <span class="fw-normal">{{data.manufacturer}}</span></h5>
+        <h5 class="bs-body-color fw-bold">REF #: <span class="fw-normal">{{unique_id}}</span></h5>
         <div id="more-details" style="display:none">
-            <h5 class="bs-body-color">Unit Label: {{data.unit_name}}</h5>
-            <h5 class="bs-body-color">Registered Date: {{data.installation_date}}</h5>
-            <h5 class="bs-body-color">Factory Charge: {{display_lbs_oz}} ({{display_kg_g}})</h5>
-            <h5 class="bs-body-color">Additional Charge: {{additional_lbs_oz}} ({{additional_kg_g}})</h5>
-            <h5 class="bs-body-color">Total Charge: {{total_lbs_oz}} ({{total_kg_g}})</h5>
-            <h5 class="bs-body-color">Serial Number: {{data.serial_number}}</h5>
-            <h5 class="bs-body-color">Model: {{data.model_number}}</h5>
-            <h5 class="bs-body-color">Registered By: {{user_detail_data.first_name}} {{user_detail_data.last_name}}</h5>
-            <h5 class="bs-body-color">Organization Name: {{data.organization_name}}</h5>
-            <h5 class="bs-body-color">Address: {{data.equipment_unit_address}}</h5>
-            <h5 class="bs-body-color">Location: {{data.equipment_location}}</h5>
-            <h5 class="bs-body-color">Additional Notes: {{data.additional_notes}}</h5>
-            <h5 class="bs-body-color">Equipment Unit Number: {{data.equipment_unit_number}}</h5>
+            <h5 class="bs-body-color fw-bold">Unit Label: <span class="fw-normal">{{data.unit_name}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Registered Date: <span class="fw-normal">{{data.installation_date}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Factory Charge: <span class="fw-normal">{{display_lbs_oz}} ({{display_kg_g}})</span></h5>
+            <h5 class="bs-body-color fw-bold">Additional Charge: <span class="fw-normal">{{additional_lbs_oz}} ({{additional_kg_g}})</span></h5>
+            <h5 class="bs-body-color fw-bold">Total Charge: <span class="fw-normal">{{total_lbs_oz}} ({{total_kg_g}})</span></h5>
+            <h5 class="bs-body-color fw-bold">Serial Number: <span class="fw-normal">{{data.serial_number}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Model: <span class="fw-normal">{{data.model_number}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Registered By: <span class="fw-normal">{{user_detail_data.first_name}} {{user_detail_data.last_name}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Organization Name: <span class="fw-normal">{{data.organization_name}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Address: <span class="fw-normal">{{data.equipment_unit_address}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Location: <span class="fw-normal">{{data.equipment_location}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Additional Notes: <span class="fw-normal">{{data.additional_notes}}</span></h5>
+            <h5 class="bs-body-color fw-bold">Equipment Unit Number: <span class="fw-normal">{{data.equipment_unit_number}}</span></h5>
         </div>
         <a href="javascript:void(0);" onclick="toggleDetails()">
             <h6 style="margin-top: 15px;" class="bs-body-color" id="toggleText"><strong>SEE MORE</strong></h6>
