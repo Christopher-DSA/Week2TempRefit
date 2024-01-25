@@ -45,15 +45,14 @@
           background-image: url('images/background.svg');
           background-size: cover; 
           background-repeat: no-repeat;
-          background-position:top center;
+          
+          overflow: visible;
           transition: box-shadow 0.3s ease, transform 0.3s ease;
-
+          
         }
-
         #HERE:hover {
-       
-        transform: scale(1.05);
-      }
+          transform: scale(1.05);
+        }
     </style>
 
 </head>
@@ -100,10 +99,11 @@
         <div class="row justify-content-center mt-5">
           <!-- Begin SVG -->
 
-          <div id="HERE" class="col-sm-5 col-md-3 col-lg-3">
+          <div id="HERE" class="col-sm-5 col-md-5 col-lg-4 rounded">
+          
             <div class="d-flex flex-column align-items-center justify-content-evenly h-100">
-              <h1 class="text-white mb-5">Already have an account?</h1>
-              <a href="/login" class="btn btn-lg btn-light fw-bold mt-5  w-100">Sign in</a>
+              <h1 class="text-white mb-5 text-center">Already have an account?</h1>
+              <a href="/login" class="btn btn-lg btn-light fw-bold mt-5 w-75 text-center">Sign in</a>
             </div>
 
           </div>
