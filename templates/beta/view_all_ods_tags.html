@@ -45,6 +45,14 @@
         }
     </style>
 
+    <style>
+      .table-header th {
+        background-color: #111A66;
+        color: #FFFFFF; /* If you want white text */
+    }
+
+    </style>
+
     <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
     <link rel="stylesheet" href="/static/css/Poppins.css?h=3b3aefe71f57d702393cff5e84476a7a">
     <link rel="stylesheet" href="/static/css/bs-theme-overrides.css?h=c5ea18736f8f7fad3c119301c412bdf6">
@@ -619,12 +627,11 @@
     </section>
 
     <div class=container>
-        <h1 class="mt-4 bs-body-color">All ODS Tags History: </h1>
+        <h1 class="mt-5 bs-body-color">All ODS Tags History: </h1>
 
-
-        <table id="data" class="table table-hover">
-            <thead>
-                <tr>
+        <table id="data" class="table table-responsive .table-bordered table-hover mt-5" >
+            <thead class="table-header ">
+                <tr >
                     <th scope="col">Repair Date</th>
                     <th scope="col" class="d-none d-lg-table-cell">Refrigerant Type</th>
                     <th scope="col" class="d-none d-lg-table-cell">Technician Name</th>
