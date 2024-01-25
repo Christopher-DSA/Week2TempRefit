@@ -46,7 +46,7 @@
 <body>
     <!-- Start: Navbar -->
     <nav class="navbar bg-primary">
-        <div class="container d-flex justify-content-center align-items-center py-2">
+        <div class="container d-flex justify-content-between align-items-center py-2">
           <div>
             <a class="btn p-0 text-white fw-bold" role="button" href="/"><svg xmlns="http://www.w3.org/2000/svg"
               width="1em" height="44" fill="currentColor" viewBox="0 0 16 16"
@@ -81,17 +81,20 @@
     </nav>
     <!-- End: Navbar -->
 
-   
+  
         <div class="row justify-content-center mt-5">
             <div class="col-sm-11 col-md-8 col-lg-6 ">
               <div class="card mt-5 p-5">
                 <div class="card-body p-3">
-                <form class="px-4" action="/create" method="post">
+
+                  <div class="d-flex justify-content-start mt-5 px-5">
+                    <h2 class="fw-bold fs-2" style="color:#111A66;">Create a Refit Account</h2>
+                  </div>
+                <form class="px-5" action="/create" method="post">
                     <!-- Start: Form Header -->
                     <div class="row mb-3">
                         <div class="col">
-                            
-                            <h2>Create a Refit Account</h2>
+                           
                             <p>Fields with an asterisk (<span class="text-danger">*</span>) are required.</p>
                         </div>
                     </div>
