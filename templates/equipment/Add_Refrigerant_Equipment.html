@@ -24,11 +24,16 @@
   <link rel="stylesheet" href="/static/css/QR-Scanner.css?h=376092ebd9ede60f9d6ca2aea2b07df6">
   <link rel="stylesheet" href="/static/css/styles.css?h=0e92255a3d7da6d89898f52edb855399">
   <link rel="stylesheet" href="/static/css/test.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
   <style>
     .light-grey-background {
       background-color: rgb(203, 203, 203);
       /* This is your light grey color */
+    }
+    .table-header th {
+          background-color: #111A66;
+          color: white;
     }
   </style>
 </head>
@@ -39,33 +44,35 @@
     <div class="d-flex justify-content-center align-items-center">
       <div class="px-4">
         <h1>Refrigerant Recovery Form</h1>
-        <div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Cylinder Tag ID</th>
-                <th>Refrigerant Name</th>
-                <th>Technician ID</th>
-                <th>Cylinder Type</th>
-                <th>Cylinder Weight BEFORE recovery (lbs):</th>
-                <th>Current Refrigerant Weight (oz)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{dt.tag}}</td>
-                <td>{{dt.name}}</td>
-                <td>{{dt.tech_id}}</td>
-                <td>{{dt.type}}</td>
-                <td id="tare_weight_before_repair">{{dt.tare_weight_before_repair}}</td>
-                <td>{{dt.weight}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        
       </div>
     </div>
   </div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-header">
+        <tr>
+          <th class="text-center">Cylinder Tag ID <i class="fas fa-arrow-up"></i></th>
+          <th class="text-center">Refrigerant Name <i class="fas fa-arrow-up"></i></th>
+          <th class="text-center">Technician ID <i class="fas fa-arrow-up"></i></th>
+          <th class="text-center">Cylinder Type <i class="fas fa-arrow-up"></i></th>
+          <th class="text-center">Cylinder Weight BEFORE recovery (lbs): <i class="fas fa-arrow-up"></i></th>
+          <th class="text-center">Current Refrigerant Weight (oz) <i class="fas fa-arrow-up"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">{{dt.tag}}</td>
+          <td class="text-center">{{dt.name}}</td>
+          <td class="text-center">{{dt.tech_id}}</td>
+          <td class="text-center">{{dt.type}}</td>
+          <td id="tare_weight_before_repair" class="text-center">{{dt.tare_weight_before_repair}}</td>
+          <td class="text-center">{{dt.weight}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <div class="d-flex justify-content-center align-items-center">
     <!-- Adjust the height as needed -->
     <form id="myForm" method="post" action="/refrigerant_recovery">
