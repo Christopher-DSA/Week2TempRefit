@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Refrigerant Inventory</title>
     <style>
         table {
@@ -15,8 +17,9 @@
             padding: 8px;
             text-align: left;
         }
-        th {
-            background-color: #f2f2f2;
+        .table-header th {
+          background-color: #111A66;
+          color: white;
         }
         tr:hover {
             background-color: #f5f5f5;
@@ -25,29 +28,29 @@
 </head>
 
 <body>
-    <table>
-        <thead>
+  <div class="table-responsive">
+    <table class="table table-hover ">
+      <thead class="table-header">
             <tr>
-                <th>Technician ID</th>
-                <th>Cylinder ID</th>
-                <th>Cylinder Added Date</th>
-                <th>Refrigerant Name</th>
-                <th>Cylinder Supplier</th>
-                
-                
+                <th class="text-center">Technician ID <i class="fas fa-arrow-up"></i></th>
+                <th class="text-center">Cylinder ID <i class="fas fa-arrow-up"></i></th>
+                <th class="text-center">Cylinder Added Date <i class="fas fa-arrow-up"></i></th>
+                <th class="text-center">Refrigerant Name <i class="fas fa-arrow-up"></i></th>
+                <th class="text-center">Cylinder Supplier <i class="fas fa-arrow-up"></i></th>
             </tr>
         </thead>
         <tbody>
             {% for i in dt %}
                 <tr>
-                    <td>{{ i['technician_id'] }}</td>
-                    <td>{{ i['id'] }}</td>
-                    <td>{{ i['added_date'] }}</td>
-                    <td>{{ i['refrigerant_name'] }}</td>
-                    <td>{{ i['supplier'] }}</td>
+                    <td class="text-center">{{ i['technician_id'] }}</td>
+                    <td class="text-center">{{ i['id'] }}</td>
+                    <td class="text-center">{{ i['added_date'] }}</td>
+                    <td class="text-center">{{ i['refrigerant_name'] }}</td>
+                    <td class="text-center">{{ i['supplier'] }}</td>
                     
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+  </div>
 </body>
