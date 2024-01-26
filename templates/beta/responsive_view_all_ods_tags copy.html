@@ -46,6 +46,10 @@
             text-align: center;
             margin-bottom: 30px;
         }
+        .table-header th {
+          background-color: #111A66;
+          color: white;
+        }
     </style>
 
     <!-- <link rel="stylesheet" href="/static/css/Inter.css?h=2b6b187577b77bbecfd8e0c0ba7be8a4">
@@ -595,9 +599,9 @@
     <div class=container>
         <h1 class="mt-4 bs-body-color">All ODS Tags History: </h1>
 
-
-        <table id="data" class="table table-hover dt-responsive nowrap" style="width:100%">
-            <thead>
+        <div class="table-responsive">
+        <table id="data" class="table table-bordered table-hover dt-responsive nowrap" style="width:100%">
+            <thead class="table-header">
                 <tr>
                     <th scope="col">Date</th>
                     <th scope="col">Refrigerant Type</th>
@@ -624,6 +628,7 @@
                 {%endfor%}
             </tbody>
         </table>
+      </div>
     </div>
 
     <!-- jQuery library -->
